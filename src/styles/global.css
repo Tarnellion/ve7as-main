@@ -1015,7 +1015,6 @@ main { display: block; }
 
 /* ── Editorial bar & category nav ───────────────────── */
 .ed-bar {
-  border-bottom: 1px solid rgba(232, 179, 74, 0.4);
   padding: 0.55rem 0;
 }
 .ed-bar-inner {
@@ -1030,7 +1029,6 @@ main { display: block; }
 }
 
 .cat-nav {
-  border-bottom: 1px solid rgba(232, 179, 74, 0.4);
   background: var(--bg);
 }
 .cat-nav-scroll {
@@ -1049,14 +1047,12 @@ main { display: block; }
   font-weight: 700;
   color: var(--text-dim);
   white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.cat-nav-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
-.cat-nav-link[aria-current="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.cat-nav-link:hover { color: var(--accent); }
+.cat-nav-link[aria-current="true"] { color: var(--accent); }
 
 /* ── Editorial feed (homepage) ───────────────────────── */
 .ed-section-label {
