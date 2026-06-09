@@ -13,7 +13,6 @@ const { lang, currentPath = '' } = Astro.props;
 const t = useTranslations(lang);
 
 const navItems = [
-  { href: path(lang), label: t.nav.home },
   { href: path(lang, 'casino-slots'), label: t.sections['casino-slots'] },
   { href: path(lang, 'sports-betting'), label: t.sections['sports-betting'] },
   { href: path(lang, 'poker-table-games'), label: t.sections['poker-table-games'] },

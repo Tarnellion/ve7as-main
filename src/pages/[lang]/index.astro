@@ -6,20 +6,18 @@ import { useTranslations } from '../../i18n/ui';
 import { path } from '../../i18n/utils';
 import { sectionColor, sectionIcon } from '../../i18n/sectionTheme';
 import { HTML_LANG, type Language } from '../../i18n/languages';
-import { getSections, getArticles, getFaqItems, renderMarkdown, getArticleText, getFaqText, isBlockedInCountry } from '../../lib/sanity';
+import { getSections, getArticles, getArticleText, isBlockedInCountry } from '../../lib/sanity';
 
 const { lang } = Astro.params as { lang: Language };
 const t = useTranslations(lang);
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const [sections, allArticles, allFaq] = await Promise.all([
+const [sections, allArticles] = await Promise.all([
   getSections(),
   getArticles(),
-  getFaqItems(),
 ]);
 
 const articles = allArticles.filter((a) => !isBlockedInCountry(a.blockedIn, country));
-const faqItems = allFaq.filter((f) => !isBlockedInCountry(f.blockedIn, country));
 
 const latestArticles = articles.slice(0, 7);
 const [featuredArticle, ...restArticles] = latestArticles;
@@ -36,10 +34,6 @@ const featuredSection = sections.find((s) => s.id === featuredArticle?.section);
 
 const todayDate = new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date());
 
-const faqViews = faqItems.slice(0, 4).map((item) => ({
-  question: getFaqText(item, 'question', lang),
-  answerHtml: renderMarkdown(getFaqText(item, 'answer', lang)),
-}));
 ---
 
 <BaseLayout lang={lang} title={t.hero.title} description={t.hero.subtitle} currentPath="">
@@ -127,25 +121,5 @@ const faqViews = faqItems.slice(0, 4).map((item) => ({
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section section--dark" id="faq">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">{t.home.faqTitle}</h2>
-          <p class="section-sub">{t.home.faqSubtitle}</p>
-        </div>
-        <a href={path(lang, 'faq')} class="view-all">{t.home.viewAll} →</a>
-      </div>
-      <div class="faq-list">
-        {faqViews.map(({ question, answerHtml }) => (
-          <details class="faq-item">
-            <summary>{question}</summary>
-            <div class="faq-body prose" set:html={answerHtml} />
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
 
 </BaseLayout>

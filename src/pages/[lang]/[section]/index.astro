@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
 import { useTranslations } from '../../../i18n/ui';
-import { HTML_LANG, type Language } from '../../../i18n/languages';
+import { type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { sectionColor } from '../../../i18n/sectionTheme';
-import { getSections, getArticles, getArticleText, isBlockedInCountry } from '../../../lib/sanity';
+import { getSections, getArticles, isBlockedInCountry } from '../../../lib/sanity';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
 const t = useTranslations(lang);
@@ -39,27 +40,9 @@ const cardColor = sectionColor(sectionId);
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
-        <h2 class="section-title" style="margin-bottom:0">{t.section.articlesIn}</h2>
-      </div>
-
       {articles.length > 0 ? (
-        <div class="article-list">
-          {articles.map((article) => (
-            <a href={path(lang, 'articles', article.id)} class="article-row" style={`--card-color: ${cardColor}`}>
-              <div>
-                <h3>{getArticleText(article, 'title', lang)}</h3>
-                <p>{getArticleText(article, 'description', lang)}</p>
-                <div class="article-meta">
-                  <span>
-                    {new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(article.pubDate))}
-                  </span>
-                  <span class="dot">{article.readingTime} {t.article.readingTime}</span>
-                </div>
-              </div>
-              <span class="article-row-arrow">→</span>
-            </a>
-          ))}
+        <div class="article-grid">
+          {articles.map((article) => <ArticleCard lang={lang} article={article} />)}
         </div>
       ) : (
         <p class="section-sub">—</p>

@@ -5,7 +5,7 @@ import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../../../i18n/langua
 import { path } from '../../../i18n/utils';
 import { sectionColor, sectionIcon } from '../../../i18n/sectionTheme';
 import ArticleArt from '../../../components/ArticleArt.astro';
-import { getArticleBySlug, renderMarkdown, extractToc, getArticleText, getArticleBody, isBlockedInCountry, youtubeId } from '../../../lib/sanity';
+import { getArticleBySlug, renderMarkdown, getArticleText, getArticleBody, isBlockedInCountry, youtubeId } from '../../../lib/sanity';
 
 const { lang, slug } = Astro.params as { lang: Language; slug: string };
 const t = useTranslations(lang);
@@ -19,7 +19,6 @@ const displayTitle = getArticleText(article, 'title', lang);
 const displayDescription = getArticleText(article, 'description', lang);
 const bodyMd = getArticleBody(article, lang);
 const bodyHtml = renderMarkdown(bodyMd);
-const tocItems = extractToc(bodyMd).filter((h) => h.depth === 2);
 
 const hasTranslation = lang === DEFAULT_LANGUAGE || Boolean((article as Record<string, unknown>)[`title_${lang}`]);
 
@@ -78,42 +77,24 @@ const ogImage = article.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&au
       {!hasTranslation && (
         <p class="notice">{t.article.translationNotice}</p>
       )}
-
-      <div class="article-layout">
-        {tocItems.length > 0 && (
-          <aside class="toc">
-            <div class="toc-inner">
-              <p class="toc-title">{t.article.tableOfContents}</p>
-              <nav class="toc-list">
-                {tocItems.map((heading) => (
-                  <a href={`#${heading.slug}`}>{heading.text}</a>
-                ))}
-              </nav>
-            </div>
-          </aside>
-        )}
-
-        <div>
-          <div class="prose" set:html={bodyHtml} />
-          {ytId && (
-            <div class="yt-embed">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${ytId}`}
-                title="YouTube video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
-            </div>
-          )}
-          <div class="prose-foot">
-            {article.section && (
-              <a href={path(lang, article.section)} class="back-link">
-                ← {t.article.back}: {t.sections[article.section as keyof typeof t.sections] ?? article.section}
-              </a>
-            )}
-          </div>
+      <div class="prose" set:html={bodyHtml} />
+      {ytId && (
+        <div class="yt-embed">
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${ytId}`}
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
+      )}
+      <div class="prose-foot">
+        {article.section && (
+          <a href={path(lang, article.section)} class="back-link">
+            ← {t.article.back}: {t.sections[article.section as keyof typeof t.sections] ?? article.section}
+          </a>
+        )}
       </div>
     </div>
   </article>
