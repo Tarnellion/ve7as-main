@@ -64,7 +64,7 @@ main { display: block; }
   background: rgba(12, 14, 20, 0.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(232, 179, 74, 0.4);
 }
 
 .nav {
@@ -1015,7 +1015,7 @@ main { display: block; }
 
 /* ── Editorial bar & category nav ───────────────────── */
 .ed-bar {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(232, 179, 74, 0.4);
   padding: 0.55rem 0;
 }
 .ed-bar-inner {
@@ -1030,7 +1030,7 @@ main { display: block; }
 }
 
 .cat-nav {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(232, 179, 74, 0.4);
   background: var(--bg);
 }
 .cat-nav-scroll {
@@ -1055,7 +1055,7 @@ main { display: block; }
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.cat-nav-link:hover { color: var(--text); border-bottom-color: rgba(255,255,255,0.2); }
+.cat-nav-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .cat-nav-link[aria-current="true"] { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ── Editorial feed (homepage) ───────────────────────── */
@@ -1065,7 +1065,7 @@ main { display: block; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
-  border-top: 2px solid var(--text);
+  border-top: 2px solid var(--accent);
   padding-top: 0.5rem;
   margin-bottom: 2rem;
   display: flex;
@@ -1179,7 +1179,7 @@ main { display: block; }
 
 .ed-divider {
   height: 1px;
-  background: var(--border);
+  background: rgba(232, 179, 74, 0.4);
   margin: 2.5rem 0;
 }
 
