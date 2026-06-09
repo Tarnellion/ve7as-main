@@ -5,7 +5,7 @@ import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../../../i18n/langua
 import { path } from '../../../i18n/utils';
 import { sectionColor, sectionIcon } from '../../../i18n/sectionTheme';
 import ArticleArt from '../../../components/ArticleArt.astro';
-import { getArticleBySlug, renderMarkdown, extractToc, getArticleText, getArticleBody, isBlockedInCountry } from '../../../lib/sanity';
+import { getArticleBySlug, renderMarkdown, extractToc, getArticleText, getArticleBody, isBlockedInCountry, youtubeId } from '../../../lib/sanity';
 
 const { lang, slug } = Astro.params as { lang: Language; slug: string };
 const t = useTranslations(lang);
@@ -29,6 +29,8 @@ const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
 
 const cardColor = sectionColor(article.section);
 const icon = article.sectionIcon || sectionIcon(article.section);
+const ytId = article.youtube ? youtubeId(article.youtube) : null;
+const ogImage = article.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&auto=format` : undefined;
 ---
 
 <BaseLayout
@@ -36,6 +38,7 @@ const icon = article.sectionIcon || sectionIcon(article.section);
   title={displayTitle}
   description={displayDescription}
   currentPath={`articles/${article.id}`}
+  ogImage={ogImage}
 >
   <div class="reading-progress" aria-hidden="true">
     <div class="reading-progress-bar" id="reading-progress-bar"></div>
@@ -43,7 +46,10 @@ const icon = article.sectionIcon || sectionIcon(article.section);
 
   <header class="page-head page-head--article" style={`--card-color: ${cardColor}`}>
     <div class="page-head-art">
-      <ArticleArt seed={article.id} color={cardColor} icon={icon} />
+      {article.imageUrl
+        ? <img src={`${article.imageUrl}?w=1400&h=500&fit=crop&auto=format`} alt={displayTitle} loading="eager" width="1400" height="500" class="page-head-photo" />
+        : <ArticleArt seed={article.id} color={cardColor} icon={icon} />
+      }
     </div>
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -89,6 +95,17 @@ const icon = article.sectionIcon || sectionIcon(article.section);
 
         <div>
           <div class="prose" set:html={bodyHtml} />
+          {ytId && (
+            <div class="yt-embed">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${ytId}`}
+                title="YouTube video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          )}
           <div class="prose-foot">
             {article.section && (
               <a href={path(lang, article.section)} class="back-link">

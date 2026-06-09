@@ -29,7 +29,10 @@ const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
   style={`--card-color: ${sectionColor(section)}`}
 >
   <div class="article-card-art">
-    <ArticleArt seed={article.id} color={sectionColor(section)} icon={sectionIcon(section)} />
+    {article.imageUrl
+      ? <img src={`${article.imageUrl}?w=600&h=340&fit=crop&auto=format`} alt={title} loading="lazy" width="600" height="340" />
+      : <ArticleArt seed={article.id} color={sectionColor(section)} icon={sectionIcon(section)} />
+    }
   </div>
   <span class="article-tag">{t.sections[section as keyof typeof t.sections] ?? section}</span>
   <h3>{title}</h3>

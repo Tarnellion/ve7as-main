@@ -60,6 +60,12 @@ export function getFaqText(faq: SanityFaq, field: 'question' | 'answer', lang: s
   return (faq[key] as string) || (faq[fallback] as string) || '';
 }
 
+export function youtubeId(url: string): string | null {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
 export function isBlockedInCountry(blockedIn: string[], country: string): boolean {
   if (!country || !blockedIn?.length) return false;
   return blockedIn.includes(country.toUpperCase());
@@ -84,6 +90,8 @@ export async function getArticles() {
     author,
     featured,
     blockedIn,
+    "imageUrl": image.asset->url,
+    youtube,
     ${langProjection('article')}
   }`);
 }
@@ -98,6 +106,8 @@ export async function getArticleBySlug(slug: string) {
     author,
     featured,
     blockedIn,
+    "imageUrl": image.asset->url,
+    youtube,
     ${langProjection('article')},
     ${langBodyProjection()}
   }`, { slug });
@@ -135,6 +145,8 @@ export type SanityArticle = LangFields<'title'> & LangFields<'description'> & {
   author: string;
   featured: boolean;
   blockedIn: string[];
+  imageUrl?: string;
+  youtube?: string;
 };
 
 export type SanityArticleFull = SanityArticle & LangFields<'body'> & {

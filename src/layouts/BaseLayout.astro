@@ -10,11 +10,11 @@ interface Props {
   lang: Language;
   title: string;
   description: string;
-  /** Path segments after the language prefix, e.g. 'faq' or 'casino-slots/how-to-choose'. Used for the language switcher and hreflang tags. */
   currentPath?: string;
+  ogImage?: string;
 }
 
-const { lang, title, description, currentPath = '' } = Astro.props;
+const { lang, title, description, currentPath = '', ogImage } = Astro.props;
 const t = useTranslations(lang);
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -39,6 +39,9 @@ const pageTitle = currentPath ? `${title} — Ve7as` : `Ve7as — ${title}`;
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonicalURL} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  {ogImage && <meta name="twitter:card" content="summary_large_image" />}
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
 
   <title>{pageTitle}</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

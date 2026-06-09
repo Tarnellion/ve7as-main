@@ -89,6 +89,20 @@ export default {
       initialValue: false,
     },
     {
+      name: 'image',
+      title: 'Cover Image',
+      type: 'image',
+      group: 'settings',
+      options: { hotspot: true },
+    },
+    {
+      name: 'youtube',
+      title: 'YouTube URL',
+      description: 'https://www.youtube.com/watch?v=... — will be embedded at the end of the article',
+      type: 'url',
+      group: 'settings',
+    },
+    {
       name: 'blockedIn',
       title: 'Hide in countries',
       description: 'Article will NOT be shown to users from selected countries',
@@ -100,6 +114,6 @@ export default {
     ...langFields,
   ],
   preview: {
-    select: { title: 'title_ru', subtitle: 'section.title' },
+    select: { title: 'title_ru', subtitle: 'section.title', media: 'image' },
   },
 }
