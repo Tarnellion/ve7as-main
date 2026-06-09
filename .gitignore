@@ -20,5 +20,13 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# playwright artifacts
+.playwright-mcp/
+*.png
+
+# studio build artifacts
+studio/.sanity/
+studio/dist/
+
 # jetbrains setting folder
 .idea/

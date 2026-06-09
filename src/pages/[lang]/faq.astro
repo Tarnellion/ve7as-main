@@ -1,9 +1,9 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/ui';
 import { languagePaths } from '../../i18n/utils';
 import { DEFAULT_LANGUAGE, type Language } from '../../i18n/languages';
+import { getFaqItems, renderMarkdown } from '../../lib/sanity';
 
 export function getStaticPaths() {
   return languagePaths();
@@ -12,21 +12,19 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Language };
 const t = useTranslations(lang);
 
-const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
-const views = await Promise.all(
-  faqEntries.map(async (entry) => {
-    const translation = lang !== DEFAULT_LANGUAGE
-      ? await getEntry('faqTranslations', `${lang}/${entry.id}`)
-      : undefined;
-    const { Content } = await render(translation ?? entry);
-    return {
-      question: translation?.data.question ?? entry.data.question,
-      hasTranslation: Boolean(translation),
-      Content,
-    };
-  }),
-);
-const missingTranslation = lang !== DEFAULT_LANGUAGE && views.some((view) => !view.hasTranslation);
+const faqItems = await getFaqItems();
+const views = faqItems.map((item) => {
+  const tr = lang !== DEFAULT_LANGUAGE
+    ? item.translations?.find((x) => x.lang === lang)
+    : undefined;
+  return {
+    question: tr?.question ?? item.question,
+    answerHtml: renderMarkdown(tr?.answer ?? item.answer ?? ''),
+    hasTranslation: Boolean(tr),
+  };
+});
+
+const missingTranslation = lang !== DEFAULT_LANGUAGE && views.some((v) => !v.hasTranslation);
 ---
 
 <BaseLayout lang={lang} title={t.home.faqTitle} description={t.home.faqSubtitle} currentPath="faq">
@@ -42,10 +40,10 @@ const missingTranslation = lang !== DEFAULT_LANGUAGE && views.some((view) => !vi
       {missingTranslation && <p class="notice">{t.article.translationNotice}</p>}
 
       <div class="faq-list">
-        {views.map(({ question, Content }, i) => (
+        {views.map(({ question, answerHtml }, i) => (
           <details class="faq-item" open={i === 0}>
             <summary>{question}</summary>
-            <div class="faq-body"><Content /></div>
+            <div class="faq-body prose" set:html={answerHtml} />
           </details>
         ))}
       </div>

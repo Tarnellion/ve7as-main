@@ -1,36 +1,34 @@
 ---
-import { getEntry, type CollectionEntry } from 'astro:content';
 import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/utils';
 import { sectionColor, sectionIcon } from '../i18n/sectionTheme';
 import ArticleArt from './ArticleArt.astro';
+import type { SanityArticle } from '../lib/sanity';
 
 interface Props {
   lang: Language;
-  article: CollectionEntry<'articles'>;
+  article: SanityArticle;
 }
 
 const { lang, article } = Astro.props;
 const t = useTranslations(lang);
-const { section, pubDate, readingTime, featured } = article.data;
+const { section, pubDate, readingTime } = article;
 
-const translation = lang !== DEFAULT_LANGUAGE
-  ? await getEntry('articleTranslations', `${lang}/${article.id}`)
+const tr = lang !== DEFAULT_LANGUAGE
+  ? article.translations?.find((x) => x.lang === lang)
   : undefined;
-const title = translation?.data.title ?? article.data.title;
-const description = translation?.data.description ?? article.data.description;
+const title = tr?.title ?? article.title;
+const description = tr?.description ?? article.description;
 
 const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-}).format(pubDate);
+  year: 'numeric', month: 'long', day: 'numeric',
+}).format(new Date(pubDate));
 ---
 
 <a
   href={path(lang, 'articles', article.id)}
-  class:list={['article-card', { 'article-card--featured': featured }]}
+  class:list={['article-card', { 'article-card--featured': article.featured }]}
   style={`--card-color: ${sectionColor(section)}`}
 >
   <div class="article-card-art">
