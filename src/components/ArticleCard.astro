@@ -1,0 +1,46 @@
+---
+import { getEntry, type CollectionEntry } from 'astro:content';
+import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+import { path } from '../i18n/utils';
+import { sectionColor, sectionIcon } from '../i18n/sectionTheme';
+import ArticleArt from './ArticleArt.astro';
+
+interface Props {
+  lang: Language;
+  article: CollectionEntry<'articles'>;
+}
+
+const { lang, article } = Astro.props;
+const t = useTranslations(lang);
+const { section, pubDate, readingTime, featured } = article.data;
+
+const translation = lang !== DEFAULT_LANGUAGE
+  ? await getEntry('articleTranslations', `${lang}/${article.id}`)
+  : undefined;
+const title = translation?.data.title ?? article.data.title;
+const description = translation?.data.description ?? article.data.description;
+
+const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+---
+
+<a
+  href={path(lang, 'articles', article.id)}
+  class:list={['article-card', { 'article-card--featured': featured }]}
+  style={`--card-color: ${sectionColor(section)}`}
+>
+  <div class="article-card-art">
+    <ArticleArt seed={article.id} color={sectionColor(section)} icon={sectionIcon(section)} />
+  </div>
+  <span class="article-tag">{t.sections[section as keyof typeof t.sections] ?? section}</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <div class="article-meta">
+    <span>{formattedDate}</span>
+    <span class="dot">{readingTime} {t.article.readingTime}</span>
+  </div>
+</a>

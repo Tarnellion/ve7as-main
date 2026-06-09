@@ -1,0 +1,125 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { LANGUAGES, HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { sectionColor, sectionIcon } from '../../../i18n/sectionTheme';
+import ArticleArt from '../../../components/ArticleArt.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return LANGUAGES.flatMap((lang) =>
+    articles.map((article) => ({
+      params: { lang, slug: article.id },
+      props: { article },
+    })),
+  );
+}
+
+const { lang } = Astro.params as { lang: Language };
+const { article } = Astro.props as { article: Awaited<ReturnType<typeof getCollection<'articles'>>>[number] };
+const t = useTranslations(lang);
+
+const section = await getEntry('sections', article.data.section);
+const sectionTitle = section ? (t.sections[section.id as keyof typeof t.sections] ?? section.data.title) : article.data.section;
+
+const translation = lang !== DEFAULT_LANGUAGE
+  ? await getEntry('articleTranslations', `${lang}/${article.id}`)
+  : undefined;
+
+const displayTitle = translation?.data.title ?? article.data.title;
+const displayDescription = translation?.data.description ?? article.data.description;
+
+const { Content, headings } = await render(translation ?? article);
+const tocItems = headings.filter((heading) => heading.depth === 2);
+
+const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(article.data.pubDate);
+
+const cardColor = sectionColor(article.data.section);
+---
+
+<BaseLayout
+  lang={lang}
+  title={displayTitle}
+  description={displayDescription}
+  currentPath={`articles/${article.id}`}
+>
+  <div class="reading-progress" aria-hidden="true">
+    <div class="reading-progress-bar" id="reading-progress-bar"></div>
+  </div>
+
+  <header class="page-head page-head--article" style={`--card-color: ${cardColor}`}>
+    <div class="page-head-art"><ArticleArt seed={article.id} color={cardColor} icon={section?.data.icon ?? sectionIcon(article.data.section)} /></div>
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        {section && <a href={path(lang, section.id)}>{sectionTitle}</a>}
+        <span class="sep">/</span>
+        <span>{displayTitle}</span>
+      </nav>
+      <h1>{displayTitle}</h1>
+      <p class="lede">{displayDescription}</p>
+      <div class="article-meta" style="margin-top:1rem; border-top:none; padding-top:0;">
+        <span>{t.article.publishedOn} {formattedDate}</span>
+        <span class="dot">{t.article.author}: {article.data.author}</span>
+        <span class="dot">{article.data.readingTime} {t.article.readingTime}</span>
+      </div>
+    </div>
+  </header>
+
+  <article class="section">
+    <div class="container">
+      {lang !== DEFAULT_LANGUAGE && !translation && (
+        <p class="notice">{t.article.translationNotice}</p>
+      )}
+
+      <div class="article-layout">
+        {tocItems.length > 0 && (
+          <aside class="toc">
+            <div class="toc-inner">
+              <p class="toc-title">{t.article.tableOfContents}</p>
+              <nav class="toc-list">
+                {tocItems.map((heading) => (
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                ))}
+              </nav>
+            </div>
+          </aside>
+        )}
+
+        <div>
+          <div class="prose">
+            <Content />
+          </div>
+
+          <div class="prose-foot">
+            {section && (
+              <a href={path(lang, section.id)} class="back-link">← {t.article.back}: {sectionTitle}</a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  const bar = document.getElementById('reading-progress-bar');
+
+  function updateProgress() {
+    if (!bar) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
+    bar.style.width = `${ratio * 100}%`;
+  }
+
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+</script>

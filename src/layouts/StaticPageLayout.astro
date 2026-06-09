@@ -1,0 +1,46 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { useTranslations } from '../i18n/ui';
+import { DEFAULT_LANGUAGE, type Language } from '../i18n/languages';
+
+interface Props {
+  lang: Language;
+  /** id of the entry in the `pages` content collection, e.g. 'about'. */
+  pageId: 'about' | 'contacts' | 'privacy' | 'terms';
+  /** Path segment used for the language switcher / hreflang, e.g. 'about'. */
+  currentPath: string;
+}
+
+const { lang, pageId, currentPath } = Astro.props;
+const t = useTranslations(lang);
+
+const entry = await getEntry('pages', pageId);
+if (!entry) throw new Error(`Missing "pages" entry: ${pageId}`);
+
+const translation = lang !== DEFAULT_LANGUAGE
+  ? await getEntry('pageTranslations', `${lang}/${pageId}`)
+  : undefined;
+
+const title = translation?.data.title ?? entry.data.title;
+const description = translation?.data.description ?? entry.data.description;
+
+const { Content } = await render(translation ?? entry);
+---
+
+<BaseLayout lang={lang} title={title} description={description} currentPath={currentPath}>
+  <header class="page-head">
+    <div class="container">
+      <h1>{title}</h1>
+    </div>
+  </header>
+
+  <section class="section static-page">
+    <div class="container">
+      {lang !== DEFAULT_LANGUAGE && !translation && <p class="notice">{t.article.translationNotice}</p>}
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

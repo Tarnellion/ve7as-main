@@ -1,0 +1,57 @@
+---
+import type { Language } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+import { path } from '../i18n/utils';
+
+interface Props { lang: Language }
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a href={path(lang)} class="logo">Ve<span>7</span>as</a>
+        <p>{t.footer.about}</p>
+      </div>
+
+      <div class="footer-nav-cols">
+        <div class="footer-col">
+          <h4>{t.nav.home}</h4>
+          <a href={path(lang, 'casino-slots')}>{t.sections['casino-slots']}</a>
+          <a href={path(lang, 'sports-betting')}>{t.sections['sports-betting']}</a>
+          <a href={path(lang, 'poker-table-games')}>{t.sections['poker-table-games']}</a>
+          <a href={path(lang, 'lottery-esports')}>{t.sections['lottery-esports']}</a>
+        </div>
+        <div class="footer-col">
+          <h4>{t.nav.about}</h4>
+          <a href={path(lang, 'about')}>{t.nav.about}</a>
+          <a href={path(lang, 'faq')}>{t.nav.faq}</a>
+          <a href={path(lang, 'contacts')}>{t.footer.contacts}</a>
+        </div>
+        <div class="footer-col">
+          <h4>{t.footer.terms}</h4>
+          <a href={path(lang, 'privacy')}>{t.footer.privacy}</a>
+          <a href={path(lang, 'terms')}>{t.footer.terms}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-warning">
+      <span>⚠️ {t.footer.ageWarning}</span>
+      <span>{t.footer.disclaimer}</span>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {year} Ve7as. {t.footer.rights}</span>
+      <nav>
+        <a href={path(lang, 'privacy')}>{t.footer.privacy}</a>
+        <a href={path(lang, 'terms')}>{t.footer.terms}</a>
+        <a href={path(lang, 'contacts')}>{t.footer.contacts}</a>
+      </nav>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,13 @@
+---
+import StaticPageLayout from '../../layouts/StaticPageLayout.astro';
+import { languagePaths } from '../../i18n/utils';
+import type { Language } from '../../i18n/languages';
+
+export function getStaticPaths() {
+  return languagePaths();
+}
+
+const { lang } = Astro.params as { lang: Language };
+---
+
+<StaticPageLayout lang={lang} pageId="terms" currentPath="terms" />

@@ -1,0 +1,64 @@
+---
+import { LANGUAGES, HTML_LANG, type Language } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+import { path } from '../i18n/utils';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  lang: Language;
+  title: string;
+  description: string;
+  /** Path segments after the language prefix, e.g. 'faq' or 'casino-slots/how-to-choose'. Used for the language switcher and hreflang tags. */
+  currentPath?: string;
+}
+
+const { lang, title, description, currentPath = '' } = Astro.props;
+const t = useTranslations(lang);
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageTitle = currentPath ? `${title} — Ve7as` : `Ve7as — ${title}`;
+---
+
+<!DOCTYPE html>
+<html lang={HTML_LANG[lang]}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonicalURL} />
+
+  {LANGUAGES.map((code) => (
+    <link rel="alternate" hreflang={HTML_LANG[code]} href={new URL(path(code, currentPath), Astro.site)} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={new URL(path('ru', currentPath), Astro.site)} />
+
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+
+  <title>{pageTitle}</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Ve7as',
+    url: Astro.site?.toString(),
+    description: t.site.tagline,
+    publisher: { '@type': 'Organization', name: 'Ve7as' },
+    inLanguage: HTML_LANG[lang],
+  })} />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <Header lang={lang} currentPath={currentPath} />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer lang={lang} />
+</body>
+</html>

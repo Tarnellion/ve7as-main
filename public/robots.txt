@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ve7as.com/sitemap-index.xml

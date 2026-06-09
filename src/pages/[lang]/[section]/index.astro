@@ -1,0 +1,87 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { LANGUAGES, DEFAULT_LANGUAGE, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { sectionColor } from '../../../i18n/sectionTheme';
+
+export async function getStaticPaths() {
+  const sections = await getCollection('sections');
+  return LANGUAGES.flatMap((lang) =>
+    sections.map((section) => ({
+      params: { lang, section: section.id },
+      props: { section },
+    })),
+  );
+}
+
+const { lang } = Astro.params as { lang: Language };
+const { section } = Astro.props as { section: Awaited<ReturnType<typeof getCollection<'sections'>>>[number] };
+const t = useTranslations(lang);
+
+const sectionTitle = t.sections[section.id as keyof typeof t.sections] ?? section.data.title;
+
+const articles = (await getCollection('articles'))
+  .filter((article) => article.data.section === section.id)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const articleViews = await Promise.all(
+  articles.map(async (article) => {
+    const translation = lang !== DEFAULT_LANGUAGE
+      ? await getEntry('articleTranslations', `${lang}/${article.id}`)
+      : undefined;
+    return {
+      article,
+      title: translation?.data.title ?? article.data.title,
+      description: translation?.data.description ?? article.data.description,
+    };
+  }),
+);
+
+const cardColor = sectionColor(section.id);
+---
+
+<BaseLayout lang={lang} title={sectionTitle} description={t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.data.description} currentPath={section.id}>
+  <header class="page-head" style={`--card-color: ${cardColor}`}>
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        <span>{sectionTitle}</span>
+      </nav>
+      <h1><span class="page-head-icon">{section.data.icon}</span> {sectionTitle}</h1>
+      <p class="lede">{t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.data.description}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title" style="margin-bottom:0">{t.section.articlesIn}</h2>
+      </div>
+
+      {articles.length > 0 ? (
+        <div class="article-list">
+          {articleViews.map(({ article, title, description }) => (
+            <a href={path(lang, 'articles', article.id)} class="article-row" style={`--card-color: ${cardColor}`}>
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <div class="article-meta">
+                  <span>
+                    {new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', day: 'numeric' }).format(article.data.pubDate)}
+                  </span>
+                  <span class="dot">{article.data.readingTime} {t.article.readingTime}</span>
+                </div>
+              </div>
+              <span class="article-row-arrow">→</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="section-sub">—</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

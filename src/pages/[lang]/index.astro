@@ -1,0 +1,135 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import ArticleArt from '../../components/ArticleArt.astro';
+import { useTranslations } from '../../i18n/ui';
+import { languagePaths, path } from '../../i18n/utils';
+import { sectionColor, sectionIcon } from '../../i18n/sectionTheme';
+import { DEFAULT_LANGUAGE, type Language } from '../../i18n/languages';
+
+export function getStaticPaths() {
+  return languagePaths();
+}
+
+const { lang } = Astro.params as { lang: Language };
+const t = useTranslations(lang);
+
+const sections = (await getCollection('sections')).sort((a, b) => a.data.order - b.data.order);
+const articles = (await getCollection('articles')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latestArticles = articles.slice(0, 6);
+const [featuredArticle, ...restArticles] = latestArticles;
+const featuredSection = featuredArticle
+  ? sections.find((section) => section.id === featuredArticle.data.section)
+  : undefined;
+const featuredColor = sectionColor(featuredArticle?.data.section ?? '');
+const featuredDate = featuredArticle
+  ? new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', day: 'numeric' }).format(featuredArticle.data.pubDate)
+  : '';
+
+const featuredTranslation = featuredArticle && lang !== DEFAULT_LANGUAGE
+  ? await getEntry('articleTranslations', `${lang}/${featuredArticle.id}`)
+  : undefined;
+const featuredTitle = featuredTranslation?.data.title ?? featuredArticle?.data.title ?? '';
+const featuredDescription = featuredTranslation?.data.description ?? featuredArticle?.data.description ?? '';
+
+const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+const faqViews = await Promise.all(
+  faqEntries.map(async (entry) => {
+    const translation = lang !== DEFAULT_LANGUAGE
+      ? await getEntry('faqTranslations', `${lang}/${entry.id}`)
+      : undefined;
+    const { Content } = await render(translation ?? entry);
+    return { question: translation?.data.question ?? entry.data.question, Content };
+  }),
+);
+---
+
+<BaseLayout lang={lang} title={t.hero.title} description={t.hero.subtitle} currentPath="">
+  <section class="hero">
+    <div class="container">
+      <div class="badge">{t.hero.badge}</div>
+      <h1>{t.hero.title}</h1>
+      <p class="hero-sub">{t.hero.subtitle}</p>
+    </div>
+  </section>
+
+  <section class="section" id="sections">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">{t.home.sectionsTitle}</h2>
+          <p class="section-sub">{t.home.sectionsSubtitle}</p>
+        </div>
+      </div>
+
+      <div class="niche-grid">
+        {sections.map((section) => (
+          <a href={path(lang, section.id)} class="niche-card" style={`--card-color: ${sectionColor(section.id)}`}>
+            <span class="niche-icon">{section.data.icon}</span>
+            <h3>{t.sections[section.id as keyof typeof t.sections] ?? section.data.title}</h3>
+            <p>{t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.data.description}</p>
+            <span class="niche-link">{t.common.allArticles} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" id="articles">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">{t.home.latestTitle}</h2>
+          <p class="section-sub">{t.home.latestSubtitle}</p>
+        </div>
+      </div>
+
+      <div class="feed">
+        {featuredArticle && (
+          <a href={path(lang, 'articles', featuredArticle.id)} class="feed-feature" style={`--card-color: ${featuredColor}`}>
+            <div class="feed-feature-visual">
+              <ArticleArt seed={featuredArticle.id} color={featuredColor} icon={featuredSection?.data.icon ?? sectionIcon(featuredArticle.data.section)} />
+            </div>
+            <div class="feed-feature-body">
+              <span class="article-tag">{t.sections[featuredArticle.data.section as keyof typeof t.sections] ?? featuredArticle.data.section}</span>
+              <h3>{featuredTitle}</h3>
+              <p>{featuredDescription}</p>
+              <div class="article-meta">
+                <span>{featuredDate}</span>
+                <span class="dot">{featuredArticle.data.readingTime} {t.article.readingTime}</span>
+              </div>
+            </div>
+          </a>
+        )}
+
+        <div class="feed-grid">
+          {restArticles.map((article) => <ArticleCard lang={lang} article={article} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">{t.home.faqTitle}</h2>
+          <p class="section-sub">{t.home.faqSubtitle}</p>
+        </div>
+        <a href={path(lang, 'faq')} class="view-all">{t.home.viewAll} →</a>
+      </div>
+
+      <div class="faq-list">
+        {faqViews.map(({ question, Content }) => (
+          <details class="faq-item">
+            <summary>{question}</summary>
+            <div class="faq-body"><Content /></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

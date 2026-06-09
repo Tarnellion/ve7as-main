@@ -1,0 +1,83 @@
+---
+import { LANGUAGES, LANGUAGE_NAMES, type Language } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+import { path } from '../i18n/utils';
+
+interface Props {
+  lang: Language;
+  /** Current path's segments after the language prefix, used to build the language switcher links. */
+  currentPath?: string;
+}
+
+const { lang, currentPath = '' } = Astro.props;
+const t = useTranslations(lang);
+
+const navItems = [
+  { href: path(lang), label: t.nav.home },
+  { href: path(lang, 'casino-slots'), label: t.sections['casino-slots'] },
+  { href: path(lang, 'sports-betting'), label: t.sections['sports-betting'] },
+  { href: path(lang, 'poker-table-games'), label: t.sections['poker-table-games'] },
+  { href: path(lang, 'lottery-esports'), label: t.sections['lottery-esports'] },
+  { href: path(lang, 'faq'), label: t.nav.faq },
+];
+
+const currentUrl = Astro.url.pathname;
+---
+
+<header class="nav-wrap">
+  <nav class="nav">
+    <a href={path(lang)} class="logo">
+      Ve<span>7</span>as
+      <span class="nav-tagline">{t.site.tagline}</span>
+    </a>
+
+    <button class="burger" id="burger" aria-label={t.nav.menu} aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      {navItems.map((item) => (
+        <li>
+          <a href={item.href} aria-current={currentUrl === item.href ? 'page' : undefined}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="nav-right">
+      <details class="lang-switch">
+        <summary>{LANGUAGE_NAMES[lang]}</summary>
+        <div class="lang-menu">
+          {LANGUAGES.map((code) => (
+            <a
+              href={path(code, currentPath)}
+              aria-current={code === lang ? 'true' : undefined}
+            >
+              {LANGUAGE_NAMES[code]}
+            </a>
+          ))}
+        </div>
+      </details>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('nav-links');
+
+  burger?.addEventListener('click', () => {
+    const open = navLinks?.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+
+  navLinks?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      burger?.classList.remove('open');
+      burger?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
