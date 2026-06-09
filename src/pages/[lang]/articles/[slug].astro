@@ -1,38 +1,27 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../../i18n/ui';
-import { LANGUAGES, HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../../../i18n/languages';
+import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { sectionColor, sectionIcon } from '../../../i18n/sectionTheme';
 import ArticleArt from '../../../components/ArticleArt.astro';
-import { getArticles, getArticleBySlug, renderMarkdown, extractToc } from '../../../lib/sanity';
+import { getArticleBySlug, renderMarkdown, extractToc, getArticleText, getArticleBody, isBlockedInCountry } from '../../../lib/sanity';
 
-export async function getStaticPaths() {
-  const articles = await getArticles();
-  return LANGUAGES.flatMap((lang) =>
-    articles.map((article) => ({
-      params: { lang, slug: article.id },
-      props: { articleId: article.id },
-    })),
-  );
-}
-
-const { lang } = Astro.params as { lang: Language };
-const { articleId } = Astro.props as { articleId: string };
+const { lang, slug } = Astro.params as { lang: Language; slug: string };
 const t = useTranslations(lang);
+const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const article = await getArticleBySlug(articleId);
+const article = await getArticleBySlug(slug);
 if (!article) return Astro.redirect(path(lang));
+if (isBlockedInCountry(article.blockedIn, country)) return Astro.redirect(path(lang));
 
-const tr = lang !== DEFAULT_LANGUAGE
-  ? article.translations?.find((x) => x.lang === lang)
-  : undefined;
-
-const displayTitle = tr?.title ?? article.title;
-const displayDescription = tr?.description ?? article.description;
-const bodyMd = tr?.body ?? article.body ?? '';
+const displayTitle = getArticleText(article, 'title', lang);
+const displayDescription = getArticleText(article, 'description', lang);
+const bodyMd = getArticleBody(article, lang);
 const bodyHtml = renderMarkdown(bodyMd);
 const tocItems = extractToc(bodyMd).filter((h) => h.depth === 2);
+
+const hasTranslation = lang === DEFAULT_LANGUAGE || Boolean((article as Record<string, unknown>)[`title_${lang}`]);
 
 const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
   year: 'numeric', month: 'long', day: 'numeric',
@@ -62,7 +51,7 @@ const icon = article.sectionIcon || sectionIcon(article.section);
         <span class="sep">/</span>
         {article.section && (
           <a href={path(lang, article.section)}>
-            {t.sections[article.section as keyof typeof t.sections] ?? article.sectionTitle}
+            {t.sections[article.section as keyof typeof t.sections] ?? article.section}
           </a>
         )}
         <span class="sep">/</span>
@@ -80,7 +69,7 @@ const icon = article.sectionIcon || sectionIcon(article.section);
 
   <article class="section">
     <div class="container">
-      {lang !== DEFAULT_LANGUAGE && !tr && (
+      {!hasTranslation && (
         <p class="notice">{t.article.translationNotice}</p>
       )}
 
@@ -103,7 +92,7 @@ const icon = article.sectionIcon || sectionIcon(article.section);
           <div class="prose-foot">
             {article.section && (
               <a href={path(lang, article.section)} class="back-link">
-                ← {t.article.back}: {t.sections[article.section as keyof typeof t.sections] ?? article.sectionTitle}
+                ← {t.article.back}: {t.sections[article.section as keyof typeof t.sections] ?? article.section}
               </a>
             )}
           </div>

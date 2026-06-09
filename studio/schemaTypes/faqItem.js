@@ -1,3 +1,6 @@
+const LANGS = ['ru', 'en', 'es', 'pt', 'de', 'fr', 'br']
+const LANG_LABELS = { ru: '🇷🇺 RU', en: '🇬🇧 EN', es: '🇪🇸 ES', pt: '🇵🇹 PT', de: '🇩🇪 DE', fr: '🇫🇷 FR', br: '🇧🇷 BR' }
+
 const GEO_OPTIONS = [
   { title: 'Germany', value: 'DE' },
   { title: 'Spain', value: 'ES' },
@@ -7,33 +10,45 @@ const GEO_OPTIONS = [
   { title: 'Russia', value: 'RU' },
 ]
 
+const langFields = LANGS.flatMap((lang) => [
+  {
+    name: `question_${lang}`,
+    title: 'Question',
+    type: 'string',
+    group: lang,
+    validation: lang === 'ru' ? (Rule) => Rule.required() : undefined,
+  },
+  {
+    name: `answer_${lang}`,
+    title: 'Answer',
+    type: 'text',
+    rows: 8,
+    group: lang,
+  },
+])
+
 export default {
   name: 'faqItem',
   title: 'FAQ Item',
   type: 'document',
+  groups: [
+    { name: 'settings', title: '⚙️ Settings', default: true },
+    ...LANGS.map((lang) => ({ name: lang, title: LANG_LABELS[lang] })),
+  ],
   fields: [
-    {
-      name: 'question',
-      title: 'Question (RU)',
-      type: 'string',
-      validation: Rule => Rule.required(),
-    },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'question', maxLength: 96 },
-      validation: Rule => Rule.required(),
-    },
-    {
-      name: 'answer',
-      title: 'Answer (RU)',
-      type: 'text',
+      group: 'settings',
+      options: { source: 'question_ru', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'order',
       title: 'Order',
       type: 'number',
+      group: 'settings',
       initialValue: 0,
     },
     {
@@ -42,26 +57,11 @@ export default {
       type: 'array',
       of: [{ type: 'string' }],
       options: { list: GEO_OPTIONS },
+      group: 'settings',
     },
-    {
-      name: 'translations',
-      title: 'Translations',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'translation',
-          fields: [
-            { name: 'lang', title: 'Language', type: 'string', options: { list: ['en','es','pt','de','fr','br'] } },
-            { name: 'question', title: 'Question', type: 'string' },
-            { name: 'answer', title: 'Answer', type: 'text' },
-          ],
-          preview: { select: { title: 'lang' } },
-        },
-      ],
-    },
+    ...langFields,
   ],
   preview: {
-    select: { title: 'question' },
+    select: { title: 'question_ru' },
   },
 }

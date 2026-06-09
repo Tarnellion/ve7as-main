@@ -15,8 +15,7 @@ export function renderMarkdown(md: string): string {
 
 export function extractToc(md: string): { depth: number; text: string; slug: string }[] {
   const headings: { depth: number; text: string; slug: string }[] = [];
-  const lines = (md ?? '').split('\n');
-  for (const line of lines) {
+  for (const line of (md ?? '').split('\n')) {
     const m = line.match(/^(#{1,6})\s+(.+)$/);
     if (m) {
       const text = m[2].trim();
@@ -25,6 +24,45 @@ export function extractToc(md: string): { depth: number; text: string; slug: str
     }
   }
   return headings;
+}
+
+const LANG_FIELDS = ['ru', 'en', 'es', 'pt', 'de', 'fr', 'br'] as const;
+
+function langProjection(type: 'article' | 'faq') {
+  if (type === 'article') {
+    return LANG_FIELDS.map((l) =>
+      `"title_${l}": title_${l}, "description_${l}": description_${l}`
+    ).join(', ');
+  }
+  return LANG_FIELDS.map((l) =>
+    `"question_${l}": question_${l}, "answer_${l}": answer_${l}`
+  ).join(', ');
+}
+
+function langBodyProjection() {
+  return LANG_FIELDS.map((l) => `"body_${l}": body_${l}`).join(', ');
+}
+
+export function getArticleText(article: SanityArticle | SanityArticleFull, field: 'title' | 'description', lang: string): string {
+  const key = `${field}_${lang}` as keyof typeof article;
+  const fallback = `${field}_ru` as keyof typeof article;
+  return (article[key] as string) || (article[fallback] as string) || '';
+}
+
+export function getArticleBody(article: SanityArticleFull, lang: string): string {
+  const key = `body_${lang}` as keyof SanityArticleFull;
+  return (article[key] as string) || article.body_ru || '';
+}
+
+export function getFaqText(faq: SanityFaq, field: 'question' | 'answer', lang: string): string {
+  const key = `${field}_${lang}` as keyof SanityFaq;
+  const fallback = `${field}_ru` as keyof SanityFaq;
+  return (faq[key] as string) || (faq[fallback] as string) || '';
+}
+
+export function isBlockedInCountry(blockedIn: string[], country: string): boolean {
+  if (!country || !blockedIn?.length) return false;
+  return blockedIn.includes(country.toUpperCase());
 }
 
 export async function getSections() {
@@ -40,82 +78,72 @@ export async function getSections() {
 export async function getArticles() {
   return sanity.fetch<SanityArticle[]>(`*[_type == "article"] | order(pubDate desc) {
     "id": slug.current,
-    title,
-    description,
     "section": section->slug.current,
     pubDate,
     readingTime,
     author,
     featured,
     blockedIn,
-    translations[] { lang, title, description }
+    ${langProjection('article')}
   }`);
 }
 
 export async function getArticleBySlug(slug: string) {
   return sanity.fetch<SanityArticleFull>(`*[_type == "article" && slug.current == $slug][0] {
     "id": slug.current,
-    title,
-    description,
     "section": section->slug.current,
-    "sectionTitle": section->title,
     "sectionIcon": section->icon,
     pubDate,
     readingTime,
     author,
     featured,
     blockedIn,
-    body,
-    translations[] { lang, title, description, body }
+    ${langProjection('article')},
+    ${langBodyProjection()}
   }`, { slug });
 }
 
 export async function getFaqItems() {
   return sanity.fetch<SanityFaq[]>(`*[_type == "faqItem"] | order(order asc) {
     "id": slug.current,
-    question,
-    answer,
     order,
     blockedIn,
-    translations[] { lang, question, answer }
+    ${langProjection('faq')},
+    ${LANG_FIELDS.map((l) => `"answer_${l}": answer_${l}`).join(', ')}
   }`);
 }
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-export interface SanitySection {
+type LangFields<Prefix extends string, V = string> = {
+  [L in typeof LANG_FIELDS[number] as `${Prefix}_${L}`]: V;
+};
+
+export type SanitySection = {
   id: string;
   title: string;
   icon: string;
   description: string;
   order: number;
-}
+};
 
-export interface SanityArticle {
+export type SanityArticle = LangFields<'title'> & LangFields<'description'> & {
   id: string;
-  title: string;
-  description: string;
   section: string;
   pubDate: string;
   readingTime: number;
   author: string;
   featured: boolean;
   blockedIn: string[];
-  translations: { lang: string; title: string; description: string }[];
-}
+};
 
-export interface SanityArticleFull extends SanityArticle {
-  sectionTitle: string;
+export type SanityArticleFull = SanityArticle & LangFields<'body'> & {
   sectionIcon: string;
-  body: string;
-  translations: { lang: string; title: string; description: string; body: string }[];
-}
+  body_ru: string;
+};
 
-export interface SanityFaq {
+export type SanityFaq = LangFields<'question'> & LangFields<'answer'> & {
   id: string;
-  question: string;
-  answer: string;
   order: number;
   blockedIn: string[];
-  translations: { lang: string; question: string; answer: string }[];
-}
+};

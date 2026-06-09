@@ -3,47 +3,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import ArticleArt from '../../components/ArticleArt.astro';
 import { useTranslations } from '../../i18n/ui';
-import { languagePaths, path } from '../../i18n/utils';
+import { path } from '../../i18n/utils';
 import { sectionColor, sectionIcon } from '../../i18n/sectionTheme';
-import { DEFAULT_LANGUAGE, HTML_LANG, type Language } from '../../i18n/languages';
-import { getSections, getArticles, getFaqItems, renderMarkdown } from '../../lib/sanity';
-
-export function getStaticPaths() {
-  return languagePaths();
-}
+import { HTML_LANG, type Language } from '../../i18n/languages';
+import { getSections, getArticles, getFaqItems, renderMarkdown, getArticleText, getFaqText, isBlockedInCountry } from '../../lib/sanity';
 
 const { lang } = Astro.params as { lang: Language };
 const t = useTranslations(lang);
+const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const [sections, articles, faqItems] = await Promise.all([
+const [sections, allArticles, allFaq] = await Promise.all([
   getSections(),
   getArticles(),
   getFaqItems(),
 ]);
 
+const articles = allArticles.filter((a) => !isBlockedInCountry(a.blockedIn, country));
+const faqItems = allFaq.filter((f) => !isBlockedInCountry(f.blockedIn, country));
+
 const latestArticles = articles.slice(0, 6);
 const [featuredArticle, ...restArticles] = latestArticles;
 
-const featuredTr = featuredArticle && lang !== DEFAULT_LANGUAGE
-  ? featuredArticle.translations?.find((x) => x.lang === lang)
-  : undefined;
-const featuredTitle = featuredTr?.title ?? featuredArticle?.title ?? '';
-const featuredDescription = featuredTr?.description ?? featuredArticle?.description ?? '';
+const featuredTitle = featuredArticle ? getArticleText(featuredArticle, 'title', lang) : '';
+const featuredDescription = featuredArticle ? getArticleText(featuredArticle, 'description', lang) : '';
 const featuredColor = sectionColor(featuredArticle?.section ?? '');
 const featuredDate = featuredArticle
   ? new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(featuredArticle.pubDate))
   : '';
 const featuredSection = sections.find((s) => s.id === featuredArticle?.section);
 
-const faqViews = faqItems.slice(0, 4).map((item) => {
-  const tr = lang !== DEFAULT_LANGUAGE
-    ? item.translations?.find((x) => x.lang === lang)
-    : undefined;
-  return {
-    question: tr?.question ?? item.question,
-    answerHtml: renderMarkdown(tr?.answer ?? item.answer ?? ''),
-  };
-});
+const faqViews = faqItems.slice(0, 4).map((item) => ({
+  question: getFaqText(item, 'question', lang),
+  answerHtml: renderMarkdown(getFaqText(item, 'answer', lang)),
+}));
 ---
 
 <BaseLayout lang={lang} title={t.hero.title} description={t.hero.subtitle} currentPath="">
@@ -63,7 +55,6 @@ const faqViews = faqItems.slice(0, 4).map((item) => {
           <p class="section-sub">{t.home.sectionsSubtitle}</p>
         </div>
       </div>
-
       <div class="niche-grid">
         {sections.map((section) => (
           <a href={path(lang, section.id)} class="niche-card" style={`--card-color: ${sectionColor(section.id)}`}>
@@ -85,7 +76,6 @@ const faqViews = faqItems.slice(0, 4).map((item) => {
           <p class="section-sub">{t.home.latestSubtitle}</p>
         </div>
       </div>
-
       <div class="feed">
         {featuredArticle && (
           <a href={path(lang, 'articles', featuredArticle.id)} class="feed-feature" style={`--card-color: ${featuredColor}`}>
@@ -103,7 +93,6 @@ const faqViews = faqItems.slice(0, 4).map((item) => {
             </div>
           </a>
         )}
-
         <div class="feed-grid">
           {restArticles.map((article) => <ArticleCard lang={lang} article={article} />)}
         </div>
@@ -120,7 +109,6 @@ const faqViews = faqItems.slice(0, 4).map((item) => {
         </div>
         <a href={path(lang, 'faq')} class="view-all">{t.home.viewAll} →</a>
       </div>
-
       <div class="faq-list">
         {faqViews.map(({ question, answerHtml }) => (
           <details class="faq-item">

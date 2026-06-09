@@ -1,24 +1,14 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../../i18n/ui';
-import { LANGUAGES, DEFAULT_LANGUAGE, type Language } from '../../../i18n/languages';
+import { HTML_LANG, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { sectionColor } from '../../../i18n/sectionTheme';
-import { getSections, getArticles } from '../../../lib/sanity';
+import { getSections, getArticles, getArticleText, isBlockedInCountry } from '../../../lib/sanity';
 
-export async function getStaticPaths() {
-  const sections = await getSections();
-  return LANGUAGES.flatMap((lang) =>
-    sections.map((section) => ({
-      params: { lang, section: section.id },
-      props: { sectionId: section.id },
-    })),
-  );
-}
-
-const { lang } = Astro.params as { lang: Language };
-const { sectionId } = Astro.props as { sectionId: string };
+const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
 const t = useTranslations(lang);
+const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
 const sections = await getSections();
 const section = sections.find((s) => s.id === sectionId);
@@ -28,7 +18,9 @@ const sectionTitle = t.sections[section.id as keyof typeof t.sections] ?? sectio
 const sectionDesc = t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.description;
 
 const allArticles = await getArticles();
-const articles = allArticles.filter((a) => a.section === sectionId);
+const articles = allArticles
+  .filter((a) => a.section === sectionId)
+  .filter((a) => !isBlockedInCountry(a.blockedIn, country));
 const cardColor = sectionColor(sectionId);
 ---
 
@@ -53,28 +45,21 @@ const cardColor = sectionColor(sectionId);
 
       {articles.length > 0 ? (
         <div class="article-list">
-          {articles.map((article) => {
-            const tr = lang !== DEFAULT_LANGUAGE
-              ? article.translations?.find((x) => x.lang === lang)
-              : undefined;
-            const title = tr?.title ?? article.title;
-            const description = tr?.description ?? article.description;
-            return (
-              <a href={path(lang, 'articles', article.id)} class="article-row" style={`--card-color: ${cardColor}`}>
-                <div>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                  <div class="article-meta">
-                    <span>
-                      {new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(article.pubDate))}
-                    </span>
-                    <span class="dot">{article.readingTime} {t.article.readingTime}</span>
-                  </div>
+          {articles.map((article) => (
+            <a href={path(lang, 'articles', article.id)} class="article-row" style={`--card-color: ${cardColor}`}>
+              <div>
+                <h3>{getArticleText(article, 'title', lang)}</h3>
+                <p>{getArticleText(article, 'description', lang)}</p>
+                <div class="article-meta">
+                  <span>
+                    {new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(article.pubDate))}
+                  </span>
+                  <span class="dot">{article.readingTime} {t.article.readingTime}</span>
                 </div>
-                <span class="article-row-arrow">→</span>
-              </a>
-            );
-          })}
+              </div>
+              <span class="article-row-arrow">→</span>
+            </a>
+          ))}
         </div>
       ) : (
         <p class="section-sub">—</p>

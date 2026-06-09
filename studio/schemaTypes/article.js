@@ -1,3 +1,6 @@
+const LANGS = ['ru', 'en', 'es', 'pt', 'de', 'fr', 'br']
+const LANG_LABELS = { ru: '🇷🇺 RU', en: '🇬🇧 EN', es: '🇪🇸 ES', pt: '🇵🇹 PT', de: '🇩🇪 DE', fr: '🇫🇷 FR', br: '🇧🇷 BR' }
+
 const GEO_OPTIONS = [
   { title: 'Germany', value: 'DE' },
   { title: 'Spain', value: 'ES' },
@@ -9,93 +12,94 @@ const GEO_OPTIONS = [
   { title: 'United States', value: 'US' },
 ]
 
+const langFields = LANGS.flatMap((lang) => [
+  {
+    name: `title_${lang}`,
+    title: 'Title',
+    type: 'string',
+    group: lang,
+    validation: lang === 'ru' ? (Rule) => Rule.required() : undefined,
+  },
+  {
+    name: `description_${lang}`,
+    title: 'Description',
+    type: 'text',
+    rows: 2,
+    group: lang,
+  },
+  {
+    name: `body_${lang}`,
+    title: 'Body',
+    type: 'text',
+    rows: 20,
+    group: lang,
+  },
+])
+
 export default {
   name: 'article',
   title: 'Article',
   type: 'document',
+  groups: [
+    { name: 'settings', title: '⚙️ Settings', default: true },
+    ...LANGS.map((lang) => ({ name: lang, title: LANG_LABELS[lang] })),
+  ],
   fields: [
-    {
-      name: 'title',
-      title: 'Title (RU)',
-      type: 'string',
-      validation: Rule => Rule.required(),
-    },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'title', maxLength: 96 },
-      validation: Rule => Rule.required(),
+      group: 'settings',
+      options: { source: 'title_ru', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'section',
       title: 'Section',
       type: 'reference',
       to: [{ type: 'section' }],
-      validation: Rule => Rule.required(),
-    },
-    {
-      name: 'description',
-      title: 'Description (RU)',
-      type: 'text',
-      rows: 2,
+      group: 'settings',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'pubDate',
       title: 'Publish Date',
       type: 'datetime',
-      validation: Rule => Rule.required(),
+      group: 'settings',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'author',
       title: 'Author',
       type: 'string',
+      group: 'settings',
       initialValue: 'редакция',
     },
     {
       name: 'readingTime',
       title: 'Reading Time (min)',
       type: 'number',
+      group: 'settings',
     },
     {
       name: 'featured',
       title: 'Featured',
       type: 'boolean',
+      group: 'settings',
       initialValue: false,
-    },
-    {
-      name: 'body',
-      title: 'Body (RU)',
-      type: 'text',
     },
     {
       name: 'blockedIn',
       title: 'Hide in countries',
-      description: 'This article will NOT be shown to users from selected countries',
+      description: 'Article will NOT be shown to users from selected countries',
       type: 'array',
       of: [{ type: 'string' }],
       options: { list: GEO_OPTIONS },
+      group: 'settings',
     },
-    {
-      name: 'translations',
-      title: 'Translations',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'translation',
-          fields: [
-            { name: 'lang', title: 'Language', type: 'string', options: { list: ['en','es','pt','de','fr','br'] } },
-            { name: 'title', title: 'Title', type: 'string' },
-            { name: 'description', title: 'Description', type: 'text', rows: 2 },
-            { name: 'body', title: 'Body', type: 'text' },
-          ],
-          preview: { select: { title: 'lang' } },
-        },
-      ],
-    },
+    ...langFields,
   ],
   preview: {
-    select: { title: 'title', subtitle: 'section.title' },
+    select: { title: 'title_ru', subtitle: 'section.title' },
   },
 }

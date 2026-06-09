@@ -1,10 +1,10 @@
 ---
-import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../i18n/languages';
+import { HTML_LANG, type Language } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/utils';
 import { sectionColor, sectionIcon } from '../i18n/sectionTheme';
 import ArticleArt from './ArticleArt.astro';
-import type { SanityArticle } from '../lib/sanity';
+import { getArticleText, type SanityArticle } from '../lib/sanity';
 
 interface Props {
   lang: Language;
@@ -15,11 +15,8 @@ const { lang, article } = Astro.props;
 const t = useTranslations(lang);
 const { section, pubDate, readingTime } = article;
 
-const tr = lang !== DEFAULT_LANGUAGE
-  ? article.translations?.find((x) => x.lang === lang)
-  : undefined;
-const title = tr?.title ?? article.title;
-const description = tr?.description ?? article.description;
+const title = getArticleText(article, 'title', lang);
+const description = getArticleText(article, 'description', lang);
 
 const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
   year: 'numeric', month: 'long', day: 'numeric',

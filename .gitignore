@@ -30,3 +30,6 @@ studio/dist/
 
 # jetbrains setting folder
 .idea/
+
+# wrangler cache
+.wrangler/
