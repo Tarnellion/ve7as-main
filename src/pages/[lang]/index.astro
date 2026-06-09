@@ -21,8 +21,10 @@ const [sections, allArticles, allFaq] = await Promise.all([
 const articles = allArticles.filter((a) => !isBlockedInCountry(a.blockedIn, country));
 const faqItems = allFaq.filter((f) => !isBlockedInCountry(f.blockedIn, country));
 
-const latestArticles = articles.slice(0, 6);
+const latestArticles = articles.slice(0, 7);
 const [featuredArticle, ...restArticles] = latestArticles;
+const sidebarArticles = restArticles.slice(0, 3);
+const rowArticles = restArticles.slice(3);
 
 const featuredTitle = featuredArticle ? getArticleText(featuredArticle, 'title', lang) : '';
 const featuredDescription = featuredArticle ? getArticleText(featuredArticle, 'description', lang) : '';
@@ -32,6 +34,8 @@ const featuredDate = featuredArticle
   : '';
 const featuredSection = sections.find((s) => s.id === featuredArticle?.section);
 
+const todayDate = new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date());
+
 const faqViews = faqItems.slice(0, 4).map((item) => ({
   question: getFaqText(item, 'question', lang),
   answerHtml: renderMarkdown(getFaqText(item, 'answer', lang)),
@@ -39,68 +43,92 @@ const faqViews = faqItems.slice(0, 4).map((item) => ({
 ---
 
 <BaseLayout lang={lang} title={t.hero.title} description={t.hero.subtitle} currentPath="">
-  <section class="hero">
-    <div class="container">
-      <div class="badge">{t.hero.badge}</div>
-      <h1>{t.hero.title}</h1>
-      <p class="hero-sub">{t.hero.subtitle}</p>
-    </div>
-  </section>
 
-  <section class="section" id="sections">
+  <!-- Editorial dateline bar -->
+  <div class="ed-bar">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">{t.home.sectionsTitle}</h2>
-          <p class="section-sub">{t.home.sectionsSubtitle}</p>
-        </div>
+      <div class="ed-bar-inner">
+        <span>{t.hero.subtitle}</span>
+        <time>{todayDate}</time>
       </div>
-      <div class="niche-grid">
+    </div>
+  </div>
+
+  <!-- Category nav -->
+  <nav class="cat-nav" aria-label={t.home.sectionsTitle}>
+    <div class="container">
+      <div class="cat-nav-scroll">
         {sections.map((section) => (
-          <a href={path(lang, section.id)} class="niche-card" style={`--card-color: ${sectionColor(section.id)}`}>
-            <span class="niche-icon">{section.icon}</span>
-            <h3>{t.sections[section.id as keyof typeof t.sections] ?? section.title}</h3>
-            <p>{t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.description}</p>
-            <span class="niche-link">{t.common.allArticles} →</span>
+          <a href={path(lang, section.id)} class="cat-nav-link">
+            {section.icon} {t.sections[section.id as keyof typeof t.sections] ?? section.title}
           </a>
         ))}
       </div>
     </div>
-  </section>
+  </nav>
 
-  <section class="section section--dark" id="articles">
+  <!-- Main editorial feed -->
+  <section class="section" id="articles">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">{t.home.latestTitle}</h2>
-          <p class="section-sub">{t.home.latestSubtitle}</p>
-        </div>
-      </div>
-      <div class="feed">
-        {featuredArticle && (
-          <a href={path(lang, 'articles', featuredArticle.id)} class="feed-feature" style={`--card-color: ${featuredColor}`}>
-            <div class="feed-feature-visual">
-              <ArticleArt seed={featuredArticle.id} color={featuredColor} icon={featuredSection?.icon ?? sectionIcon(featuredArticle.section)} />
+      <div class="ed-section-label">{t.home.latestTitle}</div>
+
+      {featuredArticle && (
+        <div class="ed-grid">
+          <!-- Lead article -->
+          <a href={path(lang, 'articles', featuredArticle.id)} class="ed-lead" style={`--card-color: ${featuredColor}`}>
+            <div class="ed-lead-image">
+              {featuredArticle.imageUrl
+                ? <img src={`${featuredArticle.imageUrl}?w=840&h=472&fit=crop&auto=format`} alt={featuredTitle} loading="eager" width="840" height="472" />
+                : <ArticleArt seed={featuredArticle.id} color={featuredColor} icon={featuredSection?.icon ?? sectionIcon(featuredArticle.section)} />
+              }
             </div>
-            <div class="feed-feature-body">
-              <span class="article-tag">{t.sections[featuredArticle.section as keyof typeof t.sections] ?? featuredArticle.section}</span>
-              <h3>{featuredTitle}</h3>
-              <p>{featuredDescription}</p>
-              <div class="article-meta">
-                <span>{featuredDate}</span>
-                <span class="dot">{featuredArticle.readingTime} {t.article.readingTime}</span>
-              </div>
+            <span class="ed-lead-cat">{t.sections[featuredArticle.section as keyof typeof t.sections] ?? featuredArticle.section}</span>
+            <h2 class="ed-lead-title">{featuredTitle}</h2>
+            <p class="ed-lead-desc">{featuredDescription}</p>
+            <div class="article-meta" style="border:none;padding:0;margin-top:0.2rem">
+              <span>{featuredDate}</span>
+              <span class="dot">{featuredArticle.readingTime} {t.article.readingTime}</span>
             </div>
           </a>
-        )}
-        <div class="feed-grid">
-          {restArticles.map((article) => <ArticleCard lang={lang} article={article} />)}
+
+          <!-- Sidebar -->
+          <div class="ed-sidebar">
+            {sidebarArticles.map((article) => (
+              <a href={path(lang, 'articles', article.id)} class="ed-sidebar-item" style={`--card-color: ${sectionColor(article.section)}`}>
+                <span class="ed-sidebar-cat">{t.sections[article.section as keyof typeof t.sections] ?? article.section}</span>
+                <div class="ed-sidebar-inner">
+                  {article.imageUrl && (
+                    <div class="ed-sidebar-img">
+                      <img src={`${article.imageUrl}?w=160&h=112&fit=crop&auto=format`} alt="" loading="lazy" width="80" height="56" />
+                    </div>
+                  )}
+                  <div>
+                    <p class="ed-sidebar-title">{getArticleText(article, 'title', lang)}</p>
+                    <div class="article-meta" style="border:none;padding:0;margin-top:0.3rem">
+                      <span>{new Intl.DateTimeFormat(HTML_LANG[lang], { month: 'short', day: 'numeric' }).format(new Date(article.pubDate))}</span>
+                      <span class="dot">{article.readingTime} {t.article.readingTime}</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {rowArticles.length > 0 && (
+        <>
+          <div class="ed-divider"></div>
+          <div class="ed-row">
+            {rowArticles.map((article) => <ArticleCard lang={lang} article={article} />)}
+          </div>
+        </>
+      )}
     </div>
   </section>
 
-  <section class="section" id="faq">
+  <!-- FAQ -->
+  <section class="section section--dark" id="faq">
     <div class="container">
       <div class="section-head">
         <div>
@@ -119,4 +147,5 @@ const faqViews = faqItems.slice(0, 4).map((item) => ({
       </div>
     </div>
   </section>
+
 </BaseLayout>
