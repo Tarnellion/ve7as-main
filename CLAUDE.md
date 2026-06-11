@@ -40,6 +40,7 @@ Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID`, `SANITY_
 - `src/i18n/ui.ts` holds all UI copy (nav labels, hero text, footer, etc.) per language as a typed `Translation` record, accessed via `useTranslations(lang)`.
 - `src/i18n/sectionTheme.ts` maps niche section IDs (`casino-slots`, `sports-betting`, `poker-table-games`, `lottery-esports`) to accent colors/icons used across cards and page headers.
 - Route groups: `[lang]/index.astro` (homepage feed), `[lang]/[section]/index.astro` (niche archive), `[lang]/articles/[slug].astro` (article page), `[lang]/faq.astro`, plus static pages `about`/`contacts`/`privacy`/`terms`.
+- `src/pages/sitemap.xml.ts` is an SSR endpoint that builds `sitemap.xml` at request time from `getSections()`/`getArticles()` × `LANGUAGES`, with `hreflang` alternates and `lastmod`. Referenced from `public/robots.txt`.
 
 ### Content sources — Sanity is canonical for editorial content
 
@@ -49,8 +50,8 @@ Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID`, `SANITY_
 
 ### Static pages — local content collections
 
-- `src/content.config.ts` defines Astro content collections. Of these, only `pages` and `pageTranslations` are actually used (by `src/layouts/StaticPageLayout.astro`): `src/content/pages/*.md` holds the Russian-canonical about/contacts/privacy/terms content, and `src/content/translations/pages/<lang>/*.md` holds translated copies. If no translation exists for a language, the Russian original is rendered with a "translation missing" notice.
-- The other collections defined in `content.config.ts` (`sections`, `articles`, `faq`, `articleTranslations`, `faqTranslations`) and their backing files under `src/content/{sections,articles,faq,translations/articles,translations/faq}` are **leftovers from the pre-Sanity Astro migration** (commit `790f5c9`) and are no longer read by any page — Sanity replaced them as of `f2c012f`. Don't add new editorial content there; add it in Sanity Studio instead.
+- `src/content.config.ts` defines two Astro content collections, used by `src/layouts/StaticPageLayout.astro`: `pages` (`src/content/pages/*.md` — Russian-canonical about/contacts/privacy/terms content) and `pageTranslations` (`src/content/translations/pages/<lang>/*.md` — translated copies). If no translation exists for a language, the Russian original is rendered with a "translation missing" notice.
+- All other editorial content (articles, FAQ, niche sections) lives in Sanity — don't add new editorial content as local Markdown; add it in Sanity Studio instead.
 
 ### Styling
 
@@ -63,9 +64,3 @@ Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID`, `SANITY_
 - Build output is SSR for Cloudflare (`@astrojs/cloudflare` adapter, `output: 'server'`).
 - `scripts/patch-wrangler.mjs` strips the auto-added `kv_namespaces`/`images` bindings from `dist/server/wrangler.json` before deploy (these need Cloudflare account resources that aren't provisioned — without this step deploys fail with Error 1101).
 - `.github/workflows/deploy.yml` runs on push to `main` or a `repository_dispatch` (`sanity-deploy`, triggered by a Sanity webhook): writes `.env` from secrets, `npm run build`, runs the wrangler patch script, then `wrangler deploy`.
-
-### Other directories
-
-- `_legacy/` — the original pre-Astro static `index.html`/`style.css`/`script.js`, kept for reference only; not part of the build.
-- `scripts/migrate-to-sanity.mjs` / `scripts/fix-migration.mjs` — one-off scripts used for the Astro-content → Sanity migration.
-- `public/admin/` — a Decap/Netlify CMS config pointing at the legacy `src/content/*` folders; predates the Sanity migration and is likely stale.
