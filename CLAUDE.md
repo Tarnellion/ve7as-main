@@ -4,28 +4,68 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Ve7as is a static, single-page SEO landing site (Russian-language) for an online casino/bookmaker rating portal. It is a plain HTML/CSS/JS site with no build step, package manager, framework, or test suite — just three files:
+Ve7as (`ve7as.com`) is a multilingual SEO content portal about online casino/betting/poker/lottery niches. It is an **Astro 6 SSR app** deployed to **Cloudflare Workers**, with editorial content (articles, FAQ, niche sections) managed in **Sanity CMS**. Static legal/info pages (about, contacts, privacy, terms) are stored as local Markdown content collections.
 
-- `index.html` — entire page markup (nav, hero, ratings table, bonus cards, articles grid, FAQ, footer), plus inline JSON-LD structured data (`schema.org/WebSite`) and SEO meta tags (description, robots, Open Graph)
-- `style.css` — all styling, organized into clearly delimited sections via `/* ── Section ── */` comment headers (Variables, Reset, Container, Nav, Hero, Sections, Casino Cards, Buttons, Bonus Grid, Articles, FAQ, Footer, Responsive)
-- `script.js` — minimal vanilla JS, only handles the mobile burger-menu toggle
-
-## Running locally
-
-There is no build/dev server tooling configured. Open `index.html` directly in a browser, or serve the directory with any static file server, e.g.:
+## Commands
 
 ```bash
-python3 -m http.server 8000
+npm install         # install deps (Node >= 22.12.0)
+npm run dev          # astro dev server
+npm run build        # astro build -> dist/
+npm run preview      # preview the built output (wrangler/cloudflare)
+npx astro check      # typecheck (uses @astrojs/check + strict tsconfig)
 ```
 
-No lint, test, or build commands exist in this repo.
+Sanity Studio is a separate npm project in `studio/`:
 
-## Architecture & conventions
+```bash
+cd studio
+npm install
+npm run dev          # local Sanity Studio
+npm run deploy       # deploy hosted Studio
+```
 
-- **No build pipeline**: edits to `index.html`, `style.css`, `script.js` take effect immediately on page reload — there is nothing to compile or bundle.
-- **CSS uses custom properties** defined in `:root` in `style.css` (`--bg`, `--gold`, `--green`, `--text`, `--radius`, `--max-w`, etc.). Reuse these variables rather than hardcoding colors/sizes to keep the dark gold/green theme consistent.
-- **Sections are anchor-linked**: nav links (`#ratings`, `#bonuses`, `#articles`, `#faq`) correspond to `<section id="...">` blocks in `index.html`. Keep IDs and anchors in sync if sections are renamed or reordered.
-- **Repeating card patterns**: casino rating rows (`.casino-card`), bonus cards (`.bonus-card`), article cards (`.article-card`), and FAQ items (`.faq-item` using native `<details>/<summary>`) each follow a copy-paste markup pattern in `index.html` with matching CSS blocks. When adding/editing entries, follow the existing markup structure for that card type exactly so styling and responsive behavior stay correct.
-- **Responsive breakpoints** are at `768px` and `480px` at the bottom of `style.css` — mobile nav (burger menu), card grid collapsing, and stat spacing are adjusted there.
-- **SEO-sensitive content**: `<title>`, meta description, Open Graph tags, and the JSON-LD block in `index.html`'s `<head>` are part of the site's purpose (SEO portal) — keep them accurate and in sync with on-page content (e.g., year references like "2026").
-- All `href="#"` links throughout (CTA buttons, footer legal links, article links) are placeholders pending real destinations.
+There is no test suite or linter configured at the root.
+
+### Environment variables
+
+Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN`. These are consumed in `src/lib/sanity.ts` to create the Sanity client.
+
+## Architecture
+
+### Routing & i18n
+
+- All public routes live under `src/pages/[lang]/...`, where `lang` is one of the 7 supported languages defined in `src/i18n/languages.ts`: `LANGUAGES = ['ru', 'en', 'es', 'pt', 'de', 'fr', 'br']`, with `DEFAULT_LANGUAGE = 'ru'`. The site root `/` redirects to `/ru/` (configured in `astro.config.mjs`).
+- `src/i18n/utils.ts` provides `path(lang, ...segments)` to build language-prefixed URLs and `languagePaths()` for `getStaticPaths`.
+- `src/i18n/ui.ts` holds all UI copy (nav labels, hero text, footer, etc.) per language as a typed `Translation` record, accessed via `useTranslations(lang)`.
+- `src/i18n/sectionTheme.ts` maps niche section IDs (`casino-slots`, `sports-betting`, `poker-table-games`, `lottery-esports`) to accent colors/icons used across cards and page headers.
+- Route groups: `[lang]/index.astro` (homepage feed), `[lang]/[section]/index.astro` (niche archive), `[lang]/articles/[slug].astro` (article page), `[lang]/faq.astro`, plus static pages `about`/`contacts`/`privacy`/`terms`.
+
+### Content sources — Sanity is canonical for editorial content
+
+- `src/lib/sanity.ts` creates the Sanity client and exposes `getSections()`, `getArticles()`, `getArticleBySlug()`, `getFaqItems()`, plus helpers `getArticleText`/`getArticleBody`/`getFaqText` (language fallback to `ru`) and `isBlockedInCountry`.
+- Sanity documents (schemas in `studio/schemaTypes/`) store **per-language fields directly on each document** as `title_<lang>`, `description_<lang>`, `body_<lang>` / `question_<lang>`, `answer_<lang>` for each of the 7 languages — there is no separate translation document for articles/FAQ/sections.
+- **Geo-blocking**: articles, sections and FAQ items can carry a `blockedIn` array of country codes. Pages read the visitor's country from the `cf-ipcountry` request header (Cloudflare) and filter content via `isBlockedInCountry(blockedIn, country)`.
+
+### Static pages — local content collections
+
+- `src/content.config.ts` defines Astro content collections. Of these, only `pages` and `pageTranslations` are actually used (by `src/layouts/StaticPageLayout.astro`): `src/content/pages/*.md` holds the Russian-canonical about/contacts/privacy/terms content, and `src/content/translations/pages/<lang>/*.md` holds translated copies. If no translation exists for a language, the Russian original is rendered with a "translation missing" notice.
+- The other collections defined in `content.config.ts` (`sections`, `articles`, `faq`, `articleTranslations`, `faqTranslations`) and their backing files under `src/content/{sections,articles,faq,translations/articles,translations/faq}` are **leftovers from the pre-Sanity Astro migration** (commit `790f5c9`) and are no longer read by any page — Sanity replaced them as of `f2c012f`. Don't add new editorial content there; add it in Sanity Studio instead.
+
+### Styling
+
+- All styles live in `src/styles/global.css`, organized into `/* ── Section ── */`-delimited blocks (Variables, Reset, Layout, Nav, Hero, Sections, Niche cards, Article feed/cards, Buttons, Prose, TOC, FAQ, Footer, Editorial feed, Responsive).
+- Theme is driven by CSS custom properties in `:root` (`--bg`, `--bg-2/3`, `--accent`, `--accent-2`, `--text`, `--text-dim`, `--border`, `--radius`, `--max-w`, `--font-serif`) — reuse these instead of hardcoding values.
+- Responsive breakpoints are consolidated at the bottom of `global.css`.
+
+### Deployment
+
+- Build output is SSR for Cloudflare (`@astrojs/cloudflare` adapter, `output: 'server'`).
+- `scripts/patch-wrangler.mjs` strips the auto-added `kv_namespaces`/`images` bindings from `dist/server/wrangler.json` before deploy (these need Cloudflare account resources that aren't provisioned — without this step deploys fail with Error 1101).
+- `.github/workflows/deploy.yml` runs on push to `main` or a `repository_dispatch` (`sanity-deploy`, triggered by a Sanity webhook): writes `.env` from secrets, `npm run build`, runs the wrangler patch script, then `wrangler deploy`.
+
+### Other directories
+
+- `_legacy/` — the original pre-Astro static `index.html`/`style.css`/`script.js`, kept for reference only; not part of the build.
+- `scripts/migrate-to-sanity.mjs` / `scripts/fix-migration.mjs` — one-off scripts used for the Astro-content → Sanity migration.
+- `public/admin/` — a Decap/Netlify CMS config pointing at the legacy `src/content/*` folders; predates the Sanity migration and is likely stale.
