@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations } from '../i18n/ui';
+import { DEFAULT_LANGUAGE, isLanguage, type Language } from '../i18n/languages';
+import { path } from '../i18n/utils';
+import { sectionColor, sectionIcon } from '../i18n/sectionTheme';
+
+// Настоящий 404, а не «мягкий»: без явного статуса Google считает страницу
+// обычной (200) и держит несуществующие URL в индексе.
+Astro.response.status = 404;
+Astro.response.statusText = 'Not Found';
+
+// Язык берём из первого сегмента исходного пути. originPathname хранит
+// оригинальный URL, если сюда пришли через Astro.rewrite('/404') со страницы
+// раздела или статьи; для прямого попадания на несуществующий URL он равен
+// Astro.url.pathname.
+const firstSegment = (Astro.originPathname || Astro.url.pathname).split('/').filter(Boolean)[0] ?? '';
+const lang: Language = isLanguage(firstSegment) ? firstSegment : DEFAULT_LANGUAGE;
+const t = useTranslations(lang);
+
+type SectionId = keyof typeof t.sections;
+const sectionIds = Object.keys(t.sections) as SectionId[];
+---
+
+<BaseLayout
+  lang={lang}
+  title={t.notFound.title}
+  description={t.notFound.description}
+  currentPath="404"
+  noindex
+>
+  <header class="page-head">
+    <div class="container">
+      <p class="nf-code" aria-hidden="true">404</p>
+      <h1>{t.notFound.title}</h1>
+      <p class="lede">{t.notFound.description}</p>
+      <div class="nf-actions">
+        <a href={path(lang)} class="btn btn--primary">{t.notFound.backHome}</a>
+        <a href={path(lang, 'faq')} class="btn btn--outline">{t.nav.faq}</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="nf-sections-title">{t.notFound.sectionsTitle}</h2>
+      <div class="nf-sections">
+        {sectionIds.map((id) => (
+          <a href={path(lang, id)} class="nf-section" style={`--card-color: ${sectionColor(id)}`}>
+            <span class="nf-section-icon">{sectionIcon(id)}</span>
+            <span class="nf-section-name">{t.sections[id]}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
