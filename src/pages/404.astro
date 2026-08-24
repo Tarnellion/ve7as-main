@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n/ui';
 import { DEFAULT_LANGUAGE, isLanguage, type Language } from '../i18n/languages';
 import { path } from '../i18n/utils';
-import { sectionColor, type SectionId } from '../i18n/sections';
+import { type SectionId } from '../i18n/sections';
 
 // Настоящий 404, а не «мягкий»: без явного статуса Google считает страницу
 // обычной (200) и держит несуществующие URL в индексе.
@@ -45,9 +45,7 @@ const sectionIds = Object.keys(t.sections) as SectionId[];
       <h2 class="nf-sections-title">{t.notFound.sectionsTitle}</h2>
       <div class="nf-sections">
         {sectionIds.map((id) => (
-          <a href={path(lang, id)} class="nf-section" style={`--card-color: ${sectionColor(id)}`}>
-            <span class="nf-section-name">{t.sections[id]}</span>
-          </a>
+          <a href={path(lang, id)} class="nf-section">{t.sections[id]}</a>
         ))}
       </div>
     </div>

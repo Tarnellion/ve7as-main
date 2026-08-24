@@ -13,7 +13,7 @@
    поле readingTime заполнено у всех статей.
 
    Порядок блоков: Токены · Сброс · Каркас · Шапка · Подвал · Индекс ·
-   Шапка страницы · Проза · FAQ · Плашки · 404 · Утилиты · Адаптив
+   Шапка страницы · Проза · FAQ · Плашки · 404 · Адаптив
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Токены ─────────────────────────────────────────────────────────────── */
@@ -404,6 +404,13 @@ a { color: inherit; }
   font-size: var(--t-lg);
   margin-top: var(--s-5);
 }
+/* Редактор может поставить в тексте и h4–h6: allow-list рендерера их
+   пропускает. Без этого правила h5 и h6 доставались браузерные кегль
+   (мельче основного текста) и отступы. */
+.prose h4, .prose h5, .prose h6 {
+  font-size: var(--t-base);
+  margin-top: var(--s-5);
+}
 .prose a { color: var(--ink); text-decoration-color: var(--mark); text-underline-offset: 0.15em; }
 .prose a:hover { color: var(--mark); }
 .prose ul, .prose ol { padding-left: 1.15rem; }
@@ -553,10 +560,9 @@ a { color: inherit; }
   font-size: var(--t-cap);
 }
 .nf-section:hover { color: var(--mark); }
-/* Эмодзи-иконки разделов убраны: они рисуются по-разному на каждой
-   платформе, не поддаются стилизации и не работают как знак издания. */
-.nf-section-icon { display: none; }
-.nf-section-name { display: inline; }
+/* Эмодзи-иконки разделов убраны из самой разметки: они рисуются по-разному
+   на каждой платформе, не поддаются стилизации и не работают как знак
+   издания. Осталось только имя раздела. */
 
 /* Отдельно от .page-head: lede встречается ещё на 404 и статических страницах. */
 .lede { font-size: var(--t-lg); color: var(--soft); max-width: var(--measure); }
@@ -588,18 +594,6 @@ a { color: inherit; }
 .btn--primary { background: var(--ink); color: var(--paper); }
 .btn--primary:hover { background: var(--mark); border-color: var(--mark); }
 .btn--outline { background: none; color: var(--ink); }
-
-/* ── Утилиты ────────────────────────────────────────────────────────────── */
-
-.visually-hidden {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px; padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
 
 /* ── Адаптив ────────────────────────────────────────────────────────────── */
 
@@ -675,7 +669,4 @@ a { color: inherit; }
      на сервере нельзя — поэтому скроллится она сама, и только на узком
      экране, чтобы на десктопе не терять обычное поведение таблицы. */
   .prose table { display: block; overflow-x: auto; white-space: nowrap; }
-
-  .footer-inner { flex-direction: column; gap: var(--s-5); }
-  .footer-col:last-child { margin-left: 0; text-align: left; }
 }

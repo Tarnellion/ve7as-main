@@ -4,7 +4,7 @@ import ArticleCard from '../../../components/ArticleCard.astro';
 import { useTranslations } from '../../../i18n/ui';
 import { isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
-import { sectionColor, type SectionId } from '../../../i18n/sections';
+import { type SectionId } from '../../../i18n/sections';
 import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
@@ -48,11 +48,10 @@ const dataFailed = sectionsResult.failed || articlesResult.failed;
 const errorCopy = DATA_ERROR_COPY[lang];
 if (articlesResult.failed) markContentUnavailable(Astro.response);
 
-const cardColor = sectionColor(sectionId);
 ---
 
 <BaseLayout lang={lang} title={sectionTitle} description={sectionDesc} currentPath={sectionId}>
-  <header class="page-head" style={`--card-color: ${cardColor}`}>
+  <header class="page-head">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href={path(lang)}>{t.nav.home}</a>

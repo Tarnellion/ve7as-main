@@ -66,15 +66,15 @@ const currentUrl = Astro.url.pathname;
   const navLinks = document.getElementById('nav-links');
 
   burger?.addEventListener('click', () => {
+    // Состояние бургера несёт aria-expanded, а не класс: правила .burger.open
+    // в теме нет, и класс оставался бы мёртвым.
     const open = navLinks?.classList.toggle('open');
-    burger.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', String(Boolean(open)));
   });
 
   navLinks?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => {
       navLinks.classList.remove('open');
-      burger?.classList.remove('open');
       burger?.setAttribute('aria-expanded', 'false');
     });
   });

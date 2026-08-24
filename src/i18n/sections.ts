@@ -9,6 +9,11 @@ export type SectionId = keyof Translation['sections'];
 const FALLBACK_COLOR = '#e8b34a';
 const FALLBACK_ICON = '✦';
 
+/** НЕ мёртвый код, хотя `grep` не найдёт ни одного вызова `sectionColor`.
+ *  Акцентные цвета разделов ушли из вёрстки вместе со старой тёмной темой:
+ *  у нынешней один акцент `--mark`. Словарь остаётся ради генератора
+ *  OG-карточек — там раздел кодируется цветом, потому что в растре нет
+ *  ни токенов, ни темы. Не удалять вместе с `sectionColor`. */
 export const SECTION_COLORS: Record<SectionId, string> = {
   'casino-slots': '#e8b34a',
   'sports-betting': '#5fc9b8',
@@ -16,9 +21,9 @@ export const SECTION_COLORS: Record<SectionId, string> = {
   'lottery-esports': '#7c98f0',
 };
 
-/** НЕ мёртвый код. В вёрстке эмодзи не используются — они рисуются
- *  по-разному на каждой платформе и не поддаются стилизации, — но нужны
- *  генератору OG-карточек, где символ рисуется в картинку, а не в DOM.
+/** НЕ мёртвый код — по той же причине, что и `SECTION_COLORS`.
+ *  В вёрстке эмодзи не используются: они рисуются по-разному на каждой
+ *  платформе и не поддаются стилизации. В картинке этой проблемы нет.
  *  Не удалять вместе с `sectionIcon`. */
 export const SECTION_ICONS: Record<SectionId, string> = {
   'casino-slots': '🎰',
