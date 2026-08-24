@@ -375,6 +375,7 @@ export async function getArticleBySlug(
       "section": section->slug.current,
       "sectionIcon": section->icon,
       pubDate,
+      _updatedAt,
       readingTime,
       author,
       featured,
@@ -501,6 +502,14 @@ export type SanityArticleCard = {
 export type SanityArticleFull = SanityArticleCard & {
   sectionIcon: string;
   body: string;
+  /**
+   * Отметка правки самой Sanity. Идёт в `dateModified` разметки и в строку
+   * «Обновлено» — для YMYL это один из немногих сигналов актуальности,
+   * который Google читает напрямую. Опциональна: у документа, ни разу не
+   * правленного после создания, поле всё равно есть, но полагаться на это
+   * в типе незачем.
+   */
+  _updatedAt?: string;
 };
 
 export type SanityFaq = {

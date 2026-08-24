@@ -46,9 +46,21 @@ export interface Translation {
     readingUnit: string;
     publishedOn: string;
     author: string;
+    /** Строка «Обновлено» перед датой правки; показывается, когда правка заметно позже публикации. */
+    updatedOn: string;
     back: string;
     translationNotice: string;
     tableOfContents: string;
+  };
+  /**
+   * Блок ответственной игры в конце каждого материала. Ссылки на службы
+   * помощи лежат отдельно, в `src/i18n/helplines.ts`: это данные, а не копия,
+   * и их состав зависит от юрисдикции, а не от языка интерфейса.
+   */
+  responsible: {
+    title: string;
+    body: string;
+    helpLabel: string;
   };
   common: { readMore: string; allArticles: string };
   footer: {
@@ -112,12 +124,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'мин',
       publishedOn: 'Опубликовано',
       author: 'Автор',
+      updatedOn: 'Обновлено',
       back: 'Назад к разделу',
       translationNotice:
         'Эта статья пока доступна только на русском языке. Перевод появится позже.',
       tableOfContents: 'Содержание',
     },
     common: { readMore: 'Читать', allArticles: 'Все статьи' },
+    responsible: {
+      title: 'Ответственная игра',
+      body: "Азартные игры — развлечение для совершеннолетних, а не способ заработка. Если игра перестаёт быть развлечением, помощь доступна бесплатно и анонимно.",
+      helpLabel: 'Куда обратиться',
+    },
     footer: {
       about:
         'Независимый информационный портал об азартных развлечениях. Не является оператором азартных игр.',
@@ -181,12 +199,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Published',
       author: 'Author',
+      updatedOn: 'Updated',
       back: 'Back to section',
       translationNotice:
         'This article is currently available in Russian only. A translation is coming soon.',
       tableOfContents: 'Contents',
     },
     common: { readMore: 'Read', allArticles: 'All articles' },
+    responsible: {
+      title: 'Responsible gambling',
+      body: "Gambling is adult entertainment, not a way to make money. If it stops being entertainment, free and confidential help is available.",
+      helpLabel: 'Where to get help',
+    },
     footer: {
       about:
         'Independent information portal about gambling entertainment. Not a gambling operator.',
@@ -250,12 +274,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publicado',
       author: 'Autor',
+      updatedOn: 'Actualizado',
       back: 'Volver a la sección',
       translationNotice:
         'Este artículo solo está disponible en ruso por ahora. La traducción llegará pronto.',
       tableOfContents: 'Contenido',
     },
     common: { readMore: 'Leer', allArticles: 'Todos los artículos' },
+    responsible: {
+      title: 'Juego responsable',
+      body: "El juego es un entretenimiento para adultos, no una forma de ganar dinero. Si deja de ser un entretenimiento, existe ayuda gratuita y confidencial.",
+      helpLabel: 'Dónde pedir ayuda',
+    },
     footer: {
       about:
         'Portal informativo independiente sobre entretenimiento de azar. No somos un operador de juego.',
@@ -319,12 +349,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publicado',
       author: 'Autor',
+      updatedOn: 'Atualizado',
       back: 'Voltar à secção',
       translationNotice:
         'Este artigo está disponível apenas em russo, por enquanto. A tradução chegará em breve.',
       tableOfContents: 'Conteúdo',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
+    responsible: {
+      title: 'Jogo responsável',
+      body: "O jogo é um entretenimento para adultos, não uma forma de ganhar dinheiro. Se deixar de ser um entretenimento, existe ajuda gratuita e confidencial.",
+      helpLabel: 'Onde procurar ajuda',
+    },
     footer: {
       about:
         'Portal informativo independente sobre entretenimento de jogo. Não somos um operador de jogo.',
@@ -388,12 +424,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'Min',
       publishedOn: 'Veröffentlicht',
       author: 'Autor',
+      updatedOn: 'Aktualisiert',
       back: 'Zurück zum Bereich',
       translationNotice:
         'Dieser Artikel ist derzeit nur auf Russisch verfügbar. Eine Übersetzung folgt in Kürze.',
       tableOfContents: 'Inhalt',
     },
     common: { readMore: 'Lesen', allArticles: 'Alle Artikel' },
+    responsible: {
+      title: 'Verantwortungsvolles Spielen',
+      body: "Glücksspiel ist Unterhaltung für Erwachsene, kein Weg, Geld zu verdienen. Wenn das Spielen keine Unterhaltung mehr ist, gibt es kostenlose und vertrauliche Hilfe.",
+      helpLabel: 'Hier gibt es Hilfe',
+    },
     footer: {
       about:
         'Unabhängiges Informationsportal über Glücksspiel-Unterhaltung. Kein Glücksspielanbieter.',
@@ -458,12 +500,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publié le',
       author: 'Auteur',
+      updatedOn: 'Mis à jour',
       back: 'Retour à la rubrique',
       translationNotice:
         "Cet article n'est actuellement disponible qu'en russe. Une traduction sera bientôt disponible.",
       tableOfContents: 'Sommaire',
     },
     common: { readMore: 'Lire', allArticles: 'Tous les articles' },
+    responsible: {
+      title: 'Jeu responsable',
+      body: "Le jeu est un divertissement pour adultes, pas un moyen de gagner de l'argent. S'il cesse d'être un divertissement, une aide gratuite et confidentielle existe.",
+      helpLabel: "Où trouver de l'aide",
+    },
     footer: {
       about:
         "Portail d'information indépendant sur le divertissement autour des jeux d'argent. Nous ne sommes pas un opérateur de jeux.",
@@ -528,12 +576,18 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publicado em',
       author: 'Autor',
+      updatedOn: 'Atualizado',
       back: 'Voltar para a seção',
       translationNotice:
         'Este artigo está disponível apenas em russo, por enquanto. A tradução chega em breve.',
       tableOfContents: 'Conteúdo',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
+    responsible: {
+      title: 'Jogo responsável',
+      body: "O jogo é um entretenimento para adultos, não uma forma de ganhar dinheiro. Se deixar de ser um entretenimento, há ajuda gratuita e sigilosa.",
+      helpLabel: 'Onde buscar ajuda',
+    },
     footer: {
       about:
         'Portal informativo independente sobre entretenimento de apostas e jogos de azar. Não somos um operador de jogos.',

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/ui';
 import { isLanguage, type Language } from '../../i18n/languages';
 import { getFaqItems, renderMarkdown, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../lib/sanity';
+import { faqPage } from '../../lib/schema';
 
 const { lang } = Astro.params as { lang: Language };
 
@@ -29,9 +30,17 @@ const views = faqItems.map((item) => ({
 }));
 
 const missingTranslation = views.some((v) => !v.hasTranslation);
+
+// Разметка строится из `views` — того же массива, что отрисовывается ниже,
+// уже после гео-фильтра. HTML в ответах допустим: Google принимает в
+// `Answer.text` ограниченный набор тегов, и это ровно тот HTML, что видит
+// читатель. Пустой FAQ (сбой CMS) разметку не порождает вовсе.
+const schema = views.length > 0
+  ? [faqPage(views.map((v) => ({ question: v.question, answer: v.answerHtml })))]
+  : [];
 ---
 
-<BaseLayout lang={lang} title={t.home.faqTitle} description={t.home.faqSubtitle} currentPath="faq">
+<BaseLayout lang={lang} title={t.home.faqTitle} description={t.home.faqSubtitle} currentPath="faq" schema={schema}>
   <header class="page-head">
     <div class="container">
       <h1>{t.home.faqTitle}</h1>

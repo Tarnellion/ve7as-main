@@ -1,0 +1,30 @@
+---
+import type { Language } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+import { HELPLINES } from '../i18n/helplines';
+
+/**
+ * Блок ответственной игры в конце материала.
+ *
+ * Ссылки на службы помощи — часть требований проекта: каждый
+ * материал обязан не только предупреждать, но и указывать, куда идти за
+ * помощью. `rel="noopener"` без `nofollow` — сознательно: это ссылки на
+ * некоммерческие службы, ручаться за которые сайт готов.
+ */
+interface Props { lang: Language }
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const helplines = HELPLINES[lang];
+---
+
+<aside class="rg-block" aria-label={t.responsible.title}>
+  <p class="rg-title">{t.responsible.title}</p>
+  <p>{t.responsible.body}</p>
+  <p class="rg-links">
+    <span>{t.responsible.helpLabel}:</span>
+    {helplines.map((h) => (
+      <a href={h.url} rel="noopener" target="_blank">{h.name}</a>
+    ))}
+  </p>
+</aside>

@@ -1,7 +1,8 @@
 ---
-import { LANGUAGES, HTML_LANG, type Language } from '../i18n/languages';
+import { INDEXED_LANGUAGES, HTML_LANG, isIndexable, type Language } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/utils';
+import { organization, website, type SchemaNode } from '../lib/schema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -14,9 +15,22 @@ interface Props {
   ogImage?: string;
   /** Держать страницу вне индекса (404 и прочие служебные). */
   noindex?: boolean;
+  /**
+   * Узлы JSON-LD, специфичные для страницы: `Article`, `BreadcrumbList`,
+   * `FAQPage`. Организация и сайт добавляются сюда сами и повторять их в
+   * странице не нужно.
+   */
+  schema?: SchemaNode[];
 }
 
-const { lang, title, description, currentPath = '', ogImage, noindex = false } = Astro.props;
+const props = Astro.props;
+
+// Страница вне индексируемых локалей закрывается независимо от собственного
+// флага: `noindex` из пропсов — про служебные страницы, а этот — про решение
+// уровня сайта (см. INDEXED_LANGUAGES). Ссылки остаются follow, чтобы вес
+// проходил на индексируемые версии.
+const { lang, title, description, currentPath = '', ogImage, schema = [] } = props;
+const noindex = (props.noindex ?? false) || !isIndexable(lang);
 const t = useTranslations(lang);
 
 // Canonical всегда со слешем на конце: иначе /ru/faq и /ru/faq/ получают
@@ -39,6 +53,17 @@ const pageTitle = currentPath ? `${title} — Ve7as` : `Ve7as — ${title}`;
 function jsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, '\\u003c');
 }
+
+/**
+ * Один `@graph` на страницу вместо нескольких независимых блоков: так
+ * `Article.publisher` и `WebSite.publisher` указывают на один и тот же узел
+ * организации по `@id`, а не плодят три её несвязанные копии.
+ */
+const graph = [
+  organization(Astro.site!, t.site.tagline),
+  website(Astro.site!, lang, t.site.tagline),
+  ...schema,
+];
 ---
 
 <!DOCTYPE html>
@@ -50,10 +75,16 @@ function jsonLd(data: unknown): string {
   <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
   <link rel="canonical" href={canonicalURL} />
 
-  {LANGUAGES.map((code) => (
+  {/*
+    hreflang объявляет только индексируемые локали: тег на noindex-версию —
+    противоречие (страница одновременно «альтернатива» и «не индексируй»),
+    которое Google разрешает отбрасыванием всего кластера. На самих
+    noindex-страницах hreflang не выводится вовсе — их в кластере нет.
+  */}
+  {!noindex && INDEXED_LANGUAGES.map((code) => (
     <link rel="alternate" hreflang={HTML_LANG[code]} href={new URL(path(code, currentPath), Astro.site)} />
   ))}
-  <link rel="alternate" hreflang="x-default" href={new URL(path('ru', currentPath), Astro.site)} />
+  {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(path('ru', currentPath), Astro.site)} />}
 
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
@@ -75,12 +106,7 @@ function jsonLd(data: unknown): string {
 
   <script type="application/ld+json" is:inline set:html={jsonLd({
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Ve7as',
-    url: Astro.site?.toString(),
-    description: t.site.tagline,
-    publisher: { '@type': 'Organization', name: 'Ve7as' },
-    inLanguage: HTML_LANG[lang],
+    '@graph': graph,
   })} />
 </head>
 <body>

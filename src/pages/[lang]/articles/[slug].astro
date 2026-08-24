@@ -4,6 +4,8 @@ import { useTranslations } from '../../../i18n/ui';
 import { HTML_LANG, isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { getArticleBySlug, renderMarkdown, isBlockedInCountry, youtubeId, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
+import { article as articleSchema, breadcrumbs } from '../../../lib/schema';
+import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
 
 const { lang, slug } = Astro.params as { lang: Language; slug: string };
 
@@ -48,6 +50,49 @@ const formattedDate = article
 
 const ytId = article?.youtube ? youtubeId(article.youtube) : null;
 const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&auto=format` : undefined;
+
+// Дата правки показывается только если она заметно позже публикации: Sanity
+// обновляет `_updatedAt` при любом сохранении, включая правку опечатки через
+// минуту после выпуска, и «Обновлено» в тот же день выглядит как шум. Сутки —
+// порог, ниже которого читателю эта строка ничего не сообщает.
+const updatedAt = article?._updatedAt ? new Date(article._updatedAt) : null;
+const publishedAt = article ? new Date(article.pubDate) : null;
+const showUpdated =
+  updatedAt && publishedAt && updatedAt.getTime() - publishedAt.getTime() > 86_400_000;
+const formattedUpdated = showUpdated
+  ? new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(updatedAt)
+  : '';
+
+// Разметка собирается из тех же данных, что и видимая страница: крошки
+// повторяют `nav.breadcrumb` ниже, а не описывают отдельную выдуманную
+// иерархию — расхождение разметки с HTML Google трактует как нарушение.
+const sectionName = article?.section
+  ? (t.sections[article.section as keyof typeof t.sections] ?? article.section)
+  : '';
+const canonical = article ? new URL(path(lang, 'articles', article.id), Astro.site) : null;
+
+const schema = article && canonical
+  ? [
+      articleSchema(Astro.site!, {
+        url: canonical,
+        headline: displayTitle,
+        description: displayDescription,
+        datePublished: article.pubDate,
+        dateModified: article._updatedAt,
+        authorName: article.author,
+        imageUrl: article.imageUrl,
+        lang,
+        section: sectionName || undefined,
+      }),
+      breadcrumbs([
+        { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+        ...(article.section
+          ? [{ name: sectionName, url: new URL(path(lang, article.section), Astro.site).toString() }]
+          : []),
+        { name: displayTitle, url: canonical.toString() },
+      ]),
+    ]
+  : [];
 ---
 
 {article === null ? (
@@ -76,6 +121,7 @@ const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&a
     description={displayDescription}
     currentPath={`articles/${article.id}`}
     ogImage={ogImage}
+    schema={schema}
   >
     {/*
       Обложка больше не растягивается на всю ширину под заголовком: размытая
@@ -98,6 +144,7 @@ const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&a
         <p class="lede">{displayDescription}</p>
         <div class="article-meta">
           <span>{formattedDate}</span>
+          {showUpdated && <span>{t.article.updatedOn}: {formattedUpdated}</span>}
           <span>{t.article.author}: {article.author}</span>
         </div>
       </div>
@@ -144,6 +191,8 @@ const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&a
                 ></iframe>
               </div>
             )}
+
+            <ResponsibleGaming lang={lang} />
 
             <div class="prose-foot">
               {article.section && (

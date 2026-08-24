@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { LANGUAGES, DEFAULT_LANGUAGE, HTML_LANG, type Language } from '../i18n/languages';
+import { INDEXED_LANGUAGES, DEFAULT_LANGUAGE, HTML_LANG, type Language } from '../i18n/languages';
 import { path } from '../i18n/utils';
 import { getSitemapContent, type SitemapContent } from '../lib/sanity';
 
@@ -93,14 +93,17 @@ export const GET: APIRoute = async ({ site }) => {
       })),
   ];
 
+  // Только индексируемые локали: sitemap — это приглашение к обходу, и звать
+  // краулер на страницы, которые сами говорят noindex, значит жечь бюджет
+  // обхода и слать противоречивые сигналы (см. INDEXED_LANGUAGES).
   const urls = entries.flatMap(({ segments, lastmod }) =>
-    LANGUAGES.map((lang) => {
+    INDEXED_LANGUAGES.map((lang) => {
       // hreflang must use the same BCP 47 tags the pages advertise in <head>
       // (`HTML_LANG`), not the raw route codes: `pt`/`br` there vs `pt-PT`/`pt-BR`
       // in the markup produced two contradicting hreflang clusters for the same
       // URLs — and bare `br` is Breton, not Brazilian Portuguese.
       const alternates = [
-        ...LANGUAGES.map(
+        ...INDEXED_LANGUAGES.map(
           (alt) =>
             `    <xhtml:link rel="alternate" hreflang="${HTML_LANG[alt]}" href="${url(base, alt, segments)}" />`
         ),

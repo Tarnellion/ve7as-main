@@ -531,6 +531,29 @@ a { color: inherit; }
 }
 .notice strong { font-weight: 600; }
 
+/* Блок ответственной игры в конце материала. Живёт в потоке прозы, поэтому
+   отступ сверху задаёт он сам как последний элемент контента, а не .section. */
+.rg-block {
+  max-width: var(--measure);
+  font-family: var(--sans);
+  font-size: var(--t-cap);
+  color: var(--soft);
+  background: var(--paper-2);
+  border-left: 2px solid var(--mark);
+  padding: var(--s-3) var(--s-4);
+  margin-top: var(--s-6);
+}
+.rg-block p { margin: 0 0 var(--s-2); }
+.rg-block p:last-child { margin-bottom: 0; }
+.rg-title {
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+}
+.rg-links a { color: var(--ink); margin-left: var(--s-2); }
+
 .section-sub { color: var(--soft); font-size: var(--t-cap); }
 
 /* ── 404 и служебные состояния ──────────────────────────────────────────── */

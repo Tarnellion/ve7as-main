@@ -1,5 +1,5 @@
 ---
-import { LANGUAGES, LANGUAGE_NAMES, type Language } from '../i18n/languages';
+import { INDEXED_LANGUAGES, LANGUAGE_NAMES, isIndexable, type Language } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/utils';
 
@@ -47,7 +47,14 @@ const currentUrl = Astro.url.pathname;
       <details class="lang-switch">
         <summary>{LANGUAGE_NAMES[lang]}</summary>
         <div class="lang-menu">
-          {LANGUAGES.map((code) => (
+          {/*
+            Переключатель предлагает только индексируемые локали: остальные
+            живы по прямой ссылке, но навигация на них — приглашение читателю
+            в версию, которую проект сознательно не развивает. Если читатель
+            уже внутри такой локали, она добавляется в список — иначе текущий
+            язык выглядел бы исчезнувшим из собственного меню.
+          */}
+          {[...(isIndexable(lang) ? [] : [lang]), ...INDEXED_LANGUAGES].map((code) => (
             <a
               href={path(code, currentPath)}
               aria-current={code === lang ? 'true' : undefined}
