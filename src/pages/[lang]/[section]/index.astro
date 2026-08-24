@@ -4,7 +4,7 @@ import ArticleCard from '../../../components/ArticleCard.astro';
 import { useTranslations } from '../../../i18n/ui';
 import { isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
-import { sectionColor } from '../../../i18n/sectionTheme';
+import { sectionColor, type SectionId } from '../../../i18n/sections';
 import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
@@ -35,12 +35,11 @@ const section = sectionsResult.data.find((s) => s.id === sectionId);
 // редирект Google трактует как soft-404 и держит URL в индексе.
 if (!section && !sectionsResult.failed) return Astro.rewrite('/404');
 
-const sectionTitle = section
-  ? t.sections[section.id as keyof typeof t.sections] ?? section.title
-  : t.sections[sectionId as keyof typeof t.sections] ?? sectionId;
-const sectionDesc = section
-  ? t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.description
-  : t.sectionDescriptions[sectionId as keyof typeof t.sectionDescriptions] ?? '';
+// id раздела приходит из URL и из CMS, поэтому это `string`: приводим к
+// `SectionId` только для доступа в словарь и подстраховываемся фолбэком.
+const knownId = (section?.id ?? sectionId) as SectionId;
+const sectionTitle = t.sections[knownId] ?? section?.title ?? sectionId;
+const sectionDesc = t.sectionDescriptions[knownId] ?? section?.description ?? '';
 
 const articles = articlesResult.data.filter((a) => !isBlockedInCountry(a.blockedIn, country));
 
