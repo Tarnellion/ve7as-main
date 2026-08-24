@@ -17,6 +17,12 @@ pnpm-debug.log*
 .env
 .env.production
 
+# claude code local settings
+# settings.local.json — Claude Code сохраняет одобренные команды дословно, вместе
+# со значениями переменных окружения; launch.json содержит абсолютные пути сессии
+.claude/settings.local.json
+.claude/launch.json
+
 # macOS-specific files
 .DS_Store
 
