@@ -29,24 +29,30 @@ There is no test suite or linter configured at the root.
 
 ### Environment variables
 
-Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN`. These are consumed in `src/lib/sanity.ts` to create the Sanity client.
+Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID` and `SANITY_DATASET`, consumed in `src/lib/sanity.ts`.
+
+There is deliberately **no** `SANITY_API_TOKEN` — see Security invariants. A write token will be needed later by the news pipeline, but it lives in GitHub Secrets and never in the site client. Planned secrets are tracked, names only, in `docs/pipeline-secrets.md`.
 
 ## Architecture
 
 ### Routing & i18n
 
 - All public routes live under `src/pages/[lang]/...`, where `lang` is one of the 7 supported languages defined in `src/i18n/languages.ts`: `LANGUAGES = ['ru', 'en', 'es', 'pt', 'de', 'fr', 'br']`, with `DEFAULT_LANGUAGE = 'ru'`. The site root `/` redirects to `/ru/` (configured in `astro.config.mjs`).
-- `src/i18n/utils.ts` provides `path(lang, ...segments)` to build language-prefixed URLs and `languagePaths()` for `getStaticPaths`.
+- `src/i18n/utils.ts` provides `path(lang, ...segments)`, which builds language-prefixed URLs with a trailing slash — the canonical form the middleware redirects to.
 - `src/i18n/ui.ts` holds all UI copy (nav labels, hero text, footer, etc.) per language as a typed `Translation` record, accessed via `useTranslations(lang)`.
-- `src/i18n/sectionTheme.ts` maps niche section IDs (`casino-slots`, `sports-betting`, `poker-table-games`, `lottery-esports`) to accent colors/icons used across cards and page headers.
-- Route groups: `[lang]/index.astro` (homepage feed), `[lang]/[section]/index.astro` (niche archive), `[lang]/articles/[slug].astro` (article page), `[lang]/faq.astro`, plus static pages `about`/`contacts`/`privacy`/`terms`.
+- `src/i18n/sections.ts` exports `SectionId` (derived from the keys of `Translation['sections']`, so a section without a translated name cannot exist) plus per-section colors and icons. **Neither is used in the markup any more** — the theme has a single accent and no emoji. They are kept for the OG-card generator, which encodes a section as colour and glyph inside a raster where CSS tokens do not exist. Both carry a do-not-delete comment; `grep` will not find callers.
+- Route groups: `[lang]/index.astro` (homepage index), `[lang]/[section]/index.astro` (niche archive), `[lang]/articles/[slug].astro` (article page), `[lang]/faq.astro`, plus static pages `about`/`contacts`/`privacy`/`terms`, and `src/pages/404.astro`.
+- **`src/middleware.ts` runs before every route** and does three things, in this order: rejects an unknown language prefix with `rewrite('/404')`; 301-redirects any path without a trailing slash to the canonical form; serves and stores HTML in `caches.default`. Order matters — validating the language first means `/wp-login.php` gets a 404 directly instead of a redirect to a 404, and neither garbage URLs nor redirects ever enter the cache.
+- The edge cache key is `/__edge/<country><pathname>`. **The country is mandatory**: pages vary by `cf-ipcountry` through `blockedIn`, so a country-less key would serve one jurisdiction's HTML to another. Query strings are deliberately excluded from the key — no page reads `searchParams`, and leaving them out stops `?utm_source=…` from fragmenting the cache. Any future page that does read `searchParams` must revisit `cacheKey()`.
 - `src/pages/sitemap.xml.ts` is an SSR endpoint that builds `sitemap.xml` at request time from `getSections()`/`getArticles()` × `LANGUAGES`, with `hreflang` alternates and `lastmod`. Referenced from `public/robots.txt`.
 
 ### Content sources — Sanity is canonical for editorial content
 
-- `src/lib/sanity.ts` creates the Sanity client and exposes `getSections()`, `getArticles()`, `getArticleBySlug()`, `getFaqItems()`, plus helpers `getArticleText`/`getArticleBody`/`getFaqText` (language fallback to `ru`) and `isBlockedInCountry`.
+- `src/lib/sanity.ts` creates the client and exposes `getSections()`, `getArticles(lang, opts)`, `getArticleBySlug(slug, lang)`, `getFaqItems(lang)`, `getSitemapContent()`, plus `renderMarkdown`, `isBlockedInCountry`, `markContentUnavailable` and `DATA_ERROR_COPY`.
+- **Queries are narrowed to one language in GROQ**, not filtered in JS: the projection resolves `title`/`description`/`body` for the requested language with a fallback to `ru`, and returns a `hasTranslation` flag alongside. Fetching all seven languages cost roughly 4× the payload and grew linearly with the article count. The language is validated *inside* the data layer, not only in the route — a GROQ field name is interpolated, so an unvalidated value is an injection.
+- **Every query goes through `fetchOrDegrade()`**, which returns `{ data, failed }` instead of throwing. A CMS outage must not turn into a 500: pages render an explicit notice and call `markContentUnavailable()` for a 503, and `sitemap.xml` falls back to static routes. Distinguishing «the CMS is empty» from «the CMS is unreachable» is the point — do not collapse the two.
 - Sanity documents (schemas in `studio/schemaTypes/`) store **per-language fields directly on each document** as `title_<lang>`, `description_<lang>`, `body_<lang>` / `question_<lang>`, `answer_<lang>` for each of the 7 languages — there is no separate translation document for articles/FAQ/sections.
-- **Geo-blocking**: articles, sections and FAQ items can carry a `blockedIn` array of country codes. Pages read the visitor's country from the `cf-ipcountry` request header (Cloudflare) and filter content via `isBlockedInCountry(blockedIn, country)`.
+- **Geo-blocking**: articles and FAQ items can carry a `blockedIn` array of country codes. Sections cannot — there is no such field in `studio/schemaTypes/section.js`. Pages read `cf-ipcountry` and filter via `isBlockedInCountry(blockedIn, country)`. Absent header means no filtering, so local development shows everything.
 
 ### Static pages — local content collections
 
@@ -55,12 +61,28 @@ Required at build/runtime (in `.env`, gitignored): `SANITY_PROJECT_ID`, `SANITY_
 
 ### Styling
 
-- All styles live in `src/styles/global.css`, organized into `/* ── Section ── */`-delimited blocks (Variables, Reset, Layout, Nav, Hero, Sections, Niche cards, Article feed/cards, Buttons, Prose, TOC, FAQ, Footer, Editorial feed, Responsive).
-- Theme is driven by CSS custom properties in `:root` (`--bg`, `--bg-2/3`, `--accent`, `--accent-2`, `--text`, `--text-dim`, `--border`, `--radius`, `--max-w`, `--font-serif`) — reuse these instead of hardcoding values.
-- Responsive breakpoints are consolidated at the bottom of `global.css`.
+The theme is direction A, «Указатель». It is grounded in the subject: the portal is about probability — RTP, odds, wagering, basic strategy — which is a world of tables and numbers, not glamour. Dark-with-gold is the visual cliché of the niche the editorial line explicitly rejects, so the palette is paper in a cool green instead.
+
+- All styles live in `src/styles/global.css`, organized into `/* ── Section ── */`-delimited blocks, in this order: **Токены · Сброс · Каркас · Шапка · Подвал · Индекс · Шапка страницы · Проза · FAQ · Плашки · 404 · Адаптив**.
+- **Colour is five tokens, and that is deliberate**: `--paper`, `--paper-2`, `--ink`, `--soft`, `--rule`, plus the single accent `--mark`. Do not add a second accent.
+- Type scale `--t-xs … --t-4xl`, spacing scale `--s-1 … --s-8`, frame `--measure` (reading column), `--rail` and `--rail-gap` (the reading-time rail), `--page-w`. Never hardcode a value that a token already covers.
+- Fonts are system stacks: `--serif` for reading, `--sans` for labels. **No external font domains** — Google Fonts were removed on purpose (render-blocking request plus handing EU readers' IPs to a third party). Self-host from `public/` if a face is ever needed.
+- `.section` is the single owner of vertical rhythm between page bands; children must not add their own margins. The previous theme lost this and ended up with inline `style="margin-top:…"` in the markup.
+- The signature element is reading time as a large numeral in the left rail, identical on the index and inside an article. It reads from the existing `readingTime` field.
+- Responsive rules are consolidated at the bottom of the file. On narrow screens the rail collapses into the section label line — it would otherwise eat a quarter of the width.
+- **There is no dark theme yet.** Tokens are ready for one, but every colour is currently defined once, on `:root`. When the dark pair is added, no colour may have its only definition inside a media query.
 
 ### Deployment
 
 - Build output is SSR for Cloudflare (`@astrojs/cloudflare` adapter, `output: 'server'`).
-- `scripts/patch-wrangler.mjs` strips the auto-added `kv_namespaces`/`images` bindings from `dist/server/wrangler.json` before deploy (these need Cloudflare account resources that aren't provisioned — without this step deploys fail with Error 1101).
-- `.github/workflows/deploy.yml` runs on push to `main` or a `repository_dispatch` (`sanity-deploy`, triggered by a Sanity webhook): writes `.env` from secrets, `npm run build`, runs the wrangler patch script, then `wrangler deploy`.
+- **Redirected configuration — the non-obvious part.** The root `wrangler.toml` does *not* drive the deploy on its own. The build writes `.wrangler/deploy/config.json`, which points wrangler at the adapter-generated `dist/server/wrangler.json` (`main: entry.mjs`, `assets.directory: ../client`). So `[assets] directory` in the root file is inert; `compatibility_date` and `[observability]` *do* propagate. Don't "fix" the root `wrangler.toml` without running `npx wrangler deploy --dry-run` first.
+- `scripts/patch-wrangler.mjs` runs between build and deploy. The adapter unconditionally declares a KV binding `SESSION` (for Astro sessions) with no `id`; deploying that fails with Error 1101. Sessions aren't used here, so the script strips bindings that have no `id` and loudly warns about any other binding that needs a Cloudflare account resource (D1, R2, Durable Objects…) instead of letting the deploy fail opaquely.
+- `.github/workflows/deploy.yml` runs on push to `main` (or manual `workflow_dispatch`): writes `.env` from secrets, `npx astro check`, `npm run build`, the wrangler patch script, `wrangler deploy`, then a smoke test against `https://ve7as.com/ru/`.
+- **Content changes do not need a deploy.** Every route is SSR and reads Sanity per request, so new or edited articles appear immediately. The old `repository_dispatch` (`sanity-deploy`) trigger was removed for this reason — deploy only when code, styles, `src/i18n/` strings, or `src/content/` Markdown change.
+
+### Security invariants
+
+- `SANITY_API_TOKEN` is **not** used: the `production` dataset is public and the client reads anonymously. A token made the client return `drafts.*` and disabled CDN caching. Keep `perspective: 'published'` and `apiVersion >= '2025-02-19'` in `src/lib/sanity.ts`.
+- Markdown from the CMS is rendered with `set:html`, so `renderMarkdown()` in `src/lib/sanity.ts` sanitizes in two layers: a `marked` renderer that escapes raw HTML and allow-lists URL schemes, then an `ultrahtml` tag/attribute allow-list. Never bypass it or feed CMS strings into `set:html` directly.
+- JSON-LD goes through `jsonLd()` in `BaseLayout.astro`, which escapes `<` — `JSON.stringify` alone lets a `</script>` in CMS text break out of the block.
+- Never put secrets into `.claude/settings.local.json` permission rules; Claude Code stores approved commands verbatim. That file is gitignored, and the repository is public.

@@ -1,9 +1,4 @@
-import { LANGUAGES, type Language } from './languages';
-
-/** `getStaticPaths` helper: one route per supported language. */
-export function languagePaths() {
-  return LANGUAGES.map((lang) => ({ params: { lang } }));
-}
+import { type Language } from './languages';
 
 /** Builds an absolute, language-prefixed path, e.g. path('en', 'faq') -> '/en/faq/'. */
 export function path(lang: Language, ...segments: string[]): string {
