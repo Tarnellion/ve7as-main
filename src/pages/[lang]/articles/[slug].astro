@@ -1,114 +1,160 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../../i18n/ui';
-import { HTML_LANG, DEFAULT_LANGUAGE, type Language } from '../../../i18n/languages';
+import { HTML_LANG, isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
-import { sectionColor, sectionIcon } from '../../../i18n/sectionTheme';
-import ArticleArt from '../../../components/ArticleArt.astro';
-import { getArticleBySlug, renderMarkdown, getArticleText, getArticleBody, isBlockedInCountry, youtubeId } from '../../../lib/sanity';
+import { getArticleBySlug, renderMarkdown, isBlockedInCountry, youtubeId, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
 
 const { lang, slug } = Astro.params as { lang: Language; slug: string };
+
+// Подстраховка: в SSR [lang] ловит любой первый сегмент, поэтому без проверки
+// /foo/articles/... отдавал бы 200 с русским контентом (soft-404).
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
 const t = useTranslations(lang);
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const article = await getArticleBySlug(slug);
-if (!article) return Astro.redirect(path(lang));
-if (isBlockedInCountry(article.blockedIn, country)) return Astro.redirect(path(lang));
+const articleResult = await getArticleBySlug(slug, lang);
+const article = articleResult.data;
 
-const displayTitle = getArticleText(article, 'title', lang);
-const displayDescription = getArticleText(article, 'description', lang);
-const bodyMd = getArticleBody(article, lang);
-const bodyHtml = renderMarkdown(bodyMd);
+// Отказ CMS — это не отсутствие статьи. 404 здесь был бы враньём: материал
+// существует, просто сейчас недоступен, и такой ответ выбил бы живой URL из
+// индекса из-за нашего же сбоя. Поэтому 503 с человеческой страницей, а
+// `Retry-After` зовёт краулер вернуться позже.
+const errorCopy = DATA_ERROR_COPY[lang];
+if (articleResult.failed) markContentUnavailable(Astro.response);
 
-const hasTranslation = lang === DEFAULT_LANGUAGE || Boolean((article as Record<string, unknown>)[`title_${lang}`]);
+// Нет статьи или она закрыта по гео — честный 404, а не редирект на главную:
+// редирект Google трактует как soft-404 и держит URL в индексе.
+if (!article && !articleResult.failed) return Astro.rewrite('/404');
+if (article && isBlockedInCountry(article.blockedIn, country)) return Astro.rewrite('/404');
 
-const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
-  year: 'numeric', month: 'long', day: 'numeric',
-}).format(new Date(article.pubDate));
+// Тексты уже сведены к одному языку в GROQ (с фолбэком на русский), поэтому
+// страница читает готовые поля, а не выбирает язык из семи вариантов.
+const displayTitle = article?.title ?? '';
+const displayDescription = article?.description ?? '';
+const bodyHtml = article ? renderMarkdown(article.body) : '';
 
-const cardColor = sectionColor(article.section);
-const icon = article.sectionIcon || sectionIcon(article.section);
-const ytId = article.youtube ? youtubeId(article.youtube) : null;
-const ogImage = article.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&auto=format` : undefined;
+// Флаг приходит из проекции и учитывает и заголовок, и тело: раньше плашку
+// решал один заголовок, и статья с переведённым `title_en`, но пустым
+// `body_en` отдавала русский текст без всякого предупреждения.
+const hasTranslation = article?.hasTranslation ?? true;
+
+const formattedDate = article
+  ? new Intl.DateTimeFormat(HTML_LANG[lang], {
+      year: 'numeric', month: 'long', day: 'numeric',
+    }).format(new Date(article.pubDate))
+  : '';
+
+const ytId = article?.youtube ? youtubeId(article.youtube) : null;
+const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&auto=format` : undefined;
 ---
 
-<BaseLayout
-  lang={lang}
-  title={displayTitle}
-  description={displayDescription}
-  currentPath={`articles/${article.id}`}
-  ogImage={ogImage}
->
-  <div class="reading-progress" aria-hidden="true">
-    <div class="reading-progress-bar" id="reading-progress-bar"></div>
-  </div>
-
-  <header class="page-head page-head--article" style={`--card-color: ${cardColor}`}>
-    <div class="page-head-art">
-      {article.imageUrl
-        ? <img src={`${article.imageUrl}?w=1400&h=500&fit=crop&auto=format`} alt={displayTitle} loading="eager" width="1400" height="500" class="page-head-photo" />
-        : <ArticleArt seed={article.id} color={cardColor} icon={icon} />
-      }
-    </div>
-    <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href={path(lang)}>{t.nav.home}</a>
-        <span class="sep">/</span>
-        {article.section && (
-          <a href={path(lang, article.section)}>
-            {t.sections[article.section as keyof typeof t.sections] ?? article.section}
-          </a>
-        )}
-        <span class="sep">/</span>
-        <span>{displayTitle}</span>
-      </nav>
-      <h1>{displayTitle}</h1>
-      <p class="lede">{displayDescription}</p>
-      <div class="article-meta" style="margin-top:1rem; border-top:none; padding-top:0;">
-        <span>{t.article.publishedOn} {formattedDate}</span>
-        <span class="dot">{t.article.author}: {article.author}</span>
-        <span class="dot">{article.readingTime} {t.article.readingTime}</span>
-      </div>
-    </div>
-  </header>
-
-  <article class="section">
-    <div class="container">
-      {!hasTranslation && (
-        <p class="notice">{t.article.translationNotice}</p>
-      )}
-      <div class="prose" set:html={bodyHtml} />
-      {ytId && (
-        <div class="yt-embed">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${ytId}`}
-            title="YouTube video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
+{article === null ? (
+  <BaseLayout
+    lang={lang}
+    title={errorCopy.title}
+    description={errorCopy.body}
+    currentPath={`articles/${slug}`}
+    noindex
+  >
+    <header class="page-head">
+      <div class="container">
+        <h1>{errorCopy.title}</h1>
+        <p class="lede">{errorCopy.body}</p>
+        <div class="nf-actions">
+          <a href={path(lang)} class="btn btn--primary">{t.notFound.backHome}</a>
+          <a href={path(lang, 'faq')} class="btn">{t.nav.faq}</a>
         </div>
-      )}
-      <div class="prose-foot">
-        {article.section && (
-          <a href={path(lang, article.section)} class="back-link">
-            ← {t.article.back}: {t.sections[article.section as keyof typeof t.sections] ?? article.section}
-          </a>
-        )}
       </div>
-    </div>
-  </article>
-</BaseLayout>
+    </header>
+  </BaseLayout>
+) : (
+  <BaseLayout
+    lang={lang}
+    title={displayTitle}
+    description={displayDescription}
+    currentPath={`articles/${article.id}`}
+    ogImage={ogImage}
+  >
+    {/*
+      Обложка больше не растягивается на всю ширину под заголовком: размытая
+      подложка спорила с текстом и снижала читаемость на каждой статье.
+      Картинка, если редактор её загрузил, стоит внутри колонки чтения как
+      обычная иллюстрация — на своём месте и в своём масштабе.
+    */}
+    <header class="page-head article-head">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href={path(lang)}>{t.nav.home}</a>
+          <span class="sep">/</span>
+          {article.section && (
+            <a href={path(lang, article.section)}>
+              {t.sections[article.section as keyof typeof t.sections] ?? article.section}
+            </a>
+          )}
+        </nav>
+        <h1>{displayTitle}</h1>
+        <p class="lede">{displayDescription}</p>
+        <div class="article-meta">
+          <span>{formattedDate}</span>
+          <span>{t.article.author}: {article.author}</span>
+        </div>
+      </div>
+    </header>
 
-<script>
-  const bar = document.getElementById('reading-progress-bar');
-  function updateProgress() {
-    if (!bar) return;
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    const ratio = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
-    bar.style.width = `${ratio * 100}%`;
-  }
-  updateProgress();
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  window.addEventListener('resize', updateProgress);
-</script>
+    <article class="section">
+      <div class="container">
+        <div class="article-body">
+          {/*
+            Тот же рельс, что на указателе. Читатель, перешедший со списка,
+            попадает в знакомую конструкцию — цифра осталась на месте и
+            держится при прокрутке, отвечая на вопрос «сколько ещё».
+          */}
+          <div class="article-rail">
+            <span class="idx-min">{article.readingTime}</span>
+            <span class="idx-unit">{t.article.readingUnit}</span>
+          </div>
+
+          <div class="article-content">
+            {!hasTranslation && (
+              <p class="notice">{t.article.translationNotice}</p>
+            )}
+
+            <div class="prose" set:html={bodyHtml} />
+
+            {article.imageUrl && (
+              <figure class="article-figure">
+                <img
+                  src={`${article.imageUrl}?w=1000&fit=max&auto=format`}
+                  alt={displayTitle}
+                  loading="lazy"
+                />
+              </figure>
+            )}
+
+            {ytId && (
+              <div class="yt-embed">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${ytId}`}
+                  title="YouTube video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+            )}
+
+            <div class="prose-foot">
+              {article.section && (
+                <a href={path(lang, article.section)} class="back-link">
+                  {`← ${t.article.back}: ${t.sections[article.section as keyof typeof t.sections] ?? article.section}`}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </BaseLayout>
+)}

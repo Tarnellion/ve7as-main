@@ -2,26 +2,53 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
 import { useTranslations } from '../../../i18n/ui';
-import { type Language } from '../../../i18n/languages';
+import { isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { sectionColor } from '../../../i18n/sectionTheme';
-import { getSections, getArticles, isBlockedInCountry } from '../../../lib/sanity';
+import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
+
+// Подстраховка: в SSR [lang] ловит любой первый сегмент, поэтому без проверки
+// /foo/casino-slots/ отдавал бы 200 с русским контентом (soft-404).
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
 const t = useTranslations(lang);
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const sections = await getSections();
-const section = sections.find((s) => s.id === sectionId);
-if (!section) return Astro.redirect(path(lang));
+// Список разделов и статьи раздела — одним заходом. Фильтр по разделу теперь
+// в GROQ: раньше страница забирала все статьи портала и отсеивала чужие в JS.
+const [sectionsResult, articlesResult] = await Promise.all([
+  getSections(),
+  getArticles(lang, { section: sectionId }),
+]);
 
-const sectionTitle = t.sections[section.id as keyof typeof t.sections] ?? section.title;
-const sectionDesc = t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.description;
+// Порядок проверок важен. Если список разделов не загрузился, «раздел не
+// найден» — неправда: мы просто не знаем, существует он или нет. 404 здесь
+// выбил бы живой URL из индекса из-за нашего же сбоя, поэтому 503.
+if (sectionsResult.failed) {
+  markContentUnavailable(Astro.response);
+}
 
-const allArticles = await getArticles();
-const articles = allArticles
-  .filter((a) => a.section === sectionId)
-  .filter((a) => !isBlockedInCountry(a.blockedIn, country));
+const section = sectionsResult.data.find((s) => s.id === sectionId);
+// Несуществующий раздел — честный 404, а не редирект на главную:
+// редирект Google трактует как soft-404 и держит URL в индексе.
+if (!section && !sectionsResult.failed) return Astro.rewrite('/404');
+
+const sectionTitle = section
+  ? t.sections[section.id as keyof typeof t.sections] ?? section.title
+  : t.sections[sectionId as keyof typeof t.sections] ?? sectionId;
+const sectionDesc = section
+  ? t.sectionDescriptions[section.id as keyof typeof t.sectionDescriptions] ?? section.description
+  : t.sectionDescriptions[sectionId as keyof typeof t.sectionDescriptions] ?? '';
+
+const articles = articlesResult.data.filter((a) => !isBlockedInCountry(a.blockedIn, country));
+
+// Список статей и есть содержимое страницы: его пропажа — тоже 503.
+const dataFailed = sectionsResult.failed || articlesResult.failed;
+const errorCopy = DATA_ERROR_COPY[lang];
+if (articlesResult.failed) markContentUnavailable(Astro.response);
+
 const cardColor = sectionColor(sectionId);
 ---
 
@@ -33,19 +60,27 @@ const cardColor = sectionColor(sectionId);
         <span class="sep">/</span>
         <span>{sectionTitle}</span>
       </nav>
-      <h1><span class="page-head-icon">{section.icon}</span> {sectionTitle}</h1>
+      <h1>{sectionTitle}</h1>
       <p class="lede">{sectionDesc}</p>
     </div>
   </header>
 
   <section class="section">
     <div class="container">
+      {dataFailed && (
+        <p class="notice notice--error">
+          <strong>{errorCopy.title}.</strong> {errorCopy.body}
+        </p>
+      )}
+
       {articles.length > 0 ? (
-        <div class="article-grid">
+        <div class="idx">
           {articles.map((article) => <ArticleCard lang={lang} article={article} />)}
         </div>
       ) : (
-        <p class="section-sub">—</p>
+        // Прочерк — это «в разделе пока пусто». При сбое выше стоит плашка,
+        // так что пустота от сбоя и пустота по сути читаются по-разному.
+        !dataFailed && <p class="section-sub">—</p>
       )}
     </div>
   </section>

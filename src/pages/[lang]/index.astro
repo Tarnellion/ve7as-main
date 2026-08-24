@@ -1,125 +1,66 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import ArticleArt from '../../components/ArticleArt.astro';
 import { useTranslations } from '../../i18n/ui';
-import { path } from '../../i18n/utils';
-import { sectionColor, sectionIcon } from '../../i18n/sectionTheme';
-import { HTML_LANG, type Language } from '../../i18n/languages';
-import { getSections, getArticles, getArticleText, isBlockedInCountry } from '../../lib/sanity';
+import { isLanguage, type Language } from '../../i18n/languages';
+import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../lib/sanity';
 
 const { lang } = Astro.params as { lang: Language };
+
+// Подстраховка: в SSR [lang] ловит любой первый сегмент, поэтому без проверки
+// /foo/ отдавал бы 200 с русской главной — soft-404 и дубль контента.
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
 const t = useTranslations(lang);
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const [sections, allArticles] = await Promise.all([
+const [sectionsResult, articlesResult] = await Promise.all([
   getSections(),
-  getArticles(),
+  getArticles(lang),
 ]);
 
-const articles = allArticles.filter((a) => !isBlockedInCountry(a.blockedIn, country));
+const articles = articlesResult.data.filter((a) => !isBlockedInCountry(a.blockedIn, country));
 
-const latestArticles = articles.slice(0, 7);
-const [featuredArticle, ...restArticles] = latestArticles;
-const sidebarArticles = restArticles.slice(0, 3);
-const rowArticles = restArticles.slice(3);
-
-const featuredTitle = featuredArticle ? getArticleText(featuredArticle, 'title', lang) : '';
-const featuredDescription = featuredArticle ? getArticleText(featuredArticle, 'description', lang) : '';
-const featuredColor = sectionColor(featuredArticle?.section ?? '');
-const featuredDate = featuredArticle
-  ? new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(featuredArticle.pubDate))
-  : '';
-const featuredSection = sections.find((s) => s.id === featuredArticle?.section);
-
-const todayDate = new Intl.DateTimeFormat(HTML_LANG[lang], { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date());
-
+// Сбой CMS не кладёт главную: она рендерится с пустым указателем и явным
+// сообщением. Плашка обязательна — иначе «в CMS пусто» и «CMS недоступна»
+// выглядят одинаково. Статус 503 ставим только когда пропал основной контент
+// (список статей); упавшая навигация по разделам страницу не обессмысливает.
+const dataFailed = sectionsResult.failed || articlesResult.failed;
+const errorCopy = DATA_ERROR_COPY[lang];
+if (articlesResult.failed) markContentUnavailable(Astro.response);
 ---
 
 <BaseLayout lang={lang} title={t.hero.title} description={t.hero.subtitle} currentPath="">
 
-  <!-- Editorial dateline bar -->
-  <div class="ed-bar">
+  {/*
+    Главная — указатель, а не витрина. Сетка карточек продаёт, список
+    объясняет; для редакции, которая заявляет «ноль партнёрских ссылок»,
+    второе честнее. Порядок хронологический, без выделенного главного
+    материала: у объяснителя нет «горящей новости».
+  */}
+  <header class="page-head">
     <div class="container">
-      <div class="ed-bar-inner">
-        <span>{t.hero.subtitle}</span>
-        <time>{todayDate}</time>
-      </div>
+      <h1>{t.hero.title}</h1>
+      <p class="lede">{t.hero.subtitle}</p>
     </div>
-  </div>
+  </header>
 
-  <!-- Category nav -->
-  <nav class="cat-nav" aria-label={t.home.sectionsTitle}>
+  <section class="section">
     <div class="container">
-      <div class="cat-nav-scroll">
-        {sections.map((section) => (
-          <a href={path(lang, section.id)} class="cat-nav-link">
-            {section.icon} {t.sections[section.id as keyof typeof t.sections] ?? section.title}
-          </a>
-        ))}
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main editorial feed -->
-  <section class="section" id="articles">
-    <div class="container">
-      <div class="ed-section-label">{t.home.latestTitle}</div>
-
-      {featuredArticle && (
-        <div class="ed-grid">
-          <!-- Lead article -->
-          <a href={path(lang, 'articles', featuredArticle.id)} class="ed-lead" style={`--card-color: ${featuredColor}`}>
-            <div class="ed-lead-image">
-              {featuredArticle.imageUrl
-                ? <img src={`${featuredArticle.imageUrl}?w=840&h=472&fit=crop&auto=format`} alt={featuredTitle} loading="eager" width="840" height="472" />
-                : <ArticleArt seed={featuredArticle.id} color={featuredColor} icon={featuredSection?.icon ?? sectionIcon(featuredArticle.section)} />
-              }
-            </div>
-            <span class="ed-lead-cat">{t.sections[featuredArticle.section as keyof typeof t.sections] ?? featuredArticle.section}</span>
-            <h2 class="ed-lead-title">{featuredTitle}</h2>
-            <p class="ed-lead-desc">{featuredDescription}</p>
-            <div class="article-meta" style="border:none;padding:0;margin-top:0.2rem">
-              <span>{featuredDate}</span>
-              <span class="dot">{featuredArticle.readingTime} {t.article.readingTime}</span>
-            </div>
-          </a>
-
-          <!-- Sidebar -->
-          <div class="ed-sidebar">
-            {sidebarArticles.map((article) => (
-              <a href={path(lang, 'articles', article.id)} class="ed-sidebar-item" style={`--card-color: ${sectionColor(article.section)}`}>
-                <span class="ed-sidebar-cat">{t.sections[article.section as keyof typeof t.sections] ?? article.section}</span>
-                <div class="ed-sidebar-inner">
-                  {article.imageUrl && (
-                    <div class="ed-sidebar-img">
-                      <img src={`${article.imageUrl}?w=160&h=112&fit=crop&auto=format`} alt="" loading="lazy" width="80" height="56" />
-                    </div>
-                  )}
-                  <div>
-                    <p class="ed-sidebar-title">{getArticleText(article, 'title', lang)}</p>
-                    <div class="article-meta" style="border:none;padding:0;margin-top:0.3rem">
-                      <span>{new Intl.DateTimeFormat(HTML_LANG[lang], { month: 'short', day: 'numeric' }).format(new Date(article.pubDate))}</span>
-                      <span class="dot">{article.readingTime} {t.article.readingTime}</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
+      {dataFailed && (
+        <p class="notice notice--error">
+          <strong>{errorCopy.title}.</strong> {errorCopy.body}
+        </p>
       )}
 
-      {rowArticles.length > 0 && (
-        <>
-          <div class="ed-divider"></div>
-          <div class="ed-row">
-            {rowArticles.map((article) => <ArticleCard lang={lang} article={article} />)}
-          </div>
-        </>
+      {articles.length > 0 ? (
+        <div class="idx">
+          {articles.map((article) => <ArticleCard lang={lang} article={article} />)}
+        </div>
+      ) : (
+        !dataFailed && <p class="section-sub">—</p>
       )}
     </div>
   </section>
-
 
 </BaseLayout>

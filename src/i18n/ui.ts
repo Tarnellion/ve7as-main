@@ -32,8 +32,18 @@ export interface Translation {
     viewAll: string;
   };
   section: { articlesIn: string };
+  notFound: {
+    title: string;
+    description: string;
+    backHome: string;
+    sectionsTitle: string;
+  };
   article: {
     readingTime: string;
+    /** Короткая единица для рельса: под крупной цифрой полная
+     *  формулировка вроде «min de lectura» ложится в две строки и ломает
+     *  колонку чисел. */
+    readingUnit: string;
     publishedOn: string;
     author: string;
     back: string;
@@ -90,8 +100,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Смотреть все',
     },
     section: { articlesIn: 'Статьи в разделе' },
+    notFound: {
+      title: 'Страница не найдена',
+      description:
+        'Такой страницы у нас нет: материал могли удалить или переименовать, а ссылка — содержать опечатку. Начните с главной или выберите раздел ниже.',
+      backHome: 'Вернуться на главную',
+      sectionsTitle: 'Разделы портала',
+    },
     article: {
       readingTime: 'мин чтения',
+      readingUnit: 'мин',
       publishedOn: 'Опубликовано',
       author: 'Автор',
       back: 'Назад к разделу',
@@ -151,8 +169,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'View all',
     },
     section: { articlesIn: 'Articles in this section' },
+    notFound: {
+      title: 'Page not found',
+      description:
+        'This page does not exist: the material may have been removed or renamed, or the link contains a typo. Start from the homepage or pick a section below.',
+      backHome: 'Back to homepage',
+      sectionsTitle: 'Browse the sections',
+    },
     article: {
       readingTime: 'min read',
+      readingUnit: 'min',
       publishedOn: 'Published',
       author: 'Author',
       back: 'Back to section',
@@ -212,8 +238,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Ver todo',
     },
     section: { articlesIn: 'Artículos de esta sección' },
+    notFound: {
+      title: 'Página no encontrada',
+      description:
+        'Esta página no existe: el contenido pudo eliminarse o cambiar de nombre, o el enlace tiene una errata. Empieza por la portada o elige una sección más abajo.',
+      backHome: 'Volver al inicio',
+      sectionsTitle: 'Secciones del portal',
+    },
     article: {
       readingTime: 'min de lectura',
+      readingUnit: 'min',
       publishedOn: 'Publicado',
       author: 'Autor',
       back: 'Volver a la sección',
@@ -273,8 +307,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Ver tudo',
     },
     section: { articlesIn: 'Artigos desta secção' },
+    notFound: {
+      title: 'Página não encontrada',
+      description:
+        'Esta página não existe: o conteúdo pode ter sido removido ou renomeado, ou a ligação tem um erro. Comece pela página inicial ou escolha uma secção abaixo.',
+      backHome: 'Voltar ao início',
+      sectionsTitle: 'Secções do portal',
+    },
     article: {
       readingTime: 'min de leitura',
+      readingUnit: 'min',
       publishedOn: 'Publicado',
       author: 'Autor',
       back: 'Voltar à secção',
@@ -334,8 +376,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Alle ansehen',
     },
     section: { articlesIn: 'Artikel in diesem Bereich' },
+    notFound: {
+      title: 'Seite nicht gefunden',
+      description:
+        'Diese Seite existiert nicht: Der Beitrag wurde möglicherweise gelöscht oder umbenannt, oder der Link enthält einen Tippfehler. Beginnen Sie auf der Startseite oder wählen Sie unten einen Bereich.',
+      backHome: 'Zur Startseite',
+      sectionsTitle: 'Themenbereiche des Portals',
+    },
     article: {
       readingTime: 'Min. Lesezeit',
+      readingUnit: 'Min',
       publishedOn: 'Veröffentlicht',
       author: 'Autor',
       back: 'Zurück zum Bereich',
@@ -396,8 +446,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Tout voir',
     },
     section: { articlesIn: 'Articles de cette rubrique' },
+    notFound: {
+      title: 'Page introuvable',
+      description:
+        "Cette page n'existe pas : le contenu a peut-être été supprimé ou renommé, ou le lien comporte une erreur. Repartez de l'accueil ou choisissez une rubrique ci-dessous.",
+      backHome: "Retour à l'accueil",
+      sectionsTitle: 'Rubriques du portail',
+    },
     article: {
       readingTime: 'min de lecture',
+      readingUnit: 'min',
       publishedOn: 'Publié le',
       author: 'Auteur',
       back: 'Retour à la rubrique',
@@ -458,8 +516,16 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Ver tudo',
     },
     section: { articlesIn: 'Artigos desta seção' },
+    notFound: {
+      title: 'Página não encontrada',
+      description:
+        'Esta página não existe: o conteúdo pode ter sido removido ou renomeado, ou o link tem um erro de digitação. Comece pela página inicial ou escolha uma seção abaixo.',
+      backHome: 'Voltar ao início',
+      sectionsTitle: 'Seções do portal',
+    },
     article: {
       readingTime: 'min de leitura',
+      readingUnit: 'min',
       publishedOn: 'Publicado em',
       author: 'Autor',
       back: 'Voltar para a seção',

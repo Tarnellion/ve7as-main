@@ -1,20 +1,31 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/ui';
-import { DEFAULT_LANGUAGE, type Language } from '../../i18n/languages';
-import { getFaqItems, renderMarkdown, getFaqText, isBlockedInCountry } from '../../lib/sanity';
+import { isLanguage, type Language } from '../../i18n/languages';
+import { getFaqItems, renderMarkdown, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../lib/sanity';
 
 const { lang } = Astro.params as { lang: Language };
+
+// Подстраховка: в SSR [lang] ловит любой первый сегмент, поэтому без проверки
+// /foo/faq/ отдавал бы 200 с русским контентом (soft-404).
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
 const t = useTranslations(lang);
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const allFaq = await getFaqItems();
-const faqItems = allFaq.filter((f) => !isBlockedInCountry(f.blockedIn, country));
+const faqResult = await getFaqItems(lang);
+const faqItems = faqResult.data.filter((f) => !isBlockedInCountry(f.blockedIn, country));
 
+// Сбой CMS оставляет страницу живой (шапка, навигация, футер), но список
+// вопросов — это и есть страница, поэтому статус 503, а не 200 с пустотой.
+const errorCopy = DATA_ERROR_COPY[lang];
+if (faqResult.failed) markContentUnavailable(Astro.response);
+
+// Тексты и признак перевода приходят из GROQ; флаг учитывает и вопрос, и ответ.
 const views = faqItems.map((item) => ({
-  question: getFaqText(item, 'question', lang),
-  answerHtml: renderMarkdown(getFaqText(item, 'answer', lang)),
-  hasTranslation: lang === DEFAULT_LANGUAGE || Boolean((item as Record<string, unknown>)[`question_${lang}`]),
+  question: item.question,
+  answerHtml: renderMarkdown(item.answer),
+  hasTranslation: item.hasTranslation,
 }));
 
 const missingTranslation = views.some((v) => !v.hasTranslation);
@@ -30,6 +41,12 @@ const missingTranslation = views.some((v) => !v.hasTranslation);
 
   <section class="section">
     <div class="container">
+      {faqResult.failed && (
+        <p class="notice notice--error">
+          <strong>{errorCopy.title}.</strong> {errorCopy.body}
+        </p>
+      )}
+
       {missingTranslation && <p class="notice">{t.article.translationNotice}</p>}
 
       <div class="faq-list">

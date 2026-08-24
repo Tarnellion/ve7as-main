@@ -2,43 +2,41 @@
 import { HTML_LANG, type Language } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/utils';
-import { sectionColor, sectionIcon } from '../i18n/sectionTheme';
-import ArticleArt from './ArticleArt.astro';
-import { getArticleText, type SanityArticle } from '../lib/sanity';
+import { type SanityArticleCard } from '../lib/sanity';
 
 interface Props {
   lang: Language;
-  article: SanityArticle;
+  article: SanityArticleCard;
 }
 
 const { lang, article } = Astro.props;
 const t = useTranslations(lang);
-const { section, pubDate, readingTime } = article;
-
-const title = getArticleText(article, 'title', lang);
-const description = getArticleText(article, 'description', lang);
+// Язык выбран ещё в GROQ-проекции (с фолбэком на русский), строке индекса
+// остаётся только вывести готовые значения.
+const { section, pubDate, readingTime, title, description } = article;
 
 const formattedDate = new Intl.DateTimeFormat(HTML_LANG[lang], {
   year: 'numeric', month: 'long', day: 'numeric',
 }).format(new Date(pubDate));
 ---
 
-<a
-  href={path(lang, 'articles', article.id)}
-  class:list={['article-card', { 'article-card--featured': article.featured }]}
-  style={`--card-color: ${sectionColor(section)}`}
->
-  <div class="article-card-art">
-    {article.imageUrl
-      ? <img src={`${article.imageUrl}?w=600&h=340&fit=crop&auto=format`} alt={title} loading="lazy" width="600" height="340" />
-      : <ArticleArt seed={article.id} color={sectionColor(section)} icon={sectionIcon(section)} />
-    }
-  </div>
-  <span class="article-tag">{t.sections[section as keyof typeof t.sections] ?? section}</span>
-  <h3>{title}</h3>
-  <p>{description}</p>
-  <div class="article-meta">
-    <span>{formattedDate}</span>
-    <span class="dot">{readingTime} {t.article.readingTime}</span>
-  </div>
+{/*
+  Строка указателя. Одна и та же на главной и в архиве раздела: обе страницы —
+  списки статей, и разводить их в разные компоненты значило бы поддерживать
+  два вида одного и того же.
+
+  Время чтения слева крупной цифрой — это выбор читателя объясняющего портала:
+  он решает не «что красивее», а «на сколько я готов вникнуть».
+*/}
+<a href={path(lang, 'articles', article.id)} class="idx-row">
+  <span class="idx-time">
+    <span class="idx-min">{readingTime}</span>
+    <span class="idx-unit">{t.article.readingUnit}</span>
+  </span>
+  <span class="idx-body">
+    <span class="idx-sect">{t.sections[section as keyof typeof t.sections] ?? section}</span>
+    <span class="idx-title">{title}</span>
+    <span class="idx-desc">{description}</span>
+    <span class="idx-date">{formattedDate}</span>
+  </span>
 </a>
