@@ -1,14 +1,40 @@
 name: Deploy to Cloudflare
 
+# Только push в main. Триггер `repository_dispatch: [sanity-deploy]` убран
+# осознанно — не возвращай его, не прочитав это.
+#
+# Сайт целиком SSR: `prerender` не выставлен ни на одном роуте, Sanity
+# читается на каждый запрос (`src/lib/sanity.ts`, useCdn: true). Новый или
+# отредактированный контент виден на сайте сразу, максимум с задержкой на
+# CDN-кэш Sanity. Пересборка ничего не публикует.
+#
+# То есть вебхук из Sanity давал ровно обратный эффект: 2–4 минуты ожидания
+# сборки вместо мгновенной публикации, лишние прогоны CI и риск гонки за
+# один воркер. Деплой нужен только когда меняется код: src/**, стили,
+# строки в src/i18n/, локальный Markdown в src/content/, конфиги.
+#
+# Вебхук на стороне Sanity надо отключить отдельно — см. отчёт/README.
 on:
   push:
     branches: [main]
-  repository_dispatch:
-    types: [sanity-deploy]
+  workflow_dispatch:
+
+# Один активный деплой на ветку. Без этого два быстрых push подряд гонят
+# два `wrangler deploy` в один воркер, и выигрывает тот, кто финиширует
+# вторым, — не обязательно тот, чей коммит новее.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+# Воркфлоу только читает репозиторий. Деплоит по CLOUDFLARE_API_TOKEN,
+# токен GITHUB_TOKEN ему для записи не нужен.
+permissions:
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -19,11 +45,15 @@ jobs:
 
       - run: npm ci
 
+      # SANITY_API_TOKEN больше не пишется: датасет публичный, клиент ходит
+      # анонимно. Токен только вытягивал черновики и запрещал кэш на CDN.
       - name: Create .env
         run: |
           echo "SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}" > .env
           echo "SANITY_DATASET=${{ secrets.SANITY_DATASET }}" >> .env
-          printf "SANITY_API_TOKEN=%s" "${{ secrets.SANITY_API_TOKEN }}" >> .env
+
+      - name: Typecheck
+        run: npx astro check
 
       - name: Build Astro
         run: npm run build
@@ -35,3 +65,29 @@ jobs:
         run: npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      # Деплой, который вернул 0, ещё не значит работающий сайт: воркер может
+      # упасть на первом же запросе (Error 1101) — так уже было из-за KV
+      # SESSION без id. Проверяем реальную страницу.
+      # Новой версии нужно время раскатиться по краю, поэтому несколько
+      # попыток с паузой, а не один запрос сразу после деплоя.
+      - name: Smoke test production
+        run: |
+          set -uo pipefail
+          url="https://ve7as.com/ru/"
+          attempts=6
+          delay=10
+          for attempt in $(seq 1 "$attempts"); do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$url") || code=000
+            if [ "$code" = "200" ]; then
+              echo "OK: $url -> 200 (попытка $attempt из $attempts)"
+              exit 0
+            fi
+            echo "попытка $attempt из $attempts: $url -> $code"
+            if [ "$attempt" -lt "$attempts" ]; then
+              sleep "$delay"
+            fi
+          done
+          echo "FAIL: $url так и не отдал 200 за $attempts попыток (~$(( attempts * delay ))s)."
+          echo "Смотри логи воркера: npx wrangler tail (observability включена в wrangler.toml)."
+          exit 1

@@ -1,5 +1,21 @@
 name = "ve7as-main"
-compatibility_date = "2025-01-01"
 
+# Держим дату в пределах, которые понимает установленный workerd
+# (см. `npx wrangler --version`). Дата выше поддерживаемой ломает
+# и dry-run, и локальный preview.
+compatibility_date = "2026-06-01"
+
+# ВНИМАНИЕ: этот [assets] блок фактически не применяется.
+# Деплой идёт через redirected configuration: .wrangler/deploy/config.json
+# указывает wrangler на сгенерированный dist/server/wrangler.json, где
+# adapter выставляет свой assets.directory = "../client" (и binding ASSETS).
+# Значения отсюда лишь мержатся адаптером как база, directory он перетирает.
+# Менять путь здесь бессмысленно — правится в @astrojs/cloudflare.
 [assets]
 directory = "./dist"
+
+# Логи Workers по умолчанию выключены: в проде нечем диагностировать 500-е
+# и падения SSR-роутов. Включаем — логи видны в дашборде и `wrangler tail`.
+[observability]
+enabled = true
+head_sampling_rate = 1
