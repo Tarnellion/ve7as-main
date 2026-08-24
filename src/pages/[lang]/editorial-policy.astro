@@ -1,0 +1,9 @@
+---
+import StaticPageLayout from '../../layouts/StaticPageLayout.astro';
+import type { Language } from '../../i18n/languages';
+
+
+const { lang } = Astro.params as { lang: Language };
+---
+
+<StaticPageLayout lang={lang} pageId="editorial-policy" currentPath="editorial-policy" />

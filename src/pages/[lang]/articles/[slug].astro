@@ -7,6 +7,26 @@ import { getArticleBySlug, renderMarkdown, isBlockedInCountry, youtubeId, markCo
 import { article as articleSchema, breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
 
+/**
+ * Связка статья → инструмент. Тело статьи живёт в Sanity и ссылку на инструмент
+ * туда не вставить без миграции контента, поэтому связь держит шаблон: у слага
+ * из этой карты после текста рендерится плашка с приглашением посчитать.
+ */
+const RELATED_TOOL: Record<string, { segments: string[]; label: Record<Language, string> }> = {
+  'wagering-explained': {
+    segments: ['tools', 'wagering-calculator'],
+    label: {
+      ru: 'Посчитайте свой бонус: калькулятор вейджера',
+      en: 'Run your own numbers: wagering calculator',
+      es: 'Calcule su bono: calculadora de rollover',
+      pt: 'Calcule o seu bónus: calculadora de rollover',
+      de: 'Rechnen Sie selbst nach: Umsatz-Rechner',
+      fr: 'Faites le calcul : calculateur de wagering',
+      br: 'Calcule o seu bônus: calculadora de rollover',
+    },
+  },
+};
+
 const { lang, slug } = Astro.params as { lang: Language; slug: string };
 
 // Подстраховка: в SSR [lang] ловит любой первый сегмент, поэтому без проверки
@@ -70,6 +90,9 @@ const sectionName = article?.section
   ? (t.sections[article.section as keyof typeof t.sections] ?? article.section)
   : '';
 const canonical = article ? new URL(path(lang, 'articles', article.id), Astro.site) : null;
+const authorUrl = article?.authorSlug
+  ? new URL(path(lang, 'authors', article.authorSlug), Astro.site).toString()
+  : undefined;
 
 const schema = article && canonical
   ? [
@@ -80,6 +103,7 @@ const schema = article && canonical
         datePublished: article.pubDate,
         dateModified: article._updatedAt,
         authorName: article.author,
+        authorUrl,
         imageUrl: article.imageUrl,
         lang,
         section: sectionName || undefined,
@@ -145,7 +169,13 @@ const schema = article && canonical
         <div class="article-meta">
           <span>{formattedDate}</span>
           {showUpdated && <span>{t.article.updatedOn}: {formattedUpdated}</span>}
-          <span>{t.article.author}: {article.author}</span>
+          <span>
+            {t.article.author}:{' '}
+            {article.authorSlug
+              ? <a class="meta-link" href={path(lang, 'authors', article.authorSlug)}>{article.author}</a>
+              : article.author}
+          </span>
+          <a href={path(lang, 'editorial-policy')} class="meta-link">{t.footer.editorial}</a>
         </div>
       </div>
     </header>
@@ -190,6 +220,14 @@ const schema = article && canonical
                   loading="lazy"
                 ></iframe>
               </div>
+            )}
+
+            {RELATED_TOOL[article.id] && (
+              <p class="tool-promo">
+                <a href={path(lang, ...RELATED_TOOL[article.id].segments)}>
+                  {RELATED_TOOL[article.id].label[lang]} →
+                </a>
+              </p>
             )}
 
             <ResponsibleGaming lang={lang} />

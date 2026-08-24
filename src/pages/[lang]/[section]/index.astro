@@ -5,7 +5,7 @@ import { useTranslations } from '../../../i18n/ui';
 import { isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { type SectionId } from '../../../i18n/sections';
-import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
+import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY, renderMarkdown } from '../../../lib/sanity';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
 
@@ -19,7 +19,7 @@ const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 // Список разделов и статьи раздела — одним заходом. Фильтр по разделу теперь
 // в GROQ: раньше страница забирала все статьи портала и отсеивала чужие в JS.
 const [sectionsResult, articlesResult] = await Promise.all([
-  getSections(),
+  getSections({ bodyLang: lang }),
   getArticles(lang, { section: sectionId }),
 ]);
 
@@ -42,6 +42,11 @@ const sectionTitle = t.sections[knownId] ?? section?.title ?? sectionId;
 const sectionDesc = t.sectionDescriptions[knownId] ?? section?.description ?? '';
 
 const articles = articlesResult.data.filter((a) => !isBlockedInCountry(a.blockedIn, country));
+
+// Текст хаба. Пустой body — норма (хаб ещё не наполнен), рендерим просто
+// список; это не то же самое, что сбой CMS, который обрабатывается выше.
+const hubHtml = section?.body ? renderMarkdown(section.body) : '';
+const hubIsFallback = Boolean(section?.body) && section?.hasTranslation === false;
 
 // Список статей и есть содержимое страницы: его пропажа — тоже 503.
 const dataFailed = sectionsResult.failed || articlesResult.failed;
@@ -82,4 +87,18 @@ if (articlesResult.failed) markContentUnavailable(Astro.response);
       )}
     </div>
   </section>
+
+  {/*
+    Текст хаба — ПОД списком: указатель в этой теме главный, читатель приходит
+    за материалами, а объясняющий текст раскрывает рубрику тем, кто дошёл до
+    конца, и даёт хабу ранжироваться по категорийному запросу.
+  */}
+  {hubHtml && (
+    <section class="section">
+      <div class="container">
+        {hubIsFallback && <p class="notice">{t.article.translationNotice}</p>}
+        <div class="prose hub-text" set:html={hubHtml} />
+      </div>
+    </section>
+  )}
 </BaseLayout>

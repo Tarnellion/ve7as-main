@@ -1,0 +1,363 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isLanguage, HTML_LANG, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/ui';
+import { breadcrumbs } from '../../../lib/schema';
+import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+
+/**
+ * Калькулятор вейджера — первый инструмент-магнит из фазы 4 SEO-роадмапа.
+ *
+ * Топ выдачи по «wagering requirement» состоит из страниц с калькуляторами;
+ * текст без инструмента там не конкурент. Отличие этого калькулятора от
+ * существующих — честная «цена отыгрыша»: он считает не только оборот, но и
+ * ожидаемые потери на этом обороте через house edge, то есть показывает,
+ * сколько бонус стоит на самом деле.
+ *
+ * Весь расчёт — клиентский JS без единого запроса: нулевой бюджет проекта
+ * не тратится, квота Sanity не расходуется, страница работает без сети.
+ *
+ * Копия инструмента лежит локальным словарём, а не в `ui.ts`: это тексты
+ * одной страницы, и раздувать глобальный Translation ради них не нужно —
+ * тот же приём, что у DATA_ERROR_COPY в sanity.ts.
+ */
+
+const { lang } = Astro.params as { lang: Language };
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
+const t = useTranslations(lang);
+
+type ToolCopy = {
+  title: string;
+  metaTitle: string;
+  description: string;
+  lede: string;
+  bonus: string;
+  deposit: string;
+  depositHint: string;
+  multiplier: string;
+  multiplierHint: string;
+  weighting: string;
+  weightingHint: string;
+  rtp: string;
+  rtpHint: string;
+  betSize: string;
+  turnover: string;
+  turnoverNote: string;
+  effectiveTurnover: string;
+  bets: string;
+  expectedCost: string;
+  expectedCostNote: string;
+  verdictNote: string;
+  disclaimer: string;
+  articleLink: string;
+};
+
+const COPY: Record<Language, ToolCopy> = {
+  ru: {
+    title: 'Калькулятор вейджера',
+    metaTitle: 'Калькулятор вейджера: оборот и цена отыгрыша',
+    description: 'Считает оборот по бонусу и честную цену отыгрыша: сколько в среднем теряется на обороте при заданном RTP. Без регистрации.',
+    lede: 'Оборот, который требует бонус, — и сколько этот оборот стоит в среднем при заданном RTP. Все расчёты выполняются в браузере.',
+    bonus: 'Сумма бонуса',
+    deposit: 'Депозит (если отыгрывается)',
+    depositHint: 'Оставьте 0, если условия требуют отыгрывать только бонус.',
+    multiplier: 'Вейджер (множитель)',
+    multiplierHint: 'Например, 35 означает «×35».',
+    weighting: 'Вклад игры в отыгрыш, %',
+    weightingHint: 'Слоты обычно 100 %, настольные игры — меньше. Смотрите условия оператора.',
+    rtp: 'RTP игры, %',
+    rtpHint: 'Возврат игроку. У слотов обычно 94–97 %.',
+    betSize: 'Средняя ставка',
+    turnover: 'Требуемый оборот',
+    turnoverNote: 'Сумма ставок, которую нужно сделать.',
+    effectiveTurnover: 'Фактический оборот с учётом вклада',
+    bets: 'Ставок при средней ставке',
+    expectedCost: 'Ожидаемые потери на обороте',
+    expectedCostNote: 'Оборот × (100 % − RTP). Это средняя цена отыгрыша: в отдельной сессии результат может быть любым, но математическое ожидание именно такое.',
+    verdictNote: 'Если ожидаемые потери больше бонуса, отыгрыш в среднем убыточен.',
+    disclaimer: 'Калькулятор показывает математическое ожидание, а не прогноз вашей сессии. Условия бонусов различаются — проверяйте правила конкретного оператора.',
+    articleLink: 'Что такое вейджер и как его считать',
+  },
+  en: {
+    title: 'Wagering requirement calculator',
+    metaTitle: 'Wagering calculator: turnover and true cost',
+    description: 'Calculates the bonus turnover and the honest cost of clearing: the expected loss on that turnover at a given RTP. No sign-up.',
+    lede: 'The turnover a bonus demands — and what that turnover costs on average at a given RTP. Everything runs in your browser.',
+    bonus: 'Bonus amount',
+    deposit: 'Deposit (if it must be wagered)',
+    depositHint: 'Leave 0 if the terms require wagering the bonus only.',
+    multiplier: 'Wagering multiplier',
+    multiplierHint: 'For example, 35 means "×35".',
+    weighting: 'Game weighting, %',
+    weightingHint: 'Slots usually count 100%, table games less. Check the operator’s terms.',
+    rtp: 'Game RTP, %',
+    rtpHint: 'Return to player. Slots are typically 94–97%.',
+    betSize: 'Average bet size',
+    turnover: 'Required turnover',
+    turnoverNote: 'The total amount you must stake.',
+    effectiveTurnover: 'Actual turnover after weighting',
+    bets: 'Bets at the average size',
+    expectedCost: 'Expected loss on the turnover',
+    expectedCostNote: 'Turnover × (100% − RTP). This is the average price of clearing: any single session can end anywhere, but the expectation is exactly this.',
+    verdictNote: 'If the expected loss exceeds the bonus, clearing is unprofitable on average.',
+    disclaimer: 'The calculator shows mathematical expectation, not a prediction of your session. Bonus terms differ — always check the specific operator’s rules.',
+    articleLink: 'What wagering is and how to calculate it',
+  },
+  es: {
+    title: 'Calculadora de requisitos de apuesta',
+    metaTitle: 'Calculadora de rollover: volumen y coste real',
+    description: 'Calcula el volumen de apuestas del bono y el coste real de liberarlo: la pérdida esperada con un RTP dado. Sin registro.',
+    lede: 'El volumen que exige el bono y cuánto cuesta ese volumen de media con un RTP dado. Todo se calcula en su navegador.',
+    bonus: 'Importe del bono',
+    deposit: 'Depósito (si debe apostarse)',
+    depositHint: 'Deje 0 si las condiciones solo exigen apostar el bono.',
+    multiplier: 'Multiplicador (rollover)',
+    multiplierHint: 'Por ejemplo, 35 significa «×35».',
+    weighting: 'Contribución del juego, %',
+    weightingHint: 'Las tragaperras suelen contar el 100 %; los juegos de mesa, menos.',
+    rtp: 'RTP del juego, %',
+    rtpHint: 'Retorno al jugador. En tragaperras suele ser 94–97 %.',
+    betSize: 'Apuesta media',
+    turnover: 'Volumen requerido',
+    turnoverNote: 'La suma total que hay que apostar.',
+    effectiveTurnover: 'Volumen real según contribución',
+    bets: 'Apuestas con la apuesta media',
+    expectedCost: 'Pérdida esperada en el volumen',
+    expectedCostNote: 'Volumen × (100 % − RTP). Es el precio medio de liberar el bono.',
+    verdictNote: 'Si la pérdida esperada supera el bono, liberarlo es deficitario de media.',
+    disclaimer: 'La calculadora muestra la esperanza matemática, no una predicción de su sesión. Compruebe siempre las condiciones del operador.',
+    articleLink: 'Qué es el rollover y cómo calcularlo',
+  },
+  pt: {
+    title: 'Calculadora de requisitos de apostas',
+    metaTitle: 'Calculadora de rollover: volume e custo real',
+    description: 'Calcula o volume de apostas do bónus e o custo real de o libertar: a perda esperada com um dado RTP. Sem registo.',
+    lede: 'O volume que o bónus exige e quanto esse volume custa em média com um dado RTP. Tudo é calculado no seu navegador.',
+    bonus: 'Valor do bónus',
+    deposit: 'Depósito (se tiver de ser apostado)',
+    depositHint: 'Deixe 0 se as condições exigirem apostar apenas o bónus.',
+    multiplier: 'Multiplicador (rollover)',
+    multiplierHint: 'Por exemplo, 35 significa «×35».',
+    weighting: 'Contribuição do jogo, %',
+    weightingHint: 'As slots contam normalmente 100 %; os jogos de mesa, menos.',
+    rtp: 'RTP do jogo, %',
+    rtpHint: 'Retorno ao jogador. Nas slots é tipicamente 94–97 %.',
+    betSize: 'Aposta média',
+    turnover: 'Volume exigido',
+    turnoverNote: 'O total que é preciso apostar.',
+    effectiveTurnover: 'Volume real após contribuição',
+    bets: 'Apostas com a aposta média',
+    expectedCost: 'Perda esperada no volume',
+    expectedCostNote: 'Volume × (100 % − RTP). É o preço médio de libertar o bónus.',
+    verdictNote: 'Se a perda esperada exceder o bónus, libertá-lo é deficitário em média.',
+    disclaimer: 'A calculadora mostra a esperança matemática, não uma previsão da sua sessão. Verifique sempre as condições do operador.',
+    articleLink: 'O que é o rollover e como calculá-lo',
+  },
+  de: {
+    title: 'Umsatzbedingungen-Rechner',
+    metaTitle: 'Wagering-Rechner: Umsatz und echter Preis',
+    description: 'Berechnet den Bonusumsatz und den ehrlichen Preis der Freispielung: den erwarteten Verlust bei gegebenem RTP. Ohne Anmeldung.',
+    lede: 'Der Umsatz, den ein Bonus verlangt — und was dieser Umsatz bei gegebenem RTP im Schnitt kostet. Alles läuft im Browser.',
+    bonus: 'Bonusbetrag',
+    deposit: 'Einzahlung (falls umzusetzen)',
+    depositHint: '0 lassen, wenn nur der Bonus umgesetzt werden muss.',
+    multiplier: 'Umsatzfaktor',
+    multiplierHint: 'Zum Beispiel bedeutet 35 „×35“.',
+    weighting: 'Spielgewichtung, %',
+    weightingHint: 'Slots zählen meist 100 %, Tischspiele weniger.',
+    rtp: 'RTP des Spiels, %',
+    rtpHint: 'Auszahlungsquote. Bei Slots typischerweise 94–97 %.',
+    betSize: 'Durchschnittlicher Einsatz',
+    turnover: 'Geforderter Umsatz',
+    turnoverNote: 'Die Gesamtsumme, die gesetzt werden muss.',
+    effectiveTurnover: 'Tatsächlicher Umsatz nach Gewichtung',
+    bets: 'Einsätze bei durchschnittlicher Höhe',
+    expectedCost: 'Erwarteter Verlust auf dem Umsatz',
+    expectedCostNote: 'Umsatz × (100 % − RTP). Das ist der durchschnittliche Preis der Freispielung.',
+    verdictNote: 'Übersteigt der erwartete Verlust den Bonus, ist die Freispielung im Schnitt ein Verlustgeschäft.',
+    disclaimer: 'Der Rechner zeigt den Erwartungswert, keine Vorhersage Ihrer Session. Prüfen Sie stets die Bedingungen des Anbieters.',
+    articleLink: 'Was Umsatzbedingungen sind und wie man sie berechnet',
+  },
+  fr: {
+    title: 'Calculateur de conditions de mise',
+    metaTitle: 'Calculateur de wagering : volume et coût réel',
+    description: 'Calcule le volume de mises du bonus et le coût réel du déblocage : la perte attendue à RTP donné. Sans inscription.',
+    lede: 'Le volume que le bonus exige — et ce que ce volume coûte en moyenne à RTP donné. Tout se calcule dans votre navigateur.',
+    bonus: 'Montant du bonus',
+    deposit: 'Dépôt (s’il doit être misé)',
+    depositHint: 'Laissez 0 si les conditions n’exigent de miser que le bonus.',
+    multiplier: 'Multiplicateur de mise',
+    multiplierHint: 'Par exemple, 35 signifie « ×35 ».',
+    weighting: 'Contribution du jeu, %',
+    weightingHint: 'Les machines à sous comptent généralement 100 %, les jeux de table moins.',
+    rtp: 'RTP du jeu, %',
+    rtpHint: 'Taux de retour au joueur. Typiquement 94–97 % pour les machines à sous.',
+    betSize: 'Mise moyenne',
+    turnover: 'Volume exigé',
+    turnoverNote: 'La somme totale à miser.',
+    effectiveTurnover: 'Volume réel après contribution',
+    bets: 'Mises à la mise moyenne',
+    expectedCost: 'Perte attendue sur le volume',
+    expectedCostNote: 'Volume × (100 % − RTP). C’est le prix moyen du déblocage.',
+    verdictNote: 'Si la perte attendue dépasse le bonus, le déblocage est perdant en moyenne.',
+    disclaimer: 'Le calculateur montre l’espérance mathématique, pas une prédiction de votre session. Vérifiez toujours les conditions de l’opérateur.',
+    articleLink: 'Ce qu’est le wagering et comment le calculer',
+  },
+  br: {
+    title: 'Calculadora de rollover',
+    metaTitle: 'Calculadora de rollover: volume e custo real',
+    description: 'Calcula o volume de apostas do bônus e o custo real de liberá-lo: a perda esperada com um dado RTP. Sem cadastro.',
+    lede: 'O volume que o bônus exige — e quanto esse volume custa em média com um dado RTP. Tudo roda no seu navegador.',
+    bonus: 'Valor do bônus',
+    deposit: 'Depósito (se precisar ser apostado)',
+    depositHint: 'Deixe 0 se as condições exigirem apostar apenas o bônus.',
+    multiplier: 'Multiplicador (rollover)',
+    multiplierHint: 'Por exemplo, 35 significa “×35”.',
+    weighting: 'Contribuição do jogo, %',
+    weightingHint: 'Slots geralmente contam 100 %; jogos de mesa, menos.',
+    rtp: 'RTP do jogo, %',
+    rtpHint: 'Retorno ao jogador. Em slots costuma ser 94–97 %.',
+    betSize: 'Aposta média',
+    turnover: 'Volume exigido',
+    turnoverNote: 'O total que precisa ser apostado.',
+    effectiveTurnover: 'Volume real após contribuição',
+    bets: 'Apostas com a aposta média',
+    expectedCost: 'Perda esperada no volume',
+    expectedCostNote: 'Volume × (100 % − RTP). É o preço médio de liberar o bônus.',
+    verdictNote: 'Se a perda esperada passar do bônus, liberá-lo dá prejuízo em média.',
+    disclaimer: 'A calculadora mostra a expectativa matemática, não uma previsão da sua sessão. Sempre confira as condições do operador.',
+    articleLink: 'O que é rollover e como calcular',
+  },
+};
+
+const c = COPY[lang];
+const pageUrl = new URL(path(lang, 'tools', 'wagering-calculator'), Astro.site);
+
+const schema = [
+  {
+    '@type': 'SoftwareApplication' as const,
+    name: c.title,
+    description: c.description,
+    url: pageUrl.toString(),
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    inLanguage: HTML_LANG[lang],
+  },
+  breadcrumbs([
+    { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: c.title, url: pageUrl.toString() },
+  ]),
+];
+---
+
+<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/wagering-calculator" schema={schema}>
+  <header class="page-head">
+    <div class="container">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="calc" id="wagering-calc">
+        <form class="calc-form" autocomplete="off">
+          <div class="calc-field">
+            <label for="wc-bonus">{c.bonus}</label>
+            <input id="wc-bonus" type="number" min="0" step="any" value="100" inputmode="decimal" />
+          </div>
+          <div class="calc-field">
+            <label for="wc-deposit">{c.deposit}</label>
+            <input id="wc-deposit" type="number" min="0" step="any" value="0" inputmode="decimal" />
+            <small>{c.depositHint}</small>
+          </div>
+          <div class="calc-field">
+            <label for="wc-mult">{c.multiplier}</label>
+            <input id="wc-mult" type="number" min="1" step="any" value="35" inputmode="decimal" />
+            <small>{c.multiplierHint}</small>
+          </div>
+          <div class="calc-field">
+            <label for="wc-weight">{c.weighting}</label>
+            <input id="wc-weight" type="number" min="1" max="100" step="any" value="100" inputmode="decimal" />
+            <small>{c.weightingHint}</small>
+          </div>
+          <div class="calc-field">
+            <label for="wc-rtp">{c.rtp}</label>
+            <input id="wc-rtp" type="number" min="1" max="99.9" step="any" value="96" inputmode="decimal" />
+            <small>{c.rtpHint}</small>
+          </div>
+          <div class="calc-field">
+            <label for="wc-bet">{c.betSize}</label>
+            <input id="wc-bet" type="number" min="0" step="any" value="1" inputmode="decimal" />
+          </div>
+        </form>
+
+        <div class="calc-results" aria-live="polite">
+          <div class="calc-row">
+            <span class="calc-label">{c.turnover}</span>
+            <span class="calc-value" id="wc-turnover">—</span>
+            <small>{c.turnoverNote}</small>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.effectiveTurnover}</span>
+            <span class="calc-value" id="wc-effective">—</span>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.bets}</span>
+            <span class="calc-value" id="wc-bets">—</span>
+          </div>
+          <div class="calc-row calc-row--accent">
+            <span class="calc-label">{c.expectedCost}</span>
+            <span class="calc-value" id="wc-cost">—</span>
+            <small>{c.expectedCostNote}</small>
+          </div>
+          <p class="calc-note" id="wc-verdict" hidden>{c.verdictNote}</p>
+        </div>
+      </div>
+
+      <p class="notice">{c.disclaimer}</p>
+
+      <p class="calc-article-link">
+        <a href={path(lang, 'articles', 'wagering-explained')}>{c.articleLink} →</a>
+      </p>
+
+      <ResponsibleGaming lang={lang} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Чистая арифметика без сети. Формулы:
+  //   оборот           = (бонус + депозит?) × множитель
+  //   фактический      = оборот / (вклад / 100)  — при вкладе 50% крутить надо вдвое больше
+  //   ожидаемые потери = фактический × (1 − RTP/100)
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const out = (id: string) => document.getElementById(id)!;
+
+  const fmt = new Intl.NumberFormat(document.documentElement.lang, { maximumFractionDigits: 2 });
+
+  function recalc() {
+    const bonus = Math.max(0, Number($('wc-bonus').value) || 0);
+    const deposit = Math.max(0, Number($('wc-deposit').value) || 0);
+    const mult = Math.max(1, Number($('wc-mult').value) || 1);
+    const weight = Math.min(100, Math.max(1, Number($('wc-weight').value) || 100));
+    const rtp = Math.min(99.9, Math.max(1, Number($('wc-rtp').value) || 96));
+    const bet = Math.max(0, Number($('wc-bet').value) || 0);
+
+    const turnover = (bonus + deposit) * mult;
+    const effective = turnover / (weight / 100);
+    const cost = effective * (1 - rtp / 100);
+
+    out('wc-turnover').textContent = fmt.format(turnover);
+    out('wc-effective').textContent = fmt.format(effective);
+    out('wc-bets').textContent = bet > 0 ? fmt.format(Math.ceil(effective / bet)) : '—';
+    out('wc-cost').textContent = fmt.format(cost);
+    (out('wc-verdict') as HTMLElement).hidden = !(bonus > 0 && cost > bonus);
+  }
+
+  document.querySelectorAll('#wagering-calc input').forEach((el) => el.addEventListener('input', recalc));
+  recalc();
+</script>

@@ -13,7 +13,7 @@
    поле readingTime заполнено у всех статей.
 
    Порядок блоков: Токены · Сброс · Каркас · Шапка · Подвал · Индекс ·
-   Шапка страницы · Проза · FAQ · Плашки · 404 · Адаптив
+   Шапка страницы · Проза · FAQ · Плашки · Инструменты · 404 · Адаптив
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Токены ─────────────────────────────────────────────────────────────── */
@@ -373,6 +373,8 @@ a { color: inherit; }
   color: var(--soft);
   font-variant-numeric: lining-nums;
 }
+.article-meta .meta-link { color: var(--soft); }
+.article-meta .meta-link:hover { color: var(--ink); }
 
 .article-body {
   display: grid;
@@ -556,6 +558,94 @@ a { color: inherit; }
 
 .section-sub { color: var(--soft); font-size: var(--t-cap); }
 
+/* ── Инструменты ────────────────────────────────────────────────────────── */
+
+/* Калькулятор: форма слева, результаты справа; на узких экранах — столбцом
+   (правило в Адаптиве). Всё по токенам, без собственных вертикальных полей
+   сверху/снизу — ритм держит .section. */
+.calc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-6);
+  max-width: calc(var(--measure) * 1.5);
+  margin-bottom: var(--s-5);
+}
+.calc-form { display: flex; flex-direction: column; gap: var(--s-4); }
+.calc-field { display: flex; flex-direction: column; gap: var(--s-1); }
+.calc-field label {
+  font-family: var(--sans);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+.calc-field input {
+  font-family: var(--sans);
+  font-size: var(--t-base);
+  font-variant-numeric: lining-nums;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: var(--s-2) var(--s-3);
+  width: 100%;
+}
+.calc-field input:focus { outline: 2px solid var(--mark); outline-offset: -1px; }
+.calc-field small { font-family: var(--sans); font-size: var(--t-xs); color: var(--soft); }
+.calc-results {
+  background: var(--paper-2);
+  border-left: 2px solid var(--rule);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-self: start;
+}
+.calc-row { display: flex; flex-direction: column; gap: var(--s-1); }
+.calc-label {
+  font-family: var(--sans);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+.calc-value {
+  font-family: var(--serif);
+  font-size: var(--t-2xl);
+  font-variant-numeric: lining-nums;
+  color: var(--ink);
+}
+.calc-row--accent .calc-value { color: var(--mark); }
+.calc-row small { font-family: var(--sans); font-size: var(--t-xs); color: var(--soft); }
+.calc-note { font-family: var(--sans); font-size: var(--t-cap); color: var(--ink); }
+.calc-article-link { font-family: var(--sans); font-size: var(--t-cap); }
+
+/* Текст хаба под указателем рубрики: обычная проза в колонке чтения. */
+.hub-text { max-width: var(--measure); }
+
+/* Карточка автора: фото слева, биография в колонке чтения. */
+.author-card {
+  display: flex;
+  gap: var(--s-5);
+  align-items: flex-start;
+  max-width: calc(var(--measure) + 120px + var(--s-5));
+  margin-bottom: var(--s-6);
+}
+.author-photo { border-radius: 50%; flex-shrink: 0; }
+.author-links a { margin-right: var(--s-3); font-family: var(--sans); font-size: var(--t-cap); }
+
+/* Плашка «к этой статье есть инструмент» в теле материала. */
+.tool-promo {
+  max-width: var(--measure);
+  font-family: var(--sans);
+  font-size: var(--t-cap);
+  background: var(--paper-2);
+  border-left: 2px solid var(--mark);
+  padding: var(--s-3) var(--s-4);
+  margin-top: var(--s-5);
+}
+.tool-promo a { color: var(--ink); font-weight: 600; }
+
 /* ── 404 и служебные состояния ──────────────────────────────────────────── */
 
 .nf-code {
@@ -622,6 +712,9 @@ a { color: inherit; }
 
 @media (max-width: 46rem) {
   :root { --page-w: 100%; }
+
+  .calc { grid-template-columns: 1fr; }
+  .author-card { flex-direction: column; }
 
   .nav { flex-wrap: wrap; gap: var(--s-3); padding: var(--s-3) var(--s-4); }
 

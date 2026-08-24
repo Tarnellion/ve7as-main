@@ -312,16 +312,31 @@ const SITEMAP_LIMIT = 5000;
 
 // ── Запросы ──────────────────────────────────────────────────────────────────
 
-export async function getSections(): Promise<Fetched<SanitySection[]>> {
+/**
+ * `bodyLang` подключает текст хаба (localized `body_*` с русским фолбэком и
+ * флагом перевода). Он опционален намеренно: главная зовёт `getSections()` для
+ * списка карточек, и тянуть ей тексты всех четырёх хабов — лишний трафик на
+ * каждый рендер.
+ */
+export async function getSections(options: { bodyLang?: string } = {}): Promise<Fetched<SanitySection[]>> {
+  const bodyProjection = options.bodyLang
+    ? (() => {
+        const code = safeLang(options.bodyLang);
+        return `,
+      ${localized('body', code)},
+      ${translationFlag(['body'], code)}`;
+      })()
+    : '';
+
   return fetchOrDegrade<SanitySection[]>(
-    'getSections',
+    `getSections(${options.bodyLang ?? ''})`,
     [],
     `*[_type == "section"] | order(order asc) [0...${SECTIONS_LIMIT}] {
       "id": slug.current,
       title,
       icon,
       description,
-      order
+      order${bodyProjection}
     }`,
   );
 }
@@ -377,7 +392,10 @@ export async function getArticleBySlug(
       pubDate,
       _updatedAt,
       readingTime,
-      author,
+      // Документ автора главнее строки: строка остаётся фолбэком для статей,
+      // у которых ссылка ещё не проставлена.
+      "author": coalesce(authorRef->name, author),
+      "authorSlug": authorRef->slug.current,
       featured,
       blockedIn,
       "imageUrl": image.asset->url,
@@ -386,6 +404,40 @@ export async function getArticleBySlug(
       ${localized('description', code)},
       ${localized('body', code)},
       ${translationFlag(['title', 'body'], code)}
+    }`,
+    { slug },
+  );
+}
+
+export async function getAuthorBySlug(
+  slug: string,
+  lang: string,
+): Promise<Fetched<SanityAuthor | null>> {
+  const code = safeLang(lang);
+
+  return fetchOrDegrade<SanityAuthor | null>(
+    `getAuthorBySlug(${code})`,
+    null,
+    `*[_type == "author" && slug.current == $slug][0] {
+      "id": slug.current,
+      name,
+      links,
+      "photoUrl": photo.asset->url,
+      ${localized('role', code)},
+      ${localized('bio', code)},
+      ${translationFlag(['bio'], code)},
+      "articles": *[_type == "article" && authorRef._ref == ^._id] | order(pubDate desc) [0...${FEED_LIMIT}] {
+        "id": slug.current,
+        "section": section->slug.current,
+        pubDate,
+        readingTime,
+        "author": coalesce(authorRef->name, author),
+        featured,
+        blockedIn,
+        ${localized('title', code)},
+        ${localized('description', code)},
+        ${translationFlag(['title'], code)}
+      }
     }`,
     { slug },
   );
@@ -480,6 +532,9 @@ export type SanitySection = {
   icon: string;
   description: string;
   order: number;
+  /** Текст хаба; приходит только при `getSections({ bodyLang })`. */
+  body?: string | null;
+  hasTranslation?: boolean;
 };
 
 /** Статья в ленте: тексты уже сведены к одному языку в GROQ. */
@@ -502,6 +557,8 @@ export type SanityArticleCard = {
 export type SanityArticleFull = SanityArticleCard & {
   sectionIcon: string;
   body: string;
+  /** Слаг документа автора; null у статей, где проставлена только строка. */
+  authorSlug?: string | null;
   /**
    * Отметка правки самой Sanity. Идёт в `dateModified` разметки и в строку
    * «Обновлено» — для YMYL это один из немногих сигналов актуальности,
@@ -519,6 +576,17 @@ export type SanityFaq = {
   question: string;
   answer: string;
   hasTranslation: boolean;
+};
+
+export type SanityAuthor = {
+  id: string;
+  name: string;
+  links?: string[];
+  photoUrl?: string;
+  role: string;
+  bio: string;
+  hasTranslation: boolean;
+  articles: SanityArticleCard[];
 };
 
 export type SitemapContent = {

@@ -70,10 +70,19 @@ export default {
     },
     {
       name: 'author',
-      title: 'Author',
+      title: 'Author (text, legacy)',
+      description: 'Строка на случай, если документа автора нет. Если заполнен Author (person) ниже — он главнее.',
       type: 'string',
       group: 'settings',
       initialValue: 'редакция',
+    },
+    {
+      name: 'authorRef',
+      title: 'Author (person)',
+      description: 'Ссылка на документ автора: даёт странице автора, биографию и Person-разметку. Заполняйте у всех новых статей.',
+      type: 'reference',
+      to: [{ type: 'author' }],
+      group: 'settings',
     },
     {
       name: 'readingTime',

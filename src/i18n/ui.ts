@@ -65,6 +65,8 @@ export interface Translation {
   common: { readMore: string; allArticles: string };
   footer: {
     about: string;
+    /** Подпись ссылки на редакционную политику — в футере и в шапке статьи. */
+    editorial: string;
     disclaimer: string;
     ageWarning: string;
     rights: string;
@@ -139,6 +141,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         'Независимый информационный портал об азартных развлечениях. Не является оператором азартных игр.',
+      editorial: 'Редакционная политика',
       disclaimer:
         'Материалы сайта носят информационный характер и не являются рекомендацией к действию.',
       ageWarning:
@@ -214,6 +217,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         'Independent information portal about gambling entertainment. Not a gambling operator.',
+      editorial: 'Editorial policy',
       disclaimer:
         'Site content is for informational purposes only and is not a recommendation to act.',
       ageWarning:
@@ -289,6 +293,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         'Portal informativo independiente sobre entretenimiento de azar. No somos un operador de juego.',
+      editorial: 'Política editorial',
       disclaimer:
         'El contenido del sitio tiene fines informativos y no constituye una recomendación para actuar.',
       ageWarning:
@@ -364,6 +369,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         'Portal informativo independente sobre entretenimento de jogo. Não somos um operador de jogo.',
+      editorial: 'Política editorial',
       disclaimer:
         'O conteúdo do site tem fins informativos e não constitui uma recomendação para agir.',
       ageWarning:
@@ -439,6 +445,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         'Unabhängiges Informationsportal über Glücksspiel-Unterhaltung. Kein Glücksspielanbieter.',
+      editorial: 'Redaktionelle Richtlinien',
       disclaimer:
         'Die Inhalte dieser Seite dienen ausschließlich Informationszwecken und stellen keine Handlungsempfehlung dar.',
       ageWarning:
@@ -515,6 +522,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         "Portail d'information indépendant sur le divertissement autour des jeux d'argent. Nous ne sommes pas un opérateur de jeux.",
+      editorial: 'Politique éditoriale',
       disclaimer:
         "Le contenu du site est fourni à titre informatif et ne constitue pas une recommandation d'action.",
       ageWarning:
@@ -591,6 +599,7 @@ export const ui: Record<Language, Translation> = {
     footer: {
       about:
         'Portal informativo independente sobre entretenimento de apostas e jogos de azar. Não somos um operador de jogos.',
+      editorial: 'Política editorial',
       disclaimer:
         'O conteúdo do site tem caráter informativo e não constitui recomendação para agir.',
       ageWarning:

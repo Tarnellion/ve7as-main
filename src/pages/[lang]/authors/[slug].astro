@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { HTML_LANG, isLanguage, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { getAuthorBySlug, renderMarkdown, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
+import { breadcrumbs, ORG_ID } from '../../../lib/schema';
+
+/**
+ * Страница автора — носитель E-E-A-T: биография, квалификация, ссылки на
+ * профили (Person.sameAs) и список материалов. `Article.author.url` со страниц
+ * статей ведёт сюда, замыкая для Google цепочку «текст → человек → профили».
+ */
+
+const { lang, slug } = Astro.params as { lang: Language; slug: string };
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
+const t = useTranslations(lang);
+const country = Astro.request.headers.get('cf-ipcountry') ?? '';
+
+const authorResult = await getAuthorBySlug(slug, lang);
+const author = authorResult.data;
+
+const errorCopy = DATA_ERROR_COPY[lang];
+if (authorResult.failed) markContentUnavailable(Astro.response);
+if (!author && !authorResult.failed) return Astro.rewrite('/404');
+
+const bioHtml = author ? renderMarkdown(author.bio) : '';
+const articles = (author?.articles ?? []).filter((a) => !isBlockedInCountry(a.blockedIn, country));
+
+const pageUrl = author ? new URL(path(lang, 'authors', author.id), Astro.site) : null;
+
+const personNode = author && pageUrl
+  ? {
+      '@type': 'Person' as const,
+      name: author.name,
+      url: pageUrl.toString(),
+      jobTitle: author.role,
+      description: author.bio,
+      ...(author.photoUrl ? { image: `${author.photoUrl}?w=400&h=400&fit=crop&auto=format` } : {}),
+      ...(author.links?.length ? { sameAs: author.links } : {}),
+      worksFor: { '@id': new URL(ORG_ID, Astro.site).toString() },
+      inLanguage: HTML_LANG[lang],
+    }
+  : null;
+
+const schema = author && pageUrl && personNode
+  ? [
+      personNode,
+      breadcrumbs([
+        { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+        { name: author.name, url: pageUrl.toString() },
+      ]),
+    ]
+  : [];
+---
+
+{author === null ? (
+  <BaseLayout
+    lang={lang}
+    title={errorCopy.title}
+    description={errorCopy.body}
+    currentPath={`authors/${slug}`}
+    noindex
+  >
+    <header class="page-head">
+      <div class="container">
+        <h1>{errorCopy.title}</h1>
+        <p class="lede">{errorCopy.body}</p>
+      </div>
+    </header>
+  </BaseLayout>
+) : (
+  <BaseLayout
+    lang={lang}
+    title={author.name}
+    description={author.role}
+    currentPath={`authors/${author.id}`}
+    schema={schema}
+  >
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href={path(lang)}>{t.nav.home}</a>
+          <span class="sep">/</span>
+          <span>{author.name}</span>
+        </nav>
+        <h1>{author.name}</h1>
+        <p class="lede">{author.role}</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="author-card">
+          {author.photoUrl && (
+            <img
+              class="author-photo"
+              src={`${author.photoUrl}?w=240&h=240&fit=crop&auto=format`}
+              alt={author.name}
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+          )}
+          <div class="prose">
+            {!author.hasTranslation && <p class="notice">{t.article.translationNotice}</p>}
+            <div set:html={bioHtml} />
+            {author.links && author.links.length > 0 && (
+              <p class="author-links">
+                {author.links.map((link) => (
+                  <a href={link} rel="me noopener" target="_blank">{new URL(link).hostname.replace('www.', '')}</a>
+                ))}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {articles.length > 0 && (
+          <div class="author-articles">
+            <h2 class="nf-sections-title">{t.common.allArticles}</h2>
+            <div class="idx">
+              {articles.map((article) => <ArticleCard lang={lang} article={article} />)}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  </BaseLayout>
+)}

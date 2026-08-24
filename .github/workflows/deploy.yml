@@ -105,3 +105,11 @@ jobs:
           echo "FAIL: $url так и не отдал 200 за $attempts попыток (~$(( attempts * delay ))s)."
           echo "Смотри логи воркера: npx wrangler tail (observability включена в wrangler.toml)."
           exit 1
+
+      # IndexNow — после успешного смоука. Пинг ускоряет переобход Bing
+      # (и всех, кто читает IndexNow); Google протокол игнорирует. Ключ
+      # публичный по дизайну протокола. continue-on-error: пинг — это
+      # оптимизация, деплой из-за него падать не должен.
+      - name: Ping IndexNow
+        run: node scripts/seo/indexnow.mjs
+        continue-on-error: true

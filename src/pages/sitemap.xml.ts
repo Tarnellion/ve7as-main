@@ -4,7 +4,7 @@ import { path } from '../i18n/utils';
 import { getSitemapContent, type SitemapContent } from '../lib/sanity';
 
 /** Pages that exist for every language regardless of CMS content. */
-const STATIC_SEGMENTS = ['', 'about', 'contacts', 'privacy', 'terms'];
+const STATIC_SEGMENTS = ['', 'about', 'contacts', 'privacy', 'terms', 'editorial-policy', 'tools/wagering-calculator'];
 
 /**
  * The sitemap spec requires escaped URLs, and the XML itself must stay
