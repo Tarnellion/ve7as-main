@@ -1,4 +1,15 @@
 ---
+// НЕ МЁРТВЫЙ КОД, хотя `grep -rn ArticleArt src/` не находит ни одной ссылки.
+//
+// Компонент сейчас нигде не отрисовывается, но остаётся эталонной реализацией
+// будущего генератора OG-карточек: он показывает, как одна и та же
+// детерминированная геометрия из `src/lib/og-art.ts` ложится в SVG. Генератор
+// поедет в GitHub Actions на Node, куда `.astro` не подключить, — поэтому
+// математика живёт в отдельном модуле, а здесь остаётся только разметка.
+// Не удаляй как неиспользуемый: вместе с ним пропадёт единственный образец
+// разметки, к которому должен сойтись растр карточки.
+import { artGeometry } from '../lib/og-art';
+
 interface Props {
   /** Deterministic seed (e.g. article id or section id) — same seed always renders the same art. */
   seed: string;
@@ -10,43 +21,7 @@ interface Props {
 
 const { seed, color, icon } = Astro.props;
 
-function hashSeed(value: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < value.length; i++) {
-    h ^= value.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-
-function mulberry32(seed: number) {
-  let t = seed;
-  return () => {
-    t = (t + 0x6d2b79f5) | 0;
-    let r = Math.imul(t ^ (t >>> 15), 1 | t);
-    r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
-    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-const hash = hashSeed(seed);
-const rand = mulberry32(hash);
-const uid = `art-${hash.toString(36)}`;
-
-const blobs = Array.from({ length: 3 }, () => ({
-  cx: 16 + rand() * 68,
-  cy: 14 + rand() * 72,
-  r: 22 + rand() * 30,
-  opacity: 0.1 + rand() * 0.16,
-}));
-
-const ringCx = 14 + rand() * 72;
-const ringCy = 14 + rand() * 72;
-const ringR = 16 + rand() * 22;
-
-const tilt = Math.round(-16 + rand() * 32);
-const iconX = 28 + rand() * 44;
-const iconY = 36 + rand() * 40;
+const { uid, blobs, ringCx, ringCy, ringR, tilt, iconX, iconY } = artGeometry(seed);
 ---
 
 <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class="article-art" role="presentation" aria-hidden="true">

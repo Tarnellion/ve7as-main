@@ -1,5 +1,10 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "studio", ".wrangler", ".playwright-mcp"]
+  // `include` — это "**/*" при включённых resolveJsonModule и allowJs, поэтому
+  // без явных исключений `astro check` затянет в проверку весь код новостного
+  // конвейера и многомегабайтные JSON его прогонов. Тогда деплой сайта падает
+  // на файле, к сайту отношения не имеющем. Конвейер типизируется своим
+  // tsconfig, рядом с собой.
+  "exclude": ["dist", "studio", ".wrangler", ".playwright-mcp", ".pipeline", "scripts/news", "workers"]
 }
