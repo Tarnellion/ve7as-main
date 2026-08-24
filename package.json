@@ -14,12 +14,13 @@
   "dependencies": {
     "@astrojs/cloudflare": "^13.6.1",
     "@sanity/client": "^7.22.1",
-    "astro": "^6.4.4",
-    "marked": "^18.0.5"
+    "astro": "^6.4.8",
+    "marked": "^18.0.5",
+    "ultrahtml": "^1.6.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "gray-matter": "^4.0.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.123.0"
   }
 }
