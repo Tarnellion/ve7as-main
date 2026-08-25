@@ -2,7 +2,22 @@ export const LANGUAGES = ['ru', 'en', 'es', 'pt', 'de', 'fr', 'br'] as const;
 
 export type Language = (typeof LANGUAGES)[number];
 
+/**
+ * Корень фолбэка КОНТЕНТА. Девять существующих статей написаны по-русски,
+ * остальные языки — переводы, поэтому пустое поле перевода подставляет
+ * русский текст (см. `localized()` в src/lib/sanity.ts).
+ *
+ * Это НЕ канонический язык сайта — см. `PRIMARY_LANGUAGE`. Роли разведены
+ * намеренно: склеивать их значит, что смена одной потянет вторую.
+ */
 export const DEFAULT_LANGUAGE: Language = 'ru';
+
+/**
+ * Канонический язык: цель корневого редиректа `/`, адресат `hreflang="x-default"`
+ * и объект смоук-теста после деплоя. Обязан входить в `INDEXED_LANGUAGES` —
+ * иначе точка входа на сайт закрыта от индексации.
+ */
+export const PRIMARY_LANGUAGE: Language = 'en';
 
 /**
  * Локали, участвующие в поиске: sitemap, hreflang, переключатель языков,
@@ -15,10 +30,10 @@ export const DEFAULT_LANGUAGE: Language = 'ru';
  * (200, `noindex, follow`) — это обратимо правкой одной строки здесь, ссылочный
  * вес входящих ссылок не теряется.
  *
- * `x-default` в hreflang указывает на `ru`, пока он в этом списке; порядок —
- * как в `LANGUAGES`.
+ * `x-default` указывает на `PRIMARY_LANGUAGE`, а не на первый элемент списка.
+ * Порядок — как в `LANGUAGES`.
  */
-export const INDEXED_LANGUAGES: readonly Language[] = ['ru', 'en'];
+export const INDEXED_LANGUAGES: readonly Language[] = ['en', 'es'];
 
 export function isIndexable(lang: Language): boolean {
   return INDEXED_LANGUAGES.includes(lang);

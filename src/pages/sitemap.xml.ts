@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { INDEXED_LANGUAGES, DEFAULT_LANGUAGE, HTML_LANG, type Language } from '../i18n/languages';
+import { INDEXED_LANGUAGES, PRIMARY_LANGUAGE, HTML_LANG, type Language } from '../i18n/languages';
 import { path } from '../i18n/utils';
 import { getSitemapContent, type SitemapContent } from '../lib/sanity';
 
@@ -107,7 +107,7 @@ export const GET: APIRoute = async ({ site }) => {
           (alt) =>
             `    <xhtml:link rel="alternate" hreflang="${HTML_LANG[alt]}" href="${url(base, alt, segments)}" />`
         ),
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${url(base, DEFAULT_LANGUAGE, segments)}" />`,
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${url(base, PRIMARY_LANGUAGE, segments)}" />`,
       ].join('\n');
 
       return `  <url>

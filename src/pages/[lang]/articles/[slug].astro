@@ -158,6 +158,7 @@ const schema = article && canonical
     currentPath={`articles/${article.id}`}
     ogImage={ogImage}
     schema={schema}
+    noindex={!hasTranslation}
   >
     {/*
       Обложка больше не растягивается на всю ширину под заголовком: размытая

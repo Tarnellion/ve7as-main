@@ -1,5 +1,5 @@
 ---
-import { INDEXED_LANGUAGES, HTML_LANG, isIndexable, type Language } from '../i18n/languages';
+import { INDEXED_LANGUAGES, HTML_LANG, PRIMARY_LANGUAGE, isIndexable, type Language } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/utils';
 import { organization, website, type SchemaNode } from '../lib/schema';
@@ -84,7 +84,7 @@ const graph = [
   {!noindex && INDEXED_LANGUAGES.map((code) => (
     <link rel="alternate" hreflang={HTML_LANG[code]} href={new URL(path(code, currentPath), Astro.site)} />
   ))}
-  {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(path('ru', currentPath), Astro.site)} />}
+  {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(path(PRIMARY_LANGUAGE, currentPath), Astro.site)} />}
 
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
