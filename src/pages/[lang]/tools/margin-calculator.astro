@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isLanguage, HTML_LANG, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/ui';
+import { breadcrumbs } from '../../../lib/schema';
+import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+
+/**
+ * Калькулятор маржи букмекера — третий инструмент фазы 4.
+ *
+ * Показывает то, что букмекеры не публикуют: сколько линия стоит игроку.
+ * Считает overround, маржу и «честные» коэффициенты без маржи (no-vig) —
+ * подразумеваемые вероятности нормируются к 100 %.
+ *
+ * Расчёт клиентский. Копия — локальный словарь, не ui.ts.
+ */
+
+const { lang } = Astro.params as { lang: Language };
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
+const t = useTranslations(lang);
+
+type Copy = {
+  title: string; description: string; lede: string;
+  outcome: string; optional: string;
+  sum: string; sumHint: string;
+  margin: string; marginHint: string;
+  fair: string; fairHint: string;
+  converterLink: string;
+  disclaimer: string;
+};
+
+const COPY: Record<Language, Copy> = {
+  ru: {
+    title: 'Калькулятор маржи букмекера',
+    description: 'Считает маржу линии по десятичным коэффициентам и показывает честные коэффициенты без маржи (no-vig). Без регистрации.',
+    lede: 'Введите десятичные коэффициенты исходов — двух для матчей без ничьей, трёх для линии с ничьей. Третий можно оставить пустым.',
+    outcome: 'Исход', optional: 'необязательно',
+    sum: 'Сумма подразумеваемых вероятностей',
+    sumHint: 'У честной линии было бы ровно 100 %. Всё сверх — цена, встроенная в коэффициенты.',
+    margin: 'Маржа букмекера',
+    marginHint: '(S − 1) / S, где S — сумма вероятностей. Доля оборота, которую линия удерживает в среднем.',
+    fair: 'Честные коэффициенты (no-vig)',
+    fairHint: 'Коэффициенты после нормировки вероятностей к 100 % — какой была бы линия без комиссии.',
+    converterLink: 'Конвертер форматов коэффициентов',
+    disclaimer: 'Калькулятор оценивает маржу по методу пропорциональной нормировки. Реальная маржа распределяется по исходам неравномерно, особенно на фаворитах и аутсайдерах. Проверяйте расчёты самостоятельно.',
+  },
+  en: {
+    title: 'Bookmaker margin calculator',
+    description: 'Calculates a line’s margin from decimal odds and shows the fair no-vig odds. No sign-up.',
+    lede: 'Enter the decimal odds of the outcomes — two for no-draw markets, three for lines with a draw. The third field may stay empty.',
+    outcome: 'Outcome', optional: 'optional',
+    sum: 'Sum of implied probabilities',
+    sumHint: 'A fair line would sum to exactly 100%. Anything above is the price built into the odds.',
+    margin: 'Bookmaker margin',
+    marginHint: '(S − 1) / S, where S is the probability sum. The share of turnover the line keeps on average.',
+    fair: 'Fair odds (no-vig)',
+    fairHint: 'Odds after normalising probabilities to 100% — what the line would be without commission.',
+    converterLink: 'Odds format converter',
+    disclaimer: 'The calculator uses proportional normalisation. Real margin is distributed unevenly across outcomes, especially on favourites and longshots. Verify calculations yourself.',
+  },
+  es: {
+    title: 'Calculadora de margen de la casa',
+    description: 'Calcula el margen de una línea a partir de cuotas decimales y muestra las cuotas justas sin margen (no-vig). Sin registro.',
+    lede: 'Introduzca las cuotas decimales de los resultados: dos para mercados sin empate, tres para líneas con empate. El tercero puede quedar vacío.',
+    outcome: 'Resultado', optional: 'opcional',
+    sum: 'Suma de probabilidades implícitas',
+    sumHint: 'Una línea justa sumaría exactamente el 100 %. Todo lo que exceda es el precio incorporado en las cuotas.',
+    margin: 'Margen de la casa',
+    marginHint: '(S − 1) / S, donde S es la suma de probabilidades. La parte del volumen que la línea retiene de media.',
+    fair: 'Cuotas justas (no-vig)',
+    fairHint: 'Cuotas tras normalizar las probabilidades al 100 %: cómo sería la línea sin comisión.',
+    converterLink: 'Conversor de formatos de cuotas',
+    disclaimer: 'La calculadora usa normalización proporcional. El margen real se reparte de forma desigual entre resultados. Verifique los cálculos.',
+  },
+  pt: {
+    title: 'Calculadora de margem da casa',
+    description: 'Calcula a margem de uma linha a partir de odds decimais e mostra as odds justas sem margem (no-vig). Sem registo.',
+    lede: 'Introduza as odds decimais dos resultados — duas para mercados sem empate, três para linhas com empate. O terceiro campo pode ficar vazio.',
+    outcome: 'Resultado', optional: 'opcional',
+    sum: 'Soma das probabilidades implícitas',
+    sumHint: 'Uma linha justa somaria exatamente 100 %. Tudo o que exceder é o preço embutido nas odds.',
+    margin: 'Margem da casa',
+    marginHint: '(S − 1) / S, onde S é a soma das probabilidades. A parte do volume que a linha retém em média.',
+    fair: 'Odds justas (no-vig)',
+    fairHint: 'Odds após normalizar as probabilidades para 100 % — como seria a linha sem comissão.',
+    converterLink: 'Conversor de formatos de odds',
+    disclaimer: 'A calculadora usa normalização proporcional. A margem real distribui-se de forma desigual pelos resultados. Verifique os cálculos.',
+  },
+  de: {
+    title: 'Buchmachermargen-Rechner',
+    description: 'Berechnet die Marge einer Linie aus Dezimalquoten und zeigt die fairen No-Vig-Quoten. Ohne Anmeldung.',
+    lede: 'Geben Sie die Dezimalquoten der Ausgänge ein — zwei für Märkte ohne Unentschieden, drei für Linien mit Unentschieden. Das dritte Feld darf leer bleiben.',
+    outcome: 'Ausgang', optional: 'optional',
+    sum: 'Summe der impliziten Wahrscheinlichkeiten',
+    sumHint: 'Eine faire Linie ergäbe genau 100 %. Alles darüber ist der in die Quoten eingebaute Preis.',
+    margin: 'Buchmachermarge',
+    marginHint: '(S − 1) / S, wobei S die Wahrscheinlichkeitssumme ist. Der Anteil des Umsatzes, den die Linie im Schnitt einbehält.',
+    fair: 'Faire Quoten (No-Vig)',
+    fairHint: 'Quoten nach Normierung der Wahrscheinlichkeiten auf 100 % — die Linie ohne Kommission.',
+    converterLink: 'Quotenformat-Rechner',
+    disclaimer: 'Der Rechner nutzt proportionale Normierung. Die reale Marge verteilt sich ungleich auf die Ausgänge. Prüfen Sie die Rechnung selbst.',
+  },
+  fr: {
+    title: 'Calculateur de marge du bookmaker',
+    description: 'Calcule la marge d’une ligne à partir des cotes décimales et montre les cotes justes sans marge (no-vig). Sans inscription.',
+    lede: 'Saisissez les cotes décimales des résultats — deux pour les marchés sans nul, trois pour les lignes avec nul. Le troisième champ peut rester vide.',
+    outcome: 'Résultat', optional: 'facultatif',
+    sum: 'Somme des probabilités implicites',
+    sumHint: 'Une ligne juste totaliserait exactement 100 %. Tout excédent est le prix intégré aux cotes.',
+    margin: 'Marge du bookmaker',
+    marginHint: '(S − 1) / S, où S est la somme des probabilités. La part du volume que la ligne retient en moyenne.',
+    fair: 'Cotes justes (no-vig)',
+    fairHint: 'Cotes après normalisation des probabilités à 100 % — la ligne sans commission.',
+    converterLink: 'Convertisseur de formats de cotes',
+    disclaimer: 'Le calculateur utilise la normalisation proportionnelle. La marge réelle se répartit inégalement entre les résultats. Vérifiez les calculs vous-même.',
+  },
+  br: {
+    title: 'Calculadora de margem da casa',
+    description: 'Calcula a margem de uma linha a partir de odds decimais e mostra as odds justas sem margem (no-vig). Sem cadastro.',
+    lede: 'Digite as odds decimais dos resultados — duas para mercados sem empate, três para linhas com empate. O terceiro campo pode ficar vazio.',
+    outcome: 'Resultado', optional: 'opcional',
+    sum: 'Soma das probabilidades implícitas',
+    sumHint: 'Uma linha justa somaria exatamente 100 %. Tudo acima é o preço embutido nas odds.',
+    margin: 'Margem da casa',
+    marginHint: '(S − 1) / S, onde S é a soma das probabilidades. A parte do volume que a linha retém em média.',
+    fair: 'Odds justas (no-vig)',
+    fairHint: 'Odds após normalizar as probabilidades para 100 % — como seria a linha sem comissão.',
+    converterLink: 'Conversor de formatos de odds',
+    disclaimer: 'A calculadora usa normalização proporcional. A margem real se distribui de forma desigual entre os resultados. Confira os cálculos.',
+  },
+};
+
+const c = COPY[lang];
+const pageUrl = new URL(path(lang, 'tools', 'margin-calculator'), Astro.site);
+
+const schema = [
+  {
+    '@type': 'SoftwareApplication' as const,
+    name: c.title,
+    description: c.description,
+    url: pageUrl.toString(),
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    inLanguage: HTML_LANG[lang],
+  },
+  breadcrumbs([
+    { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: c.title, url: pageUrl.toString() },
+  ]),
+];
+---
+
+<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/margin-calculator" schema={schema}>
+  <header class="page-head">
+    <div class="container">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="calc" id="margin-calc">
+        <form class="calc-form" autocomplete="off">
+          <div class="calc-field">
+            <label for="mc-o1">{c.outcome} 1</label>
+            <input id="mc-o1" type="number" min="1.001" step="any" value="1.90" inputmode="decimal" />
+          </div>
+          <div class="calc-field">
+            <label for="mc-o2">{c.outcome} 2</label>
+            <input id="mc-o2" type="number" min="1.001" step="any" value="1.90" inputmode="decimal" />
+          </div>
+          <div class="calc-field">
+            <label for="mc-o3">{c.outcome} 3 ({c.optional})</label>
+            <input id="mc-o3" type="number" min="1.001" step="any" value="" inputmode="decimal" />
+          </div>
+        </form>
+
+        <div class="calc-results" aria-live="polite">
+          <div class="calc-row">
+            <span class="calc-label">{c.sum}</span>
+            <span class="calc-value" id="mc-sum">—</span>
+            <small>{c.sumHint}</small>
+          </div>
+          <div class="calc-row calc-row--accent">
+            <span class="calc-label">{c.margin}</span>
+            <span class="calc-value" id="mc-margin">—</span>
+            <small>{c.marginHint}</small>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.fair}</span>
+            <span class="calc-value calc-value--list" id="mc-fair">—</span>
+            <small>{c.fairHint}</small>
+          </div>
+          <p class="calc-article-link">
+            <a href={path(lang, 'tools', 'odds-converter')}>{c.converterLink} →</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="notice">{c.disclaimer}</p>
+
+      <ResponsibleGaming lang={lang} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // p_i = 1/d_i; S = Σp_i; overround = S − 1; маржа = (S − 1)/S.
+  // No-vig (пропорциональная нормировка): честная вероятность p_i/S,
+  // честный коэффициент 1/(p_i/S) = S·d_i. Проверка: 1.90/1.90 → S≈1.0526,
+  // честные 2.00/2.00 — монетка без комиссии.
+  const ids = ['mc-o1', 'mc-o2', 'mc-o3'];
+  const out = (id: string) => document.getElementById(id)!;
+
+  function recalc() {
+    const odds = ids
+      .map((id) => Number((document.getElementById(id) as HTMLInputElement).value))
+      .filter((v) => Number.isFinite(v) && v > 1.001);
+    if (odds.length < 2) {
+      out('mc-sum').textContent = out('mc-margin').textContent = out('mc-fair').textContent = '—';
+      return;
+    }
+    const probs = odds.map((d) => 1 / d);
+    const S = probs.reduce((a, b) => a + b, 0);
+    const margin = (S - 1) / S;
+    out('mc-sum').textContent = `${(S * 100).toFixed(2)} %`;
+    out('mc-margin').textContent = `${(margin * 100).toFixed(2)} %`;
+    out('mc-fair').textContent = odds.map((d) => (d * S).toFixed(3)).join(' · ');
+  }
+
+  ids.forEach((id) => document.getElementById(id)!.addEventListener('input', recalc));
+  recalc();
+</script>

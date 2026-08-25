@@ -13,6 +13,18 @@ import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
  * из этой карты после текста рендерится плашка с приглашением посчитать.
  */
 const RELATED_TOOL: Record<string, { segments: string[]; label: Record<Language, string> }> = {
+  'football-betting-basics': {
+    segments: ['tools', 'odds-converter'],
+    label: {
+      ru: 'Переведите коэффициенты: конвертер форматов',
+      en: 'Convert the odds: format converter',
+      es: 'Convierta las cuotas: conversor de formatos',
+      pt: 'Converta as odds: conversor de formatos',
+      de: 'Quoten umrechnen: Format-Rechner',
+      fr: 'Convertissez les cotes : convertisseur de formats',
+      br: 'Converta as odds: conversor de formatos',
+    },
+  },
   'wagering-explained': {
     segments: ['tools', 'wagering-calculator'],
     label: {

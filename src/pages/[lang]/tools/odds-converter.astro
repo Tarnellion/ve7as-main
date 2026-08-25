@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isLanguage, HTML_LANG, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/ui';
+import { breadcrumbs } from '../../../lib/schema';
+import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+
+/**
+ * Конвертер коэффициентов — второй инструмент фазы 4.
+ *
+ * Топ выдачи по «odds converter» состоит из одних калькуляторов: без
+ * инструмента в кластер входа нет. Отличие — вместе с конверсией показываем
+ * подразумеваемую вероятность и проговариваем, что она содержит маржу,
+ * то есть сумма вероятностей исходов больше 100 % — мост к калькулятору маржи.
+ *
+ * Расчёт клиентский, без сети. Копия — локальный словарь (приём
+ * DATA_ERROR_COPY), не ui.ts.
+ */
+
+const { lang } = Astro.params as { lang: Language };
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
+const t = useTranslations(lang);
+
+type Copy = {
+  title: string; description: string; lede: string;
+  decimal: string; american: string; fractional: string; implied: string;
+  impliedHint: string; fractionalHint: string;
+  marginNote: string; marginLink: string;
+  disclaimer: string;
+};
+
+const COPY: Record<Language, Copy> = {
+  ru: {
+    title: 'Конвертер коэффициентов',
+    description: 'Переводит коэффициенты между десятичным, американским и дробным форматами и показывает подразумеваемую вероятность. Без регистрации.',
+    lede: 'Измените любое поле — остальные пересчитаются. Подразумеваемая вероятность включает маржу букмекера.',
+    decimal: 'Десятичный', american: 'Американский', fractional: 'Дробный (UK)', implied: 'Подразумеваемая вероятность, %',
+    impliedHint: '1 / десятичный коэффициент. Это цена, которую назначил букмекер, а не «настоящая» вероятность.',
+    fractionalHint: 'Например, 5/2. Ближайшая привычная дробь.',
+    marginNote: 'Сумма подразумеваемых вероятностей всех исходов больше 100 % — разница и есть маржа букмекера.',
+    marginLink: 'Посчитать маржу линии',
+    disclaimer: 'Конвертер меняет форму записи, а не суть: коэффициент в любом формате содержит комиссию букмекера. Проверяйте расчёты самостоятельно.',
+  },
+  en: {
+    title: 'Odds converter',
+    description: 'Converts odds between decimal, American and fractional formats and shows the implied probability. No sign-up.',
+    lede: 'Edit any field — the rest recalculate. The implied probability includes the bookmaker’s margin.',
+    decimal: 'Decimal', american: 'American', fractional: 'Fractional (UK)', implied: 'Implied probability, %',
+    impliedHint: '1 / decimal odds. This is the price the bookmaker set, not the "true" probability.',
+    fractionalHint: 'For example, 5/2. Nearest conventional fraction.',
+    marginNote: 'The implied probabilities of all outcomes sum to more than 100% — the difference is the bookmaker’s margin.',
+    marginLink: 'Calculate the margin of a line',
+    disclaimer: 'The converter changes the notation, not the substance: odds in any format contain the bookmaker’s commission. Verify calculations yourself.',
+  },
+  es: {
+    title: 'Conversor de cuotas',
+    description: 'Convierte cuotas entre formato decimal, americano y fraccional y muestra la probabilidad implícita. Sin registro.',
+    lede: 'Edite cualquier campo y el resto se recalcula. La probabilidad implícita incluye el margen de la casa.',
+    decimal: 'Decimal', american: 'Americano', fractional: 'Fraccional (UK)', implied: 'Probabilidad implícita, %',
+    impliedHint: '1 / cuota decimal. Es el precio fijado por la casa, no la probabilidad «real».',
+    fractionalHint: 'Por ejemplo, 5/2. La fracción convencional más cercana.',
+    marginNote: 'Las probabilidades implícitas de todos los resultados suman más del 100 %: la diferencia es el margen.',
+    marginLink: 'Calcular el margen de una línea',
+    disclaimer: 'El conversor cambia la notación, no el fondo: la cuota en cualquier formato contiene la comisión de la casa. Verifique los cálculos.',
+  },
+  pt: {
+    title: 'Conversor de odds',
+    description: 'Converte odds entre os formatos decimal, americano e fracionário e mostra a probabilidade implícita. Sem registo.',
+    lede: 'Edite qualquer campo — os restantes recalculam-se. A probabilidade implícita inclui a margem da casa.',
+    decimal: 'Decimal', american: 'Americano', fractional: 'Fracionário (UK)', implied: 'Probabilidade implícita, %',
+    impliedHint: '1 / odd decimal. É o preço fixado pela casa, não a probabilidade «real».',
+    fractionalHint: 'Por exemplo, 5/2. A fração convencional mais próxima.',
+    marginNote: 'As probabilidades implícitas de todos os resultados somam mais de 100 % — a diferença é a margem.',
+    marginLink: 'Calcular a margem de uma linha',
+    disclaimer: 'O conversor muda a notação, não a substância: a odd em qualquer formato contém a comissão da casa. Verifique os cálculos.',
+  },
+  de: {
+    title: 'Quotenrechner',
+    description: 'Rechnet Quoten zwischen Dezimal-, US- und Bruchformat um und zeigt die implizite Wahrscheinlichkeit. Ohne Anmeldung.',
+    lede: 'Ändern Sie ein Feld — die anderen werden neu berechnet. Die implizite Wahrscheinlichkeit enthält die Buchmachermarge.',
+    decimal: 'Dezimal', american: 'Amerikanisch', fractional: 'Bruch (UK)', implied: 'Implizite Wahrscheinlichkeit, %',
+    impliedHint: '1 / Dezimalquote. Das ist der Preis des Buchmachers, nicht die „wahre“ Wahrscheinlichkeit.',
+    fractionalHint: 'Zum Beispiel 5/2. Nächstliegender üblicher Bruch.',
+    marginNote: 'Die impliziten Wahrscheinlichkeiten aller Ausgänge summieren sich auf über 100 % — die Differenz ist die Marge.',
+    marginLink: 'Marge einer Linie berechnen',
+    disclaimer: 'Der Rechner ändert die Schreibweise, nicht die Substanz: Quoten enthalten in jedem Format die Kommission des Buchmachers. Prüfen Sie die Rechnung selbst.',
+  },
+  fr: {
+    title: 'Convertisseur de cotes',
+    description: 'Convertit les cotes entre les formats décimal, américain et fractionnaire et montre la probabilité implicite. Sans inscription.',
+    lede: 'Modifiez un champ — les autres se recalculent. La probabilité implicite inclut la marge du bookmaker.',
+    decimal: 'Décimal', american: 'Américain', fractional: 'Fractionnaire (UK)', implied: 'Probabilité implicite, %',
+    impliedHint: '1 / cote décimale. C’est le prix fixé par le bookmaker, pas la « vraie » probabilité.',
+    fractionalHint: 'Par exemple, 5/2. Fraction usuelle la plus proche.',
+    marginNote: 'Les probabilités implicites de tous les résultats dépassent 100 % au total — la différence est la marge.',
+    marginLink: 'Calculer la marge d’une ligne',
+    disclaimer: 'Le convertisseur change la notation, pas le fond : une cote contient la commission du bookmaker dans tous les formats. Vérifiez les calculs vous-même.',
+  },
+  br: {
+    title: 'Conversor de odds',
+    description: 'Converte odds entre os formatos decimal, americano e fracionário e mostra a probabilidade implícita. Sem cadastro.',
+    lede: 'Edite qualquer campo — os demais recalculam. A probabilidade implícita inclui a margem da casa.',
+    decimal: 'Decimal', american: 'Americano', fractional: 'Fracionário (UK)', implied: 'Probabilidade implícita, %',
+    impliedHint: '1 / odd decimal. É o preço definido pela casa, não a probabilidade “real”.',
+    fractionalHint: 'Por exemplo, 5/2. A fração convencional mais próxima.',
+    marginNote: 'As probabilidades implícitas de todos os resultados somam mais de 100 % — a diferença é a margem.',
+    marginLink: 'Calcular a margem de uma linha',
+    disclaimer: 'O conversor muda a notação, não a substância: a odd em qualquer formato contém a comissão da casa. Confira os cálculos.',
+  },
+};
+
+const c = COPY[lang];
+const pageUrl = new URL(path(lang, 'tools', 'odds-converter'), Astro.site);
+
+const schema = [
+  {
+    '@type': 'SoftwareApplication' as const,
+    name: c.title,
+    description: c.description,
+    url: pageUrl.toString(),
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    inLanguage: HTML_LANG[lang],
+  },
+  breadcrumbs([
+    { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: c.title, url: pageUrl.toString() },
+  ]),
+];
+---
+
+<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/odds-converter" schema={schema}>
+  <header class="page-head">
+    <div class="container">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="calc" id="odds-conv">
+        <form class="calc-form" autocomplete="off">
+          <div class="calc-field">
+            <label for="oc-decimal">{c.decimal}</label>
+            <input id="oc-decimal" type="number" min="1.001" step="any" value="2.50" inputmode="decimal" />
+          </div>
+          <div class="calc-field">
+            <label for="oc-american">{c.american}</label>
+            <input id="oc-american" type="text" value="+150" />
+          </div>
+          <div class="calc-field">
+            <label for="oc-fractional">{c.fractional}</label>
+            <input id="oc-fractional" type="text" value="3/2" />
+            <small>{c.fractionalHint}</small>
+          </div>
+        </form>
+
+        <div class="calc-results" aria-live="polite">
+          <div class="calc-row calc-row--accent">
+            <span class="calc-label">{c.implied}</span>
+            <span class="calc-value" id="oc-implied">—</span>
+            <small>{c.impliedHint}</small>
+          </div>
+          <p class="calc-note">{c.marginNote}</p>
+          <p class="calc-article-link">
+            <a href={path(lang, 'tools', 'margin-calculator')}>{c.marginLink} →</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="notice">{c.disclaimer}</p>
+
+      <ResponsibleGaming lang={lang} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Все форматы — представления одного десятичного коэффициента d (> 1):
+  //   американский: d >= 2 → +100·(d−1); d < 2 → −100/(d−1)
+  //   дробный:      d − 1, приближённый цепной дробью со знаменателем ≤ 100
+  //   вероятность:  1/d — подразумеваемая, с маржой внутри
+  const dec = document.getElementById('oc-decimal') as HTMLInputElement;
+  const ame = document.getElementById('oc-american') as HTMLInputElement;
+  const fra = document.getElementById('oc-fractional') as HTMLInputElement;
+  const imp = document.getElementById('oc-implied')!;
+
+  // Наилучшее рациональное приближение (дерево Штерна–Броко), знаменатель ≤ 100.
+  function toFraction(x: number): string {
+    let pl = 0, ql = 1, ph = 1, qh = 0;
+    for (let i = 0; i < 200; i++) {
+      const p = pl + ph, q = ql + qh;
+      if (q > 100) break;
+      if (p / q < x) { pl = p; ql = q; } else { ph = p; qh = q; }
+    }
+    const lo: [number, number] = [pl, ql];
+    const hi: [number, number] = [ph, qh];
+    const pick = qh === 0 || Math.abs(lo[0] / lo[1] - x) <= Math.abs(hi[0] / hi[1] - x) ? lo : hi;
+    return `${pick[0]}/${pick[1]}`;
+  }
+
+  function fromAmerican(raw: string): number | null {
+    const a = Number(raw.replace(/\s+/g, '').replace('+', ''));
+    if (!Number.isFinite(a) || Math.abs(a) < 100) return null;
+    return a > 0 ? 1 + a / 100 : 1 + 100 / Math.abs(a);
+  }
+
+  function fromFractional(raw: string): number | null {
+    const m = raw.replace(/\s+/g, '').match(/^(\d+(?:\.\d+)?)[/:](\d+(?:\.\d+)?)$/);
+    if (!m) return null;
+    const q = Number(m[2]);
+    if (q === 0) return null;
+    return 1 + Number(m[1]) / q;
+  }
+
+  function render(d: number, skip: HTMLElement) {
+    if (!(d > 1.001) || !Number.isFinite(d)) { imp.textContent = '—'; return; }
+    if (skip !== dec) dec.value = String(Math.round(d * 1000) / 1000);
+    if (skip !== ame) {
+      const a = d >= 2 ? Math.round((d - 1) * 100) : -Math.round(100 / (d - 1));
+      ame.value = a > 0 ? `+${a}` : String(a);
+    }
+    if (skip !== fra) fra.value = toFraction(d - 1);
+    imp.textContent = `${(100 / d).toFixed(2)} %`;
+  }
+
+  dec.addEventListener('input', () => render(Number(dec.value), dec));
+  ame.addEventListener('input', () => { const d = fromAmerican(ame.value); if (d) render(d, ame); });
+  fra.addEventListener('input', () => { const d = fromFractional(fra.value); if (d) render(d, fra); });
+  render(2.5, document.body);
+</script>

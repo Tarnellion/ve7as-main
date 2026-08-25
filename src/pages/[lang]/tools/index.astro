@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isLanguage, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/ui';
+import { breadcrumbs } from '../../../lib/schema';
+
+/**
+ * Указатель инструментов. Страница нарочно устроена как индекс той же породы,
+ * что главная и рубрики: список со ссылками, без прозы на пол-экрана.
+ * Каждый инструмент описывает сам себя на своей странице.
+ */
+
+const { lang } = Astro.params as { lang: Language };
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
+const t = useTranslations(lang);
+
+type Copy = { title: string; description: string; lede: string; tools: { segments: string[]; name: string; blurb: string }[] };
+
+const COPY: Record<Language, Copy> = {
+  ru: {
+    title: 'Инструменты',
+    description: 'Бесплатные калькуляторы Ve7as: вейджер и цена отыгрыша, конвертер коэффициентов, маржа букмекера. Всё считается в браузере.',
+    lede: 'Калькуляторы без регистрации и без сети: все расчёты выполняются в вашем браузере.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Калькулятор вейджера', blurb: 'Оборот по бонусу и ожидаемые потери на этом обороте при заданном RTP.' },
+      { segments: ['tools', 'odds-converter'], name: 'Конвертер коэффициентов', blurb: 'Десятичный, американский и дробный форматы плюс подразумеваемая вероятность.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Калькулятор маржи букмекера', blurb: 'Маржа линии и честные коэффициенты без маржи (no-vig).' },
+    ],
+  },
+  en: {
+    title: 'Tools',
+    description: 'Free Ve7as calculators: wagering and the cost of clearing, odds converter, bookmaker margin. Everything runs in your browser.',
+    lede: 'Calculators with no sign-up and no network: everything is computed in your browser.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Wagering calculator', blurb: 'Bonus turnover and the expected loss on that turnover at a given RTP.' },
+      { segments: ['tools', 'odds-converter'], name: 'Odds converter', blurb: 'Decimal, American and fractional formats plus the implied probability.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Bookmaker margin calculator', blurb: 'A line’s margin and the fair no-vig odds.' },
+    ],
+  },
+  es: {
+    title: 'Herramientas',
+    description: 'Calculadoras gratuitas de Ve7as: rollover y coste de liberación, conversor de cuotas, margen de la casa. Todo se calcula en su navegador.',
+    lede: 'Calculadoras sin registro y sin red: todo se calcula en su navegador.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Calculadora de rollover', blurb: 'Volumen del bono y pérdida esperada con un RTP dado.' },
+      { segments: ['tools', 'odds-converter'], name: 'Conversor de cuotas', blurb: 'Formatos decimal, americano y fraccional más la probabilidad implícita.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Calculadora de margen', blurb: 'Margen de una línea y cuotas justas sin margen (no-vig).' },
+    ],
+  },
+  pt: {
+    title: 'Ferramentas',
+    description: 'Calculadoras gratuitas do Ve7as: rollover e custo de libertação, conversor de odds, margem da casa. Tudo é calculado no seu navegador.',
+    lede: 'Calculadoras sem registo e sem rede: tudo é calculado no seu navegador.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Calculadora de rollover', blurb: 'Volume do bónus e perda esperada com um dado RTP.' },
+      { segments: ['tools', 'odds-converter'], name: 'Conversor de odds', blurb: 'Formatos decimal, americano e fracionário mais a probabilidade implícita.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Calculadora de margem', blurb: 'Margem de uma linha e odds justas sem margem (no-vig).' },
+    ],
+  },
+  de: {
+    title: 'Rechner',
+    description: 'Kostenlose Ve7as-Rechner: Umsatzbedingungen und Freispielpreis, Quotenumrechner, Buchmachermarge. Alles läuft im Browser.',
+    lede: 'Rechner ohne Anmeldung und ohne Netz: alles wird in Ihrem Browser berechnet.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Umsatzbedingungen-Rechner', blurb: 'Bonusumsatz und erwarteter Verlust bei gegebenem RTP.' },
+      { segments: ['tools', 'odds-converter'], name: 'Quotenrechner', blurb: 'Dezimal-, US- und Bruchformat plus implizite Wahrscheinlichkeit.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Margen-Rechner', blurb: 'Marge einer Linie und faire No-Vig-Quoten.' },
+    ],
+  },
+  fr: {
+    title: 'Outils',
+    description: 'Calculateurs gratuits Ve7as : wagering et coût du déblocage, convertisseur de cotes, marge du bookmaker. Tout se calcule dans votre navigateur.',
+    lede: 'Calculateurs sans inscription et sans réseau : tout se calcule dans votre navigateur.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Calculateur de wagering', blurb: 'Volume du bonus et perte attendue à RTP donné.' },
+      { segments: ['tools', 'odds-converter'], name: 'Convertisseur de cotes', blurb: 'Formats décimal, américain et fractionnaire plus la probabilité implicite.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Calculateur de marge', blurb: 'Marge d’une ligne et cotes justes sans marge (no-vig).' },
+    ],
+  },
+  br: {
+    title: 'Ferramentas',
+    description: 'Calculadoras gratuitas do Ve7as: rollover e custo de liberação, conversor de odds, margem da casa. Tudo roda no seu navegador.',
+    lede: 'Calculadoras sem cadastro e sem rede: tudo é calculado no seu navegador.',
+    tools: [
+      { segments: ['tools', 'wagering-calculator'], name: 'Calculadora de rollover', blurb: 'Volume do bônus e perda esperada com um dado RTP.' },
+      { segments: ['tools', 'odds-converter'], name: 'Conversor de odds', blurb: 'Formatos decimal, americano e fracionário mais a probabilidade implícita.' },
+      { segments: ['tools', 'margin-calculator'], name: 'Calculadora de margem', blurb: 'Margem de uma linha e odds justas sem margem (no-vig).' },
+    ],
+  },
+};
+
+const c = COPY[lang];
+const pageUrl = new URL(path(lang, 'tools'), Astro.site);
+const schema = [
+  breadcrumbs([
+    { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: c.title, url: pageUrl.toString() },
+  ]),
+];
+---
+
+<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools" schema={schema}>
+  <header class="page-head">
+    <div class="container">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="nf-sections">
+        {c.tools.map((tool) => (
+          <a href={path(lang, ...tool.segments)} class="nf-section">
+            <strong>{tool.name}</strong>
+            <span class="section-sub">{tool.blurb}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
