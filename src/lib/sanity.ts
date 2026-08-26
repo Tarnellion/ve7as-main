@@ -2,7 +2,7 @@ import { createClient } from '@sanity/client';
 import { Marked, type RendererObject, type Tokens } from 'marked';
 import { transformSync } from 'ultrahtml';
 import sanitize from 'ultrahtml/transformers/sanitize';
-import { DEFAULT_LANGUAGE, isLanguage, type Language } from '../i18n/languages';
+import { DEFAULT_LANGUAGE, INDEXED_LANGUAGES, isLanguage, type Language } from '../i18n/languages';
 
 // Датасет публичный, поэтому токен не нужен: анонимные запросы возвращают
 // опубликованный контент. Токен, наоборот, вредил — он вытягивал drafts.*
@@ -229,6 +229,26 @@ function localized(field: string, lang: Language): string {
  * смотрела только на заголовок, и статья с заполненным `title_en`, но пустым
  * `body_en` показывала русский текст вообще без предупреждения.
  */
+/**
+ * `"translations": { en: bool, es: bool, … }` по индексируемым локалям.
+ *
+ * Нужна там, где решение принимается ЗА другую локаль: sitemap не должен
+ * приглашать краулер на URL, который сам скажет noindex (нет перевода),
+ * а страница не должна целиться hreflang'ом в такую альтернативу —
+ * несогласованные сигналы Google разрешает отбрасыванием кластера.
+ * Для DEFAULT_LANGUAGE перевод есть по определению — это язык оригинала.
+ */
+function translationsMap(fields: string[]): string {
+  const entries = INDEXED_LANGUAGES.map((code) => {
+    if (code === DEFAULT_LANGUAGE) return `"${code}": true`;
+    const conditions = fields
+      .map((field) => `(defined(${field}_${code}) && ${field}_${code} != "")`)
+      .join(' && ');
+    return `"${code}": ${conditions}`;
+  });
+  return `"translations": { ${entries.join(', ')} }`;
+}
+
 function translationFlag(fields: string[], lang: Language): string {
   if (lang === DEFAULT_LANGUAGE) return '"hasTranslation": true';
   const conditions = fields
@@ -403,7 +423,8 @@ export async function getArticleBySlug(
       ${localized('title', code)},
       ${localized('description', code)},
       ${localized('body', code)},
-      ${translationFlag(['title', 'body'], code)}
+      ${translationFlag(['title', 'body'], code)},
+      ${translationsMap(['title', 'body'])}
     }`,
     { slug },
   );
@@ -478,7 +499,8 @@ export async function getSitemapContent(): Promise<Fetched<SitemapContent>> {
         "id": slug.current,
         pubDate,
         _updatedAt,
-        blockedIn
+        blockedIn,
+        ${translationsMap(['title', 'body'])}
       },
       "faqItems": *[_type == "faqItem"] [0...${FAQ_LIMIT}] {
         blockedIn
@@ -557,6 +579,8 @@ export type SanityArticleCard = {
 export type SanityArticleFull = SanityArticleCard & {
   sectionIcon: string;
   body: string;
+  /** По индексируемым локалям: есть ли там полный перевод (title + body). */
+  translations?: Partial<Record<Language, boolean>>;
   /** Слаг документа автора; null у статей, где проставлена только строка. */
   authorSlug?: string | null;
   /**
@@ -591,6 +615,12 @@ export type SanityAuthor = {
 
 export type SitemapContent = {
   sections: { id: string }[];
-  articles: { id: string; pubDate: string; _updatedAt?: string; blockedIn?: string[] }[];
+  articles: {
+    id: string;
+    pubDate: string;
+    _updatedAt?: string;
+    blockedIn?: string[];
+    translations?: Partial<Record<Language, boolean>>;
+  }[];
   faqItems: { blockedIn?: string[] }[];
 };

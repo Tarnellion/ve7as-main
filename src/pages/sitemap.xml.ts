@@ -80,7 +80,10 @@ export const GET: APIRoute = async ({ site }) => {
   const faqIsListable =
     faqItems.length === 0 || faqItems.some((item) => !isGeoRestricted(item.blockedIn));
 
-  const entries: { segments: string; lastmod?: string }[] = [
+  // `langs` у статьи — только локали с настоящим переводом: URL, который сам
+  // скажет noindex (фолбэк), в sitemap не приглашается, и альтернативы на
+  // него не объявляются. У статики и списков версия есть на каждом языке.
+  const entries: { segments: string; lastmod?: string; langs?: readonly Language[] }[] = [
     ...STATIC_SEGMENTS.map((segments) => ({ segments })),
     ...(faqIsListable ? [{ segments: 'faq' }] : []),
     // `section` documents have no `blockedIn` field in the Sanity schema.
@@ -90,32 +93,36 @@ export const GET: APIRoute = async ({ site }) => {
       .map((article) => ({
         segments: `articles/${article.id}`,
         lastmod: lastmodOf(article),
+        langs: INDEXED_LANGUAGES.filter((code) => article.translations?.[code] === true),
       })),
   ];
 
   // Только индексируемые локали: sitemap — это приглашение к обходу, и звать
   // краулер на страницы, которые сами говорят noindex, значит жечь бюджет
   // обхода и слать противоречивые сигналы (см. INDEXED_LANGUAGES).
-  const urls = entries.flatMap(({ segments, lastmod }) =>
-    INDEXED_LANGUAGES.map((lang) => {
+  const urls = entries.flatMap(({ segments, lastmod, langs }) => {
+    const pageLangs = langs ?? INDEXED_LANGUAGES;
+    return pageLangs.map((lang) => {
       // hreflang must use the same BCP 47 tags the pages advertise in <head>
       // (`HTML_LANG`), not the raw route codes: `pt`/`br` there vs `pt-PT`/`pt-BR`
       // in the markup produced two contradicting hreflang clusters for the same
       // URLs — and bare `br` is Breton, not Brazilian Portuguese.
-      const alternates = [
-        ...INDEXED_LANGUAGES.map(
+      const alternates = pageLangs.length < 2 ? '' : [
+        ...pageLangs.map(
           (alt) =>
             `    <xhtml:link rel="alternate" hreflang="${HTML_LANG[alt]}" href="${url(base, alt, segments)}" />`
         ),
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${url(base, PRIMARY_LANGUAGE, segments)}" />`,
+        ...(pageLangs.includes(PRIMARY_LANGUAGE)
+          ? [`    <xhtml:link rel="alternate" hreflang="x-default" href="${url(base, PRIMARY_LANGUAGE, segments)}" />`]
+          : []),
       ].join('\n');
 
       return `  <url>
     <loc>${url(base, lang, segments)}</loc>
 ${lastmod ? `    <lastmod>${lastmod}</lastmod>\n` : ''}${alternates}
   </url>`;
-    })
-  );
+    });
+  });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">

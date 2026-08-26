@@ -21,6 +21,14 @@ interface Props {
    * странице не нужно.
    */
   schema?: SchemaNode[];
+  /**
+   * Локали, в которых у ЭТОЙ страницы реально есть версия. По умолчанию —
+   * все индексируемые: верно для статики, инструментов и списков, которые
+   * существуют на каждом языке. Страница статьи передаёт сюда только локали
+   * с переводом: hreflang на версию-фолбэк — это тег на noindex-страницу,
+   * противоречие, из-за которого Google отбрасывает кластер целиком.
+   */
+  alternates?: Language[];
 }
 
 const props = Astro.props;
@@ -31,6 +39,12 @@ const props = Astro.props;
 // проходил на индексируемые версии.
 const { lang, title, description, currentPath = '', ogImage, schema = [] } = props;
 const noindex = (props.noindex ?? false) || !isIndexable(lang);
+
+// Один hreflang без пары бессмыслен: если у страницы нет ни одной живой
+// альтернативы, кластер не объявляется вовсе (self-canonical достаточно).
+const alternateLangs = (props.alternates ?? [...INDEXED_LANGUAGES]).filter(isIndexable);
+const emitHreflang = !noindex && alternateLangs.length >= 2;
+const emitXDefault = emitHreflang && alternateLangs.includes(PRIMARY_LANGUAGE);
 const t = useTranslations(lang);
 
 // Canonical всегда со слешем на конце: иначе /ru/faq и /ru/faq/ получают
@@ -81,10 +95,10 @@ const graph = [
     которое Google разрешает отбрасыванием всего кластера. На самих
     noindex-страницах hreflang не выводится вовсе — их в кластере нет.
   */}
-  {!noindex && INDEXED_LANGUAGES.map((code) => (
+  {emitHreflang && alternateLangs.map((code) => (
     <link rel="alternate" hreflang={HTML_LANG[code]} href={new URL(path(code, currentPath), Astro.site)} />
   ))}
-  {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(path(PRIMARY_LANGUAGE, currentPath), Astro.site)} />}
+  {emitXDefault && <link rel="alternate" hreflang="x-default" href={new URL(path(PRIMARY_LANGUAGE, currentPath), Astro.site)} />}
 
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
