@@ -1,0 +1,43 @@
+{
+  "_comment": [
+    "Единственное место, где перечислены URL источников. Все скрипты конвейера читают",
+    "только отсюда — дублировать адреса в коде запрещено.",
+    "",
+    "layer:  A — отраслевое ядро (обнаружение и кросс-верификация)",
+    "        B — первоисточники: регуляторы и пресс-релизы",
+    "        C — локальные издания",
+    "",
+    "independenceGroup: издательская группа. Два источника с одинаковым значением",
+    "        считаются ОДНИМ подтверждением. Три ленты SBC — это один голос, не три.",
+    "",
+    "sourceType: editorial | regulator | press-release",
+    "soleSourceAllowed: может ли источник быть единственным подтверждением новости.",
+    "        Инвариант: sourceType == 'press-release' => soleSourceAllowed === false.",
+    "",
+    "factsOnly: язык источника не входит в индексируемые локали (en, es), но факты",
+    "        из него годятся для подтверждения события."
+  ],
+  "sources": [
+    { "id": "igamingbusiness", "url": "https://igamingbusiness.com/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "igamingbusiness", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "sbcnews", "url": "https://sbcnews.co.uk/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "sbc", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "sbcamericas", "url": "https://sbcamericas.com/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "sbc", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "casinoorg", "url": "https://www.casino.org/news/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "casinoorg", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "gamblingnews", "url": "https://www.gamblingnews.com/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "gamblingnews", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "focusgn", "url": "https://focusgn.com/feed", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "focusgn", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "gamblinginsider", "url": "https://www.gamblinginsider.com/feed", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "gamblinginsider", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "casinobeats", "url": "https://www.casinobeats.com/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "sbc", "sourceType": "editorial", "soleSourceAllowed": true },
+
+    { "id": "mga", "url": "https://www.mga.org.mt/feed/", "layer": "B", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "mga", "sourceType": "regulator", "soleSourceAllowed": true },
+    { "id": "ukgc", "url": "https://www.gamblingcommission.gov.uk/news/enforcement-action", "layer": "B", "lang": "en", "kind": "html", "expectFullText": false, "independenceGroup": "ukgc", "sourceType": "regulator", "soleSourceAllowed": true, "note": "RSS у UKGC не существует: /news/rss и /news/feed отдают HTML. Здесь проверяется только доступность листинга." },
+    { "id": "g3newswire", "url": "https://www.g3newswire.com/feed/", "layer": "B", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "g3newswire", "sourceType": "press-release", "soleSourceAllowed": false, "note": "Пресс-релизы операторов. Никогда не может быть единственным подтверждением." },
+
+    { "id": "sbcnoticias", "url": "https://sbcnoticias.com/feed/", "layer": "C", "lang": "es", "kind": "rss", "expectFullText": true, "independenceGroup": "sbc", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "yogonet_intl", "url": "https://www.yogonet.com/international/rss.xml", "layer": "C", "lang": "en", "kind": "rss", "expectFullText": false, "independenceGroup": "yogonet", "sourceType": "editorial", "soleSourceAllowed": true },
+    { "id": "yogonet_latam", "url": "https://www.yogonet.com/latinoamerica/rss.xml", "layer": "C", "lang": "es", "kind": "rss", "expectFullText": false, "independenceGroup": "yogonet", "sourceType": "editorial", "soleSourceAllowed": true },
+
+    { "id": "igamingbrazil", "url": "https://igamingbrazil.com/feed/", "layer": "C", "lang": "pt", "kind": "rss", "expectFullText": true, "independenceGroup": "igamingbrazil", "sourceType": "editorial", "soleSourceAllowed": true, "factsOnly": true },
+    { "id": "isaguide", "url": "https://www.isa-guide.de/feed/", "layer": "C", "lang": "de", "kind": "rss", "expectFullText": true, "independenceGroup": "isaguide", "sourceType": "editorial", "soleSourceAllowed": true, "factsOnly": true },
+
+    { "id": "calvinayre_control", "url": "https://calvinayre.com/feed/", "layer": "A", "lang": "en", "kind": "rss", "expectFullText": true, "independenceGroup": "calvinayre", "sourceType": "editorial", "soleSourceAllowed": true, "note": "КОНТРОЛЬНЫЙ образец протухшей ленты: отдаёт HTTP 200 и 20 записей от февраля 2021. Проба обязана пометить его stale — если не пометила, детектор сломан." }
+  ]
+}

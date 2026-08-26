@@ -1,0 +1,42 @@
+name: Проба новостных лент
+
+# Запускается только вручную. Ничего не публикует, не требует ни одного секрета
+# и не трогает сайт — единственная задача измерить, отвечают ли ленты с адреса,
+# откуда будет ходить конвейер.
+#
+# Смысл именно в запуске ОТСЮДА: раннеры GitHub сидят в датацентровых диапазонах
+# Azure, которые фильтруются жёстче домашних адресов. Локальный прогон даёт
+# другой ответ и потому ничего не доказывает.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Зависимостей у пробы нет вообще — только встроенный fetch.
+      # npm ci здесь не нужен и занял бы больше времени, чем сама проба.
+      - name: Проба
+        run: node scripts/news/probe.mjs
+
+      - name: Отчёт в сводку прогона
+        if: always()
+        run: cat .pipeline/probe-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Отчёт артефактом
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-report
+          path: .pipeline/
+          retention-days: 30
