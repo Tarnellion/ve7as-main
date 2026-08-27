@@ -189,18 +189,41 @@ const schema = [
   const fra = document.getElementById('oc-fractional') as HTMLInputElement;
   const imp = document.getElementById('oc-implied')!;
 
-  // Наилучшее рациональное приближение (дерево Штерна–Броко), знаменатель ≤ 100.
-  function toFraction(x: number): string {
+  // Букмекеры не котируют «математически лучшую» дробь — они пользуются
+  // традиционной лестницей (1/5, 2/9, …, 15/8, 85/40, …, 100/1). Поэтому
+  // сначала прищёлкиваем к ближайшей ступени лестницы; Штерн–Броко остаётся
+  // фолбэком для значений за её пределами. Найдено адверсариальной проверкой:
+  // для 2.88 честный ответ букмекера — 15/8, а не «лучшая» 47/25.
+  const LADDER: [number, number][] = [
+    [1,10],[1,9],[1,8],[1,7],[1,6],[2,11],[1,5],[2,9],[1,4],[2,7],[3,10],[1,3],
+    [4,11],[2,5],[4,9],[1,2],[8,15],[4,7],[8,13],[2,3],[4,5],[5,6],[10,11],[20,21],
+    [1,1],[21,20],[11,10],[6,5],[5,4],[11,8],[6,4],[13,8],[7,4],[15,8],[2,1],
+    [85,40],[9,4],[12,5],[5,2],[13,5],[11,4],[3,1],[10,3],[7,2],[4,1],[9,2],[5,1],
+    [11,2],[6,1],[13,2],[7,1],[15,2],[8,1],[17,2],[9,1],[10,1],[11,1],[12,1],
+    [14,1],[16,1],[18,1],[20,1],[25,1],[33,1],[40,1],[50,1],[66,1],[80,1],[100,1],
+  ];
+
+  function sternBrocot(x: number): [number, number] {
     let pl = 0, ql = 1, ph = 1, qh = 0;
-    for (let i = 0; i < 200; i++) {
+    // Обход по одному медианту за шаг линеен для целых частей, поэтому
+    // запас итераций больше верхней ступени лестницы (кэфы вида 500/1).
+    for (let i = 0; i < 1200; i++) {
       const p = pl + ph, q = ql + qh;
       if (q > 100) break;
       if (p / q < x) { pl = p; ql = q; } else { ph = p; qh = q; }
     }
-    const lo: [number, number] = [pl, ql];
-    const hi: [number, number] = [ph, qh];
-    const pick = qh === 0 || Math.abs(lo[0] / lo[1] - x) <= Math.abs(hi[0] / hi[1] - x) ? lo : hi;
-    return `${pick[0]}/${pick[1]}`;
+    return qh === 0 || Math.abs(pl / ql - x) <= Math.abs(ph / qh - x) ? [pl, ql] : [ph, qh];
+  }
+
+  function toFraction(x: number): string {
+    const min = LADDER[0][0] / LADDER[0][1];
+    const max = LADDER[LADDER.length - 1][0] / LADDER[LADDER.length - 1][1];
+    const [p, q] = x >= min && x <= max
+      ? LADDER.reduce((a, b) => Math.abs(a[0] / a[1] - x) <= Math.abs(b[0] / b[1] - x) ? a : b)
+      : sternBrocot(x);
+    // «≈» — честность: ступень лестницы не всегда равна введённому значению.
+    const approx = Math.abs(p / q - x) > 1e-9 ? '≈ ' : '';
+    return `${approx}${p}/${q}`;
   }
 
   function fromAmerican(raw: string): number | null {
@@ -210,7 +233,7 @@ const schema = [
   }
 
   function fromFractional(raw: string): number | null {
-    const m = raw.replace(/\s+/g, '').match(/^(\d+(?:\.\d+)?)[/:](\d+(?:\.\d+)?)$/);
+    const m = raw.replace(/[≈\s]+/g, '').match(/^(\d+(?:\.\d+)?)[/:](\d+(?:\.\d+)?)$/);
     if (!m) return null;
     const q = Number(m[2]);
     if (q === 0) return null;
