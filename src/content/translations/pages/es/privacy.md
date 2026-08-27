@@ -1,6 +1,6 @@
 ---
 title: Política de privacidad
-description: Cómo trata Ve7as los datos de los visitantes del sitio.
+description: "Cómo trata Ve7as los datos de los visitantes: qué recogemos, qué evitamos recoger a propósito y de qué servicios de terceros depende el sitio."
 ---
 
 Esta página describe qué datos recopila Ve7as y cómo se utilizan.

@@ -12,6 +12,21 @@ const { lang } = Astro.params as { lang: Language };
 if (!isLanguage(lang)) return Astro.rewrite('/404');
 
 const t = useTranslations(lang);
+
+/**
+ * Meta-description страницы. Подпись блока FAQ с главной (t.home.faqSubtitle)
+ * для сниппета слишком короткая (38–45 симв. против нормы 70–160), а удлинять
+ * её нельзя — она стоит и под заголовком секции на главной.
+ */
+const FAQ_META_DESCRIPTION: Record<Language, string> = {
+  ru: 'Ответы на частые вопросы о Ve7as: кто мы, почему без рекламы и рейтингов казино, откуда берём факты и как устроены наши материалы.',
+  en: 'Answers to common questions about Ve7as: who we are, why there are no casino ads or rankings, where our facts come from and how our articles are made.',
+  es: 'Respuestas a preguntas frecuentes sobre Ve7as: quiénes somos, por qué no hay publicidad ni rankings de casinos y de dónde salen nuestros datos.',
+  pt: 'Respostas às perguntas frequentes sobre o Ve7as: quem somos, porque não há publicidade nem rankings de casinos e de onde vêm os nossos factos.',
+  de: 'Antworten auf häufige Fragen zu Ve7as: wer wir sind, warum es keine Casino-Werbung und keine Rankings gibt und woher unsere Fakten stammen.',
+  fr: 'Réponses aux questions fréquentes sur Ve7as : qui nous sommes, pourquoi ni publicité ni classements de casinos, et d’où viennent nos informations.',
+  br: 'Respostas às perguntas frequentes sobre o Ve7as: quem somos, por que não há publicidade nem rankings de cassinos e de onde vêm os nossos fatos.',
+};
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
 const faqResult = await getFaqItems(lang);
@@ -40,7 +55,7 @@ const schema = views.length > 0
   : [];
 ---
 
-<BaseLayout lang={lang} title={t.home.faqTitle} description={t.home.faqSubtitle} currentPath="faq" schema={schema}>
+<BaseLayout lang={lang} title={t.home.faqTitle} description={FAQ_META_DESCRIPTION[lang]} currentPath="faq" schema={schema}>
   <header class="page-head">
     <div class="container">
       <h1>{t.home.faqTitle}</h1>

@@ -1,6 +1,6 @@
 ---
 title: "About the project"
-description: "Ve7as is an independent informational portal about gambling entertainment. We cover gambling and betting niches in plain language, with no advertising for operators."
+description: "Ve7as is an independent portal about gambling entertainment: plain-language explanations of casino, betting and lottery math, with no operator ads."
 ---
 
 Ve7as is an independent informational and educational portal about gambling

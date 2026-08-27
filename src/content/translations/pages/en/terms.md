@@ -1,6 +1,6 @@
 ---
 title: "Terms of use"
-description: "The rules for using the Ve7as informational portal."
+description: "The rules for using the Ve7as informational portal: what our content is and is not, age restrictions, and the limits of our liability."
 ---
 
 By using the Ve7as website, you agree to the following terms.

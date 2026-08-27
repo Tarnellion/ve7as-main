@@ -1,6 +1,6 @@
 ---
 title: Condiciones de uso
-description: Reglas de uso del portal informativo Ve7as.
+description: "Reglas de uso del portal informativo Ve7as: qué es y qué no es nuestro contenido, restricciones de edad y los límites de nuestra responsabilidad."
 ---
 
 Al utilizar el sitio Ve7as, aceptas las siguientes condiciones.

@@ -1,6 +1,6 @@
 ---
 title: Sobre el proyecto
-description: Ve7as es un portal informativo independiente sobre el entretenimiento de azar. Hablamos de los distintos nichos del gambling y las apuestas en un lenguaje sencillo, sin publicidad de operadores.
+description: "Ve7as es un portal independiente sobre el entretenimiento de azar: explicaciones claras de la matemática del juego, sin publicidad de operadores."
 ---
 
 Ve7as es un portal informativo y educativo independiente sobre el

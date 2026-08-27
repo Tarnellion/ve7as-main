@@ -30,7 +30,12 @@ const errorCopy = DATA_ERROR_COPY[lang];
 if (articlesResult.failed) markContentUnavailable(Astro.response);
 ---
 
-<BaseLayout lang={lang} title={t.hero.title} description={t.hero.subtitle} currentPath="">
+{/*
+  <title> главной набирается из tagline, а не из hero.title: заголовок героя —
+  это H1 и он длиннее лимита сниппета (63/78 симв. с префиксом «Ve7as — »),
+  а tagline укладывается в 60 на обоих индексируемых языках.
+*/}
+<BaseLayout lang={lang} title={t.site.tagline} description={t.hero.subtitle} currentPath="">
 
   {/*
     Главная — указатель, а не витрина. Сетка карточек продаёт, список
