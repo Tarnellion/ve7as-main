@@ -1,0 +1,32 @@
+{
+  "source": "https://wizardofodds.com/games/blackjack/calculator/",
+  "captured": "2026-08-27",
+  "method": "Точные значения сняты программно с официального калькулятора WoO (функция CalculateResult) по трём методикам: optimal (composition-dependent, перетасовка каждую руку), cut (total-dependent basic strategy + cut card), ccs (total-dependent + continuous shuffler). Бенчмарк: 8 колод, S17, DAS, дабл на любых двух, респлит до 4 рук, без RSA/HSA, OBO/peek, без сдачи, 3:2.",
+  "purpose": "Верификационный артефакт для ТЗ blackjack-house-edge-by-rules (items 1–2) и источник данных инструмента /tools/blackjack-house-edge/. Аддитивная модель проверена на стеках: party pit (H17+6:5) отклонение 0.00001 пп; 6d+H17+noDAS+6:5 — 0.0032 пп; 2d+H17 — 0.0124 пп. Все в пределах порога 0.05 пп из ТЗ.",
+  "exact": {
+    "benchmark": { "opt": 0.43096, "cut": 0.44686, "ccs": 0.43286 },
+    "decks1": { "opt": -0.18289, "cut": -0.03119, "ccs": -0.14420 },
+    "decks2": { "opt": 0.17832, "cut": 0.25532, "ccs": 0.19232 },
+    "decks4": { "opt": 0.34749, "cut": 0.38699, "ccs": 0.35299 },
+    "decks5": { "opt": 0.38084, "cut": 0.41284, "ccs": 0.38484 },
+    "decks6": { "opt": 0.40312, "cut": 0.42622, "ccs": 0.40622 },
+    "h17": { "opt": 0.64493, "cut": 0.66083, "ccs": 0.64683 },
+    "noDas": { "opt": 0.57250, "cut": 0.58840, "ccs": 0.57440 },
+    "dbl911": { "opt": 0.52507, "cut": 0.54097, "ccs": 0.52697 },
+    "dbl1011": { "opt": 0.61879, "cut": 0.63469, "ccs": 0.62069 },
+    "resplit2": { "opt": 0.48578, "cut": 0.50168, "ccs": 0.48768 },
+    "resplit3": { "opt": 0.43998, "cut": 0.45588, "ccs": 0.44188 },
+    "rsa": { "opt": 0.36052, "cut": 0.37642, "ccs": 0.36242 },
+    "hsa": { "opt": 0.24111, "cut": 0.25701, "ccs": 0.24301 },
+    "enhcFullLoss": { "opt": 0.54263, "cut": 0.55853, "ccs": 0.54453 },
+    "lateSurrender": { "opt": 0.35514, "cut": 0.37104, "ccs": 0.35704 },
+    "pay65": { "opt": 1.78895, "cut": 1.80485, "ccs": 1.79085 },
+    "stack_8d_h17_65": { "opt": 2.00291, "cut": 2.01881, "ccs": 2.00481 },
+    "stack_6d_h17_noDas_65": { "opt": 2.11986, "cut": 2.14296, "ccs": 2.12296 },
+    "stack_2d_h17": { "opt": 0.37988, "cut": 0.45688, "ccs": 0.39388 }
+  },
+  "published_rule_variations": {
+    "source": "https://wizardofodds.com/games/blackjack/rule-variations/",
+    "note": "Опубликованные эффекты (player return): 6:5 −1.39; 1:1 −2.27; H17 −0.22; dbl 10-11 −0.18; dbl 9-11 −0.09; no DAS −0.14; 1 deck +0.48; 2 +0.19; 4 +0.06; 5 +0.03; 6 +0.02; no resplit −0.10; RSA +0.08; HSA +0.19; late surrender vs ten +0.07; early surrender vs ace +0.39; ENHC −0.11. Замеры cut-card совпадают с published в пределах округления, кроме no-resplit (замер +0.055 пп против published 0.10) и 6:5 (замер +1.358 пп против published 1.39) — в инструменте и статье используются ТОЧНЫЕ замеры с калькулятора, расхождения проговорить в статье."
+  }
+}

@@ -591,6 +591,17 @@ a { color: inherit; }
   width: 100%;
 }
 .calc-field input:focus { outline: 2px solid var(--mark); outline-offset: -1px; }
+.calc-field select {
+  font-family: var(--sans);
+  font-size: var(--t-base);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: var(--s-2) var(--s-3);
+  width: 100%;
+}
+.calc-field select:focus { outline: 2px solid var(--mark); outline-offset: -1px; }
 .calc-field small { font-family: var(--sans); font-size: var(--t-xs); color: var(--soft); }
 .calc-results {
   background: var(--paper-2);
