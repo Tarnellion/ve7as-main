@@ -13,13 +13,20 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { checkRhythm } from './rhythm.mjs';
+import { checkRhythm, paragraphs } from './rhythm.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const BANNED = JSON.parse(readFileSync(join(HERE, 'style', 'banned.json'), 'utf8'));
 
 /** Объём по ТЗ новости: меньше — заметка, больше — лонгрид не этой ступени. */
-export const WORDS_MIN = 380;
+/**
+ * Нижний предел объёма. Был 380, пока ТЗ требовало 450-650 слов, — и именно
+ * эта планка заставляла модель растягивать новость на тонком источнике:
+ * решение регулятора на 2300 символов она «дотянула» домыслом «framing
+ * implies…», который второй проход отловил как преувеличение. Объём
+ * определяют факты, а не планка.
+ */
+export const WORDS_MIN = 250;
 /**
  * Предел объёма зависит от языка. Испанский текст систематически длиннее
  * английского примерно на пятую часть при том же содержании — измерено на
@@ -49,8 +56,48 @@ function findPhrase(text, phrase) {
 const excerpt = (text, at, len) =>
   text.slice(Math.max(0, at - 40), Math.min(text.length, at + len + 40)).replace(/\s+/g, ' ').trim();
 
+/**
+ * Утверждения о подготовке текста. Пометку об ИИ рисует сайт; всё, что модель
+ * напишет о процессе сама, при автопубликации ложно (первый боевой прогон:
+ * «reviewed by the Ve7as editorial team» в материале, который не читал никто)
+ * и ещё и дублирует строку сайта.
+ */
+const PROCESS_CLAIMS = [
+  /prepared with (the help of )?(ai|artificial intelligence)/i,
+  /\bai[- ](assist|generated|prepared)/i,
+  /reviewed by (the )?(ve7as )?(editor|editorial)/i,
+  /(not|no) (for|to be) (publication|published)/i,
+  /\bnote (for|to) (the )?(editor|editorial)/i,
+  /elaborado con (ayuda de )?(ia|inteligencia artificial)/i,
+  /revisado por (el )?(equipo )?(editorial|de redacci)/i,
+  /\bnota (para|a) (la )?(redacci|editor)/i,
+];
+
 export function postcheck(text, lang = 'en') {
   const issues = [];
+
+  // Кириллица в материале на en/es — служебная записка или недоперевод. На
+  // первом боевом прогоне шаг правки вписал в статью записку по-русски с
+  // перечнем блокеров конвейера: на сайт она ушла бы вместе с текстом.
+  const cyr = text.match(/[А-Яа-яЁё]{3,}/);
+  if (cyr) issues.push({ kind: 'служебное', detail: `кириллица в тексте на ${lang} («${cyr[0]}…») — служебная записка или недоперевод` });
+
+  for (const re of PROCESS_CLAIMS) {
+    const m = text.match(re);
+    if (m) issues.push({ kind: 'служебное', detail: `текст рассказывает о своей подготовке: «${m[0]}» — это делает сайт, не текст` });
+  }
+
+  // Ссылки, картинки и адреса. Модель могла бы написать их по подсказке из текста
+  // источника, а рендерер markdown ссылки и картинки ПРОПУСКАЕТ (им нужны
+  // разрешённые схемы, а не отсутствие ссылок), и ни один гейт их не проверял.
+  // Сайт не размещает внешних ссылок в новостях и не рекламирует операторов.
+  const link = text.match(/!?\[[^\]]*\]\([^)]*\)|https?:\/\/\S+|\bwww\.\S+/i);
+  if (link) issues.push({ kind: 'ссылки', detail: `ссылка или адрес в тексте: «${link[0].slice(0, 60)}» — новости без внешних ссылок` });
+
+  // Сырой HTML рендерер экранирует, и на странице он стоял бы буквальным
+  // текстом «<small>…</small>».
+  const html = text.match(/<\/?[a-z][a-z0-9]*(\s[^>]*)?>/i);
+  if (html) issues.push({ kind: 'служебное', detail: `сырая HTML-разметка в тексте: ${html[0]}` });
 
   const lists = BANNED[lang] ?? BANNED.en;
   for (const [category, phrases] of Object.entries(lists)) {
@@ -67,8 +114,14 @@ export function postcheck(text, lang = 'en') {
 
   if (/^#\s/m.test(text)) issues.push({ kind: 'структура', detail: 'H1 внутри текста: заголовок задаётся отдельным полем' });
 
+  // РИТМ — ТОЛЬКО ДЛЯ АНГЛИЙСКОГО. Пороги откалиброваны на английских одобренных
+  // текстах, и к переводу абсолютное сравнение неприменимо: на первом боевом
+  // прогоне у испанской версии материала с английским CV 0.449 и 25 %
+  // однопредложенных абзацев стало 0.415 и 8 % при тех же 12 абзацах — перевод
+  // склеил короткие предложения. Это шум перевода, а не «машинность». Для
+  // перевода проверяем сохранность структуры оригинала (translationFidelity).
   const r = checkRhythm(text);
-  if (!r.ok && !r.skipped) {
+  if (lang !== 'es' && !r.ok && !r.skipped) {
     for (const i of r.issues) issues.push({ kind: 'ритм', detail: i });
     if (r.hint) issues.push({ kind: 'ритм', detail: r.hint });
   }
@@ -87,6 +140,50 @@ export function postcheck(text, lang = 'en') {
     hint: r.hint ?? null,
     rhythm: { cv: Number(r.cv.toFixed(3)), singleShare: Number(r.singleShare.toFixed(3)), paragraphs: r.paragraphs },
   };
+}
+
+const countWords = (text) => text.replace(/[#>*_`|-]/g, ' ').split(/\s+/).filter(Boolean).length;
+
+/**
+ * Перевод должен сохранять структуру оригинала: то же число абзацев и
+ * правдоподобное отношение объёмов. Это то, что перевод ОБЯЗАН сохранять, и
+ * то, что ломается, когда он теряет или досочиняет текст. Испанский длиннее
+ * английского примерно на пятую часть (измерено: ×1.13-1.21), поэтому окно
+ * широкое — оно ловит потерянный или раздутый перевод, а не стиль.
+ */
+/**
+ * Числа текста: суммы, годы, количества. Разделители тысяч в разных языках разные
+ * («2,000», «2.000», «2 000»), поэтому между цифрами они вырезаются до сравнения.
+ * Одноцифровые числа не берём: «1», «2» стоят в порядковых и перечислениях, а
+ * подмена «37» на «73» — ровно то, что нужно ловить, — двузначная.
+ */
+function numbersOf(text) {
+  const joined = text
+    .replace(/(?<=\d)[.,\u00a0\u202f](?=\d{3}(?!\d))/g, '')
+    .replace(/(?<=\d{1,3}) (?=\d{3}(?!\d))/g, '');
+  return new Set((joined.match(/\d+/g) ?? []).filter((n) => n.length >= 2));
+}
+
+export function translationFidelity(enText, esText) {
+  const issues = [];
+  // Переводчик не должен терять и добавлять числа. Это механически ловит то, чего
+  // не поймает счёт абзацев: подмену суммы или даты внутри нормального по форме текста.
+  const en = numbersOf(enText), es = numbersOf(esText);
+  const lost = [...en].filter((n) => !es.has(n));
+  const added = [...es].filter((n) => !en.has(n));
+  if (lost.length || added.length) {
+    issues.push({ kind: 'перевод', detail: `числа расходятся: потеряны ${lost.join(', ') || '—'}, добавлены ${added.join(', ') || '—'}` });
+  }
+  const pe = paragraphs(enText).length;
+  const ps = paragraphs(esText).length;
+  if (pe !== ps) issues.push({ kind: 'перевод', detail: `абзацев ${ps} при ${pe} в оригинале: структура не сохранена` });
+  const we = countWords(enText);
+  const ws = countWords(esText);
+  const ratio = we ? ws / we : 0;
+  if (ratio < 0.95 || ratio > 1.5) {
+    issues.push({ kind: 'перевод', detail: `объём перевода ${ws} слов при ${we} в оригинале (×${ratio.toFixed(2)}): текст потерян или досочинён` });
+  }
+  return issues;
 }
 
 /** Замечания одной строкой — ровно то, что уходит в промпт правки. */

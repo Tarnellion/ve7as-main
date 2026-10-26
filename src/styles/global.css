@@ -527,6 +527,23 @@ a { color: inherit; }
   padding: var(--s-3) var(--s-4);
   margin-bottom: var(--s-5);
 }
+/* Раскрытие использования ИИ: мелко, но читаемо — пометка, а не баннер. */
+.ai-notice {
+  margin-top: var(--s-6);
+  max-width: var(--measure);
+  font-family: var(--sans);
+  font-size: var(--t-xs);
+  color: var(--soft);
+}
+/*
+ * Вариант «опубликовано без проверки человеком» несёт существенный для читателя
+ * факт, а не просто пометку об инструменте, поэтому он крупнее: самый мелкий
+ * кегль темы оставлен только для «проверено редактором».
+ */
+.ai-notice[data-ai-disclosure="automated"] { font-size: var(--t-cap); }
+.ai-notice a { color: inherit; text-decoration: underline; }
+.ai-notice a:hover { color: var(--ink); }
+
 .notice--error {
   border-left-color: var(--mark);
   color: var(--ink);

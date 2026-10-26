@@ -120,6 +120,24 @@ export default {
       options: { list: GEO_OPTIONS },
       group: 'settings',
     },
+    {
+      name: 'aiDisclosure',
+      title: 'AI disclosure',
+      description:
+        'Shown at the bottom of the article. Leave empty for text written by a person. ' +
+        '"Assisted" — prepared with AI and reviewed by an editor before publication. ' +
+        '"Automated" — published by the news pipeline without prior editorial review. ' +
+        'Set by the pipeline; when you review a draft and publish it, switch it to "Assisted".',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Assisted — reviewed by an editor', value: 'assisted' },
+          { title: 'Automated — published without prior review', value: 'automated' },
+        ],
+        layout: 'radio',
+      },
+      group: 'settings',
+    },
     ...langFields,
   ],
   preview: {

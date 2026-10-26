@@ -420,6 +420,7 @@ export async function getArticleBySlug(
       blockedIn,
       "imageUrl": image.asset->url,
       youtube,
+      aiDisclosure,
       ${localized('title', code)},
       ${localized('description', code)},
       ${localized('body', code)},
@@ -586,6 +587,15 @@ export type SanityArticleFull = SanityArticleCard & {
   translations?: Partial<Record<Language, boolean>>;
   /** Слаг документа автора; null у статей, где проставлена только строка. */
   authorSlug?: string | null;
+  /**
+   * Раскрытие использования ИИ. `null` — текст написан человеком.
+   * `assisted` — подготовлено с ИИ и прочитано редактором; `automated` —
+   * вышло из новостного конвейера без предварительной проверки человеком.
+   * В запрос идёт поимённо, а не через `...`. Заметок редактора в документе
+   * статьи нет вообще: датасет публичный, и поле статьи читалось бы любым через
+   * API, поэтому они лежат в закрытом черновике типа newsReview.
+   */
+  aiDisclosure?: 'assisted' | 'automated' | null;
   /**
    * Отметка правки самой Sanity. Идёт в `dateModified` разметки и в строку
    * «Обновлено» — для YMYL это один из немногих сигналов актуальности,

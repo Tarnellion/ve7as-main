@@ -51,6 +51,10 @@ export interface Translation {
     back: string;
     translationNotice: string;
     tableOfContents: string;
+    /** Раскрытие использования ИИ под материалом. */
+    aiAssisted: string;
+    aiAutomated: string;
+    aiPolicy: string;
   };
   /**
    * Блок ответственной игры в конце каждого материала. Ссылки на службы
@@ -133,6 +137,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         'Эта статья пока доступна только на русском языке. Перевод появится позже.',
       tableOfContents: 'Содержание',
+      aiAssisted: 'Подготовлено с помощью ИИ и проверено редакцией перед публикацией.',
+      aiAutomated: 'Подготовлено ИИ по независимым источникам и опубликовано автоматически, без предварительной проверки редакцией.',
+      aiPolicy: 'Как мы используем ИИ',
     },
     common: { readMore: 'Читать', allArticles: 'Все статьи' },
     responsible: {
@@ -210,6 +217,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         'This article is currently available in Russian only. A translation is coming soon.',
       tableOfContents: 'Contents',
+      aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
+      aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Read', allArticles: 'All articles' },
     responsible: {
@@ -287,6 +297,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         'Este artículo solo está disponible en ruso por ahora. La traducción llegará pronto.',
       tableOfContents: 'Contenido',
+      aiAssisted: 'Elaborado con ayuda de IA y revisado por el equipo editorial antes de su publicación.',
+      aiAutomated: 'Elaborado con IA a partir de fuentes independientes y publicado automáticamente, sin revisión editorial previa.',
+      aiPolicy: 'Cómo usamos la IA',
     },
     common: { readMore: 'Leer', allArticles: 'Todos los artículos' },
     responsible: {
@@ -364,6 +377,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         'Este artigo está disponível apenas em russo, por enquanto. A tradução chegará em breve.',
       tableOfContents: 'Conteúdo',
+      aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
+      aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
     responsible: {
@@ -441,6 +457,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         'Dieser Artikel ist derzeit nur auf Russisch verfügbar. Eine Übersetzung folgt in Kürze.',
       tableOfContents: 'Inhalt',
+      aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
+      aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Lesen', allArticles: 'Alle Artikel' },
     responsible: {
@@ -519,6 +538,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         "Cet article n'est actuellement disponible qu'en russe. Une traduction sera bientôt disponible.",
       tableOfContents: 'Sommaire',
+      aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
+      aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Lire', allArticles: 'Tous les articles' },
     responsible: {
@@ -597,6 +619,9 @@ export const ui: Record<Language, Translation> = {
       translationNotice:
         'Este artigo está disponível apenas em russo, por enquanto. A tradução chega em breve.',
       tableOfContents: 'Conteúdo',
+      aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
+      aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
     responsible: {

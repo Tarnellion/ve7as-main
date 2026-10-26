@@ -1,0 +1,35 @@
+---
+import type { Language } from '../i18n/languages';
+import { path } from '../i18n/utils';
+import { useTranslations } from '../i18n/ui';
+
+/**
+ * Раскрытие использования ИИ под материалом.
+ *
+ * Одна строка мелким кеглем, ОДИНАКОВАЯ для читателя и для бота: решение
+ * владельца от 24.08.2026. Показ разного содержимого разным клиентам —
+ * клоакинг, он отклонён и к нему не возвращаются. Основание — ст. 50(4)
+ * Регламента ЕС об ИИ, действующая с 02.08.2026, и редполитика сайта,
+ * которая обещает, что материалы с существенным вкладом ИИ помечены.
+ *
+ * `null` и неизвестные значения не рендерят ничего: текст, написанный
+ * человеком, пометки не несёт.
+ */
+interface Props {
+  lang: Language;
+  disclosure?: 'assisted' | 'automated' | null;
+}
+
+const { lang, disclosure } = Astro.props;
+const t = useTranslations(lang);
+const text = disclosure === 'automated' ? t.article.aiAutomated
+  : disclosure === 'assisted' ? t.article.aiAssisted
+  : null;
+---
+
+{text && (
+  <p class="ai-notice" data-ai-disclosure={disclosure}>
+    {text}{' '}
+    <a href={path(lang, 'editorial-policy')}>{t.article.aiPolicy}</a>
+  </p>
+)}

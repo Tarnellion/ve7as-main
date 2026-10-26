@@ -1,0 +1,248 @@
+name: Новости — ежедневный конвейер
+
+# Сбор лент → кластеризация → предполётная проверка → генерация → доставка в Sanity → журнал.
+#
+# РЕЖИМ ПУБЛИКАЦИИ задаёт переменная репозитория NEWS_PUBLISH_MODE:
+#   draft (по умолчанию, если переменной нет) — всё уходит в Studio черновиком;
+#   auto — материал, прошедший все гейты scripts/news/policy.mjs, публикуется
+#          сам, остальное остаётся черновиком.
+# Переключатель — Settings → Secrets and variables → Actions → Variables.
+#
+# ВЫКЛЮЧАТЕЛЬ: переменная NEWS_ENABLED=false останавливает РАСПИСАНИЕ целиком,
+# не трогая файл. Ручной запуск при этом работает всегда — иначе, пока расписание
+# выключено, цепочку нельзя было бы и проверить.
+#
+# ГЛАВНОЕ ПРО ПУБЛИЧНОСТЬ. Репозиторий публичный, значит публичны и логи этого
+# задания, и его сводка, и артефакты. Поэтому: (1) скрипты в Actions печатают
+# только КОДЫ причин, а не имена и цитаты; (2) артефактом уходит только
+# `news-report/` — идентификаторы, коды и стоимость, но не черновики и не заметки
+# редактора (они живут в закрытом документе newsReview в Sanity); (3) секреты
+# заданы только тем шагам, которым нужны, а не всему заданию — иначе их видели
+# бы и скрипты установки зависимостей.
+#
+# ДОСТУП К API. Работают оба способа, ключ выбирается первым:
+#   • секрет ANTHROPIC_API_KEY — просто и работает сразу;
+#   • федерация удостоверений — переменные ANTHROPIC_FEDERATION_RULE_ID,
+#     ANTHROPIC_ORGANIZATION_ID, ANTHROPIC_SERVICE_ACCOUNT_ID (и по желанию
+#     ANTHROPIC_WORKSPACE_ID); секрет не нужен. Для перехода на федерацию
+#     ключ из секретов нужно УДАЛИТЬ: заданный ключ молча перекрывает её.
+# Подробности и порядок настройки — docs/news/automation.md.
+#
+# РАСПИСАНИЕ. 05:17 UTC — не круглое время намеренно: в начале часа раннеры
+# GitHub перегружены, и запуск по расписанию может запоздать на десятки минут.
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Режим доставки на этот запуск. default — взять переменную NEWS_PUBLISH_MODE'
+        type: choice
+        options: [default, draft, auto]
+        default: default
+      limit:
+        description: 'Сколько событий брать. Пусто — переменная NEWS_PER_RUN, иначе 2'
+        type: string
+        default: ''
+      dry_run:
+        description: 'Сухой прогон: ни денег API, ни записи в Sanity — только проверка цепочки'
+        type: boolean
+        default: false
+
+# Два прогона одновременно — это два вызова в один журнал и двойная оплата.
+# Второй ждёт первого, а не отменяет его: отмена посреди оплаченных фаз
+# теряет деньги.
+concurrency:
+  group: news-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # коммит журнала обратно в репозиторий
+  id-token: write   # OIDC-токен для федерации; при работе по ключу не используется
+
+jobs:
+  news:
+    # Только в основном репозитории (форк не должен тратить чужой ключ) и только с main:
+    # запуск с другой ветки потратил бы деньги и записал в Sanity, а журнал в main
+    # записать уже не смог бы.
+    if: ${{ github.repository == 'Tarnellion/ve7as-main' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || vars.NEWS_ENABLED != 'false') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # Здесь только НЕсекретная настройка. Секреты — в env конкретных шагов ниже.
+    env:
+      NEWS_PUBLISH_MODE: ${{ (inputs.mode && inputs.mode != 'default') && inputs.mode || vars.NEWS_PUBLISH_MODE || 'draft' }}
+      NEWS_PER_RUN: ${{ inputs.limit || vars.NEWS_PER_RUN || '2' }}
+      NEWS_AUTO_MAX_PER_RUN: ${{ vars.NEWS_AUTO_MAX_PER_RUN }}
+      NEWS_AUTO_MIN_GROUPS: ${{ vars.NEWS_AUTO_MIN_GROUPS }}
+      NEWS_RUN_BUDGET: ${{ vars.NEWS_RUN_BUDGET }}
+      DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Токен не остаётся в .git/config: его видели бы скрипты установки зависимостей.
+          # Для пуша журнала он передаётся явно в том единственном шаге, которому нужен.
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Кэш — ПОСЛЕ npm ci: `npm ci` удаляет node_modules целиком, и восстановленный до него
+      # кэш пропадал бы, а модель в 470 МБ скачивалась заново каждый прогон. Ключ без хэша
+      # лок-файла: модель от зависимостей не зависит; сменится модель — сменится версия в ключе.
+      - name: Кэш модели эмбеддингов
+        uses: actions/cache@v4
+        with:
+          path: node_modules/@huggingface/transformers/.cache
+          key: hf-multilingual-e5-small-v1
+
+      - name: Сводка настроек
+        env:
+          # Только признак наличия, не само значение: значение в этот шаг не попадает.
+          HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' && 'true' || 'false' }}
+          HAS_FED: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID != '' && 'true' || 'false' }}
+        run: |
+          {
+            echo "### Прогон конвейера новостей"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| режим доставки | \`$NEWS_PUBLISH_MODE\` |"
+            echo "| событий за прогон | $NEWS_PER_RUN |"
+            echo "| сухой прогон | $DRY_RUN |"
+            echo "| доступ к API | $([ "$HAS_KEY" = true ] && echo 'ключ' || ([ "$HAS_FED" = true ] && echo 'федерация' || echo '**не настроен**')) |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Сбор лент
+        run: node scripts/news/harvest.mjs
+
+      - name: Кластеризация и правило подтверждения
+        run: node scripts/news/cluster.mjs
+
+      # Всё, что можно проверить бесплатно, — ДО первого платного вызова: токен Sanity, ключ
+      # Anthropic, режим, числовые ручки. Раньше первой об ошибке настройки узнавала доставка,
+      # уже после оплаченной генерации, и это повторялось бы каждое утро.
+      - name: Предполётная проверка
+        id: preflight
+        if: ${{ env.DRY_RUN != 'true' }}
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_FEDERATION_RULE_ID: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}
+          ANTHROPIC_ORGANIZATION_ID: ${{ vars.ANTHROPIC_ORGANIZATION_ID }}
+          ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          ANTHROPIC_WORKSPACE_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
+        run: node scripts/news/preflight.mjs
+
+      # Синхронно, не батчем: на 1-3 события в день скидка батча — около девяти долларов в
+      # месяц, а цена — ожидание до суток и риск, что таймаут убьёт прогон между оплаченными
+      # фазами. См. комментарий к SYNC в generate.mjs.
+      - name: Генерация
+        id: generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_FEDERATION_RULE_ID: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}
+          ANTHROPIC_ORGANIZATION_ID: ${{ vars.ANTHROPIC_ORGANIZATION_ID }}
+          ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          ANTHROPIC_WORKSPACE_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            node scripts/news/generate.mjs --sync
+          else
+            node scripts/news/generate.mjs --sync --live
+          fi
+
+      # `!cancelled()`, а не успех предыдущего шага: если генерация упала на потолке трат или на
+      # одном событии, уже оплаченные записи всё равно нужно доставить, иначе деньги потрачены
+      # впустую. Не запускается, только если предполётная проверка отказала.
+      - name: Доставка в Sanity
+        id: deliver
+        if: ${{ !cancelled() && steps.preflight.outcome != 'failure' }}
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            node scripts/news/deliver.mjs
+          else
+            node scripts/news/deliver.mjs --write
+          fi
+
+      # Журнал заполняем из записей с отметкой о доставке, а не из выхода шага доставки: тот
+      # терялся, когда шаг падал на середине, и тогда доставленное событие на следующий день
+      # генерировалось и оплачивалось заново.
+      - name: Журнал — занести доставленное
+        if: ${{ !cancelled() && env.DRY_RUN != 'true' }}
+        run: |
+          IDS=$(node -e "
+            const fs = require('fs'); const d = '.pipeline/drafts';
+            const ids = fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.json'))
+              .map((f) => JSON.parse(fs.readFileSync(d + '/' + f, 'utf8'))).filter((r) => r.deliveredAt).map((r) => r.id) : [];
+            console.log(ids.join(' '));")
+          if [ -n "$IDS" ]; then
+            node scripts/news/journal-record.mjs $IDS
+          else
+            echo "Доставленных событий нет — журналу нечего заносить."
+          fi
+
+      - name: Журнал — коммит в репозиторий
+        if: ${{ !cancelled() && env.DRY_RUN != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- scripts/news/state/journal.json; then
+            echo "Журнал не менялся."
+            exit 0
+          fi
+          git config user.name "ve7as-news-bot"
+          git config user.email "news-bot@users.noreply.github.com"
+          git add scripts/news/state/journal.json
+          git commit -m "chore(news): журнал опубликованного, прогон ${GITHUB_RUN_ID}"
+          PUSH_URL="${PUSH_URL:-https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git}"
+          # Пока шёл прогон, в main могли запушить; повтор нужен потому, что потерянный журнал
+          # означает регенерацию и оплату тех же событий каждый день.
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push "$PUSH_URL" HEAD:main; then
+              exit 0
+            fi
+            echo "Попытка $attempt не удалась."
+            sleep $((attempt * 5))
+          done
+          echo "::error::Не удалось отправить журнал в main за три попытки"
+          exit 1
+
+      # Страницы появляются сразу (всё SSR), но поисковикам сообщаем явно. Пауза нужна, чтобы
+      # sitemap успел обновиться: его читает пинг.
+      - name: Пинг IndexNow
+        if: ${{ !cancelled() && steps.deliver.outputs.published != '' && steps.deliver.outputs.published != '0' }}
+        continue-on-error: true
+        run: |
+          sleep 90
+          node scripts/seo/indexnow.mjs
+
+      # В артефакт уходит ТОЛЬКО то, что безопасно показать публично. Каталог `.pipeline/` скрытый
+      # и артефактом не выгружается (actions/upload-artifact пропускает скрытые файлы), и так
+      # должно оставаться: в нём черновики целиком, критика и имена людей, которых проверка
+      # пометила как рискованных. Полные записи прогона — в закрытом newsReview в Sanity.
+      - name: Публичный отчёт прогона
+        if: ${{ always() }}
+        run: |
+          mkdir -p news-report
+          cp .pipeline/generate-report.json news-report/ 2>/dev/null || true
+          cp .pipeline/delivered.public.json news-report/ 2>/dev/null || true
+
+      - name: Артефакт отчёта
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          # Номер попытки в имени: перезапуск того же прогона иначе упал бы на конфликте имён.
+          name: news-report-${{ github.run_id }}-${{ github.run_attempt }}
+          path: news-report/
+          if-no-files-found: ignore
+          retention-days: 14

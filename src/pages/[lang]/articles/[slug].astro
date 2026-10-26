@@ -7,6 +7,7 @@ import { INDEXED_LANGUAGES } from '../../../i18n/languages';
 import { getArticleBySlug, renderMarkdown, isBlockedInCountry, youtubeId, markContentUnavailable, DATA_ERROR_COPY } from '../../../lib/sanity';
 import { article as articleSchema, breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+import AiNotice from '../../../components/AiNotice.astro';
 
 /**
  * Связка статья → инструмент. Тело статьи живёт в Sanity и ссылку на инструмент
@@ -274,6 +275,8 @@ const schema = article && canonical
                 </a>
               </p>
             )}
+
+            <AiNotice lang={lang} disclosure={article.aiDisclosure} />
 
             <ResponsibleGaming lang={lang} />
 
