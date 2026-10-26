@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { embedTexts, embedText, cosine, centroidOf, quantize, quantizationError } from './embedding.mjs';
 import { loadJournal, matchKnown } from './journal.mjs';
+import { assess } from './newsworthiness.mjs';
 import { SAME_EVENT, COHESION_FLOOR as FLOOR } from './thresholds.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -159,13 +160,23 @@ const events = clusters.map((c) => {
   if (verdict === 'syndicated-single' && !syndicated) verdict = 'single-source';
 
   const seed = members[0];
+  // Значимость оценивается по затравке кластера — первому сообщению о событии.
+  const sense = assess(seed.title, seed.lead);
   const known = matchKnown(journal, c.vecs);
   const isKnown = known?.same === true;
+  const confirmed = (verdict === 'confirmed' || verdict === 'regulator-primary') && !isKnown;
 
   return {
     id: createHash('sha256').update(seed.urlHash).digest('hex').slice(0, 12),
     verdict,
-    publishable: (verdict === 'confirmed' || verdict === 'regulator-primary') && !isKnown,
+    // Два РАЗНЫХ решения, и смешивать их нельзя. `publishable` — про
+    // подтверждение: событие доказано двумя независимыми голосами или
+    // первичным документом регулятора. `queue` — про то, стоит ли оно
+    // публикации вообще. Анонс выставки бывает безупречно подтверждён.
+    publishable: confirmed,
+    queue: confirmed && sense.newsworthy,
+    newsworthy: sense.newsworthy,
+    filterReason: sense.reason,
     known: isKnown
       ? { id: known.entry.id, title: known.entry.title, score: Number(known.score.toFixed(4)) }
       : null,
@@ -209,9 +220,9 @@ const events = clusters.map((c) => {
  */
 const nearDuplicates = [];
 for (let i = 0; i < clusters.length; i++) {
-  if (!events[i].publishable) continue;
+  if (!events[i].queue) continue;
   for (let j = i + 1; j < clusters.length; j++) {
-    if (!events[j].publishable) continue;
+    if (!events[j].queue) continue;
     const score = cosine(clusters[i].centroid, clusters[j].centroid);
     if (score < CLUSTER_THRESHOLD) continue;
     let worst = 1;
@@ -228,12 +239,15 @@ nearDuplicates.sort((x, y) => y.score - x.score);
 
 // Сначала подтверждённые, внутри — по числу независимых групп, затем по свежести.
 events.sort((a, b) =>
+  Number(b.queue) - Number(a.queue) ||
   Number(b.publishable) - Number(a.publishable) ||
   b.voices - a.voices ||
   (b.firstSeen ?? '').localeCompare(a.firstSeen ?? ''));
 
 const count = (v) => events.filter((e) => e.verdict === v).length;
 const publishable = events.filter((e) => e.publishable);
+const queue = events.filter((e) => e.queue);
+const screened = events.filter((e) => e.publishable && !e.newsworthy);
 const days = JSON.parse(readFileSync(join(PIPE, 'candidates.json'), 'utf8')).days ?? 7;
 
 console.log(`  кластеров:                  ${events.length}`);
@@ -243,7 +257,9 @@ console.log(`    синдикация, один голос:   ${count('syndicate
 console.log(`    один источник:            ${count('single-source')}`);
 console.log(`    только пресс-релиз:       ${count('press-release-only')}`);
 console.log(`  уже в журнале:              ${events.filter((e) => e.known).length}`);
-console.log(`  к публикации:               ${publishable.length}  (${(publishable.length / days).toFixed(1)} в сутки)`);
+console.log(`  подтверждено к выпуску:     ${publishable.length}`);
+console.log(`    отсеяно как анонс:        ${screened.length}`);
+console.log(`  В ОЧЕРЕДЬ:                  ${queue.length}  (${(queue.length / days).toFixed(1)} в сутки)`);
 if (nearDuplicates.length) {
   const x = nearDuplicates.filter((n) => n.crossLanguage).length;
   console.log(`  возможные дубли в выдаче:   ${nearDuplicates.length}${x ? `, из них межъязыковых ${x}` : ''} — требуют взгляда редактора`);
@@ -274,13 +290,23 @@ writeFileSync(join(PIPE, 'events-report.md'),
 Сверка с журналом идёт по тому же правилу: совпадением считается то, что
 склеилось бы в один кластер, попади оба события в один корпус.
 
-**К публикации: ${publishable.length}** (${(publishable.length / days).toFixed(1)} в сутки).
+**В очередь: ${queue.length}** (${(queue.length / days).toFixed(1)} в сутки) — подтверждено ${publishable.length}, из них отсеяно фильтром значимости ${screened.length}.
 Подтверждено двумя голосами ${count('confirmed')}, первичка регулятора ${count('regulator-primary')},
 синдикация ${count('syndicated-single')}, один источник ${count('single-source')},
 только пресс-релиз ${count('press-release-only')}.
 
 Подтверждение считается по группам независимости, а не по лентам: четыре ленты
 SBC дают один голос. Пресс-релизы в подтверждение не засчитываются.
+
+## Отсеяно фильтром значимости
+
+Эти события правило подтверждения прошли, но выглядят корпоративным анонсом, а
+не новостью. Они НЕ удалены: фильтр настроен на уверенное отбрасывание, и если
+он ошибся, это видно здесь.
+
+${screened.length ? screened.map((e) =>
+  `- _${e.filterReason}_ · ${e.voices} гол. [${e.confirmingGroups.join(', ')}]\n  ${e.title}`).join('\n')
+  : '_Нет._'}
 
 ## Возможные дубли — проверить глазами
 
@@ -293,9 +319,9 @@ ${nearDuplicates.length ? nearDuplicates.map((n) =>
   `  - [${n.a.lang}] ${n.a.title}\n  - [${n.b.lang}] ${n.b.title}`).join('\n')
   : '_Нет._'}
 
-## К публикации
+## В очередь
 
-${publishable.map(block).join('\n') || '_Нет событий, набравших подтверждение._'}
+${queue.map(block).join('\n') || '_Нет событий, набравших подтверждение._'}
 
 ## Отклонено
 

@@ -193,10 +193,18 @@ if (!existsSync(eventsFile)) {
   process.exit(2);
 }
 const { events } = JSON.parse(readFileSync(eventsFile, 'utf8'));
-const queue = events.filter((e) => e.publishable).slice(0, LIMIT);
+// Берём `queue`, а не `publishable`: это разные решения. `publishable` —
+// событие подтверждено двумя независимыми голосами или первичным документом
+// регулятора. `queue` — оно вдобавок прошло фильтр значимости и не является
+// корпоративным анонсом. Анонс выставки бывает безупречно подтверждён, и по
+// `publishable` ступень 3 платила бы за него модели. Старое поле оставлено
+// для совместимости со `events.json` прошлых прогонов.
+const selectable = events.filter((e) => (e.queue ?? e.publishable));
+const screened = events.filter((e) => e.publishable && e.queue === false).length;
+const queue = selectable.slice(0, LIMIT);
 
 console.log(`\nСтупень 3 · ${LIVE ? 'БОЕВОЙ ПРОГОН (тратит деньги)' : 'сухой прогон, трат нет'}`);
-console.log(`Событий к публикации: ${events.filter((e) => e.publishable).length}, беру ${queue.length}\n`);
+console.log(`Событий в очереди: ${selectable.length}${screened ? ` (ещё ${screened} отсеяно фильтром значимости)` : ''}, беру ${queue.length}\n`);
 
 if (!queue.length) {
   console.log('Пригодных событий нет. Это нормально: правило 2+ независимых подтверждений');
