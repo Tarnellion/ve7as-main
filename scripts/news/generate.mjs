@@ -130,9 +130,21 @@ function account(step, usage) {
 async function runBatch(client, step, requests) {
   if (!requests.length) return new Map();
   console.log(`\n  фаза ${step}: ${requests.length} запросов (${STEPS[step].model})`);
-  const batch = await client.messages.batches.create({
-    requests: requests.map(({ custom_id, params }) => ({ custom_id, params })),
-  });
+  let batch;
+  try {
+    batch = await client.messages.batches.create({
+      requests: requests.map(({ custom_id, params }) => ({ custom_id, params })),
+    });
+  } catch (e) {
+    if (e?.status === 401 || e?.status === 403) {
+      console.error('\nAPI отказал в доступе. Варианты подключения:');
+      console.error('  • ключ рабочего пространства:  export ANTHROPIC_API_KEY=sk-ant-...');
+      console.error('  • профиль для локальной работы: ant auth login');
+      console.error('  • из GitHub Actions — федерация удостоверений, без хранения секрета');
+      process.exit(2);
+    }
+    throw e;
+  }
   process.stdout.write(`    батч ${batch.id}, жду`);
   let status = batch;
   while (status.processing_status !== 'ended') {
@@ -192,12 +204,34 @@ if (!queue.length) {
   process.exit(0);
 }
 
+/**
+ * Доступ к API. Способов несколько, и проверять только ANTHROPIC_API_KEY
+ * нельзя: SDK разрешает учётные данные по цепочке — переменная с ключом,
+ * ANTHROPIC_AUTH_TOKEN, профиль `ant auth login`, федерация удостоверений
+ * (короткоживущие OIDC-токены, которые выдаёт GitHub Actions). Жёсткая
+ * проверка на ключ запретила бы федерацию, то есть ровно тот способ,
+ * которым этот конвейер должен ходить в API из CI, когда туда переедет.
+ *
+ * Поэтому здесь не запрет, а подсказка: явных признаков нет — предупреждаем
+ * и всё равно пробуем, вдруг на диске лежит профиль. Отказ по аутентификации
+ * ловится при первом же батче и объясняется словами.
+ */
+const FEDERATION_VARS = [
+  'ANTHROPIC_FEDERATION_RULE_ID', 'ANTHROPIC_ORGANIZATION_ID',
+  'ANTHROPIC_SERVICE_ACCOUNT_ID',
+];
+const hasFederation = FEDERATION_VARS.every((v) => process.env[v])
+  && (process.env.ANTHROPIC_IDENTITY_TOKEN_FILE || process.env.ANTHROPIC_IDENTITY_TOKEN);
+
 let client = null;
 if (LIVE) {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('ANTHROPIC_API_KEY не задан — боевой прогон невозможен.');
-    process.exit(2);
-  }
+  const source = process.env.ANTHROPIC_API_KEY ? 'ANTHROPIC_API_KEY'
+    : process.env.ANTHROPIC_AUTH_TOKEN ? 'ANTHROPIC_AUTH_TOKEN'
+    : hasFederation ? 'федерация удостоверений'
+    : null;
+  if (source) console.log(`Доступ к API: ${source}`);
+  else console.log('Доступ к API: явных переменных нет, рассчитываю на профиль `ant auth login`');
+
   const { default: Anthropic } = await import('@anthropic-ai/sdk');
   client = new Anthropic();
 }
