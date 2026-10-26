@@ -1,0 +1,487 @@
+{
+  "generatedAt": "2026-10-26T15:49:20.176Z",
+  "checks": [
+    {
+      "pass": true,
+      "label": "пространство джекпота = 292,201,338",
+      "detail": "официально 292201338"
+    },
+    {
+      "pass": true,
+      "label": "5+1: 1 в 292,201,338",
+      "detail": "официально 1 в 292,201,338, пересчёт даёт 292201338"
+    },
+    {
+      "pass": true,
+      "label": "5+0: 1 в 11,688,053.52",
+      "detail": "официально 1 в 11,688,053.52, пересчёт даёт 11688053.52"
+    },
+    {
+      "pass": true,
+      "label": "4+1: 1 в 913,129.18",
+      "detail": "официально 1 в 913,129.18, пересчёт даёт 913129.18"
+    },
+    {
+      "pass": true,
+      "label": "4+0: 1 в 36,525.17",
+      "detail": "официально 1 в 36,525.17, пересчёт даёт 36525.17"
+    },
+    {
+      "pass": true,
+      "label": "3+1: 1 в 14,494.11",
+      "detail": "официально 1 в 14,494.11, пересчёт даёт 14494.11"
+    },
+    {
+      "pass": true,
+      "label": "3+0: 1 в 579.76",
+      "detail": "официально 1 в 579.76, пересчёт даёт 579.76"
+    },
+    {
+      "pass": true,
+      "label": "2+1: 1 в 701.33",
+      "detail": "официально 1 в 701.33, пересчёт даёт 701.33"
+    },
+    {
+      "pass": true,
+      "label": "1+1: 1 в 91.98",
+      "detail": "официально 1 в 91.98, пересчёт даёт 91.98"
+    },
+    {
+      "pass": true,
+      "label": "0+1: 1 в 38.32",
+      "detail": "официально 1 в 38.32, пересчёт даёт 38.32"
+    },
+    {
+      "pass": true,
+      "label": "overall odds любого приза: 1 в 24.87",
+      "detail": "официально 1 в 24.87"
+    },
+    {
+      "pass": true,
+      "label": "пространство джекпота = 290,472,336",
+      "detail": "официально 290472336"
+    },
+    {
+      "pass": true,
+      "label": "5+1: 1 в 290,472,336",
+      "detail": "официально 1 в 290,472,336, пересчёт даёт 290472336"
+    },
+    {
+      "pass": true,
+      "label": "5+0: 1 в 12,629,232 → 12629232",
+      "detail": "официально 1 в 12,629,232, пересчёт даёт 12629232"
+    },
+    {
+      "pass": true,
+      "label": "4+1: 1 в 893,761.03",
+      "detail": "официально 1 в 893,761, пересчёт даёт 893761"
+    },
+    {
+      "pass": true,
+      "label": "4+0: 1 в 38,859.18",
+      "detail": "официально 1 в 38,859, пересчёт даёт 38859"
+    },
+    {
+      "pass": true,
+      "label": "3+1: 1 в 13,965.02",
+      "detail": "официально 1 в 13,965, пересчёт даёт 13965"
+    },
+    {
+      "pass": true,
+      "label": "3+0: 1 в 607.17",
+      "detail": "официально 1 в 607, пересчёт даёт 607"
+    },
+    {
+      "pass": true,
+      "label": "2+1: 1 в 665",
+      "detail": "официально 1 в 665, пересчёт даёт 665"
+    },
+    {
+      "pass": true,
+      "label": "1+1: 1 в 85.81 → 86",
+      "detail": "официально 1 в 86, пересчёт даёт 86"
+    },
+    {
+      "pass": true,
+      "label": "0+1: 1 в 35.17",
+      "detail": "официально 1 в 35, пересчёт даёт 35"
+    },
+    {
+      "pass": true,
+      "label": "overall odds любого приза: 1 в 23.07",
+      "detail": "официально 1 в 23.07"
+    },
+    {
+      "pass": true,
+      "label": "пространство джекпота = 139,838,160",
+      "detail": "официально 139838160"
+    },
+    {
+      "pass": true,
+      "label": "5+2: 1 в 139,838,160",
+      "detail": "официально 1 в 139,838,160, пересчёт даёт 139838160"
+    },
+    {
+      "pass": true,
+      "label": "5+1: 1 в 6,991,908 → 6991908",
+      "detail": "официально 1 в 6,991,908, пересчёт даёт 6991908"
+    },
+    {
+      "pass": true,
+      "label": "5+0: 1 в 3,107,514.67 → 3107515",
+      "detail": "официально 1 в 3,107,515, пересчёт даёт 3107515"
+    },
+    {
+      "pass": true,
+      "label": "4+2: 1 в 621,502.93 → 621503",
+      "detail": "официально 1 в 621,503, пересчёт даёт 621503"
+    },
+    {
+      "pass": true,
+      "label": "4+1: 1 в 31,075.15",
+      "detail": "официально 1 в 31,075, пересчёт даёт 31075"
+    },
+    {
+      "pass": true,
+      "label": "3+2: 1 в 14,125.07",
+      "detail": "официально 1 в 14,125, пересчёт даёт 14125"
+    },
+    {
+      "pass": true,
+      "label": "4+0: 1 в 13,811.18",
+      "detail": "официально 1 в 13,811, пересчёт даёт 13811"
+    },
+    {
+      "pass": true,
+      "label": "2+2: 1 в 985.47",
+      "detail": "официально 1 в 985, пересчёт даёт 985"
+    },
+    {
+      "pass": true,
+      "label": "3+1: 1 в 706.25",
+      "detail": "официально 1 в 706, пересчёт даёт 706"
+    },
+    {
+      "pass": true,
+      "label": "3+0: 1 в 313.89 → 314",
+      "detail": "официально 1 в 314, пересчёт даёт 314"
+    },
+    {
+      "pass": true,
+      "label": "1+2: 1 в 187.71 → 188",
+      "detail": "официально 1 в 188, пересчёт даёт 188"
+    },
+    {
+      "pass": true,
+      "label": "2+1: 1 в 49.27",
+      "detail": "официально 1 в 49, пересчёт даёт 49"
+    },
+    {
+      "pass": true,
+      "label": "2+0: 1 в 21.9 → 22",
+      "detail": "официально 1 в 22, пересчёт даёт 22"
+    },
+    {
+      "pass": true,
+      "label": "overall odds любого приза: 1 в 12.97",
+      "detail": "официально 1 в 13"
+    },
+    {
+      "pass": true,
+      "label": "распределение множителя MM полное: Σp = 1.0007"
+    },
+    {
+      "pass": true,
+      "label": "ожидаемый множитель MM = 3.0015 (проектные 3.0)"
+    },
+    {
+      "pass": true,
+      "label": "непризовые тиры EM забирают 40.00 % фонда (ожидается 40)"
+    },
+    {
+      "pass": true,
+      "label": "джекпот 50 % + тиры 40.00 % + Prize Guarantee 10 % = 100 %"
+    },
+    {
+      "pass": true,
+      "label": "share-фактор 0.9584 (ТЗ 0.9584)"
+    },
+    {
+      "pass": true,
+      "label": "EV = -1.2568 (ТЗ -1.26)"
+    },
+    {
+      "pass": true,
+      "label": "порог анонсированного джекпота 1.82 млрд (ТЗ 1.82)"
+    },
+    {
+      "pass": true,
+      "label": "сценарий использует анонс $500 млн"
+    }
+  ],
+  "games": {
+    "powerball": {
+      "source": "https://www.powerball.com/powerball-prize-chart",
+      "dateChecked": "2026-10-26",
+      "pick": {
+        "k": 5,
+        "n": 69,
+        "b": 1,
+        "m": 26
+      },
+      "ticketPrice": 2,
+      "currency": "USD",
+      "tiers": [
+        {
+          "match": "5+1",
+          "prize": null,
+          "officialOdds": 292201338,
+          "recomputedOdds": 292201338
+        },
+        {
+          "match": "5+0",
+          "prize": 1000000,
+          "officialOdds": 11688053.52,
+          "recomputedOdds": 11688053.52
+        },
+        {
+          "match": "4+1",
+          "prize": 50000,
+          "officialOdds": 913129.18,
+          "recomputedOdds": 913129.1813
+        },
+        {
+          "match": "4+0",
+          "prize": 100,
+          "officialOdds": 36525.17,
+          "recomputedOdds": 36525.1672
+        },
+        {
+          "match": "3+1",
+          "prize": 100,
+          "officialOdds": 14494.11,
+          "recomputedOdds": 14494.114
+        },
+        {
+          "match": "3+0",
+          "prize": 7,
+          "officialOdds": 579.76,
+          "recomputedOdds": 579.7646
+        },
+        {
+          "match": "2+1",
+          "prize": 7,
+          "officialOdds": 701.33,
+          "recomputedOdds": 701.3281
+        },
+        {
+          "match": "1+1",
+          "prize": 4,
+          "officialOdds": 91.98,
+          "recomputedOdds": 91.9775
+        },
+        {
+          "match": "0+1",
+          "prize": 4,
+          "officialOdds": 38.32,
+          "recomputedOdds": 38.3239
+        }
+      ]
+    },
+    "mega-millions": {
+      "source": "https://lottery.sd.gov/mega-millions-update/",
+      "dateChecked": "2026-10-26",
+      "pick": {
+        "k": 5,
+        "n": 70,
+        "b": 1,
+        "m": 24
+      },
+      "ticketPrice": 5,
+      "currency": "USD",
+      "tiers": [
+        {
+          "match": "5+1",
+          "prize": null,
+          "officialOdds": 290472336,
+          "recomputedOdds": 290472336
+        },
+        {
+          "match": "5+0",
+          "prize": 1000000,
+          "officialOdds": 12629232,
+          "recomputedOdds": 12629232
+        },
+        {
+          "match": "4+1",
+          "prize": 10000,
+          "officialOdds": 893761,
+          "recomputedOdds": 893761.0338
+        },
+        {
+          "match": "4+0",
+          "prize": 500,
+          "officialOdds": 38859,
+          "recomputedOdds": 38859.1754
+        },
+        {
+          "match": "3+1",
+          "prize": 200,
+          "officialOdds": 13965,
+          "recomputedOdds": 13965.0162
+        },
+        {
+          "match": "3+0",
+          "prize": 10,
+          "officialOdds": 607,
+          "recomputedOdds": 607.1746
+        },
+        {
+          "match": "2+1",
+          "prize": 7,
+          "officialOdds": 665,
+          "recomputedOdds": 665.0008
+        },
+        {
+          "match": "1+1",
+          "prize": 7,
+          "officialOdds": 86,
+          "recomputedOdds": 85.8066
+        },
+        {
+          "match": "0+1",
+          "prize": 5,
+          "officialOdds": 35,
+          "recomputedOdds": 35.1666
+        }
+      ]
+    },
+    "euromillions": {
+      "source": "https://en.wikipedia.org/wiki/EuroMillions",
+      "dateChecked": "2026-10-26",
+      "pick": {
+        "k": 5,
+        "n": 50,
+        "b": 2,
+        "m": 12
+      },
+      "ticketPrice": 2.5,
+      "currency": "EUR",
+      "tiers": [
+        {
+          "match": "5+2",
+          "prize": null,
+          "fundShare": 50,
+          "officialOdds": 139838160,
+          "recomputedOdds": 139838160
+        },
+        {
+          "match": "5+1",
+          "prize": null,
+          "fundShare": 2.61,
+          "officialOdds": 6991908,
+          "recomputedOdds": 6991908
+        },
+        {
+          "match": "5+0",
+          "prize": null,
+          "fundShare": 0.61,
+          "officialOdds": 3107515,
+          "recomputedOdds": 3107514.6667
+        },
+        {
+          "match": "4+2",
+          "prize": null,
+          "fundShare": 0.19,
+          "officialOdds": 621503,
+          "recomputedOdds": 621502.9333
+        },
+        {
+          "match": "4+1",
+          "prize": null,
+          "fundShare": 0.35,
+          "officialOdds": 31075,
+          "recomputedOdds": 31075.1467
+        },
+        {
+          "match": "3+2",
+          "prize": null,
+          "fundShare": 0.37,
+          "officialOdds": 14125,
+          "recomputedOdds": 14125.0667
+        },
+        {
+          "match": "4+0",
+          "prize": null,
+          "fundShare": 0.26,
+          "officialOdds": 13811,
+          "recomputedOdds": 13811.1763
+        },
+        {
+          "match": "2+2",
+          "prize": null,
+          "fundShare": 1.3,
+          "officialOdds": 985,
+          "recomputedOdds": 985.4698
+        },
+        {
+          "match": "3+1",
+          "prize": null,
+          "fundShare": 1.45,
+          "officialOdds": 706,
+          "recomputedOdds": 706.2533
+        },
+        {
+          "match": "3+0",
+          "prize": null,
+          "fundShare": 2.7,
+          "officialOdds": 314,
+          "recomputedOdds": 313.8904
+        },
+        {
+          "match": "1+2",
+          "prize": null,
+          "fundShare": 3.27,
+          "officialOdds": 188,
+          "recomputedOdds": 187.7085
+        },
+        {
+          "match": "2+1",
+          "prize": null,
+          "fundShare": 10.3,
+          "officialOdds": 49,
+          "recomputedOdds": 49.2735
+        },
+        {
+          "match": "2+0",
+          "prize": null,
+          "fundShare": 16.59,
+          "officialOdds": 22,
+          "recomputedOdds": 21.8993
+        }
+      ]
+    }
+  },
+  "acceptance": {
+    "scenario": {
+      "preset": "powerball",
+      "jackpot": 500000000,
+      "cashValue": 230000000,
+      "tickets": 25000000,
+      "taxRate": 0.37,
+      "expectedEv": -1.26,
+      "expectedBreakEvenAdvertised": 1820000000
+    },
+    "shareFactor": 0.958416,
+    "jackpotContribution": 0.47527,
+    "tierContribution": 0.267952,
+    "ev": -1.256778,
+    "breakEvenCash": 838199863,
+    "breakEvenAdvertised": 1822173615
+  },
+  "multiplier": {
+    "expected": 3.001467,
+    "probabilitySum": 1.000734
+  },
+  "failures": 0
+}

@@ -631,6 +631,51 @@ a { color: inherit; }
 .calc-note { font-family: var(--sans); font-size: var(--t-cap); color: var(--ink); }
 .calc-article-link { font-family: var(--sans); font-size: var(--t-cap); }
 
+/* Постоянная строка над калькулятором: видна всегда, не прячется под результат. */
+.calc-standing {
+  font-family: var(--sans);
+  font-size: var(--t-cap);
+  color: var(--ink);
+  border-left: 2px solid var(--mark);
+  padding-left: var(--s-3);
+  max-width: var(--measure);
+  margin-bottom: var(--s-5);
+}
+
+/* Пара полей «k из n» в одной строке: два числа читаются как одно условие. */
+.calc-field--pair .calc-pair { display: flex; align-items: center; gap: var(--s-2); }
+.calc-pair input { flex: 1 1 0; min-width: 0; }
+.calc-pair span { font-family: var(--sans); font-size: var(--t-cap); color: var(--soft); }
+
+/*
+ * Предупреждение о неотрицательном матожидании. Намеренно НЕ зелёное и
+ * вообще без цветовой семантики «хорошо»: по ТЗ положительное матожидание
+ * не должно читаться как приглашение покупать билет. Выделяется весом
+ * и рамкой, как и прочие врезки темы.
+ */
+.calc-note--warn {
+  border-left: 2px solid var(--ink);
+  background: var(--paper-2);
+  padding: var(--s-3);
+  font-weight: 600;
+}
+
+.calc-tiers-title { font-size: var(--t-lg); margin-top: var(--s-6); }
+
+/* Таблица уровней шире колонки чтения, поэтому скроллится по себе. */
+.calc-table-wrap { overflow-x: auto; margin-top: var(--s-3); }
+.calc-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: var(--t-cap); }
+.calc-table th, .calc-table td {
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--rule);
+  text-align: right;
+  white-space: nowrap;
+}
+.calc-table th:first-child, .calc-table td:first-child { text-align: left; }
+.calc-table thead th { color: var(--soft); font-weight: 400; }
+.calc-table tbody td { font-variant-numeric: lining-nums tabular-nums; }
+.calc-table tfoot th, .calc-table tfoot td { font-weight: 600; border-bottom: none; }
+
 /* Текст хаба под указателем рубрики: обычная проза в колонке чтения. */
 .hub-text { max-width: var(--measure); }
 

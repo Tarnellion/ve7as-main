@@ -28,6 +28,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Конвертер коэффициентов', blurb: 'Десятичный, американский и дробный форматы плюс подразумеваемая вероятность.' },
       { segments: ['tools', 'margin-calculator'], name: 'Калькулятор маржи букмекера', blurb: 'Маржа линии и честные коэффициенты без маржи (no-vig).' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Калькулятор house edge: блэкджек', blurb: 'Кромка казино по правилам стола: 3:2 или 6:5, S17/H17, DAS, число колод.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Калькулятор матожидания лотереи', blurb: 'Честная цена билета: шансы, налог, делёжка джекпота и дисконт кэш-выплаты.' },
     ],
   },
   en: {
@@ -39,6 +40,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Odds converter', blurb: 'Decimal, American and fractional formats plus the implied probability.' },
       { segments: ['tools', 'margin-calculator'], name: 'Bookmaker margin calculator', blurb: 'A line’s margin and the fair no-vig odds.' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Blackjack house edge calculator', blurb: 'The house edge from table rules: 3:2 vs 6:5, S17/H17, DAS, deck count.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Lottery expected value calculator', blurb: 'What a ticket really costs: odds, tax, jackpot splitting and the cash-value discount.' },
     ],
   },
   es: {
@@ -50,6 +52,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Conversor de cuotas', blurb: 'Formatos decimal, americano y fraccional más la probabilidad implícita.' },
       { segments: ['tools', 'margin-calculator'], name: 'Calculadora de margen', blurb: 'Margen de una línea y cuotas justas sin margen (no-vig).' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Calculadora de house edge: blackjack', blurb: 'La ventaja de la casa según las reglas de la mesa: 3:2 o 6:5, S17/H17, DAS, barajas.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Calculadora de valor esperado de la lotería', blurb: 'Lo que cuesta de verdad un boleto: probabilidades, impuesto, reparto del bote y descuento del pago en efectivo.' },
     ],
   },
   pt: {
@@ -61,6 +64,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Conversor de odds', blurb: 'Formatos decimal, americano e fracionário mais a probabilidade implícita.' },
       { segments: ['tools', 'margin-calculator'], name: 'Calculadora de margem', blurb: 'Margem de uma linha e odds justas sem margem (no-vig).' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Calculadora de house edge: blackjack', blurb: 'A vantagem da casa pelas regras da mesa: 3:2 ou 6:5, S17/H17, DAS, baralhos.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Calculadora de valor esperado da lotaria', blurb: 'Quanto custa realmente um bilhete: probabilidades, imposto, partilha do jackpot e desconto do pagamento a pronto.' },
     ],
   },
   de: {
@@ -72,6 +76,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Quotenrechner', blurb: 'Dezimal-, US- und Bruchformat plus implizite Wahrscheinlichkeit.' },
       { segments: ['tools', 'margin-calculator'], name: 'Margen-Rechner', blurb: 'Marge einer Linie und faire No-Vig-Quoten.' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Blackjack-Hausvorteil-Rechner', blurb: 'Der Hausvorteil aus den Tischregeln: 3:2 oder 6:5, S17/H17, DAS, Decks.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Lotto-Erwartungswert-Rechner', blurb: 'Was ein Lottoschein wirklich kostet: Chancen, Steuer, Jackpot-Teilung und Abschlag der Sofortauszahlung.' },
     ],
   },
   fr: {
@@ -83,6 +88,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Convertisseur de cotes', blurb: 'Formats décimal, américain et fractionnaire plus la probabilité implicite.' },
       { segments: ['tools', 'margin-calculator'], name: 'Calculateur de marge', blurb: 'Marge d’une ligne et cotes justes sans marge (no-vig).' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Calculateur d’avantage maison : blackjack', blurb: 'L’avantage maison selon les règles de la table : 3:2 ou 6:5, S17/H17, DAS, jeux.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Calculateur d’espérance au loto', blurb: 'Ce que coûte vraiment un billet : probabilités, impôt, partage du jackpot et décote du paiement comptant.' },
     ],
   },
   br: {
@@ -94,6 +100,7 @@ const COPY: Record<Language, Copy> = {
       { segments: ['tools', 'odds-converter'], name: 'Conversor de odds', blurb: 'Formatos decimal, americano e fracionário mais a probabilidade implícita.' },
       { segments: ['tools', 'margin-calculator'], name: 'Calculadora de margem', blurb: 'Margem de uma linha e odds justas sem margem (no-vig).' },
       { segments: ['tools', 'blackjack-house-edge'], name: 'Calculadora de house edge: blackjack', blurb: 'A vantagem da casa pelas regras da mesa: 3:2 ou 6:5, S17/H17, DAS, baralhos.' },
+      { segments: ['tools', 'lottery-expected-value'], name: 'Calculadora de valor esperado da loteria', blurb: 'Quanto um bilhete custa de verdade: probabilidades, imposto, divisão do prêmio e desconto do pagamento à vista.' },
     ],
   },
 };

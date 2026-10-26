@@ -1,0 +1,472 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isLanguage, HTML_LANG, type Language } from '../../../i18n/languages';
+import { path } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/ui';
+import { breadcrumbs } from '../../../lib/schema';
+import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+
+/**
+ * Калькулятор матожидания лотерейного билета — пятый инструмент фазы 4.
+ *
+ * По ТЗ lottery-ev-calculator: топовый профильный инструмент выдачи
+ * (lottolibrary) 301-ит на посторонний домен, сильнейший аналитический
+ * конкурент (DQYDJ) работает на данных до 2012 года и не знает реформы
+ * Mega Millions 2025, а остальная выдача — либо статьи, либо калькуляторы
+ * без трёх вещей, которые и меняют ответ: налога, делёжки джекпота и
+ * дисконта кэш-выплаты.
+ *
+ * Рамка ТЗ соблюдается в копии: главное число — не «стоит ли играть»,
+ * а честная цена билета, то есть размер ожидаемого убытка. Положительное
+ * матожидание не окрашивается в «хорошо» и сопровождается обязательным
+ * предупреждением: дисперсия 1 к 292 млн не переживается никаким банкроллом.
+ *
+ * Данные и пре-шип гейт: src/data/lottery-ev.ts,
+ * scripts/verify-lottery-data.mjs, артефакт в docs/seo/.
+ */
+
+const { lang } = Astro.params as { lang: Language };
+if (!isLanguage(lang)) return Astro.rewrite('/404');
+
+const t = useTranslations(lang);
+
+type Copy = {
+  title: string; description: string; lede: string;
+  game: string; custom: string;
+  mainPick: string; bonusPick: string; of: string;
+  jackpot: string; jackpotHint: string;
+  cashValue: string; cashHint: string;
+  price: string; tickets: string; ticketsHint: string; noSplit: string;
+  tax: string; taxHint: string; threshold: string;
+  honest: string; honestHint: string;
+  ev: string; rtp: string; rtpHint: string; oddsAny: string; oddsAnyHint: string;
+  breakEven: string; breakEvenHint: string; breakEvenCaveat: string;
+  tiers: string; tierMatch: string; tierOdds: string; tierPrize: string; tierEv: string;
+  jackpotRow: string; tierTotal: string;
+  mandatory: string; plusEv: string; pariNote: string; noStrategies: string;
+  method: string; articleLink: string;
+};
+
+/**
+ * Копия пишется только для индексируемой пары en/es — решение владельца
+ * 26.10.2026. Остальные пять локалей отдают английский текст: они закрыты
+ * `noindex, follow`, в sitemap и hreflang не попадают, и переводить копию
+ * инструмента на них значит платить за то, чего никто не ищет. Фолбэк
+ * устроен как у статей — страница остаётся доступной по прямой ссылке,
+ * но не притворяется переведённой.
+ */
+type CopyLang = 'en' | 'es';
+
+const COPY: Record<CopyLang, Copy> = {
+  en: {
+    title: 'Lottery expected value calculator',
+    description: 'Works out what a lottery ticket really costs: odds, tax, jackpot splitting and the cash-value discount. Powerball, Mega Millions, EuroMillions.',
+    lede: 'Set the draw up and the calculator shows what the ticket actually costs. That figure is the size of the average loss, not a way to avoid it.',
+    game: 'Game', custom: 'Custom game',
+    mainPick: 'Main balls', bonusPick: 'Bonus balls', of: 'of',
+    jackpot: 'Advertised jackpot', jackpotHint: 'For US games this is the 30-year annuity — the number on the billboard.',
+    cashValue: 'Cash value', cashHint: 'What is actually paid in one lump sum. Published per draw; defaults to 46 % of the advertised figure. EuroMillions pays cash in full.',
+    price: 'Ticket price', tickets: 'Tickets sold', ticketsHint: 'Needed to estimate the chance of sharing the jackpot. Leave blank and splitting is not modelled.',
+    noSplit: 'Splitting is not modelled: the jackpot is treated as undivided. On a large draw that overstates the expected value.',
+    tax: 'Tax on winnings', taxHint: 'A simplification, not tax advice: one rate and one threshold. State and regional taxes are out of scope.',
+    threshold: 'Tax threshold',
+    honest: 'What the ticket really costs', honestHint: 'The average loss per ticket: price minus the expected payout. That is the price of entering this draw.',
+    ev: 'Expected value per ticket', rtp: 'Return per unit staked', rtpHint: 'How much comes back on average from what you pay — the same idea as a slot’s RTP.',
+    oddsAny: 'Chance of any prize', oddsAnyHint: 'Including prizes smaller than the ticket price.',
+    breakEven: 'Break-even jackpot', breakEvenHint: 'Under the current assumptions',
+    breakEvenCaveat: 'The threshold is a mirage that recedes as you approach it: at that jackpot size sales surge, and the higher chance of splitting eats the edge.',
+    tiers: 'Prize tiers in full', tierMatch: 'Match', tierOdds: 'Odds', tierPrize: 'Prize', tierEv: 'Contribution to EV',
+    jackpotRow: 'jackpot', tierTotal: 'Tiers combined',
+    mandatory: 'Almost every lottery draw has negative expected value. This tool shows the size of the loss, not a way to avoid it.',
+    plusEv: 'Expected value came out non-negative. That is an average over hundreds of millions of tickets, not a prediction for your ticket: the 1-in-292M variance is not survivable by any bankroll. Historical positive-EV windows closed themselves, through a sales explosion and splitting.',
+    pariNote: 'This game’s prizes are pari-mutuel: each tier shares a slice of the fund, so the amounts are long-run averages and vary from draw to draw.',
+    noStrategies: 'No hot or cold numbers, no systems, no wheeling — not here and not later: balls do not remember past draws, and picking numbers never changes the expected value, only who you split a prize with.',
+    method: 'Every tier’s odds are recomputed from the hypergeometric formula and cross-checked against the official charts on 2026-10-26; the share of a won jackpot comes from a Poisson model. Gate: scripts/verify-lottery-data.mjs.',
+    articleLink: 'Lottery formats: what you are actually buying',
+  },
+  es: {
+    title: 'Calculadora de valor esperado de la lotería',
+    description: 'Calcula lo que cuesta de verdad un boleto: probabilidades, impuesto, reparto del bote y descuento del pago en efectivo. Powerball, Mega Millions, EuroMillones.',
+    lede: 'Configure el sorteo y la calculadora mostrará lo que cuesta realmente el boleto. Esa cifra es el tamaño de la pérdida media, no una forma de evitarla.',
+    game: 'Juego', custom: 'Juego personalizado',
+    mainPick: 'Números principales', bonusPick: 'Números bonus', of: 'de',
+    jackpot: 'Bote anunciado', jackpotHint: 'En los juegos de EE. UU. es la anualidad a 30 años: la cifra del cartel.',
+    cashValue: 'Pago en efectivo', cashHint: 'Lo que se entrega en un único pago. Se publica en cada sorteo; por defecto el 46 % de la cifra anunciada. EuroMillones paga en efectivo íntegro.',
+    price: 'Precio del boleto', tickets: 'Boletos vendidos', ticketsHint: 'Necesario para estimar la probabilidad de compartir el bote. Si lo deja vacío, no se modela el reparto.',
+    noSplit: 'El reparto no se modela: el bote se trata como indiviso. En un sorteo grande eso sobreestima el valor esperado.',
+    tax: 'Impuesto sobre el premio', taxHint: 'Una simplificación, no asesoría fiscal: un tipo y un umbral. En España el 20 % grava solo el exceso sobre el mínimo exento.',
+    threshold: 'Umbral del impuesto',
+    honest: 'Lo que cuesta de verdad el boleto', honestHint: 'La pérdida media por boleto: precio menos el pago esperado. Ese es el precio de entrar en este sorteo.',
+    ev: 'Valor esperado por boleto', rtp: 'Retorno por unidad apostada', rtpHint: 'Cuánto vuelve de media de lo que paga: la misma idea que el RTP de una tragaperras.',
+    oddsAny: 'Probabilidad de algún premio', oddsAnyHint: 'Incluidos los premios menores que el precio del boleto.',
+    breakEven: 'Bote de equilibrio', breakEvenHint: 'Con los supuestos actuales',
+    breakEvenCaveat: 'El umbral es un espejismo que se aleja al acercarse: con un bote así las ventas se disparan y la mayor probabilidad de reparto se come la ventaja.',
+    tiers: 'Desglose por categorías', tierMatch: 'Aciertos', tierOdds: 'Probabilidad', tierPrize: 'Premio', tierEv: 'Aporte al valor esperado',
+    jackpotRow: 'bote', tierTotal: 'Total de categorías',
+    mandatory: 'Casi todos los sorteos de lotería tienen valor esperado negativo. Esta herramienta muestra el tamaño de la pérdida, no una forma de evitarla.',
+    plusEv: 'El valor esperado ha salido no negativo. Es una media sobre cientos de millones de boletos, no una predicción para el suyo: una varianza de 1 entre 292 millones no la soporta ningún bankroll. Las ventanas históricas con valor esperado positivo se cerraron solas, por explosión de ventas y reparto.',
+    pariNote: 'Los premios de este juego son pari-mutuel: cada categoría reparte una porción del fondo, así que las cantidades son medias a largo plazo y varían en cada sorteo.',
+    noStrategies: 'Aquí no hay números «calientes» ni «fríos», ni sistemas, ni ruedas: las bolas no recuerdan sorteos anteriores, y elegir números nunca cambia el valor esperado, solo con quién comparte el premio.',
+    method: 'Las probabilidades de cada categoría se recalculan con la fórmula hipergeométrica y se verifican con los cuadros oficiales el 26-10-2026; la parte del bote al ganar sale de un modelo de Poisson. Control: scripts/verify-lottery-data.mjs.',
+    articleLink: 'Formatos de lotería: qué está comprando en realidad',
+  },
+};
+
+const c = COPY[(lang in COPY ? lang : 'en') as CopyLang];
+const pageUrl = new URL(path(lang, 'tools', 'lottery-expected-value'), Astro.site);
+
+const schema = [
+  {
+    '@type': 'SoftwareApplication' as const,
+    name: c.title,
+    description: c.description,
+    url: pageUrl.toString(),
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    inLanguage: HTML_LANG[lang],
+  },
+  breadcrumbs([
+    { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: c.title, url: pageUrl.toString() },
+  ]),
+];
+---
+
+<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/lottery-expected-value" schema={schema}>
+  <header class="page-head">
+    <div class="container">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <p class="calc-standing">{c.mandatory}</p>
+
+      <div class="calc" id="lv-calc">
+        <form class="calc-form" autocomplete="off">
+          <div class="calc-field">
+            <label for="lv-preset">{c.game}</label>
+            <select id="lv-preset">
+              <option value="powerball" selected>Powerball</option>
+              <option value="mega-millions">Mega Millions</option>
+              <option value="euromillions">EuroMillions</option>
+              <option value="custom">{c.custom}</option>
+            </select>
+          </div>
+
+          <div class="calc-field calc-field--pair">
+            <label for="lv-k">{c.mainPick}</label>
+            <div class="calc-pair">
+              <input id="lv-k" type="number" min="1" max="10" step="1" value="5" />
+              <span>{c.of}</span>
+              <input id="lv-n" type="number" min="2" max="99" step="1" value="69" />
+            </div>
+          </div>
+
+          <div class="calc-field calc-field--pair">
+            <label for="lv-b">{c.bonusPick}</label>
+            <div class="calc-pair">
+              <input id="lv-b" type="number" min="0" max="5" step="1" value="1" />
+              <span>{c.of}</span>
+              <input id="lv-m" type="number" min="1" max="99" step="1" value="26" />
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label for="lv-jackpot">{c.jackpot}</label>
+            <input id="lv-jackpot" type="number" min="0" step="1000000" value="500000000" />
+            <small>{c.jackpotHint}</small>
+          </div>
+
+          <div class="calc-field">
+            <label for="lv-cash">{c.cashValue}</label>
+            <input id="lv-cash" type="number" min="0" step="1000000" value="230000000" />
+            <small>{c.cashHint}</small>
+          </div>
+
+          <div class="calc-field">
+            <label for="lv-price">{c.price}</label>
+            <input id="lv-price" type="number" min="0.1" step="0.1" value="2" />
+          </div>
+
+          <div class="calc-field">
+            <label for="lv-tickets">{c.tickets}</label>
+            <input id="lv-tickets" type="number" min="0" step="1000000" value="25000000" />
+            <small>{c.ticketsHint}</small>
+          </div>
+
+          <div class="calc-field">
+            <label for="lv-tax">{c.tax}</label>
+            <input id="lv-tax" type="number" min="0" max="60" step="0.5" value="37" />
+            <small>{c.taxHint}</small>
+          </div>
+
+          <div class="calc-field">
+            <label for="lv-threshold">{c.threshold}</label>
+            <input id="lv-threshold" type="number" min="0" step="100" value="5000" />
+          </div>
+        </form>
+
+        <div class="calc-results" aria-live="polite">
+          <div class="calc-row calc-row--accent">
+            <span class="calc-label">{c.honest}</span>
+            <span class="calc-value" id="lv-honest">—</span>
+            <small>{c.honestHint}</small>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.rtp}</span>
+            <span class="calc-value" id="lv-rtp">—</span>
+            <small>{c.rtpHint}</small>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.oddsAny}</span>
+            <span class="calc-value" id="lv-odds">—</span>
+            <small>{c.oddsAnyHint}</small>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.breakEven}</span>
+            <span class="calc-value" id="lv-breakeven">—</span>
+            <small id="lv-breakeven-assumptions">—</small>
+            <small>{c.breakEvenCaveat}</small>
+          </div>
+          <p class="calc-note calc-note--warn" id="lv-plusev" hidden>{c.plusEv}</p>
+          <p class="calc-note" id="lv-nosplit" hidden>{c.noSplit}</p>
+          <p class="calc-note" id="lv-pari" hidden>{c.pariNote}</p>
+        </div>
+      </div>
+
+      <h2 class="calc-tiers-title">{c.tiers}</h2>
+      <div class="calc-table-wrap">
+        <table class="calc-table">
+          <thead>
+            <tr>
+              <th>{c.tierMatch}</th>
+              <th>{c.tierOdds}</th>
+              <th>{c.tierPrize}</th>
+              <th>{c.tierEv}</th>
+            </tr>
+          </thead>
+          <tbody id="lv-tiers" data-jackpot-label={c.jackpotRow}></tbody>
+          <tfoot>
+            <tr>
+              <th colspan="3">{c.tierTotal}</th>
+              <td id="lv-tier-total">—</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <p class="calc-note">{c.noStrategies}</p>
+      <p class="calc-note">{c.method}</p>
+
+      <p class="calc-article-link">
+        <a href={path(lang, 'articles', 'lottery-formats-overview')}>{c.articleLink} →</a>
+      </p>
+
+      <ResponsibleGaming lang={lang} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { PRESETS, type GamePreset, type ThresholdMode } from '../../../data/lottery-ev';
+
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const sel = (id: string) => document.getElementById(id) as HTMLSelectElement;
+  const out = (id: string) => document.getElementById(id)!;
+  const num = (id: string) => Number($(id).value);
+
+  /**
+   * C(n,k) без факториалов: произведение дробей держит промежуточные
+   * значения малыми, поэтому C(70,5) считается точно, а не через 70!.
+   */
+  function comb(n: number, k: number): number {
+    if (k < 0 || k > n) return 0;
+    let r = 1;
+    for (let i = 1; i <= k; i++) r = (r * (n - k + i)) / i;
+    return Math.round(r);
+  }
+
+  /** Гипергеометрика: ровно i главных из k и j бонусных из b. */
+  function tierProb(k: number, n: number, b: number, m: number, i: number, j: number): number {
+    const main = (comb(k, i) * comb(n - k, k - i)) / comb(n, k);
+    const bonus = (comb(b, j) * comb(m - b, b - j)) / comb(m, b);
+    return main * bonus;
+  }
+
+  /**
+   * Налог на отдельный приз. Режим порога различается принципиально:
+   * US облагает приз целиком, ES — только превышение над освобождённой
+   * частью. Для €100 000 при 20 % разница составляет 8 000 €.
+   */
+  function net(prize: number, rate: number, threshold: number, mode: ThresholdMode): number {
+    if (prize < threshold) return prize;
+    return mode === 'excess' ? threshold + (prize - threshold) * (1 - rate) : prize * (1 - rate);
+  }
+
+  let current: GamePreset | null = PRESETS[0];
+
+  const locale = () => document.documentElement.lang || 'en';
+  const money = (v: number, currency: string, min: number, max: number) =>
+    new Intl.NumberFormat(locale(), {
+      style: 'currency', currency, minimumFractionDigits: min, maximumFractionDigits: max,
+    }).format(v);
+
+  /** Денежная сумма: копейки только там, где они есть («$7», не «$7.00»). */
+  const fmtMoney = (v: number, currency: string) =>
+    money(v, currency, 0, Math.abs(v) < 100 && !Number.isInteger(v) ? 2 : 0);
+
+  /**
+   * Вклад уровня в матожидание. Точность подбирается под величину: вклад
+   * уровня «4+0» равен $0.0027, и при двух знаках он печатается как $0.00 —
+   * читатель видит ноль там, где вклад есть. Поэтому мелкие значения
+   * получают столько знаков, сколько нужно, чтобы быть ненулевыми.
+   */
+  const fmtEv = (v: number, currency: string) => {
+    const a = Math.abs(v);
+    const digits = a === 0 ? 2 : a < 0.001 ? 5 : a < 0.01 ? 4 : a < 1 ? 3 : 2;
+    return money(v, currency, digits, digits);
+  };
+
+  /**
+   * Порог безубыточности — оценка при заданных допущениях, а не расчёт
+   * до доллара. Печатать «$1,822,173,615» значит обещать точность, которой
+   * в модели нет: тираж задан на глаз, кэш-отношение усреднено.
+   *
+   * Сокращение отдано Intl, а не собрано вручную: в английском единица
+   * приклеивается к числу («$1.82B»), а в испанском стоит перед валютой
+   * («1820 M US$»), и ручная склейка суффикса давала «1,82 US$ mil mill.».
+   */
+  const fmtBig = (v: number, currency: string) =>
+    new Intl.NumberFormat(locale(), {
+      style: 'currency', currency, notation: 'compact', maximumFractionDigits: 2,
+    }).format(v);
+
+  const fmtOdds = (oneIn: number) =>
+    oneIn >= 1000 ? Math.round(oneIn).toLocaleString(locale()) : oneIn.toFixed(2);
+
+  function applyPreset(id: string) {
+    current = PRESETS.find((p) => p.id === id) ?? null;
+    if (!current) return;
+    $('lv-k').value = String(current.pick.k);
+    $('lv-n').value = String(current.pick.n);
+    $('lv-b').value = String(current.pick.b);
+    $('lv-m').value = String(current.pick.m);
+    $('lv-price').value = String(current.ticketPrice);
+    $('lv-tax').value = String(current.defaultTaxRate * 100);
+    $('lv-threshold').value = String(current.taxThreshold);
+    // Джекпот берётся из пресета, а не наследуется от прошлой игры: суммы
+    // несопоставимы, и чужой джекпот даёт бессмысленный тираж.
+    $('lv-jackpot').value = String(current.defaultJackpot);
+    // Кэш-выплата — доля анонса: у EuroMillions 1, у американских игр 0.46.
+    $('lv-cash').value = String(Math.round(current.defaultJackpot * current.cashRatio));
+  }
+
+  function recalc() {
+    const k = num('lv-k'), n = num('lv-n'), b = num('lv-b'), m = num('lv-m');
+    const price = num('lv-price');
+    const rate = num('lv-tax') / 100;
+    const threshold = num('lv-threshold');
+    const cash = num('lv-cash');
+    const ticketsRaw = $('lv-tickets').value.trim();
+    const tickets = ticketsRaw === '' ? null : Number(ticketsRaw);
+
+    if (!(k >= 1 && n > k && b >= 0 && m >= 1 && price > 0)) return;
+
+    const preset = current;
+    const currency = preset?.currency ?? 'USD';
+    const mode: ThresholdMode = preset?.thresholdMode ?? 'full';
+    const space = comb(n, k) * (b > 0 ? comb(m, b) : 1);
+    const pJackpot = 1 / space;
+
+    // Доля джекпота при выигрыше: E[1/(1+K)] для K ~ Poisson(μ).
+    // При μ → 0 предел равен 1, поэтому пустой тираж даёт неделёный джекпот.
+    const mu = tickets ? tickets * pJackpot : 0;
+    const share = mu > 0 ? (1 - Math.exp(-mu)) / mu : 1;
+
+    const jackpotPart = pJackpot * cash * share * (1 - rate);
+
+    // Тиры берутся из пресета, если геометрия не тронута руками: только тогда
+    // официальные призы относятся к этой сетке шаров.
+    const geometryMatches = preset
+      && preset.pick.k === k && preset.pick.n === n
+      && preset.pick.b === b && preset.pick.m === m;
+    const tiers = geometryMatches ? preset!.tiers : [];
+    const pari = geometryMatches ? preset!.pariMutuel : undefined;
+    const multiplier = geometryMatches ? preset!.multiplier : undefined;
+    const expectedMult = multiplier
+      ? multiplier.values.reduce((s, v, i) => s + v / multiplier.oddsOneIn[i], 0)
+      : 1;
+
+    const rows: string[] = [];
+    const jackpotLabel = out('lv-tiers').dataset.jackpotLabel ?? '';
+    let tierSum = 0;
+    let anyPrize = 0;
+
+    for (const tier of tiers) {
+      const p = tierProb(k, n, b, m, tier.main, tier.bonus);
+      anyPrize += p;
+      // Верхний уровень — джекпот и у фиксированных игр, и у пари-мютюэль:
+      // в обоих случаях сумму задаёт пользователь, а не таблица.
+      const isJackpotRow = tier.main === k && tier.bonus === b;
+
+      let prizeValue = 0;
+      if (isJackpotRow) {
+        prizeValue = cash;
+      } else if (pari && tier.fundShare !== undefined) {
+        // Пари-мютюэль: приз = доля фонда × доля продаж в фонд × цена / шанс.
+        // Тираж сокращается — и фонд, и число победителей линейны по нему,
+        // поэтому сумма не зависит от числа проданных билетов.
+        prizeValue = (tier.fundShare / 100) * pari.prizeFundRatio * price / p;
+      } else if (tier.prize !== null) {
+        prizeValue = tier.prize * expectedMult;
+      }
+
+      let contribution: number;
+      if (isJackpotRow) {
+        contribution = jackpotPart;
+      } else {
+        contribution = p * net(prizeValue, rate, threshold, mode);
+        tierSum += contribution;
+      }
+
+      const label = `${tier.main}${b > 0 ? ` + ${tier.bonus}` : ''}`;
+      const prizeCell = isJackpotRow
+        ? `<em>${jackpotLabel}</em>`
+        : fmtMoney(prizeValue, currency);
+      rows.push(
+        `<tr><td>${label}</td><td>1 : ${fmtOdds(1 / p)}</td><td>${prizeCell}</td>` +
+          `<td>${fmtEv(contribution, currency)}</td></tr>`
+      );
+    }
+
+    const ev = jackpotPart + tierSum - price;
+    const honest = -ev;
+
+    out('lv-honest').textContent = fmtMoney(honest, currency);
+    out('lv-rtp').textContent = `${((price + ev) / price * 100).toFixed(1)} %`;
+    out('lv-odds').textContent = anyPrize > 0 ? `1 : ${fmtOdds(1 / anyPrize)}` : '—';
+    out('lv-tiers').innerHTML = rows.join('');
+    out('lv-tier-total').textContent = fmtEv(tierSum, currency);
+
+    // Безубыточность замкнутая: матожидание линейно по кэш-выплате при
+    // фиксированном тираже, решать численно нечего.
+    const cashRatio = preset?.cashRatio ?? 1;
+    const breakEvenCash = ((price - tierSum) / (share * (1 - rate))) * space;
+    const breakEvenAdvertised = breakEvenCash / cashRatio;
+    out('lv-breakeven').textContent = breakEvenCash > 0 ? fmtBig(breakEvenAdvertised, currency) : '—';
+    out('lv-breakeven-assumptions').textContent =
+      `${(cashRatio * 100).toFixed(0)} % cash · ${tickets ? tickets.toLocaleString(locale()) : '—'} · ${(rate * 100).toFixed(1)} %`;
+
+    (out('lv-plusev') as HTMLElement).hidden = ev < 0;
+    (out('lv-nosplit') as HTMLElement).hidden = tickets !== null;
+    (out('lv-pari') as HTMLElement).hidden = !pari;
+  }
+
+  sel('lv-preset').addEventListener('change', () => { applyPreset(sel('lv-preset').value); recalc(); });
+  document.querySelectorAll('#lv-calc input').forEach((el) => el.addEventListener('input', recalc));
+  recalc();
+</script>
