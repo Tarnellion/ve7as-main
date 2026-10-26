@@ -1,6 +1,52 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-26T15:21:55.147Z",
+  "updatedAt": "2026-10-26T22:13:40.452Z",
   "dedupWindowDays": 120,
-  "entries": []
+  "entries": [
+    {
+      "id": "25ef1c34240d",
+      "publishedAt": "2026-10-26T22:13:40.452Z",
+      "title": "MGA and MCCAA sign Memorandum of Understanding to enhance cooperation on player protection",
+      "lang": "en",
+      "voices": 1,
+      "groups": [
+        "mga"
+      ],
+      "sources": [
+        {
+          "source": "mga",
+          "url": "https://www.mga.org.mt/mga-and-mccaa-sign-memorandum-of-understanding-to-enhance-cooperation-on-player-protection"
+        }
+      ],
+      "centroid": "SeuEwTPoZ0oo9yjlQL7zIELQ/LYXze42WknD5wO/2ABGs0RIweBO1rssDWFM+MxhsuH9KxpIT4+xv+8abvnbC0UcGzDC0rA76dsTSzTJPtK13ccT1FlIzmbmDlHa3Z7QwBw5ti3JIa/aPdvGMrv7JEAGvt7rs0nYOP6xvOvlEzdADRApH0cvOpAjvbbYTPkmRy9l7W0bI/gdG1C80sk0Kr/ar6y+7D9Lp+blKbsY1APELVNE6vutubXcrBgFm9Ygy9TGcL4KKDYK2isUJAz1R9wrCt22URznFhit/0HaJKb5HS7jACSmq7/T0LjxSyP/qdEi+l/83xPiQP7A5bHXPR0Gsho4xVI+IhfW0O71ihU+Cs/84iqv9lPrOi1JIuhi0Na8+hj0B0DfRbT47+QoJLf7LE3NEjEb1PEwTfUC0sLJue/oRCPk3S74HKa5QKsJ8i2rrSgM0lvwDjOdBDZmhTBWvReB7Eo32f/+MURM/Pcu1xJQ9fzbCdoQ3dY+IEYw",
+      "vectors": [
+        "SeuEwTPoZ0oo9yjlQL7zIELQ/LYXze42WknD5wO/2ABGs0RIweBO1rssDWFM+MxhsuH9KxpIT4+xv+8abvnbC0UcGzDC0rA76dsTSzTJPtK13ccT1FlIzmbmDlHa3Z7QwBw5ti3JIa/aPdvGMrv7JEAGvt7rs0nYOP6xvOvlEzdADRApH0cvOpAjvbbYTPkmRy9l7W0bI/gdG1C80sk0Kr/ar6y+7D9Lp+blKbsY1APELVNE6vutubXcrBgFm9Ygy9TGcL4KKDYK2isUJAz1R9wrCt22URznFhit/0HaJKb5HS7jACSmq7/T0LjxSyP/qdEi+l/83xPiQP7A5bHXPR0Gsho4xVI+IhfW0O71ihU+Cs/84iqv9lPrOi1JIuhi0Na8+hj0B0DfRbT47+QoJLf7LE3NEjEb1PEwTfUC0sLJue/oRCPk3S74HKa5QKsJ8i2rrSgM0lvwDjOdBDZmhTBWvReB7Eo32f/+MURM/Pcu1xJQ9fzbCdoQ3dY+IEYw"
+      ]
+    },
+    {
+      "id": "1ece8ff94039",
+      "publishedAt": "2026-10-26T22:13:40.452Z",
+      "title": "Nieuwe recordboete illegaal kansspelaanbod opgelegd: 37 miljoen voor EOD Code",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/nieuwe-recordboete-illegaal-kansspelaanbod-opgelegd-37-miljoen-voor-eod-code"
+        },
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/eod-code-srl"
+        }
+      ],
+      "centroid": "OwPJ5jz3Hg8KAjIhKejmMFnP897939MVZTj+KRW719BUuEYZo8JJwscNDlZDFtQy2AH9W+UyL6Pa39kmV/ENEi4xDTed7fEICegVWSny+eKoyN4mASIuvi7aSFDBtcSq2S8x3E7QQfTtMg/fMNqmJjMerO/hvwvratO8vN71Kh476AUhNE9WPLIQ+dPl+d4iFCJlySf4QdZDOCEB8+kfOM/xrvX0CE4JvNfiLbw52EvHDV4Tyuqtw/DYwvUEzrwPuZXdOcM6Ky4n8EMQQQTHR80vMubLN9njI/XZJEbfIr3hECy23Qbh892r2Jvu/gnkwf4PxU/9xhbmZzWW2sXZCSZNyRhD7S0EJgTz3AMI0DQ45PTeFArezDoQTR1e9MhC6Pm39iDVJAEAS+UOCNIdINMZBAMILTMz4/cgdewXttPC0P7eJAL36zb2LbvUL+H3/ha/2BkItx4ItPDhvxUzgTT5uimw0V040wMNVh5P1AAvpwwc3w3s/b0YB9EzQvQq",
+      "vectors": [
+        "MgfP6D/8HRAPBSofK+XoMVnO8N4I4dMZYC79Jxm93tZQv0gUp8lDy84HBUs9F+Au1P37V+gxLavW5tQeUfIODzIrDDuc8AH/Au4VWCnu8+OhyvAlCR4mwS7hQEjHw8up2ikv2knUOPTuMw/hMNKpKTMWt/fmwxLtX86ywN3/Mxw23AAdNk9aPMEU+dPu+t4bEyRewx3xQ+A4Mhz/6+EXO9fxsfb0/kgQw9vlK8A120nKBVYQyOqwy/TbzfL+0sAOuJ/gNM89LSsn6EQPPQbIRtUnKenRLdXlIPTgIDziI7rkEi+z4QTg8uCp25/0AwvrxfkUylL+xxP3ajWh3bjaACVFyRJG9CgDHgT54vwK1Cs95e3cEAXVzDoOUBJW+8U57/O78CTVIwL/St8KDtwVGs4bCAEFKSsq7fQac+kPutrE0P/gJgD/9TD5Nb7LL+D3/Bu+3hcNwBwNwO7ixxkogS77viy32VAw1AYRVSZQ2gEsrwkW3wTz+MscBNMrQu8j",
+        "Rv7B5TrxHg8E/jwiJ+rkLlrP9t/w3NIQa0MALBG4z8lZsEMfnrtRuMAUGGNKFMc33QX/X+EzMZng1+AuXvALFSo4DzOe6t8TEOMUWij3/uGwxskm+Cg3ui7RUFq6pr2s2TU03lLMS/TtMA7dL+OiIzMnn+bcugLpdtjHuN/qICBB9QokMU9QPaAL+dPb998pFiBu0DP/P8tPPicF/PEnNcfyq/T0E1QBtdLdL7c91k3EFmcVzOqpu+vUtfkMybcPuorZP7c1KDMm+UMSRQHFScU3O+PFQ93hJfbRKVLcIcDdDim52Qnh9dqu1Zfo+AfcvQMKvkz8xhrUYjaL1tPZFCZVyh5A5TIFLwPu1QoFzD8x4/ziGRDozDkSSSpo7ctN4P+y/RzVJAABTesRAsgnJtgX/wUMMjw91/wneO8fssu/0P3cIQTt3zvyI7jeL+L3ABDB0hwBrCABp/HgtxA/gTr3tiWpyGxB0f8JVxZNz/8ynw8j3xjlA60UCtA8Q/kx"
+      ]
+    }
+  ]
 }
