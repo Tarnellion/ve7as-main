@@ -27,6 +27,41 @@ function isReserved(pathname: string): boolean {
   return ASSET_EXTENSIONS.test(pathname);
 }
 
+/**
+ * Символы нулевой ширины и прочая невидимая типографика: мягкий перенос,
+ * zero-width пробелы и джойнеры, метки направления текста, BOM. Тот же набор,
+ * что проверяет `scripts/seo/crawl.py`.
+ */
+const INVISIBLE_CHARS = /[\u00AD\u200B-\u200F\u2060\uFEFF]/g;
+
+/**
+ * Возвращает путь без невидимых символов — или null, если чистить нечего.
+ *
+ * Зачем на уровне маршрутизации, а не только в данных: слаги набирают люди в
+ * Sanity Studio, и копипаст из редактора приносит такие символы регулярно.
+ * В Studio их не видно, в адресной строке тоже, а URL получается другой.
+ * Статья `how-to-develop-igaming-slots` с июня 2026 жила на
+ * `…-slots%E2%81%A0/` и попала в Search Console отдельным адресом. Данные
+ * поправлены, но править их придётся снова — маршрут закрывает класс.
+ *
+ * Путь приходит percent-encoded, поэтому решение принимается по
+ * декодированной форме, а собирается обратно посегментно: `encodeURI`
+ * здесь не годится, он пропускает литеральный `%` и даёт битый адрес.
+ * Сломанное кодирование (`%zz`) не наша забота — пусть отрабатывает
+ * обычный 404.
+ */
+function stripInvisible(pathname: string): string | null {
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch {
+    return null;
+  }
+  const cleaned = decoded.replace(INVISIBLE_CHARS, '');
+  if (cleaned === decoded) return null;
+  return cleaned.split('/').map(encodeURIComponent).join('/');
+}
+
 /* ── Edge-кэш HTML ───────────────────────────────────────────────────────── */
 
 /**
@@ -258,7 +293,21 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.rewrite('/404');
   }
 
-  // 2. Один канонический вид URL — со слешем на конце.
+  // 2. Невидимые символы в адресе — одним 301 к чистому виду.
+  //
+  //    После проверки языка, а не до неё: в языковой префикс такой символ
+  //    попасть не может, его подставляет код, — а мусорные пути должны
+  //    по-прежнему получать 404 сразу, без промежуточного редиректа.
+  //
+  //    Слеш дописывается здесь же: иначе `/en/articles/x<U+2060>` дал бы
+  //    цепочку из двух 301, а цепочки Google проходит неохотно.
+  const cleanedPath = stripInvisible(pathname);
+  if (cleanedPath !== null) {
+    const target = cleanedPath.endsWith('/') ? cleanedPath : `${cleanedPath}/`;
+    return context.redirect(`${target}${url.search}`, 301);
+  }
+
+  // 3. Один канонический вид URL — со слешем на конце.
   //    Без этого /ru/faq и /ru/faq/ оба отдают 200 и каждый ставит
   //    self-canonical, то есть дубль не схлопывается, а закрепляется.
   //    Тоже до кэша: иначе в кэш попадали бы неканонические URL.
@@ -266,7 +315,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(`${pathname}/${url.search}`, 301);
   }
 
-  // 3. Edge-кэш. Только GET: остальные методы идут мимо без изменений.
+  // 4. Edge-кэш. Только GET: остальные методы идут мимо без изменений.
   if (context.request.method !== 'GET') {
     return next();
   }
