@@ -23,6 +23,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { UA, ACCEPT } from './http.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
@@ -40,9 +41,11 @@ const TIMEOUT_MS = 20_000;
  */
 const STALE_DAYS = { A: 7, B: 60, C: 14 };
 
-/** Постоянный User-Agent со ссылкой на страницу о боте: это и вежливость,
- *  и защита от блокировки — анонимный агент режется охотнее. */
-const UA = 'Ve7asNewsBot/0.1 (+https://ve7as.com/en/about/; feed availability probe)';
+/**
+ * Проба обязана ходить ТЕМ ЖЕ клиентом, что и сбор, иначе она меряет не то.
+ * Разойдясь однажды, эти строки стоили группы isaguide: проба видела 200,
+ * сбор получал 403 на слово «harvest» в UA. Подробности в http.mjs.
+ */
 
 const { sources } = JSON.parse(readFileSync(join(HERE, 'sources.json'), 'utf8'));
 
@@ -79,7 +82,7 @@ async function probe(src) {
   const base = { id: src.id, layer: src.layer, lang: src.lang, url: src.url, group: src.independenceGroup };
   try {
     const res = await fetch(src.url, {
-      headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, text/html;q=0.8' },
+      headers: { 'User-Agent': UA, Accept: ACCEPT },
       redirect: 'follow',
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });

@@ -21,6 +21,9 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
 const PIPE = join(ROOT, '.pipeline');
 
+import { headers, POLITE_MS, sleep } from './http.mjs';
+import { harvestUkgc } from './parsers/ukgc.mjs';
+
 const DAYS = Number(process.env.HARVEST_DAYS ?? 7);
 const TIMEOUT_MS = 20_000;
 /**
@@ -42,7 +45,6 @@ const TIMEOUT_MS = 20_000;
  * ступени 2 (эмбеддинги), где порог 0.90 подтверждён на тех же данных.
  */
 const SIMHASH_MAXD = 3;
-const UA = 'Ve7asNewsBot/0.1 (+https://ve7as.com/en/about/; corpus harvest)';
 
 const { sources } = JSON.parse(readFileSync(join(HERE, 'sources.json'), 'utf8'));
 
@@ -108,9 +110,27 @@ const field = (xml, tag) => {
   return m ? m[1] : '';
 };
 
+/**
+ * Нормализация и хеширование записи. Общая для ленты и для разбора HTML:
+ * если каждый источник будет считать хеши по-своему, ступень 0 перестанет
+ * ловить дубли между ними, а это её единственная работа.
+ */
+function makeItem(src, { link, title, body, date }) {
+  const cu = canonicalUrl(link);
+  return {
+    source: src.id, group: src.independenceGroup, sourceType: src.sourceType,
+    soleSourceAllowed: src.soleSourceAllowed, lang: src.lang,
+    title, lead: lead(body), bodyLen: body.length,
+    pubDate: date && !Number.isNaN(date.getTime()) ? date.toISOString() : null,
+    canonicalUrl: cu, urlHash: sha(cu),
+    contentHash: sha(normalize(`${title} ${body}`)),
+    simhash: simhash(`${title} ${body}`).toString(16).padStart(16, '0'),
+  };
+}
+
 async function harvest(src) {
   try {
-    const res = await fetch(src.url, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(TIMEOUT_MS) });
+    const res = await fetch(src.url, { headers: headers(), redirect: 'follow', signal: AbortSignal.timeout(TIMEOUT_MS) });
     if (!res.ok) return { id: src.id, items: [], error: `HTTP ${res.status}` };
     const xml = await res.text();
     const blocks = [...xml.matchAll(/<item[\s>][\s\S]*?<\/item>/gi), ...xml.matchAll(/<entry[\s>][\s\S]*?<\/entry>/gi)].map((m) => m[0]);
@@ -126,26 +146,30 @@ async function harvest(src) {
       if (date && !Number.isNaN(date.getTime()) && date.getTime() < cutoff) continue;
 
       const body = strip(field(b, 'content:encoded')) || strip(field(b, 'description')) || strip(field(b, 'summary'));
-      const cu = canonicalUrl(link);
-      items.push({
-        source: src.id, group: src.independenceGroup, sourceType: src.sourceType,
-        soleSourceAllowed: src.soleSourceAllowed, lang: src.lang,
-        title, lead: lead(body), bodyLen: body.length,
-        pubDate: date && !Number.isNaN(date.getTime()) ? date.toISOString() : null,
-        canonicalUrl: cu, urlHash: sha(cu),
-        contentHash: sha(normalize(`${title} ${body}`)),
-        simhash: simhash(`${title} ${body}`).toString(16).padStart(16, '0'),
-      });
+      items.push(makeItem(src, { link, title, body, date }));
     }
     return { id: src.id, items };
   } catch (e) { return { id: src.id, items: [], error: String(e?.message ?? e).slice(0, 100) }; }
 }
 
+/** Источники без ленты: у каждого свой разбор, подключается по полю `parser`. */
+const HTML_PARSERS = { 'ukgc-cards': harvestUkgc };
+
+async function harvestHtml(src, cutoff) {
+  const parse = HTML_PARSERS[src.parser];
+  if (!parse) return { id: src.id, items: [], error: `нет парсера «${src.parser ?? '—'}»` };
+  try {
+    const rows = await parse(cutoff);
+    return { id: src.id, items: rows.map((r) => makeItem(src, r)) };
+  } catch (e) { return { id: src.id, items: [], error: String(e?.message ?? e).slice(0, 100) }; }
+}
+
 console.log(`Сбор корпуса за ${DAYS} суток\n`);
+const cutoffMs = Date.now() - DAYS * 86_400_000;
 const raw = [];
 for (const src of sources) {
   if (skip.has(src.id)) continue;
-  const r = await harvest(src);
+  const r = src.kind === 'html' ? await harvestHtml(src, cutoffMs) : await harvest(src);
   console.log(`  ${String(r.items.length).padStart(3)} зап.  ${r.id}${r.error ? '  ← ' + r.error : ''}`);
   raw.push(...r.items);
 }

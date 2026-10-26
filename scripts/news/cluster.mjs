@@ -189,6 +189,43 @@ const events = clusters.map((c) => {
   };
 });
 
+/**
+ * Возможные дубли МЕЖДУ событиями: центроиды сошлись, а связность не дотянула
+ * до пола, поэтому кластеризация их не склеила.
+ *
+ * Это не ошибка порога, а его предел, и подкручивать его нельзя. Измерено
+ * 26.10.2026: нидерландское сообщение KSA о штрафе в 37 млн и английские
+ * публикации о нём же имеют нижнюю пару 0.865 — то есть это ОДНО событие,
+ * не прошедшее пол 0.88. Но пара «иск Kalshi к Луизиане / решение суда
+ * Иллинойса» — РАЗНЫЕ события — имеет 0.873, а «KSA / L&L Europe», тоже
+ * разные, 0.860. Значение, которое склеило бы кросс-языковую пару, склеило бы
+ * и чужие события: диапазоны перекрываются, векторами они не разделяются.
+ *
+ * Разделяют их совпадающие числа и имена («37 million» и «37 miljoen»,
+ * «EOD Code»), то есть ступень извлечения фактов. Пока её нет, решение о
+ * склейке остаётся прежним, а пары просто показываются редактору рядом:
+ * ложный дубль в отчёте стоит одного взгляда, ложная склейка — выпущенной
+ * новости, слепившей два события.
+ */
+const nearDuplicates = [];
+for (let i = 0; i < clusters.length; i++) {
+  if (!events[i].publishable) continue;
+  for (let j = i + 1; j < clusters.length; j++) {
+    if (!events[j].publishable) continue;
+    const score = cosine(clusters[i].centroid, clusters[j].centroid);
+    if (score < CLUSTER_THRESHOLD) continue;
+    let worst = 1;
+    for (const a of clusters[i].vecs) for (const b of clusters[j].vecs) worst = Math.min(worst, cosine(a, b));
+    nearDuplicates.push({
+      score: Number(score.toFixed(4)), worst: Number(worst.toFixed(4)),
+      a: { id: events[i].id, lang: events[i].lang, title: events[i].title },
+      b: { id: events[j].id, lang: events[j].lang, title: events[j].title },
+      crossLanguage: events[i].lang !== events[j].lang,
+    });
+  }
+}
+nearDuplicates.sort((x, y) => y.score - x.score);
+
 // Сначала подтверждённые, внутри — по числу независимых групп, затем по свежести.
 events.sort((a, b) =>
   Number(b.publishable) - Number(a.publishable) ||
@@ -207,11 +244,15 @@ console.log(`    один источник:            ${count('single-source')}
 console.log(`    только пресс-релиз:       ${count('press-release-only')}`);
 console.log(`  уже в журнале:              ${events.filter((e) => e.known).length}`);
 console.log(`  к публикации:               ${publishable.length}  (${(publishable.length / days).toFixed(1)} в сутки)`);
+if (nearDuplicates.length) {
+  const x = nearDuplicates.filter((n) => n.crossLanguage).length;
+  console.log(`  возможные дубли в выдаче:   ${nearDuplicates.length}${x ? `, из них межъязыковых ${x}` : ''} — требуют взгляда редактора`);
+}
 
 mkdirSync(PIPE, { recursive: true });
 writeFileSync(join(PIPE, 'events.json'), JSON.stringify({
   at: new Date().toISOString(), harvestedAt, threshold: CLUSTER_THRESHOLD,
-  candidates: candidates.length, clusters: events.length, events,
+  candidates: candidates.length, clusters: events.length, nearDuplicates, events,
 }, null, 2));
 
 const block = (e) => {
@@ -240,6 +281,17 @@ writeFileSync(join(PIPE, 'events-report.md'),
 
 Подтверждение считается по группам независимости, а не по лентам: четыре ленты
 SBC дают один голос. Пресс-релизы в подтверждение не засчитываются.
+
+## Возможные дубли — проверить глазами
+
+Пары событий, чьи центроиды сошлись выше порога, но связность не дотянула до
+пола, поэтому они НЕ склеены. Решение остаётся за редактором: если это одно
+событие, брать надо одно из них.
+
+${nearDuplicates.length ? nearDuplicates.map((n) =>
+  `- **${n.score}** (нижняя пара ${n.worst})${n.crossLanguage ? ' · **разные языки**' : ''}\n` +
+  `  - [${n.a.lang}] ${n.a.title}\n  - [${n.b.lang}] ${n.b.title}`).join('\n')
+  : '_Нет._'}
 
 ## К публикации
 
