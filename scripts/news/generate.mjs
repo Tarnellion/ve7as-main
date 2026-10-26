@@ -34,7 +34,7 @@ import { makeClient } from './client.mjs';
 import { intEnv, positiveEnv } from './env.mjs';
 import { dequantize, cosine } from './vec.mjs';
 import { SAME_EVENT } from './thresholds.mjs';
-import { postcheck, issuesToPrompt, translationFidelity } from './postcheck.mjs';
+import { postcheck, metaCheck, issuesToPrompt, translationFidelity } from './postcheck.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 // NEWS_PIPE_DIR нужен самопроверке: она гоняет живой путь против мока в чужой папке.
@@ -534,6 +534,39 @@ if (LIVE) {
 }
 
 /**
+ * Мета проверяется кодом (postcheck.metaCheck) ДО второго прохода, потому что тот читает мету,
+ * и пометка вроде «Not verified.» в описании прошла бы к нему как часть материала. Нарушителю
+ * дают одну переписку с названием проблемы в промпте: это самый дешёвый запрос конвейера
+ * (Haiku, доли цента), а выбросить из-за него событие значило бы потерять оплаченную работу.
+ * Если и после повтора мета нарушает правила, она остаётся как есть: человек увидит её в
+ * черновике, а policy.mjs закроет для неё автопубликацию (`meta-check-<lang>`).
+ */
+const metaRetried = new Set();
+if (LIVE) {
+  const bad = [];
+  for (const e of living()) {
+    for (const lang of ['en', 'es']) {
+      const found = metaCheck(parseJson(metas.get(`${e.id}:${lang}`).text), lang);
+      if (!found.ok) bad.push({ e, lang, id: `${e.id}:${lang}`, issues: found.issues });
+    }
+  }
+  if (bad.length) {
+    console.log(`\n  мета нарушает правила у ${bad.length} из ${living().length * 2} — один повтор с замечаниями`);
+    const again = await run(client, 'meta', bad.map(({ e, lang, id, issues }) => ({
+      custom_id: id,
+      params: buildParams('meta',
+        metaPrompt((lang === 'en' ? revisions : translations).get(e.id).text, lang, issuesToPrompt(issues)), META_SCHEMA),
+    })));
+    for (const { id } of bad) {
+      metaRetried.add(id);
+      const r = again.get(id);
+      // Новый ответ заменяет прежний, только если он целый; иначе остаётся первая попытка.
+      if (r?.text && !r.truncated && parseJson(r.text)) metas.set(id, r);
+    }
+  }
+}
+
+/**
  * Второй проход читает ОБА языка с заголовками и описаниями: публичный текст обещает именно
  * это, а до ревью проверялся только английский текст, и испанская версия с подменённой суммой
  * или заголовок со словом «рекорд» выходили без проверки.
@@ -596,8 +629,8 @@ for (const e of living()) {
       [['facts', facts], ['draft', drafts], ['critique', critiques], ['revise', revisions],
         ['verify', verdictsEn], ['verifyEs', verdictsEs], ['translate', translations]]
         .map(([k, m]) => [k, Boolean(m.get(e.id)?.truncated)])),
-    en: { text: en, meta: parseJson(metas.get(`${e.id}:en`)?.text), check: checkEn },
-    es: { text: es, meta: parseJson(metas.get(`${e.id}:es`)?.text), check: checkEs },
+    en: { text: en, meta: parseJson(metas.get(`${e.id}:en`)?.text), check: checkEn, metaRetried: metaRetried.has(`${e.id}:en`) },
+    es: { text: es, meta: parseJson(metas.get(`${e.id}:es`)?.text), check: checkEs, metaRetried: metaRetried.has(`${e.id}:es`) },
     generatedAt: new Date().toISOString(),
     live: LIVE,
   };

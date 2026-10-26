@@ -21,6 +21,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+import { decide } from './policy.mjs';
+
 let failed = 0;
 const ok = (cond, label, detail = '') => {
   console.log(`  ${cond ? '✓' : '✗'} ${label}${!cond && detail ? ` — ${detail}` : ''}`);
@@ -33,7 +35,7 @@ const EN = body([2, 1, 4, 1, 3, 1, 2, 4, 1]);
 const ES = body([2, 1, 4, 1, 3, 1, 2, 4, 1], (s) => s.replace('regulator', 'regulador'));
 
 // ── мок ──────────────────────────────────────────────────────────────────
-const seen = { phases: [], auth: [] };
+const seen = { phases: [], auth: [], prompts: {} };
 let mode = {};
 
 function phaseOf(params) {
@@ -65,7 +67,12 @@ function reply(params) {
     return mode.badVerify ? out('это не JSON') : out(JSON.stringify({ ok: true, namesPrivateIndividuals: false, individuals: [], blockers: [], notes: 'ок' }));
   }
   if (phase === 'translate') return out(ES);
-  if (phase === 'meta') return out(JSON.stringify({ title: 'Mock title', description: 'D'.repeat(120), slug: 'mock-event', section: 'casino-slots' }));
+  if (phase === 'meta') {
+    // metaNote: 'once' — служебная пометка в описании только в первой попытке, 'always' — в каждой.
+    const retried = marked('Предыдущая попытка нарушила правила');
+    const dirty = mode.metaNote === 'always' || (mode.metaNote === 'once' && !retried);
+    return out(JSON.stringify({ title: 'Mock title', description: 'D'.repeat(120) + (dirty ? ' Not verified.' : ''), slug: 'mock-event', section: 'casino-slots' }));
+  }
   return out('?');
 }
 
@@ -95,6 +102,7 @@ const server = http.createServer((req, res) => {
       if (mode.deny) { res.statusCode = 401; res.setHeader('content-type', 'application/json'); return res.end(JSON.stringify({ type: 'error', error: { type: 'authentication_error', message: 'invalid x-api-key' } })); }
       const params = JSON.parse(buf);
       seen.phases.push(phaseOf(params));
+      if (['verify', 'meta'].includes(phaseOf(params))) (seen.prompts[phaseOf(params)] ??= []).push(JSON.stringify(params.messages));
       // SDK 1.x передаёт ключ как `Authorization: Bearer`, прежние версии — как `x-api-key`;
       // проверять нужно, что ключ дошёл, а не каким именно заголовком.
       seen.auth.push(req.headers['x-api-key'] ?? req.headers.authorization?.replace(/^Bearer /, ''));
@@ -176,6 +184,38 @@ mode = {};
 const rv = rec(bv.dir, 'v1');
 ok(rv.verify === null, 'verify = null, а не падение разбора');
 ok(bv.code === 0, 'прогон завершился штатно');
+
+// ── 4a. служебная пометка в мете ──────────────────────────────────────────
+console.log('\nМета с пометкой «Not verified.»: один повтор с замечанием, второй проход видит исправленную');
+seen.phases.length = 0; seen.prompts = {};
+mode = { metaNote: 'once' };
+const mn = await run([event('m1', 'Event m')], {}, ['--limit=1']);
+mode = {};
+const rm = rec(mn.dir, 'm1');
+ok(mn.code === 0, 'прогон завершился штатно', mn.out.slice(-300));
+ok(seen.phases.filter((p) => p === 'meta').length === 4, `мета запрошена 4 раза: по 2 языка и повтор обоих (${seen.phases.filter((p) => p === 'meta').length})`);
+ok(seen.prompts.meta.slice(2).every((p) => p.includes('статус-проверки')), 'в повторе модели названа проблема кодом, а не просто «перепиши»');
+ok(!rm.en.meta.description.includes('Not verified') && !rm.es.meta.description.includes('Not verified'), 'в записи — исправленная мета обоих языков');
+ok(rm.en.metaRetried === true && rm.es.metaRetried === true, 'в записи отмечено, что мету переписывали');
+ok(seen.prompts.verify.every((p) => !p.includes('Not verified')), 'второй проход прочёл уже исправленную мету, а не грязную');
+ok(decide(rm, 'auto').reasons.every((x) => !x.code.startsWith('meta-check')), 'после повтора гейт меты не мешает');
+
+console.log('\nМета остаётся грязной и после повтора: событие не выбрасывается, автопубликация закрыта');
+seen.phases.length = 0;
+mode = { metaNote: 'always' };
+const ma = await run([event('m2', 'Event m2')], {}, ['--limit=1']);
+mode = {};
+const rma = rec(ma.dir, 'm2');
+ok(ma.code === 0 && rma.en.meta.description.includes('Not verified'), 'запись есть, мета как была: решает человек, а не код');
+ok(seen.phases.filter((p) => p === 'meta').length === 4, 'повтор один, а не цикл до победы (деньги)');
+const dec = decide(rma, 'auto');
+ok(!dec.publish && dec.reasons.some((x) => x.code === 'meta-check-en') && dec.reasons.some((x) => x.code === 'meta-check-es'),
+  'политика закрывает публикацию кодами meta-check-en и meta-check-es', JSON.stringify(dec.reasons.map((x) => x.code)));
+
+console.log('\nЧистая мета: повтора нет, лишних запросов нет');
+seen.phases.length = 0;
+const mc = await run([event('m3', 'Event m3')], {}, ['--limit=1']);
+ok(seen.phases.filter((p) => p === 'meta').length === 2 && rec(mc.dir, 'm3').en.metaRetried === false, 'ровно 2 запроса меты, metaRetried=false');
 
 // ── 5. отказ по доступу ───────────────────────────────────────────────────
 console.log('\nОтказ по доступу (401)');

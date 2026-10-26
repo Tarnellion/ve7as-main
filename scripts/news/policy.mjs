@@ -27,6 +27,7 @@
  * что они это гарантируют, и поэтому есть потолок публикаций за прогон.
  */
 import { intEnv } from './env.mjs';
+import { metaCheck } from './postcheck.mjs';
 
 export const SECTIONS = ['casino-slots', 'sports-betting', 'poker-table-games', 'lottery-esports'];
 
@@ -193,6 +194,12 @@ export function decide(record, mode = 'draft', env = process.env) {
   for (const lang of ['en', 'es']) {
     const m = record[lang]?.meta;
     if (!m?.title || !m?.description || !SLUG.test(m?.slug ?? '')) add(`meta-${lang}`, `мета ${lang} неполная или слаг не kebab-case`);
+    // Мета читается в выдаче раньше материала, и служебная пометка в ней (на первом боевом
+    // прогоне описание кончалось «Not verified.») проходила все гейты: проверялась только
+    // полнота. Считаем здесь, а не берём из записи: старая запись или запись без поля не
+    // должна обходить проверку, а правила остаются в одном месте — postcheck.metaCheck.
+    const mc = metaCheck(m, lang);
+    if (!mc.ok) add(`meta-check-${lang}`, `мета ${lang}: ${mc.issues.map((i) => `${i.field} — ${i.kind}`).join('; ')}`);
   }
   if (!SECTIONS.includes(record.en?.meta?.section)) add('section', `раздел «${record.en?.meta?.section}» не из списка`);
 

@@ -71,12 +71,28 @@ const cases = [
   ['meta-en', (r) => { r.en.meta.slug = 'Bad Slug!'; }],
   ['meta-es', (r) => { r.es.meta.title = ''; }],
   ['section', (r) => { r.en.meta.section = 'other'; }],
+  // Настоящий провал боевого прогона: мета-описание кончалось служебной пометкой, а гейт `meta-*` проверял только полноту.
+  ['meta-check-en', (r) => { r.en.meta.description = 'The Dutch regulator fined an operator. The EUR 37m figure is only in the headline. Not verified.'; }],
+  ['meta-check-es', (r) => { r.es.meta.title = 'Multa récord, sin confirmar'; }],
 ];
 for (const [code, mutate] of cases) {
   const r = clone(good()); mutate(r);
   const d = decide(r, 'auto');
   ok(!d.publish && !d.eligible && codes(d).includes(code), `закрывает: ${code}`, JSON.stringify(codes(d)));
 }
+
+console.log('\nМета: те же правила, что у текста');
+const metaOnly = (mutate) => { const r = clone(good()); mutate(r); return codes(decide(r, 'auto')); };
+ok(metaOnly((r) => { r.en.meta.title = 'Ключ: not for publication'; }).includes('meta-check-en'), 'кириллица и пометка «not for publication» в заголовке');
+ok(metaOnly((r) => { r.en.meta.description = 'Details at https://example.com/fine now.'; }).includes('meta-check-en'), 'ссылка в описании');
+ok(metaOnly((r) => { r.es.meta.description = 'Multa a un operador <b>récord</b> en octubre.'; }).includes('meta-check-es'), 'HTML в описании');
+ok(metaOnly((r) => { r.es.meta.description = 'Elaborado con ayuda de IA y revisado por el equipo editorial.'; }).includes('meta-check-es'), 'испанская пометка о подготовке');
+ok(metaOnly((r) => { r.en.meta.description = 'Awaiting a second source before this is confirmed.'; }).includes('meta-check-en'), 'ожидание второго источника');
+ok(!metaOnly((r) => { r.en.meta.description = 'The KSA says the fine is EUR 37m. The operator has not confirmed the figure.'; }).some((c) => c.startsWith('meta-check')),
+  'оговорка атрибуцией («the operator has not confirmed») — законная, не пометка');
+ok(!metaOnly((r) => { r.es.meta.description = 'El regulador dice que la multa es de 37 millones; el operador no ha confirmado la cifra.'; }).some((c) => c.startsWith('meta-check')),
+  'то же по-испански («no ha confirmado»)');
+ok(metaOnly((r) => { r.en.meta = null; }).includes('meta-en'), 'мета не разобрана (null) — закрыта прежним гейтом полноты, не падением');
 
 console.log('\nОбходы, найденные ревью (на прежней политике каждый давал publish=true)');
 const synd = clone(good()); synd.eventMeta = { verdict: 'confirmed', confirmingGroups: ['a', 'b', 'c'], voices: 2 };
