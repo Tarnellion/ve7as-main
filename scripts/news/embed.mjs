@@ -1,54 +1,33 @@
 #!/usr/bin/env node
 /**
- * Ступень 2 каскада: эмбеддинги и косинусная близость.
+ * Калибровка порога ступени 2: распределение косинусов и выгрузка пар под
+ * ручную разметку. Сам счёт векторов живёт в `embedding.mjs`.
  *
- * Модель считается ЛОКАЛЬНО (transformers.js, multilingual-e5-small, 384
- * измерения). Причины именно локального счёта: ноль внешних квот — ничто не
- * отдаст 429 посреди прогона; детерминизм — одна версия модели даёт стабильные
- * векторы, а сравнивать придётся через месяцы; 384 измерения экономнее 1024
- * в 2,7 раза при хранении base64 в документе.
- *
- * Эмбеддится заголовок плюс лид, а не тело целиком: бойлерплейт «18+» и
- * «играйте ответственно» поднимает косинус любой пары внутри раздела и убивает
- * разделяющую способность. И не один заголовок — кликбейтные переформулировки
- * одного события дают 0,6-0,7 и прошли бы как разные.
- *
- * Префикс «query: » обязателен с ОБЕИХ сторон сравнения: задача симметричная,
- * так обучалась модель e5.
+ * Порог берётся из РАЗМЕТКИ пар человеком, а не из литературы: именно для
+ * этого сюда выгружается calibration.csv. Решения о выборе модели, текста под
+ * эмбеддинг и префикса «query: » задокументированы в embedding.mjs — здесь они
+ * не повторяются, чтобы две копии объяснения не разошлись.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { pipeline } from '@huggingface/transformers';
+import { embedTexts, embedText, cosine, MODEL } from './embedding.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PIPE = join(HERE, '..', '..', '.pipeline');
-const MODEL = 'Xenova/multilingual-e5-small';
 const TOP = Number(process.env.TOP_PAIRS ?? 60);
 
 const { candidates } = JSON.parse(readFileSync(join(PIPE, 'candidates.json'), 'utf8'));
 console.log(`Эмбеддинги для ${candidates.length} кандидатов, модель ${MODEL}\n`);
 
-const extractor = await pipeline('feature-extraction', MODEL, { dtype: 'fp32' });
-const texts = candidates.map((c) => `query: ${c.title}. ${c.lead}`.slice(0, 512));
-
-const vecs = [];
-const BATCH = 16;
-for (let i = 0; i < texts.length; i += BATCH) {
-  const out = await extractor(texts.slice(i, i + BATCH), { pooling: 'mean', normalize: true });
-  const dim = out.dims[out.dims.length - 1];
-  const data = out.data;
-  for (let k = 0; k < out.dims[0]; k++) vecs.push(Float32Array.from(data.slice(k * dim, (k + 1) * dim)));
-  process.stdout.write(`\r  посчитано ${Math.min(i + BATCH, texts.length)}/${texts.length}`);
-}
+const vecs = await embedTexts(candidates.map((c) => embedText(c.title, c.lead)), {
+  onProgress: (n, total) => process.stdout.write(`\r  посчитано ${n}/${total}`),
+});
 console.log(`\n  измерений: ${vecs[0].length}\n`);
-
-/** Векторы нормализованы, поэтому косинус — это скалярное произведение. */
-const cos = (a, b) => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * b[i]; return s; };
 
 const pairs = [];
 for (let i = 0; i < vecs.length; i++)
-  for (let j = i + 1; j < vecs.length; j++) pairs.push([cos(vecs[i], vecs[j]), i, j]);
+  for (let j = i + 1; j < vecs.length; j++) pairs.push([cosine(vecs[i], vecs[j]), i, j]);
 pairs.sort((a, b) => b[0] - a[0]);
 
 const buckets = {};
