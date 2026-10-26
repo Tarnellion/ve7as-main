@@ -20,7 +20,14 @@ const BANNED = JSON.parse(readFileSync(join(HERE, 'style', 'banned.json'), 'utf8
 
 /** Объём по ТЗ новости: меньше — заметка, больше — лонгрид не этой ступени. */
 export const WORDS_MIN = 380;
-export const WORDS_MAX = 750;
+/**
+ * Предел объёма зависит от языка. Испанский текст систематически длиннее
+ * английского примерно на пятую часть при том же содержании — измерено на
+ * первом боевом прогоне: 697 слов EN против 811 ES, и перевод свалился
+ * по объёму, хотя ничего лишнего не добавил. Единый предел наказывал бы
+ * за грамматику языка, а не за многословие.
+ */
+export const WORDS_MAX = { en: 750, es: 880 };
 
 /**
  * Поиск штампа. Для коротких слов нужна граница: «robust» не должен ловить
@@ -54,8 +61,9 @@ export function postcheck(text, lang = 'en') {
   }
 
   const words = text.replace(/[#>*_`|-]/g, ' ').split(/\s+/).filter(Boolean).length;
+  const maxWords = WORDS_MAX[lang] ?? WORDS_MAX.en;
   if (words < WORDS_MIN) issues.push({ kind: 'объём', detail: `${words} слов, нужно от ${WORDS_MIN}` });
-  if (words > WORDS_MAX) issues.push({ kind: 'объём', detail: `${words} слов, предел ${WORDS_MAX}` });
+  if (words > maxWords) issues.push({ kind: 'объём', detail: `${words} слов, предел ${maxWords}` });
 
   if (/^#\s/m.test(text)) issues.push({ kind: 'структура', detail: 'H1 внутри текста: заголовок задаётся отдельным полем' });
 

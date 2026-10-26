@@ -36,6 +36,17 @@ const PREVIEW = join(PIPE, 'batch-preview');
 
 const argv = process.argv.slice(2);
 const LIVE = argv.includes('--live');
+/**
+ * Синхронный режим — для отладки, не для потока.
+ *
+ * Batch API оптимизирован на пропускную способность, а не на задержку, и
+ * батч из ОДНОГО запроса — худший для него случай: приоритет у наполненных
+ * очередей. Измерено 26.10.2026: один черновик Opus ждал в батче больше
+ * 14 минут при том, что экономия составила четыре цента. На боевом потоке
+ * (10-20 событий за прогон) батч ведёт себя как задумано, поэтому флаг
+ * именно отладочный и в расписание попадать не должен.
+ */
+const SYNC = argv.includes('--sync');
 const LIMIT = Number((argv.find((a) => a.startsWith('--limit')) ?? '--limit=5').split('=')[1] ?? 5);
 
 /** Цены $/1M токенов, прайс от 26.10.2026. Батч вдвое дешевле. */
@@ -50,13 +61,24 @@ const PRICES = {
  * на горизонте года: текст и адверсариальная критика. Извлечение фактов —
  * работа на точность внутри данного текста, Sonnet хватает. Мета механическая.
  */
+/**
+ * Потолки заданы С ЗАПАСОМ НА ДУМАНИЕ, и это не расточительство:
+ * `max_tokens` — предел, а не предоплата, платим за фактический выход.
+ *
+ * Измерено на боевых прогонах 26.10.2026: у критики (Opus, effort high)
+ * выход 5101 токен, из них 3039 — размышление, то есть текста замечаний
+ * там меньше трети. Прижатый потолок режет не «лишнее», а ответ посередине
+ * слова, причём каждый прогон сыплется в разном месте: при 3000 обрывало
+ * критику, при 6000 — черновик. Запас дешевле, чем обрезанный черновик,
+ * по которому потом идёт правка.
+ */
 const STEPS = {
-  facts: { model: 'claude-sonnet-5-5', max_tokens: 3000, effort: 'medium' },
-  draft: { model: 'claude-opus-5-5', max_tokens: 4000, effort: 'medium' },
-  critique: { model: 'claude-opus-5-5', max_tokens: 3000, effort: 'high' },
-  revise: { model: 'claude-opus-5-5', max_tokens: 4000, effort: 'medium' },
-  translate: { model: 'claude-sonnet-5-5', max_tokens: 3500, effort: 'medium' },
-  meta: { model: 'claude-haiku-5-5', max_tokens: 600, effort: 'low' },
+  facts: { model: 'claude-sonnet-5-5', max_tokens: 10_000, effort: 'medium' },
+  draft: { model: 'claude-opus-5-5', max_tokens: 12_000, effort: 'medium' },
+  critique: { model: 'claude-opus-5-5', max_tokens: 12_000, effort: 'high' },
+  revise: { model: 'claude-opus-5-5', max_tokens: 12_000, effort: 'medium' },
+  translate: { model: 'claude-sonnet-5-5', max_tokens: 10_000, effort: 'medium' },
+  meta: { model: 'claude-haiku-5-5', max_tokens: 3000, effort: 'low' },
 };
 
 const estimateTokens = (s) => Math.round(s.length / 3.5);
@@ -118,9 +140,39 @@ function buildParams(step, messages, schema) {
 const spend = [];
 function account(step, usage) {
   const p = PRICES[STEPS[step].model];
-  const cost = ((usage.input_tokens ?? 0) * p.in + (usage.output_tokens ?? 0) * p.out) / 1e6 / 2;
+  // Скидка 50 % — свойство батча. В синхронном режиме платим полную цену.
+  const discount = SYNC ? 1 : 2;
+  const cost = ((usage.input_tokens ?? 0) * p.in + (usage.output_tokens ?? 0) * p.out) / 1e6 / discount;
   spend.push({ step, ...usage, cost });
   return cost;
+}
+
+/**
+ * Обычные вызовы по одному. Идут через stream().finalMessage(): при
+ * max_tokens в тысячи токенов и включённом adaptive thinking нестриминговый
+ * запрос рискует упереться в HTTP-таймаут раньше, чем модель договорит.
+ */
+async function runSync(client, step, requests) {
+  if (!requests.length) return new Map();
+  console.log(`\n  фаза ${step}: ${requests.length} запросов (${STEPS[step].model}, синхронно)`);
+  const out = new Map();
+  for (const { custom_id, params } of requests) {
+    process.stdout.write(`    ${custom_id} `);
+    const started = Date.now();
+    const msg = await client.messages.stream(params).finalMessage();
+    const cost = account(step, msg.usage);
+    const text = msg.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n').trim();
+    if (msg.stop_reason === 'max_tokens')
+      console.log(`! упёрся в max_tokens (${STEPS[step].max_tokens}) — ответ обрезан`);
+    else
+      console.log(`${((Date.now() - started) / 1000).toFixed(0)} с · $${cost.toFixed(4)}`);
+    out.set(custom_id, {
+      text, cost, stopReason: msg.stop_reason,
+      truncated: msg.stop_reason === 'max_tokens',
+      usage: msg.usage,
+    });
+  }
+  return out;
 }
 
 /**
@@ -155,7 +207,10 @@ async function runBatch(client, step, requests) {
   console.log(' готово');
 
   const out = new Map();
-  for await (const r of client.messages.batches.results(batch.id)) {
+  // results() отдаёт Promise<JSONLDecoder>, а не готовый итератор: без await
+  // `for await` получает сам промис и падает с «not async iterable».
+  const stream = await client.messages.batches.results(batch.id);
+  for await (const r of stream) {
     if (r.result.type !== 'succeeded') {
       console.log(`    ! ${r.custom_id}: ${r.result.type}`);
       continue;
@@ -163,7 +218,14 @@ async function runBatch(client, step, requests) {
     const msg = r.result.message;
     const cost = account(step, msg.usage);
     const text = msg.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n').trim();
-    out.set(r.custom_id, { text, cost, stopReason: msg.stop_reason });
+    /**
+     * Обрыв по max_tokens рвёт и структурированный вывод: JSON приходит
+     * незакрытым, и падение случается позже, на разборе, где причина уже
+     * не видна. Поэтому ловим здесь, пока известно, какой это шаг.
+     */
+    if (msg.stop_reason === 'max_tokens')
+      console.log(`    ! ${r.custom_id}: упёрся в max_tokens (${STEPS[step].max_tokens}) на шаге ${step} — ответ обрезан`);
+    out.set(r.custom_id, { text, cost, stopReason: msg.stop_reason, truncated: msg.stop_reason === 'max_tokens' });
   }
   return out;
 }
@@ -183,7 +245,10 @@ function previewBatch(step, requests) {
   return new Map(requests.map((r) => [r.custom_id, { text: `[сухой прогон: ${step}]`, cost: 0 }]));
 }
 
-const run = (client, step, requests) => (LIVE ? runBatch(client, step, requests) : previewBatch(step, requests));
+const run = (client, step, requests) =>
+  !LIVE ? previewBatch(step, requests)
+    : SYNC ? runSync(client, step, requests)
+    : runBatch(client, step, requests);
 
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -203,7 +268,7 @@ const selectable = events.filter((e) => (e.queue ?? e.publishable));
 const screened = events.filter((e) => e.publishable && e.queue === false).length;
 const queue = selectable.slice(0, LIMIT);
 
-console.log(`\nСтупень 3 · ${LIVE ? 'БОЕВОЙ ПРОГОН (тратит деньги)' : 'сухой прогон, трат нет'}`);
+console.log(`\nСтупень 3 · ${LIVE ? `БОЕВОЙ ПРОГОН (тратит деньги${SYNC ? ', синхронно — без скидки батча' : ''})` : 'сухой прогон, трат нет'}`);
 console.log(`Событий в очереди: ${selectable.length}${screened ? ` (ещё ${screened} отсеяно фильтром значимости)` : ''}, беру ${queue.length}\n`);
 
 if (!queue.length) {
@@ -304,6 +369,12 @@ for (const e of queue) {
     sources: e.members.map((m) => ({ group: m.group, url: m.url })),
     voices: e.voices,
     facts: facts.get(e.id)?.text ?? null,
+    critique: {
+      text: critiques.get(e.id)?.text ?? null,
+      truncated: critiques.get(e.id)?.truncated ?? false,
+      usage: critiques.get(e.id)?.usage ?? null,
+    },
+    draftBeforeRevision: drafts.get(e.id)?.text ?? null,
     en: { text: en, meta: metas.get(`${e.id}:en`)?.text ?? null, check: checkEn },
     es: { text: es, meta: metas.get(`${e.id}:es`)?.text ?? null, check: checkEs },
     generatedAt: new Date().toISOString(),
