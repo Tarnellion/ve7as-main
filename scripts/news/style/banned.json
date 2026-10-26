@@ -1,0 +1,92 @@
+{
+  "_comment": [
+    "Запрет-лист стилевых штампов. Проверяется postcheck.mjs на выходе ступени 3.",
+    "",
+    "ИЗМЕРЕНО 26.10.2026: на 20 файлах docs/content-drafts/ и docs/seo/briefs/ этот",
+    "список даёт НОЛЬ срабатываний. То есть он не делает текст живым — живым его",
+    "делает порог ритма (rhythm.mjs) и собственные данные. Список оставлен как",
+    "дешёвая страховка от регрессии: если модель начнёт сползать в шаблон, это",
+    "заметят здесь раньше, чем читатель.",
+    "",
+    "Правило пополнения: добавлять только то, что встретилось в реальном выводе",
+    "конвейера и было отвергнуто редактором. Списки из интернета сюда не копировать —",
+    "ложное срабатывание на нормальной фразе дороже пропущенного штампа.",
+    "",
+    "word: true означает проверку по границам слова (иначе 'robust' поймает",
+    "'robustness', а 'ultimately' — часть предложения, где оно уместно)."
+  ],
+  "en": {
+    "opening": [
+      "in the world of",
+      "in today's digital age",
+      "in the ever-evolving landscape",
+      "when it comes to",
+      "has become increasingly",
+      "plays a crucial role",
+      "it is important to note",
+      "it's worth noting",
+      "in the realm of"
+    ],
+    "connective": [
+      "that being said",
+      "at the end of the day",
+      "the key takeaway",
+      "navigating the complexities",
+      "a double-edged sword",
+      "delve into",
+      "unlock the potential",
+      "a testament to",
+      "game-changer"
+    ],
+    "closing": [
+      "in conclusion",
+      "only time will tell",
+      "whether you're a seasoned player",
+      "whether you are a seasoned player"
+    ],
+    "marketing": [
+      "robust",
+      "seamless",
+      "cutting-edge",
+      "unparalleled",
+      "revolutionize"
+    ]
+  },
+  "es": {
+    "opening": [
+      "en el mundo de",
+      "en la era digital",
+      "cabe destacar",
+      "es importante señalar",
+      "a día de hoy",
+      "en el panorama actual"
+    ],
+    "connective": [
+      "dicho esto",
+      "a fin de cuentas",
+      "un arma de doble filo",
+      "profundizar en",
+      "no cabe duda de que"
+    ],
+    "closing": [
+      "en conclusión",
+      "en resumen",
+      "solo el tiempo lo dirá",
+      "tanto si eres un jugador experimentado"
+    ],
+    "marketing": [
+      "revolucionario",
+      "sin precedentes",
+      "de vanguardia"
+    ]
+  },
+  "wordBoundary": [
+    "robust",
+    "seamless",
+    "cutting-edge",
+    "unparalleled",
+    "revolutionize",
+    "revolucionario",
+    "ultimately"
+  ]
+}
