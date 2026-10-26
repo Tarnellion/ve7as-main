@@ -157,9 +157,30 @@ function countryBucket(request: Request): string {
 }
 
 /**
+ * Идентификатор сборки, подставляемый Vite на этапе сборки
+ * (`vite.define` в `astro.config.mjs`). В CI это первые 8 символов SHA
+ * коммита, локально — метка времени старта.
+ */
+declare const __BUILD_ID__: string;
+
+/**
  * `caches.default` ключуется по URL запроса, а не по заголовкам, поэтому страну
- * зашиваем в синтетический путь: `/__edge/<country>/<исходный путь>`. Origin
- * сохраняем — Cloudflare разрешает класть в кэш только ключи со своей зоны.
+ * зашиваем в синтетический путь: `/__edge/<build>/<country>/<исходный путь>`.
+ * Origin сохраняем — Cloudflare разрешает класть в кэш только ключи со своей зоны.
+ *
+ * ВЕРСИЯ СБОРКИ в ключе обязательна, и это не оптимизация, а защита от
+ * поломки. HTML ссылается на ассеты по хэшу имени; деплой, меняющий CSS или
+ * клиентский JS, выдаёт новый хэш и удаляет старый файл. Без версии в ключе
+ * записи прошлой сборки доживают свой TTL и всё это время отдают разметку,
+ * указывающую на удалённый файл — браузер получает 404 вместо стилей.
+ * Наблюдалось на проде 26.10.2026: главная пять минут отдавала
+ * `BaseLayout.DkKNR9mX.css` при живом `BaseLayout.BPAgKiIh.css`. Инвалидация
+ * здесь ленивая: старые записи не удаляются, а становятся недостижимыми и
+ * вытесняются сами, поэтому чистить кэш через API не нужно.
+ *
+ * Цена — первый запрос каждой страницы после деплоя идёт в Sanity. Это та же
+ * работа, что и при обычном истечении TTL, просто разом; деплой происходит
+ * только при смене кода, контент его не требует.
  *
  * Query-строка в ключ НЕ входит намеренно: ни одна страница не читает
  * `Astro.url.searchParams`, canonical в BaseLayout строится только из pathname,
@@ -169,9 +190,10 @@ function countryBucket(request: Request): string {
  * searchParams, эту нормализацию нужно пересмотреть.
  */
 function cacheKey(url: URL, country: string): Request {
-  return new Request(new URL(`/__edge/${country}${url.pathname}`, url.origin).toString(), {
-    method: 'GET',
-  });
+  return new Request(
+    new URL(`/__edge/${__BUILD_ID__}/${country}${url.pathname}`, url.origin).toString(),
+    { method: 'GET' },
+  );
 }
 
 type CachePolicy = { ttl: number; clientCacheControl: string };
