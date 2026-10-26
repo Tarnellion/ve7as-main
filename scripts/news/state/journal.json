@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-26T22:13:40.452Z",
+  "updatedAt": "2026-10-26T23:25:20.127Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -46,6 +46,104 @@
       "vectors": [
         "MgfP6D/8HRAPBSofK+XoMVnO8N4I4dMZYC79Jxm93tZQv0gUp8lDy84HBUs9F+Au1P37V+gxLavW5tQeUfIODzIrDDuc8AH/Au4VWCnu8+OhyvAlCR4mwS7hQEjHw8up2ikv2knUOPTuMw/hMNKpKTMWt/fmwxLtX86ywN3/Mxw23AAdNk9aPMEU+dPu+t4bEyRewx3xQ+A4Mhz/6+EXO9fxsfb0/kgQw9vlK8A120nKBVYQyOqwy/TbzfL+0sAOuJ/gNM89LSsn6EQPPQbIRtUnKenRLdXlIPTgIDziI7rkEi+z4QTg8uCp25/0AwvrxfkUylL+xxP3ajWh3bjaACVFyRJG9CgDHgT54vwK1Cs95e3cEAXVzDoOUBJW+8U57/O78CTVIwL/St8KDtwVGs4bCAEFKSsq7fQac+kPutrE0P/gJgD/9TD5Nb7LL+D3/Bu+3hcNwBwNwO7ixxkogS77viy32VAw1AYRVSZQ2gEsrwkW3wTz+MscBNMrQu8j",
         "Rv7B5TrxHg8E/jwiJ+rkLlrP9t/w3NIQa0MALBG4z8lZsEMfnrtRuMAUGGNKFMc33QX/X+EzMZng1+AuXvALFSo4DzOe6t8TEOMUWij3/uGwxskm+Cg3ui7RUFq6pr2s2TU03lLMS/TtMA7dL+OiIzMnn+bcugLpdtjHuN/qICBB9QokMU9QPaAL+dPb998pFiBu0DP/P8tPPicF/PEnNcfyq/T0E1QBtdLdL7c91k3EFmcVzOqpu+vUtfkMybcPuorZP7c1KDMm+UMSRQHFScU3O+PFQ93hJfbRKVLcIcDdDim52Qnh9dqu1Zfo+AfcvQMKvkz8xhrUYjaL1tPZFCZVyh5A5TIFLwPu1QoFzD8x4/ziGRDozDkSSSpo7ctN4P+y/RzVJAABTesRAsgnJtgX/wUMMjw91/wneO8fssu/0P3cIQTt3zvyI7jeL+L3ABDB0hwBrCABp/HgtxA/gTr3tiWpyGxB0f8JVxZNz/8ynw8j3xjlA60UCtA8Q/kx"
+      ]
+    },
+    {
+      "id": "9a22ab57ffa5",
+      "publishedAt": "2026-10-26T23:25:20.127Z",
+      "title": "Three sentenced for General Election betting offences",
+      "lang": "en",
+      "voices": 6,
+      "groups": [
+        "ukgc",
+        "igamingbusiness",
+        "casinoorg",
+        "sbc",
+        "yogonet",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "ukgc",
+          "url": "https://www.gamblingcommission.gov.uk/news/article/three-sentenced-for-general-election-betting-offences"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/three-sentenced-uk-election-2024-date-betting-scandal"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/british-conservative-party-insiders-dodge-prison-in-election-betting-scandal"
+        },
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/10/24/election-betting-sentences"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/26/127004-three-conservative-party-figures-receive-suspended-sentences-for-betting-on-2024-uk-general-election-date"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/sportsbook/2026/10/26/general-election-bets-sentences"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/uk-court-sentences-ex-tory-staffers-who-made-fraudulent-election-bets"
+        }
+      ],
+      "centroid": "PQfR2RQAMjU29zjvS9nMN2TFvtsN8eU1KG7K6kTDuOpPviorpO8w8dEaID1mPcQv8PK5ZfYtFbCsvrgwUN0iITJYHCbY/NYpAfIKRzfd6ta1s6Uc3Uwdt37uQzLI29WyvjFIy0fdL66/KxDCW9DZM0MMmOnQuAvtYuu0yL78H0FizwQeGhY4WNP/68LnMeE2Jl5M9TfrRcg2CDjwxtAeCK6zxhq5ySxE5N3K/fRQBVehQz0m28u20/nNxw4s1cYhva74QsxTQCD31h0JMAyuHsAsTKqqLvr2EzjPIj2+Fp7zNFDGzjbjztSmywHzITvMwtMYzCrX4iTVPxm/uL/zLztIzzUm9EkZLxrq86T62htWzq/e5UCnzUwaLh03+u9U0eG3zEvDNED7S8T8F9tGINAYHDYFB0YG6t1CS+MS67jE2/jKDCAA0DYKIta2IZ/fCPzDmgArwlb03UjSzzBglgD6szOB/1tHqeoERiQy8C1PzSUu4Rfh59cwyaszPgBB",
+      "vectors": [
+        "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"
+      ]
+    },
+    {
+      "id": "8ab44805f62e",
+      "publishedAt": "2026-10-26T23:25:20.127Z",
+      "title": "President Lula reiterates that betting will not return in Brazil",
+      "lang": "en",
+      "voices": 4,
+      "groups": [
+        "igamingbusiness",
+        "sbc",
+        "yogonet",
+        "gamblinginsider"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/president-lula-reiterates-betting-will-not-return-brazil"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/brazil-betting-ban-battle-enters-new-phase-lula-re-election"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/features/comment/2026/10/26/lula-da-silva-online-betting-brazil"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/26/127010-lula-won-now-it-39s-time-to-correct-the-mistake-of-the-bets"
+        },
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/197605/lula-brazil-election-gambling-operators"
+        }
+      ],
+      "centroid": "KAD1rjT2Ng9BDT0WO9XXGkPHxdw1DfQ8P03l7iGf5PsdqisquNBE4LIGGEReINsi2dS0MvgPLtay16M1Mv8SHTgzJiux+stJ7vMaURfEBOXG1rEb1jggzGHPN0bRxbSw1Tsr2DmvQ6XaJx/VWrf0ESoapefBzCTaTezQrsvwC0NZACoWDRg5Y+0L+93fL84MKCxOyRfHIKoeCjWsvdopNbHWogfF2y000ufK/8ok/xbHOlAtztzJzc7MvAst8OMQrKvSPvcwNSz+6ygZNhi4OOA3N72hRPbxKDfnECYCGr7vCE3zv0DnBKrUnMf9HEHBxNYVvDLT3TX5RSK5rrrxDEZU3BkY5UpJRh2817LkzD4+0uP6/ifCvHv9DDI14txP1te8sz3UMzfkTNUaHuFHKrU1KjAbGD06zQAFVO46+cDf2uviECDu6DkFN+vRQKDZIgitwwwcpkfz4CPm3xpTgQsB3SK1ADEzsPMSWDld5/NE1yA5/gT/w98+39kiKw0x",
+      "vectors": [
+        "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"
       ]
     }
   ]
