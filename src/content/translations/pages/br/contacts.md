@@ -1,6 +1,7 @@
 ---
 title: "Contato"
 description: Entre em contato com a redação da Ve7as — sugira um tema, relate um erro em algum material ou faça uma pergunta.
+updated: 2026-06-09
 ---
 
 Estamos abertos a feedback: sugestões de temas para novos materiais,

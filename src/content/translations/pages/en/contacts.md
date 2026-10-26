@@ -1,6 +1,7 @@
 ---
 title: "Contacts"
 description: "Get in touch with the Ve7as editorial team — suggest a topic, report an error in an article, or ask a question."
+updated: 2026-06-09
 ---
 
 We welcome feedback: suggestions for new article topics, corrections to facts

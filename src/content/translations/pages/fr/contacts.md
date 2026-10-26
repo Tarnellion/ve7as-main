@@ -1,6 +1,7 @@
 ---
 title: "Contacts"
 description: "Contactez la rédaction de Ve7as pour proposer un sujet, signaler une erreur dans un article ou poser une question."
+updated: 2026-06-09
 ---
 
 Nous sommes ouverts à vos retours : propositions de sujets pour de nouveaux

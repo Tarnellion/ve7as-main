@@ -1,6 +1,7 @@
 ---
 title: Kontakt
 description: Nehmen Sie Kontakt mit der Redaktion von Ve7as auf – schlagen Sie ein Thema vor, melden Sie einen Fehler in einem Beitrag oder stellen Sie eine Frage.
+updated: 2026-06-09
 ---
 
 Wir sind offen für Rückmeldungen: Themenvorschläge für neue Beiträge, Hinweise

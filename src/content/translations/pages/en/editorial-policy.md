@@ -1,6 +1,7 @@
 ---
 title: "Editorial policy"
 description: "How Ve7as picks topics, verifies facts and corrects mistakes: sources, independence, and how AI is used."
+updated: 2026-08-24
 ---
 
 This page describes how Ve7as content is made. It is a commitment, not a marketing statement: if you find a page that does not live up to it, tell us via the [contact page](/en/contacts/) and we will fix it.

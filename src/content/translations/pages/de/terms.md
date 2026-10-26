@@ -1,6 +1,7 @@
 ---
 title: Nutzungsbedingungen
 description: Regeln für die Nutzung des Informationsportals Ve7as.
+updated: 2026-06-09
 ---
 
 Mit der Nutzung der Website Ve7as erklären Sie sich mit den folgenden

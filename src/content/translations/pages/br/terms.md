@@ -1,6 +1,7 @@
 ---
 title: "Termos de uso"
 description: Regras de uso do portal informativo Ve7as.
+updated: 2026-06-09
 ---
 
 Ao usar o site da Ve7as, você concorda com os seguintes termos.

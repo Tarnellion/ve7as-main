@@ -1,6 +1,7 @@
 ---
 title: Datenschutzrichtlinie
 description: Wie Ve7as die Daten der Besucher der Website verarbeitet.
+updated: 2026-06-09
 ---
 
 Diese Seite beschreibt, welche Daten Ve7as erhebt und wie sie verwendet werden.

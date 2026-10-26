@@ -1,6 +1,7 @@
 ---
 title: Über das Projekt
 description: Ve7as ist ein unabhängiges Informationsportal über Glücksspielunterhaltung. Wir berichten verständlich über Nischen aus Gambling und Betting – ohne Werbung für Anbieter.
+updated: 2026-06-09
 ---
 
 Ve7as ist ein unabhängiges Informations- und Bildungsportal über

@@ -1,6 +1,7 @@
 ---
 title: "À propos du projet"
 description: "Ve7as est un portail d'information indépendant sur les divertissements de hasard. Nous présentons les niches du gambling et du betting en termes simples, sans publicité d'opérateurs."
+updated: 2026-06-09
 ---
 
 Ve7as est un portail d'information et d'éducation indépendant consacré aux

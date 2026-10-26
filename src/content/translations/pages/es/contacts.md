@@ -1,6 +1,7 @@
 ---
 title: Contacto
 description: Ponte en contacto con la redacción de Ve7as — propón un tema, comunica un error en algún material o haz una pregunta.
+updated: 2026-06-09
 ---
 
 Estamos abiertos a recibir comentarios: propuestas de temas para nuevos

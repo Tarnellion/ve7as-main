@@ -1,6 +1,7 @@
 ---
 title: "Conditions d'utilisation"
 description: "Règles d'utilisation du portail d'information Ve7as."
+updated: 2026-06-09
 ---
 
 En utilisant le site Ve7as, vous acceptez les conditions suivantes.

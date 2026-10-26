@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { useTranslations } from '../../i18n/ui';
 import { isLanguage, type Language } from '../../i18n/languages';
+import { path } from '../../i18n/utils';
+import { TOOLS } from '../../data/tools';
 import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../lib/sanity';
 
 const { lang } = Astro.params as { lang: Language };
@@ -65,6 +67,32 @@ if (articlesResult.failed) markContentUnavailable(Astro.response);
       ) : (
         !dataFailed && <p class="section-sub">—</p>
       )}
+    </div>
+  </section>
+
+  {/*
+    Калькуляторы — с главной, каждый своей ссылкой.
+    Раньше на весь указатель инструментов вела одна ссылка в футере, а на сами
+    калькуляторы — ни одной: Search Console держала все десять их адресов
+    (en + es) в статусе «обнаружена, не проиндексирована» с пустым полем
+    «последнее сканирование», то есть робот о них знал и не приходил. Для
+    молодого домена с нулём внешних ссылок глубина и число внутренних ссылок —
+    единственный рычаг, которым мы вообще можем двигать обход.
+
+    Блок под списком статей, а не над ним: главная остаётся указателем
+    материалов, инструменты — то, что предлагается дальше.
+  */}
+  <section class="section">
+    <div class="container">
+      <h2 class="nf-sections-title">{t.footer.tools}</h2>
+      <div class="nf-sections">
+        {TOOLS.map((tool) => (
+          <a href={path(lang, ...tool.segments)} class="nf-section">
+            <strong>{tool.name[lang]}</strong>
+            <span class="section-sub">{tool.blurb[lang]}</span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 

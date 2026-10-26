@@ -493,16 +493,19 @@ export async function getSitemapContent(): Promise<Fetched<SitemapContent>> {
     { sections: [], articles: [], faqItems: [] },
     `{
       "sections": *[_type == "section"] | order(order asc) [0...${SECTIONS_LIMIT}] {
-        "id": slug.current
+        "id": slug.current,
+        _updatedAt
       },
       "articles": *[_type == "article"] | order(pubDate desc) [0...${SITEMAP_LIMIT}] {
         "id": slug.current,
+        "section": section->slug.current,
         pubDate,
         _updatedAt,
         blockedIn,
         ${translationsMap(['title', 'body'])}
       },
       "faqItems": *[_type == "faqItem"] [0...${FAQ_LIMIT}] {
+        _updatedAt,
         blockedIn
       }
     }`,
@@ -614,13 +617,15 @@ export type SanityAuthor = {
 };
 
 export type SitemapContent = {
-  sections: { id: string }[];
+  sections: { id: string; _updatedAt?: string }[];
   articles: {
     id: string;
+    /** Слаг рубрики: хабу нужен свежайший `_updatedAt` среди своих статей. */
+    section?: string;
     pubDate: string;
     _updatedAt?: string;
     blockedIn?: string[];
     translations?: Partial<Record<Language, boolean>>;
   }[];
-  faqItems: { blockedIn?: string[] }[];
+  faqItems: { _updatedAt?: string; blockedIn?: string[] }[];
 };

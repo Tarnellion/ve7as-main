@@ -1,6 +1,7 @@
 ---
 title: Política de privacidade
 description: Como a Ve7as trata os dados dos visitantes do site.
+updated: 2026-06-09
 ---
 
 Esta página descreve que dados a Ve7as recolhe e como são utilizados.

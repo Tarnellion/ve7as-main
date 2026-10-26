@@ -5,6 +5,7 @@ import { useTranslations } from '../../../i18n/ui';
 import { isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { type SectionId } from '../../../i18n/sections';
+import { toolsForSection } from '../../../data/tools';
 import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY, renderMarkdown } from '../../../lib/sanity';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
@@ -53,6 +54,11 @@ const dataFailed = sectionsResult.failed || articlesResult.failed;
 const errorCopy = DATA_ERROR_COPY[lang];
 if (articlesResult.failed) markContentUnavailable(Astro.response);
 
+// Калькуляторы этой рубрики. Тематическая ссылка с хаба — второй вход для
+// краулера к страницам, которые он до сих пор ни разу не сканировал, и
+// заодно единственное место, где читатель рубрики видит их в контексте.
+const sectionTools = toolsForSection(knownId);
+
 ---
 
 <BaseLayout lang={lang} title={sectionTitle} description={sectionDesc} currentPath={sectionId}>
@@ -87,6 +93,22 @@ if (articlesResult.failed) markContentUnavailable(Astro.response);
       )}
     </div>
   </section>
+
+  {sectionTools.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="nf-sections-title">{t.footer.tools}</h2>
+        <div class="nf-sections">
+          {sectionTools.map((tool) => (
+            <a href={path(lang, ...tool.segments)} class="nf-section">
+              <strong>{tool.name[lang]}</strong>
+              <span class="section-sub">{tool.blurb[lang]}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   {/*
     Текст хаба — ПОД списком: указатель в этой теме главный, читатель приходит

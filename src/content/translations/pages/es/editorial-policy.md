@@ -1,6 +1,7 @@
 ---
 title: "Política editorial"
 description: "Cómo Ve7as elige los temas, verifica los hechos y corrige errores: fuentes, independencia y uso de la IA."
+updated: 2026-08-26
 ---
 
 Esta página describe cómo se elabora el contenido de Ve7as. Es un compromiso, no una declaración de marketing: si encuentra una página que no lo cumple, escríbanos a través de la [página de contacto](/es/contacts/) y lo resolveremos.

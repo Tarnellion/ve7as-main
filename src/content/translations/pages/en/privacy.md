@@ -1,6 +1,7 @@
 ---
 title: "Privacy policy"
 description: "How Ve7as handles visitor data: what we collect, what we deliberately avoid collecting, and what third-party services this site relies on."
+updated: 2026-08-27
 ---
 
 This page describes what data Ve7as collects and how it's used.

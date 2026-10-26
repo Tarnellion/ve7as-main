@@ -1,6 +1,7 @@
 ---
 title: Contactos
 description: Contacte a redação da Ve7as — para sugerir um tema, comunicar um erro num material ou colocar uma questão.
+updated: 2026-06-09
 ---
 
 Estamos abertos a feedback: sugestões de temas para novos materiais,

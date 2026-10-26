@@ -1,10 +1,15 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { INDEXED_LANGUAGES, PRIMARY_LANGUAGE, HTML_LANG, type Language } from '../i18n/languages';
 import { path } from '../i18n/utils';
 import { getSitemapContent, type SitemapContent } from '../lib/sanity';
+import { TOOLS, TOOL_SEGMENTS, TOOL_UPDATED } from '../data/tools';
 
-/** Pages that exist for every language regardless of CMS content. */
-const STATIC_SEGMENTS = ['', 'about', 'contacts', 'privacy', 'terms', 'editorial-policy', 'tools', 'tools/wagering-calculator', 'tools/odds-converter', 'tools/margin-calculator', 'tools/blackjack-house-edge', 'tools/lottery-expected-value'];
+/**
+ * Страницы из локальных Markdown-коллекций: существуют на каждом языке
+ * независимо от CMS. Их `<lastmod>` берётся из поля `updated` во frontmatter.
+ */
+const CONTENT_PAGES = ['about', 'contacts', 'privacy', 'terms', 'editorial-policy'];
 
 /**
  * The sitemap spec requires escaped URLs, and the XML itself must stay
@@ -37,6 +42,23 @@ function lastmodOf(article: SitemapContent['articles'][number]): string | undefi
 }
 
 /**
+ * Самая свежая из дат — в ISO. Неразобранные и пустые значения отбрасываются,
+ * пустой вход даёт `undefined`, то есть запись уходит вовсе без `<lastmod>`.
+ *
+ * Так и задумано: страница, у которой даты нет, лучше уйдёт без неё, чем с
+ * выдуманной. Google сверяет `lastmod` с тем, что реально поменялось, и,
+ * поймав на расхождении, перестаёт доверять ему по всему sitemap — то есть
+ * одна неверная дата обесценивает все верные.
+ */
+function latest(...stamps: (string | Date | undefined)[]): string | undefined {
+  const times = stamps
+    .filter((value): value is string | Date => Boolean(value))
+    .map((value) => new Date(value).getTime())
+    .filter((time) => !Number.isNaN(time));
+  return times.length === 0 ? undefined : new Date(Math.max(...times)).toISOString();
+}
+
+/**
  * Geo-blocking: content carrying a non-empty `blockedIn` is withheld from the
  * sitemap entirely.
  *
@@ -61,8 +83,19 @@ export const GET: APIRoute = async ({ site }) => {
   // только слаги, `blockedIn` и `_updatedAt`. Раньше он звал `getArticles()` и
   // `getFaqItems()` и вытягивал заодно все тексты на семи языках, чтобы не
   // воспользоваться ни одной строкой.
-  const content = await getSitemapContent();
+  // Коллекции читаются рядом с CMS: даты правок локальных страниц лежат в их
+  // frontmatter, а не в Sanity, и без них about/terms/privacy уходили к
+  // краулеру вовсе без `<lastmod>`.
+  const [content, pageEntries, translationEntries] = await Promise.all([
+    getSitemapContent(),
+    getCollection('pages'),
+    getCollection('pageTranslations'),
+  ]);
   const { sections, articles, faqItems } = content.data;
+
+  // id в коллекциях: `about` у оригинала и `en/about` у перевода.
+  const pageUpdated = new Map(pageEntries.map((entry) => [entry.id, entry.data.updated]));
+  const translationUpdated = new Map(translationEntries.map((entry) => [entry.id, entry.data.updated]));
 
   // Sanity недоступна — отдаём статические маршруты, а не 500: главная и
   // юридические страницы существуют независимо от CMS, и терять их из sitemap
@@ -80,21 +113,50 @@ export const GET: APIRoute = async ({ site }) => {
   const faqIsListable =
     faqItems.length === 0 || faqItems.some((item) => !isGeoRestricted(item.blockedIn));
 
+  const listableArticles = articles.filter((article) => !isGeoRestricted(article.blockedIn));
+
+  // Содержимое индекса и хабов — список статей, поэтому их дата правки это
+  // самая свежая правка среди показанных материалов, а не дата деплоя. У хаба
+  // к ней добавляется собственный текст рубрики из CMS.
+  const indexLastmod = latest(...listableArticles.map((article) => article._updatedAt || article.pubDate));
+  const sectionLastmod = (section: SitemapContent['sections'][number]) =>
+    latest(
+      section._updatedAt,
+      ...listableArticles
+        .filter((article) => article.section === section.id)
+        .map((article) => article._updatedAt || article.pubDate),
+    );
+
+  // У локальной страницы дата своя на каждом языке: правка английского текста
+  // не делает свежее испанский. Перевода нет — рендерится русский оригинал,
+  // значит и дата берётся его.
+  const contentPageLastmod = (page: string) => (lang: Language) =>
+    latest(translationUpdated.get(`${lang}/${page}`) ?? pageUpdated.get(page));
+
   // `langs` у статьи — только локали с настоящим переводом: URL, который сам
   // скажет noindex (фолбэк), в sitemap не приглашается, и альтернативы на
   // него не объявляются. У статики и списков версия есть на каждом языке.
-  const entries: { segments: string; lastmod?: string; langs?: readonly Language[] }[] = [
-    ...STATIC_SEGMENTS.map((segments) => ({ segments })),
-    ...(faqIsListable ? [{ segments: 'faq' }] : []),
+  //
+  // `lastmod` бывает функцией от языка — см. `contentPageLastmod`.
+  const entries: {
+    segments: string;
+    lastmod?: string | ((lang: Language) => string | undefined);
+    langs?: readonly Language[];
+  }[] = [
+    { segments: '', lastmod: indexLastmod },
+    ...CONTENT_PAGES.map((segments) => ({ segments, lastmod: contentPageLastmod(segments) })),
+    { segments: 'tools', lastmod: latest(...TOOLS.map((tool) => tool.updated)) },
+    ...TOOL_SEGMENTS.map((segments) => ({ segments, lastmod: latest(TOOL_UPDATED[segments]) })),
+    ...(faqIsListable
+      ? [{ segments: 'faq', lastmod: latest(...faqItems.map((item) => item._updatedAt)) }]
+      : []),
     // `section` documents have no `blockedIn` field in the Sanity schema.
-    ...sections.map((section) => ({ segments: section.id })),
-    ...articles
-      .filter((article) => !isGeoRestricted(article.blockedIn))
-      .map((article) => ({
-        segments: `articles/${article.id}`,
-        lastmod: lastmodOf(article),
-        langs: INDEXED_LANGUAGES.filter((code) => article.translations?.[code] === true),
-      })),
+    ...sections.map((section) => ({ segments: section.id, lastmod: sectionLastmod(section) })),
+    ...listableArticles.map((article) => ({
+      segments: `articles/${article.id}`,
+      lastmod: lastmodOf(article),
+      langs: INDEXED_LANGUAGES.filter((code) => article.translations?.[code] === true),
+    })),
   ];
 
   // Только индексируемые локали: sitemap — это приглашение к обходу, и звать
@@ -103,6 +165,7 @@ export const GET: APIRoute = async ({ site }) => {
   const urls = entries.flatMap(({ segments, lastmod, langs }) => {
     const pageLangs = langs ?? INDEXED_LANGUAGES;
     return pageLangs.map((lang) => {
+      const stamp = typeof lastmod === 'function' ? lastmod(lang) : lastmod;
       // hreflang must use the same BCP 47 tags the pages advertise in <head>
       // (`HTML_LANG`), not the raw route codes: `pt`/`br` there vs `pt-PT`/`pt-BR`
       // in the markup produced two contradicting hreflang clusters for the same
@@ -119,7 +182,7 @@ export const GET: APIRoute = async ({ site }) => {
 
       return `  <url>
     <loc>${url(base, lang, segments)}</loc>
-${lastmod ? `    <lastmod>${lastmod}</lastmod>\n` : ''}${alternates}
+${stamp ? `    <lastmod>${stamp}</lastmod>\n` : ''}${alternates}
   </url>`;
     });
   });
