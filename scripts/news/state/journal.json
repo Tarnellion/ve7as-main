@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-27T08:15:42.361Z",
+  "updatedAt": "2026-10-27T10:41:07.295Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -187,6 +187,26 @@
         "QPGjxz4UFSBYE0koVO/1MmHFq+Ed1dZCYEPH3jvEwQo9shM4sb5Lu8Xp/1o7+8wn3+7DRepQINDawecTSRvr/EJxKE6mzKwaF4gVLwjJJbm4yd890i84yDEKRBXr1LK72Ecyrl3XJcvcLjivLujPA1Moxcvf3xgAUO6uv8YRBTx/xvY0HDouSM8D+L7Ybdw6QkBCvSbgLrosJlDBucrxOrS8vvip1iER1O3oJuo6+TG4IDBCxuWyy+/hog8p88U0qri3OdsvASD62RQNIQ23MeBlSqbSJ7r8KhvXGSXaN775QEGYvEXd2t+bvsUGCQsCou8s8DzdshvQSCW47L78Uj4vxSEk9DoeKzm+69j12z44w7vCB12z7kslUiZR991bw9PjyQzDKmTtYuMCKskrJrQbPSovEzET0/YWTtUYz9Tb5ebpBxj92C4pMdTrHbYWBTe/uvMjwVfj1xzR2PA4jTBN4GOh1E1BuNYXQhVe+BIzsyMvreLy2ekl4aQRLDRJ",
         "R93PwFb8E0JR70wIdPLpGmCvvuMsDchzRlzF7Sacvg9HgUEPhs0pvpf9I0w5ItI9rwazNfdfM9LMotMRUO32JD88HkvW0Z7/LZwWXif62qWIzQA3EVVdmi/cKh3VpKCptE4ywGDYM8L9RUK5Wc3GKlIQovv+jPfUPeG/n6gdKGt1sfY3JVxneMgs78PWZP8gEWhlxVvSSOISLGi0vZ//P5jewimlqTFH0dzSK/4n7j28JksusPmpo9W6rjUi3+8xzJrFLd8/JTonrjAjIAOgPNVEGrGuN+PqCETGIFzOO7oAA3Wunxvu07mzpccC/ST2rc7v2E6quTgDTiS15ev3OUFHsxIp/DUMOB/N18PnzCNNob6630fB+D4SSidc4ss5tcfbzgHeL2nabNjyNuRNFa8pH0YNODgt6vkhJMkbxMvdw/XrGRn67DHvFMnHOLEECi+qqA9AyF74CmbryiVfiSk3yFKN5TwRwcEOShxu3QM0uz8s3+Xsx/ks5LorQRhp",
         "TePEvWgFJD1F/FH8btLjFmrFydIk9N5fTFrc5ySjq/4ajTcSk+NHmqoXKFEqKMpDwATGOQRpJtewk9gZR+YCKEhFFTfA3rYIKbHwcEzhz6CdytsO+DFvpzXwFi7Tp7Oa1lkvyVTRIcsNUUDJQ9n3KVzxpOntku7BVdjOta8sK0UyuwgoIkJKYL4J77rUTgX9CVdu7E3UN+UvGGq5wY0SNbLcohGtqD1R0OfQONJI6kPFNj9Ht9qlou26uyYr2OEaxsLJJ9I6Ky8nwSs3KvSrOs1NHZKkTwH8JSnuI2XUTMwhF1bHih7Zxcuun7H5EiIJqNLx4Eqbnj8IST650c7uKVlOngs78T34WxXM8crMwj5codzb1VC+DS8QXSpW6NdNrLPZ3hX5Nm0AcscCHuZUGcAyIC4OJEQl+O8SKdouys3hwtnzFwn13kT7Bru7OoEWKDDByvwpwWDz6D7nsjlejj5luUGi0koKtOASMS5Wzx470Sga3ubxyuMe0McgNShM"
+      ]
+    },
+    {
+      "id": "80c3808e7542",
+      "publishedAt": "2026-10-27T10:41:07.294Z",
+      "title": "Kansspelautoriteit lanceert mediahandreiking voor berichtgeving over gokken",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/kansspelautoriteit-lanceert-mediahandreiking-voor-berichtgeving-over-gokken"
+        }
+      ],
+      "centroid": "Osm2u1TvK0XoHU/+Qs67OFTV6uINHeBhV0HUNve88N9NvD0kn84+78X6LlNZMt9Eue0NWOsWQ6PVrOIXef8NEz9HIA6R88449vwRPywBHgatvcA9zk0kxzboMDnRs8i16CIo5kPgIOeuHQrYWKm7IVUQttP7xCLcXO624c7AEFRIBhIhSjtMOLwK28nJN9cWPx9F2z4JRAFXGkLs0cw3HsHImezx70sZ2e3RGbY5tCLHKjQZ3PbR7L7XsyAnqtITrafeVeQyQS8T600hHfHg+NNJK8e4bPTk3CmrGzvKO5b6JwXRGBAXueLV54rh/BXg0OQd1D3mvSwFOxCRxK/AEA8ZjSdcylIcICDJB+z33xoQ6gDaKDXZ4P4LHTM/CuRO8vfH1BrnJSHMQPDvDtgQLNEk/SchWEw81uQ4S/wsw7zPv/nRLyr6Cy3JLK61FMfj6g3t7B8cnj4O4QbCzgoPgRwRuBSg5Fc7yObxL0U+/dAA4Pcu+P0j9d848QMB8i0+",
+      "vectors": [
+        "Osm2u1TvK0XoHU/+Qs67OFTV6uINHeBhV0HUNve88N9NvD0kn84+78X6LlNZMt9Eue0NWOsWQ6PVrOIXef8NEz9HIA6R88449vwRPywBHgatvcA9zk0kxzboMDnRs8i16CIo5kPgIOeuHQrYWKm7IVUQttP7xCLcXO624c7AEFRIBhIhSjtMOLwK28nJN9cWPx9F2z4JRAFXGkLs0cw3HsHImezx70sZ2e3RGbY5tCLHKjQZ3PbR7L7XsyAnqtITrafeVeQyQS8T600hHfHg+NNJK8e4bPTk3CmrGzvKO5b6JwXRGBAXueLV54rh/BXg0OQd1D3mvSwFOxCRxK/AEA8ZjSdcylIcICDJB+z33xoQ6gDaKDXZ4P4LHTM/CuRO8vfH1BrnJSHMQPDvDtgQLNEk/SchWEw81uQ4S/wsw7zPv/nRLyr6Cy3JLK61FMfj6g3t7B8cnj4O4QbCzgoPgRwRuBSg5Fc7yObxL0U+/dAA4Pcu+P0j9d848QMB8i0+"
       ]
     }
   ]
