@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-27T10:41:07.295Z",
+  "updatedAt": "2026-10-27T12:38:58.379Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -207,6 +207,58 @@
       "centroid": "Osm2u1TvK0XoHU/+Qs67OFTV6uINHeBhV0HUNve88N9NvD0kn84+78X6LlNZMt9Eue0NWOsWQ6PVrOIXef8NEz9HIA6R88449vwRPywBHgatvcA9zk0kxzboMDnRs8i16CIo5kPgIOeuHQrYWKm7IVUQttP7xCLcXO624c7AEFRIBhIhSjtMOLwK28nJN9cWPx9F2z4JRAFXGkLs0cw3HsHImezx70sZ2e3RGbY5tCLHKjQZ3PbR7L7XsyAnqtITrafeVeQyQS8T600hHfHg+NNJK8e4bPTk3CmrGzvKO5b6JwXRGBAXueLV54rh/BXg0OQd1D3mvSwFOxCRxK/AEA8ZjSdcylIcICDJB+z33xoQ6gDaKDXZ4P4LHTM/CuRO8vfH1BrnJSHMQPDvDtgQLNEk/SchWEw81uQ4S/wsw7zPv/nRLyr6Cy3JLK61FMfj6g3t7B8cnj4O4QbCzgoPgRwRuBSg5Fc7yObxL0U+/dAA4Pcu+P0j9d848QMB8i0+",
       "vectors": [
         "Osm2u1TvK0XoHU/+Qs67OFTV6uINHeBhV0HUNve88N9NvD0kn84+78X6LlNZMt9Eue0NWOsWQ6PVrOIXef8NEz9HIA6R88449vwRPywBHgatvcA9zk0kxzboMDnRs8i16CIo5kPgIOeuHQrYWKm7IVUQttP7xCLcXO624c7AEFRIBhIhSjtMOLwK28nJN9cWPx9F2z4JRAFXGkLs0cw3HsHImezx70sZ2e3RGbY5tCLHKjQZ3PbR7L7XsyAnqtITrafeVeQyQS8T600hHfHg+NNJK8e4bPTk3CmrGzvKO5b6JwXRGBAXueLV54rh/BXg0OQd1D3mvSwFOxCRxK/AEA8ZjSdcylIcICDJB+z33xoQ6gDaKDXZ4P4LHTM/CuRO8vfH1BrnJSHMQPDvDtgQLNEk/SchWEw81uQ4S/wsw7zPv/nRLyr6Cy3JLK61FMfj6g3t7B8cnj4O4QbCzgoPgRwRuBSg5Fc7yObxL0U+/dAA4Pcu+P0j9d848QMB8i0+"
+      ]
+    },
+    {
+      "id": "0427e8640837",
+      "publishedAt": "2026-10-27T12:38:58.378Z",
+      "title": "Alberta iGaming Revenue Hits $122.1 Million in First Three Months",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "casinoorg",
+        "focusgn",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/canadian-gaming-alberta-igaming-financial-results"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/alberta-igaming-revenue-first-80-days"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/26/127013-alberta-igaming-market-generates-872-million-in-first-three-months"
+        }
+      ],
+      "centroid": "FRnPzGXbMFso7GHvPKC/OzPIxtU4B/AvYDDr/BumvuUKr1Abqr5Aw9cJGDw6Eb1VqM/IR+BBMZunu8kcavoLIFssWUGj/PpI1aofSSreL+W6zs4n+i9mpjHMRVvgtre/yi4UsH/LO7PNJxakX8DWBUMOqtH79UfwW+eCr+XrMQ9IFBZFJTdDac/z+OnrIuYYZ0VbzELoWN5AIjm318sLIdzVuu3GvP5Dt/GoMedI0jnDOVMHxeXN17jopxwaxOU1z7fzOdFRPB37tDIGIQuydvEUErmXIyXlDDAsKyzjQY3fQUu45zzdr7LIx+gDJi7incneyDnSx+b7UR/GyqzZHSI6+CYj4jc0YPPppsjMxUlg7NfqOWi2+GnzLQlj6MFBtMi60BXVKgwKRLIE2utJDrkBDEEJEzcRyeAPWwYf0t7iwBGrOTgExTDuOdPhHZbbKj+J0gQ/5i/k0Pmrujtehik19yGv8jBVwfgkPh5C7P40oR9dyBL/zPI269v+Mx85",
+      "vectors": [
+        "HSfX42TwOlIh8WPvLq/ISz3XztggHP8yZSzo9hOuvOUIwGUlqME70eQRISoyF7NGqdfRau05RJSUwMkhbfYKEFQuZUC7+vY916wLQyDbKu6sz8sk9jZmmy3NSljNtqjOuiQSqn+9McjIKAuwWrrhCT0dn9T6CTvtV9+GsPLvJwRWHSRIJis7WMno6ejoJtsfZT5MyEL2Uso+LDLD087+IOLSvvrSswFGreu6Kt9X3i3JQVgKwue84b38sBYVyOYvyMvcMNxNSBj2rzH+JRW4dvQjCbyfLRjsDy4wMij1QI/fOVG88TjanbO1vuYCFyrir8/cwD/Qx/D3VRq9z6PSFBU0CRwN9S08ef33rbnJzzdh7tLrN2i++Wb6IBdd5MAtoM3D0RfWMAsXQML64uFPFLgBKCv5CUT+1tn7XAYR2NXhxBiZKjcBxCMDL8HhDJjkHUKO3SAy2zjc2P2oxzpllAlG5gKg8yZPy/sgPR1D/gwzoiROzgn5yeQx/NoTOhsr",
+        "FQ68sFXHFVMs6F7zVoyyLi/HutFJ/+YmTTryACCYyvYGnEEaprZEu8H7F04+EM1ZtsjOI9Y9J7S2ssEGbBcIKGY5QkSWB/Rc0aUoUC7yJ9fVxNEt+yhdszjKR1Psr6ux1zwauXzgRprdIBugVdPc/0QGnMwE6E3tZviPw9nnLhtFBhA9GTJCauMAEPHeIfwLXUpgzkDRVegxDUbB0NEeJeDVuO29xQo7xv2lJ/I+x0nTMlQM0+HkyrrkpRMZyPI51a0EQr9gMQ/+uCoME/mxevkKFqubGCnkETEeHzTNTZTYQk233Tfrxr7Y1Pb/LiPnk8TpyEzEvucOUBPKybPgHiQy+SMp2kQpUu3rqdXUv0JX487mKFmi+lnwOAJe7L5TyMK/0w7ULhH+VLYB5OlDB7MA/1gWIC8hy/EWVQEi3+HevP+9OjgIv0LrP+jjKZvjKDOB0ulC6hvtvvHFvC1hjDoSCzjE5CpTv/0mPy1H4vIzsQtkyRIAzAc62t7uNCc6",
+        "CxPg1mrePGEl7VfuKa7LMifC0ds5++0vZCXo/hq1vdcQukIPu8o8xOUODjY3Cr9Vo9PBP+FEJJa0xtcoWOQMJE0aWjmj9QQ43LYlQCzSN+6129Qh/ylkrynUOFzrxNjG0yQPtnTLNL3JJxqoZLzLCEEGzNf18ET5S+CBpeftNww2FwtEK0NDbMb07+X8Gt8bZ0Fa1D3zV+tKKiyo6MgFGtbcwOHKxPFBueyjO+k81zC0M0X+wuvN3brcqikcxdow1bb8NNw9NCv+vTMIKBG0ZegMFcyXHyniAywxKiTrL5LqQDq+6j3Wsq/Ry94IKTfhoM7Z1hvo1uDsRCvSzbjdISk/5y8v2i4wS/LdqM/Ox1ld9ujvRWvL9XHwKwFi6s06vc610hjbHAgIMqYQzfdDDccC+zoKDiwRwtkZVgomxejryBu1QjID0yjfNtbjHZvONECZzANB8TXm4Pyfs0JKgTVA9CSx/zxUwfAhOQw06PwynCtayBoD1esy7N76KBg/"
+      ]
+    },
+    {
+      "id": "8122ad1e7ab0",
+      "publishedAt": "2026-10-27T12:38:58.378Z",
+      "title": "MGA publishes findings from thematic review on sports betting integrity reporting and escalation",
+      "lang": "en",
+      "voices": 1,
+      "groups": [
+        "mga"
+      ],
+      "sources": [
+        {
+          "source": "mga",
+          "url": "https://www.mga.org.mt/mga-publishes-findings-from-thematic-review-on-sports-betting-integrity-reporting-and-escalation"
+        }
+      ],
+      "centroid": "LOiBrR3vLmMgClINO9TvMme4xroQ6dEsaj3a6Sy/xQhpnSI4o8s/7Z4WKyZYCehAzcUBQw8HVZbwq9VFSeTnKRUrQC/D65kwANU6YFH3FdHRyMQq5TQk2z/YCSbhtpXJ0ydM4i/IN7XsQhCwONLxA0kA9wbsv0LDaPe2tb349Fs8CBBBPTBCN8gY0dXTQPwTMwlx7joAB/IaGVjN6MUsHcLapeHJ9ixRwunS/d05vTy2LDku3Onhz+DRjyEA2PkQ1dbUabAhC/8n0jYcEh60EbktGZ25Sxf4+hvYzTnmGLX6E0nN8Rjt0M7AzJ8ANAnemugPC0D/4xXYPP/B1uC4NEc2ty8e1ksNTv7n4ejwuhtM4/na/E3m6VbbKx0uCNBJ1AT86DLbACvZNr3ZBdQ1Rq8BNkP4PU82zhA0ROkLxLzG+vjVOT/73hj+Hsi7Fabh6QXNrS0mylX07xTT2BpWhyocpUeP8TE55ucJJgtn9AYvwhwt6wrn+usv5AEOCzU3",
+      "vectors": [
+        "LOiBrR3vLmMgClINO9TvMme4xroQ6dEsaj3a6Sy/xQhpnSI4o8s/7Z4WKyZYCehAzcUBQw8HVZbwq9VFSeTnKRUrQC/D65kwANU6YFH3FdHRyMQq5TQk2z/YCSbhtpXJ0ydM4i/IN7XsQhCwONLxA0kA9wbsv0LDaPe2tb349Fs8CBBBPTBCN8gY0dXTQPwTMwlx7joAB/IaGVjN6MUsHcLapeHJ9ixRwunS/d05vTy2LDku3Onhz+DRjyEA2PkQ1dbUabAhC/8n0jYcEh60EbktGZ25Sxf4+hvYzTnmGLX6E0nN8Rjt0M7AzJ8ANAnemugPC0D/4xXYPP/B1uC4NEc2ty8e1ksNTv7n4ejwuhtM4/na/E3m6VbbKx0uCNBJ1AT86DLbACvZNr3ZBdQ1Rq8BNkP4PU82zhA0ROkLxLzG+vjVOT/73hj+Hsi7Fabh6QXNrS0mylX07xTT2BpWhyocpUeP8TE55ucJJgtn9AYvwhwt6wrn+usv5AEOCzU3"
       ]
     }
   ]
