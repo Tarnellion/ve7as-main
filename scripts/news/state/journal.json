@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-26T23:25:20.127Z",
+  "updatedAt": "2026-10-27T08:15:42.361Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -144,6 +144,49 @@
         "NgDzuyHiTQdT/jEXFtnXDU691c8+F+k3LEL9CibN0+gptCAbudA3xrQDKC91IuUd3N2gIQMMN+6oxaRJIQAvHSgIFkXBALRGzvYbOBW59fbS8bQWwjwfyGC9N0/MubSr0j4lwVHBYbPXHz/CXbbtLiEyp+3AwRvLTNnQk8nkMkJtCiIHHhcfWt3/D+zSLtIHKCJAvfyoJ6c3+xmezNobM6nVqP/C0EQkzwDWA9A4DBy6L2A5uuXTwtjYvggr4vj9ssPYOR8/MTX08hYNRAm0QMxaN7eeO/rnGUjaAg4MJLXl+ET71lndD7vEks/sMz7W09QmsiLo0zrzBzq30MvuIj1I0xQf4TtYRxjK5q/VujIo0fb5AyDEqH8PDDos6elZ3NC6k2TNTTjcQNQS8eNLLLIvJzQv+VNCxRP+X9pB9cn75/DUHyjE9TUcQe/CSJ7fJAHC0icWjk7Z5ELn5SpAhg8Urx3XBRBCuNg3ZENq9vVKzyRL/v0VwOA44ekfHfMn",
         "EgvelVDvLRwqEzUMVsy+Jzm5uecvAu9QTE7j7yyg2QMwrhpAot1KAY8KATJfGLUlxNDeQu8mH9Czv7M5RfcbKTcsMSW09rY9AQr1TwzBE+7Rzbgs3E0hwF7TJE7bxJXV5CUs7D3HObHoKhHQWqT7ET8XqNGlszznZOfHqu4GCDZg9A0mBAFOT/sC+cPgKucDJzBm1iC5E80ZHEKkxOE8RZ7tjAa34iRKxt60A8kL7RTrJUok1urKx9XZw/Ir+ewVrbDYQtwrLhYT4iIKQiPGO/AxI7qtX/nuHxne9U3/J5raGHbTwUAEE7DPwMIWETWnusobvETh5i8AShi3pbPsBUtW3SELAE1PKgTV16zm3iEk1+3sDzHpzH8CFiA9091budqwxyPXITDaStoSLN46KLZHIj8hF0RO5fz0Uf1FD7rZy/DqEiH74yTxJu7BIJ3dGO+u0h8mn0Lx6Sfs6QdFhPbv4yK4/SkknPAZZQV42vMzviFEC/gHxe085+stGRZA",
         "MAEHvyX4NAowETQPO+HeIkLTseA4EPU2K1fh8DOR5gwJrzUcxc1Ay8j0J0VHIO0U1smuJQUjHtm/1bEOKAsDIi86Ehel7tVP7+AUXBG5Ce3E3sAY5jcUv1fPMD/ZzNGbzTkp3iqWSanoQi3jTMECAikWsunX1g3pVfPct7vg/khC9SIyCCcwbPcN6uHYO9saKCxSzCrbPJckAji1peEZJrq+pfje3hMx2PPWHcUc8gPIS00rwNjV1tG8tgw34NANuKfKOfErQDgT9xcZNQewWes+PMa1OPLxQUP9Kw8AEdgDC0EDvj3Y6rLggbsCIU3Iu+AQ3iTDzjTsRhzDrL35AkBk3xgp4VI5Thu9v7Tiyz9D0dcI/CS3t2L9Fysq5ro34dK7tDjaQT/hStAmGPRCGK8hIj8cGCsZ0PAIRPYs7abg5e3pChAJ5z8KPAbnR7bePCGXyv4lsSj34BjqyQ5nhgkY8yOz+UY3svYMTkhP6ulk8CI79PDbv+Y04tIlNxEo"
+      ]
+    },
+    {
+      "id": "34c0711b940d",
+      "publishedAt": "2026-10-27T08:15:42.361Z",
+      "title": "Scratchcards fraud uncovered in Rome with €25 million in assets seized",
+      "lang": "en",
+      "voices": 4,
+      "groups": [
+        "igamingbusiness",
+        "casinoorg",
+        "focusgn",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/scratch-cards-fraud-uncovered-rome-25-million-in-assets-seized"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/lottery-employees-knew-where-winning-tickets-would-be-sold-in-alleged-27m-scam"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/italian-slot-machine-skimming-ring-had-an-inside-man-at-gambling-watchdog-police-say"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/gratta-vinci-insider-fraud"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/lottomatica-employees-accused-of-eur-25m-scam"
+        }
+      ],
+      "centroid": "Tey6xVQDGDhVAlMNcefoHWG8vdEqAd1oUVrK7zGlswc9kzIbj8o8rakBGlQ5IdM5v/y4RPJlLNnAn9wPSfj1GT9XJkS+1aoUI50LXiXe86iZxecr9ERbrDbwJi7asKmhx1M1vVfWKcb6RD22S9fXI1QNp+nxngDeS928sbQlIE9qswAxKE9KZ80V9bffX/gTGlRl10XUPdwjJl+9v5z9N6rTtBextCpCz+ThJ+k670W9L0BBseeprN/BrCYm1NMkuqjBLNo5JighuyoeHgKpQ9ZWI6CyQefzGjTdIVTYOcUKH1+xmyfbycqlpsQGCBv5sNEF30qzpjH0TTay1cf0P0NDrBAs+DsNQybP3cbgxDJZp8PF4VDG/j0YYC9g5M5Btb7VzRDfNmjpbtEBK9JCFrMqJzoYJEMm6PQaNtUgyc3Yy+rrEBL33TkLIcHGMJ0RFTO3uAQzwmLr8EPcvh1bgSlSw0yV4ksct9UVQRxk3QlEvzEr2Ozwxe8j160iPiZV",
+      "vectors": [
+        "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"
       ]
     }
   ]
