@@ -6,7 +6,7 @@
  *
  *   node scripts/news/selftest-postcheck.mjs
  */
-import { postcheck, translationFidelity, metaCheck } from './postcheck.mjs';
+import { postcheck, translationFidelity, metaCheck, numbersOf } from './postcheck.mjs';
 
 let failed = 0;
 const ok = (cond, label, detail = '') => {
@@ -193,6 +193,34 @@ for (const [label, unit] of [['not ', 'not '], ['un', 'un'], ['пробелы', 
   const ms = Number(process.hrtime.bigint() - t0) / 1e6;
   ok(ms < 1000, `100 КБ «${label}»: ${ms.toFixed(0)} мс (предел 1000)`);
 }
+
+console.log('\nЧисла с масштабом: billion ↔ millones (боевой прогон 40418824884: верный перевод браковался)');
+const numIssue = (en, es) => translationFidelity(en, es).some((i) => i.detail.startsWith('числа'));
+// Верные переводы: одна и та же величина, записанная по-разному на двух языках.
+for (const [label, en, es] of [
+  ['настоящая строка бразильского материала: «BRL1.2 billion» ↔ «1.200 millones»',
+    'It also puts their lost revenue at about BRL1.2 billion and the lost tax revenue at over BRL400 million.',
+    'Calcula además que sus ingresos perdidos rondan los 1.200 millones de reales y que la recaudación supera los 400 millones de reales.'],
+  ['одноцифровое с масштабом: «$6 million» ↔ «6 millones de dólares»', 'Operators paid BRL30 million ($6 million) for the concessions.', 'Los operadores pagaron 30 millones de reales (6 millones de dólares) por las concesiones.'],
+  ['десятичная часть: «4.3 million» ↔ «4,3 millones»', 'just over 4.3 million votes, while Yogonet gives approximately 4.4 million', 'poco más de 4,3 millones de votos, mientras que Yogonet habla de unos 4,4 millones'],
+  ['«1.2 billion» ↔ «1,2 mil millones»', 'revenue of 1.2 billion euros', 'unos ingresos de 1,2 mil millones de euros'],
+  ['сокращения: «EUR 37m» ↔ «37 M€»', 'a fine of EUR 37m was announced', 'se anunció una multa de 37 M€'],
+  ['«£5k» ↔ «5.000 libras»', 'a stake of £5k', 'una apuesta de 5.000 libras'],
+  ['«5 thousand» ↔ «5 mil»', 'about 5 thousand players', 'unos 5 mil jugadores'],
+]) ok(!numIssue(en, es), `верный перевод проходит: ${label}`, JSON.stringify(translationFidelity(en, es)));
+// Настоящие подмены остаются ловимыми — иначе нормализация просто выключила бы проверку.
+for (const [label, en, es] of [
+  ['масштаб перепутан: «billion» → «billones» (10^9 → 10^12)', 'about BRL1.2 billion in revenue', 'unos 1.200 billones de reales de ingresos'],
+  ['одноцифровое с масштабом подменено: 6 → 7 million (раньше не сверялось вовсе)', 'paid ($6 million) for the concessions', 'pagaron (7 millones de dólares) por las concesiones'],
+  ['десятичная часть подменена: 4,3 → 4,8 millones', 'just over 4.3 million votes', 'poco más de 4,8 millones de votos'],
+  ['порядок подменён: 30 million → 300 millones', 'paid BRL30 million for the concessions', 'pagaron 300 millones de reales por las concesiones'],
+  ['цифры переставлены: 37m → 73 millones', 'a fine of EUR 37m was announced', 'se anunció una multa de 73 millones de euros'],
+  ['сумма с масштабом потеряна в переводе', 'revenue of 1.2 billion euros and a fine of EUR 37m', 'una multa de 37 M€'],
+]) ok(numIssue(en, es), `подмена ловится: ${label}`);
+ok(numbersOf('1.2 billion').has('1200000000') && numbersOf('1,2 mil millones').has('1200000000') && numbersOf('1.200 millones').has('1200000000'),
+  'три записи одной суммы дают одно и то же значение');
+ok(numbersOf('5 months and 3 meters').size === 0 && numbersOf('MP 1,394 and 51.79%').size === 3,
+  'числа без масштаба не изменились: «5 months» не принят за масштаб, «1,394» и «51.79» разобраны как раньше');
 
 console.log(failed ? `\nПРОВАЛЕНО: ${failed}\n` : '\nВсе проверки пройдены.\n');
 process.exit(failed ? 1 : 0);

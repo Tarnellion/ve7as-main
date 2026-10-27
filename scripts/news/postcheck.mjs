@@ -258,14 +258,54 @@ const countWords = (text) => text.replace(/[#>*_`|-]/g, ' ').split(/\s+/).filter
  * широкое — оно ловит потерянный или раздутый перевод, а не стиль.
  */
 /**
+ * Числа с масштабом приводятся к одному абсолютному значению с ОБЕИХ сторон: «BRL1.2 billion» и
+ * «1.200 millones de reales» — одна и та же сумма, но без этого шага первое давало «1» и «2»
+ * (одноцифровые отбрасываются), а второе — «1200», и верный перевод бразильского материала
+ * браковался как «числа расходятся: добавлены 1200» (боевой прогон 40418824884, 26.10.2026).
+ * Масштабные слова: thousand/mil/k (10^3), million/millón(es)/m/M (10^6), billion/bn/«mil millones»
+ * (10^9), trillion/billón(es) (10^12; испанский «billón» — длинная шкала, поэтому «billion»→«billones»
+ * остаётся настоящей ошибкой и ловится). Число с масштабом, чьё значение не целое («1.2345 thousand»),
+ * остаётся как есть. Одинаковая нормализация на обеих сторонах означает, что лишние срабатывания на
+ * «5 m» (метры) могут только совпасть, а не разойтись.
+ */
+const SCALE_EXP = [
+  [/^mil\s+millones$/i, 9], [/^billones$|^bill[oó]n$/i, 12], [/^trillions?$/i, 12], [/^billions?$|^bn$/i, 9],
+  [/^millones$|^mill[oó]n$|^millions?$|^m$/i, 6], [/^thousand$|^mil$|^k$/i, 3],
+];
+const SCALED = new RegExp(
+  String.raw`(?<![\d.,])(\d+(?:[.,]\d+)?)\s?(mil\s+millones|billones|bill[oó]n|trillions?|billions?|bn|millones|mill[oó]n|millions?|thousand|mil|[mMk])(?![\p{L}])`,
+  'gu',
+);
+
+/** «1.2»+«billion» → «1200000000»; «1.200»+«millones» → «1200000000». null — значение не целое. */
+function scaled(token, word) {
+  const exp = SCALE_EXP.find(([re]) => re.test(word.replace(/\s+/g, ' ')))?.[1];
+  if (exp === undefined) return null;
+  const m = token.match(/^(\d+)(?:[.,](\d+))?$/);
+  if (!m) return null;
+  // Ровно три цифры после разделителя — это группа тысяч («1.200»), иначе — дробная часть («1.2», «4,3»).
+  const thousands = m[2]?.length === 3;
+  const digits = thousands ? m[1] + m[2] : m[1] + (m[2] ?? '');
+  const dec = thousands ? 0 : (m[2]?.length ?? 0);
+  if (exp < dec) return null;
+  return (digits.replace(/^0+(?=\d)/, '') + '0'.repeat(exp - dec));
+}
+
+/**
  * Числа текста: суммы, годы, количества. Разделители тысяч в разных языках разные
  * («2,000», «2.000», «2 000»), поэтому между цифрами они вырезаются до сравнения.
  * Одноцифровые числа не берём: «1», «2» стоят в порядковых и перечислениях, а
  * подмена «37» на «73» — ровно то, что нужно ловить, — двузначная.
+ * Числа с масштабом («37 million», «1,2 mil millones», «37m») сначала приводятся к абсолютному
+ * значению (см. выше), и тогда «6 million» ↔ «6 millones» тоже сверяются, а не отбрасываются.
  */
-function numbersOf(text) {
-  const joined = text
-    .replace(/(?<=\d)[.,\u00a0\u202f](?=\d{3}(?!\d))/g, '')
+export function numbersOf(text) {
+  const normalized = text.replace(SCALED, (whole, token, word) => {
+    const value = scaled(token, word);
+    return value === null ? whole : ` ${value} `;
+  });
+  const joined = normalized
+    .replace(/(?<=\d)[.,  ](?=\d{3}(?!\d))/g, '')
     .replace(/(?<=\d{1,3}) (?=\d{3}(?!\d))/g, '');
   return new Set((joined.match(/\d+/g) ?? []).filter((n) => n.length >= 2));
 }
