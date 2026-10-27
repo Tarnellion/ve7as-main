@@ -35,6 +35,7 @@ import { intEnv, positiveEnv } from './env.mjs';
 import { dequantize, cosine } from './vec.mjs';
 import { SAME_EVENT } from './thresholds.mjs';
 import { postcheck, metaCheck, issuesToPrompt, translationFidelity } from './postcheck.mjs';
+import { MAX_BODY, extractText } from './extract.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 // NEWS_PIPE_DIR нужен самопроверке: она гоняет живой путь против мока в чужой папке.
@@ -99,60 +100,6 @@ const STEPS = {
 
 const estimateTokens = (s) => Math.round(s.length / 3.5);
 const sum = (a) => a.reduce((x, y) => x + y, 0);
-
-/**
- * Текст статьи из HTML без зависимостей. Разбор ЛИНЕЙНЫЙ намеренно: прежние
- * регулярные выражения с ленивым `[\s\S]*?` на странице с тысячами незакрытых
- * `<script` работали квадратично и могли подвесить задание. Источник —
- * чужой сайт, и от его вёрстки время работы зависеть не должно.
- */
-function stripBlocks(html, open, close) {
-  const low = html.toLowerCase();
-  let out = '';
-  let i = 0;
-  for (;;) {
-    const s = low.indexOf(open, i);
-    if (s === -1) return out + html.slice(i);
-    out += `${html.slice(i, s)} `;
-    const e = low.indexOf(close, s);
-    if (e === -1) return out; // незакрытый блок уходит до конца документа
-    i = e + close.length;
-  }
-}
-
-function stripTags(html) {
-  let out = '';
-  let inTag = false;
-  for (let i = 0; i < html.length; i++) {
-    const ch = html[i];
-    if (ch === '<') inTag = true;
-    else if (ch === '>' && inTag) { inTag = false; out += ' '; }
-    else if (!inTag) out += ch;
-  }
-  return out;
-}
-
-const MAX_BODY = 1_500_000;
-
-function extractText(raw) {
-  let html = raw.slice(0, MAX_BODY);
-  for (const tag of ['script', 'style', 'noscript', 'svg']) html = stripBlocks(html, `<${tag}`, `</${tag}>`);
-  html = stripBlocks(html, '<!--', '-->');
-  const low = html.toLowerCase();
-  let main = html;
-  for (const tag of ['article', 'main']) {
-    const s = low.indexOf(`<${tag}`);
-    const e = low.indexOf(`</${tag}>`, s);
-    if (s !== -1 && e !== -1) { main = html.slice(s, e); break; }
-  }
-  return stripTags(main)
-    .replace(/&nbsp;|&#160;/g, ' ')
-    .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 12_000);
-}
 
 /**
  * Куда ходить можно. Ссылки на материалы берутся из лент чужих сайтов, то есть
