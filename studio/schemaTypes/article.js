@@ -138,6 +138,23 @@ export default {
       },
       group: 'settings',
     },
+    {
+      name: 'sourceBasis',
+      title: 'Source basis',
+      description:
+        'Changes the wording of the "Automated" AI note. "Regulator announcement": the only source is the ' +
+        'regulator\'s own announcement, so the note must not say "independent sources". Empty: the usual wording. ' +
+        'Set by the pipeline.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Independent sources (default)', value: 'independent' },
+          { title: 'Regulator announcement (single source)', value: 'regulator' },
+        ],
+        layout: 'radio',
+      },
+      group: 'settings',
+    },
     ...langFields,
   ],
   preview: {

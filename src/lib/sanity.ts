@@ -421,6 +421,7 @@ export async function getArticleBySlug(
       "imageUrl": image.asset->url,
       youtube,
       aiDisclosure,
+      sourceBasis,
       ${localized('title', code)},
       ${localized('description', code)},
       ${localized('body', code)},
@@ -596,6 +597,12 @@ export type SanityArticleFull = SanityArticleCard & {
    * API, поэтому они лежат в закрытом черновике типа newsReview.
    */
   aiDisclosure?: 'assisted' | 'automated' | null;
+  /**
+   * На чём стоит материал: `regulator` — единственный источник — собственное сообщение регулятора
+   * (плашка не говорит «по независимым источникам»); пусто или `independent` — обычная подпись.
+   * Поле публичное и описывает источник, а не внутреннюю кухню.
+   */
+  sourceBasis?: 'independent' | 'regulator' | null;
   /**
    * Отметка правки самой Sanity. Идёт в `dateModified` разметки и в строку
    * «Обновлено» — для YMYL это один из немногих сигналов актуальности,

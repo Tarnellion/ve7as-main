@@ -14,15 +14,21 @@ import { useTranslations } from '../i18n/ui';
  *
  * `null` и неизвестные значения не рендерят ничего: текст, написанный
  * человеком, пометки не несёт.
+ *
+ * `sourceBasis: 'regulator'` — единственный источник — собственное сообщение
+ * регулятора. Тогда нельзя писать «по независимым источникам»: источник один.
+ * Признак влияет только на текст «automated»; у «assisted» формулировка
+ * от основы не зависит (материал прочитал человек).
  */
 interface Props {
   lang: Language;
   disclosure?: 'assisted' | 'automated' | null;
+  sourceBasis?: 'independent' | 'regulator' | null;
 }
 
-const { lang, disclosure } = Astro.props;
+const { lang, disclosure, sourceBasis } = Astro.props;
 const t = useTranslations(lang);
-const text = disclosure === 'automated' ? t.article.aiAutomated
+const text = disclosure === 'automated' ? (sourceBasis === 'regulator' ? t.article.aiAutomatedRegulator : t.article.aiAutomated)
   : disclosure === 'assisted' ? t.article.aiAssisted
   : null;
 ---

@@ -54,6 +54,8 @@ export interface Translation {
     /** Раскрытие использования ИИ под материалом. */
     aiAssisted: string;
     aiAutomated: string;
+    /** То же, но когда единственный источник — собственное сообщение регулятора (`sourceBasis: 'regulator'`). */
+    aiAutomatedRegulator: string;
     aiPolicy: string;
   };
   /**
@@ -139,6 +141,8 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Содержание',
       aiAssisted: 'Подготовлено с помощью ИИ и проверено редакцией перед публикацией.',
       aiAutomated: 'Подготовлено ИИ по независимым источникам и опубликовано автоматически, без предварительной проверки редакцией.',
+      // Текст статей конвейера в ru-локали английский (корень фолбэка, noindex), поэтому и плашка английская.
+      aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'Как мы используем ИИ',
     },
     common: { readMore: 'Читать', allArticles: 'Все статьи' },
@@ -219,6 +223,7 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Contents',
       aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Read', allArticles: 'All articles' },
@@ -299,6 +304,7 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Contenido',
       aiAssisted: 'Elaborado con ayuda de IA y revisado por el equipo editorial antes de su publicación.',
       aiAutomated: 'Elaborado con IA a partir de fuentes independientes y publicado automáticamente, sin revisión editorial previa.',
+      aiAutomatedRegulator: 'Elaborado con IA a partir del comunicado del propio regulador y publicado automáticamente, sin revisión editorial previa.',
       aiPolicy: 'Cómo usamos la IA',
     },
     common: { readMore: 'Leer', allArticles: 'Todos los artículos' },
@@ -379,6 +385,7 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Conteúdo',
       aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
@@ -459,6 +466,7 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Inhalt',
       aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Lesen', allArticles: 'Alle Artikel' },
@@ -540,6 +548,7 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Sommaire',
       aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Lire', allArticles: 'Tous les articles' },
@@ -621,6 +630,7 @@ export const ui: Record<Language, Translation> = {
       tableOfContents: 'Conteúdo',
       aiAssisted: 'Prepared with the help of AI and reviewed by the editorial team before publication.',
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
+      aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },

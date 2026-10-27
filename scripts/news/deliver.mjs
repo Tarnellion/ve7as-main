@@ -134,6 +134,9 @@ export function buildDoc(record, decision, { now = new Date().toISOString(), slu
     // умолчанию; забытое «проверено» — ложь на публичной странице. Прочитав черновик, редактор
     // сам меняет значение на 'assisted'.
     aiDisclosure: 'automated',
+    // Единственный источник — собственное сообщение регулятора: плашка не должна говорить «по независимым источникам».
+    // Поле публичное, но описывает источник, а не внутреннюю кухню. null не пишем: у остальных статей прежняя подпись.
+    ...(record.eventMeta?.verdict === 'regulator-primary' ? { sourceBasis: 'regulator' } : {}),
     title_en: en.meta.title,
     description_en: en.meta.description,
     body_en: en.text,

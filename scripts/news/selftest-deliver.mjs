@@ -109,6 +109,9 @@ const batch = [
   record('hold', { verify: { ok: false, namesPrivateIndividuals: true, individuals: ['X Y'], blockers: [], notes: '' } }),
   record('collide', { en: { ...record('c').en, meta: { ...record('c').en.meta, slug: 'slug-collide' } } }),
   record('already'),
+  // Единственный источник — регулятор: черновик нужен только затем, чтобы не сдвигать счёт публикаций в тестах потолка.
+  record('regdraft', { eventMeta: { verdict: 'regulator-primary', confirmingGroups: ['ukgc'], voices: 1 }, fetched: [{ group: 'ukgc', chars: 2000 }],
+    verify: { ok: false, namesPrivateIndividuals: true, individuals: ['X Y'], blockers: [], notes: '' } }),
 ];
 const auto = await runDeliver(batch, { mode: 'auto', write: true, cap: 3 });
 ok(auto.code === 0, 'завершился без ошибки', auto.out.slice(-300));
@@ -125,6 +128,9 @@ ok(drafts.some((d) => d._id === 'drafts.news-hold'), 'материал с наз
 ok(!docs.some((d) => d._id.includes('already')), 'уже существующий документ не перезаписан');
 ok(docs.every((d) => d.aiDisclosure === 'automated'),
   'пометка «без проверки» у ВСЕХ материалов конвейера, и у черновиков тоже (редактор сам меняет на assisted)');
+const regDoc = docs.find((d) => d._id.endsWith('regdraft'));
+ok(regDoc?.sourceBasis === 'regulator', 'единственный источник — регулятор: в документе sourceBasis = regulator');
+ok(docs.filter((d) => !d._id.endsWith('regdraft')).every((d) => !('sourceBasis' in d)), 'у остальных статей поля нет — прежняя подпись «по независимым источникам»');
 ok(docs.every((d) => d.author === 'Ve7as' && !d.authorRef), 'автор «Ve7as», ссылки на человека нет');
 ok(docs.every((d) => d.title_ru === d.title_en && d.body_ru === d.body_en), 'поля ru заполнены английским (корень фолбэка)');
 ok(docs.every((d) => d.section._ref === 'section-casino-slots'), 'раздел задан ссылкой на section-<slug>');
