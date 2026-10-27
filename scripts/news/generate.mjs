@@ -35,6 +35,7 @@ import { intEnv, positiveEnv } from './env.mjs';
 import { dequantize, cosine } from './vec.mjs';
 import { SAME_EVENT } from './thresholds.mjs';
 import { postcheck, metaCheck, issuesToPrompt, translationFidelity } from './postcheck.mjs';
+import { holdTopics } from './policy.mjs';
 import { MAX_BODY, extractText } from './extract.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -360,47 +361,106 @@ function loadJournalCentroids() {
   } catch { return []; }
 }
 const journalVecs = loadJournalCentroids();
+/**
+ * ДВЕ ДОРОЖКИ СЛОТОВ. Порядок «по силе подтверждения» сам по себе гонит в слоты громкие судебные
+ * сюжеты: по заголовку видно, что hold-topic их задержит, а платные фазы за них уже оплачены
+ * (Тори и Италия — $0.706 из $1.854 четырёх боевых прогонов, и ни один не мог выйти сам). Поэтому
+ * первый слот отдаётся самому сильному событию, чей заголовок не содержит слов «только человек»:
+ * у него есть шанс уйти в публикацию. Остальные слоты идут по силе, как раньше, так что
+ * редактор по-прежнему получает черновики о суде и обвинениях. Если чистых событий нет — порядок прежний.
+ */
+const headlineHeld = (e) => holdTopics({ event: [e.title, ...(e.members ?? []).map((m) => m.title)].filter(Boolean).join('\n') }).length > 0;
+const cleanIds = new Set(selectable.filter((e) => !headlineHeld(e)).map((e) => e.id));
+
 const queue = [];
 const postponed = [];
-for (const e of selectable) {
-  if (queue.length >= LIMIT) break;
+const docs = new Map();
+const unreadDropped = new Map();
+const tried = new Set();
+// Бесплатные догрузки на запасные события: каждое стоит несколько секунд и ничего не стоит в деньгах,
+// а потеря слота на событии, которое никто не отдаёт (403), стоит прогона.
+const MAX_FETCH_TRIES = (Number.isFinite(LIMIT) ? LIMIT : 5) + 6;
+let fetchTries = 0;
+let announced = false;
+const announce = () => {
+  if (announced) return;
+  announced = true;
+  console.log('Догружаю исходники (тела не хранятся, только хэши):');
+};
+
+function twinOf(e) {
   const v = e.centroid ? dequantize(e.centroid) : null;
-  const twin = v && [...queue.map((q) => ({ id: q.id, vec: q.centroid ? dequantize(q.centroid) : null })), ...journalVecs]
+  return v && [...queue.map((q) => ({ id: q.id, vec: q.centroid ? dequantize(q.centroid) : null })), ...journalVecs]
     .find((o) => o.vec && cosine(v, o.vec) >= SAME_EVENT);
-  if (twin) { postponed.push({ id: e.id, of: twin.id }); continue; }
-  queue.push(e);
 }
-for (const d of postponed) console.log(`  ⤷ ${d.id} отложено: возможный дубль события ${d.of}`);
+
+/** Берёт событие в работу, если оно не дубль и хоть один его источник читается. */
+async function take(e) {
+  if (tried.has(e.id) || queue.length >= LIMIT) return false;
+  tried.add(e.id);
+  const twin = twinOf(e);
+  if (twin) { postponed.push({ id: e.id, of: twin.id }); return false; }
+  if (LIVE || argv.includes('--fetch')) {
+    if (fetchTries >= MAX_FETCH_TRIES) return false;
+    fetchTries++;
+  }
+  if (LIVE || argv.includes('--fetch')) announce();
+  console.log(`  ${e.id} ${e.title.slice(0, 60)}${queue.length === 0 && cleanIds.has(e.id) && LIVE ? '  [слот 1: заголовок без слов «только человек»]' : ''}`);
+  const got = LIVE || argv.includes('--fetch') ? await fetchDocuments(e) : [];
+  // Событие без единого прочитанного текста не обрабатываем вовсе: модель получила бы название и
+  // «подтвердили три группы» и добросовестно сочинила бы факты, а проверка, читая тот же сочинённый
+  // список, нашла бы текст безупречно согласованным с ним. Платить за это незачем, и слот
+  // не теряется: берём следующее событие очереди.
+  if (LIVE && !got.length) {
+    console.log(`    ✗ ${e.id} выбывает: ни один источник не отдал текст${queue.length < LIMIT ? ' — беру следующее событие очереди' : ''}`);
+    unreadDropped.set(e.id, 'fetch: ни один источник не отдал текст');
+    return false;
+  }
+  docs.set(e.id, got);
+  queue.push(e);
+  return true;
+}
+
+let client = null;
+const makeApiClient = () => {
+  const made = makeClient();
+  client = made.client;
+  console.log(`Доступ к API: ${made.source}`);
+  if (made.warning) console.log(`  ! ${made.warning}`);
+};
 
 console.log(`\nСтупень 3 · ${LIVE ? `БОЕВОЙ ПРОГОН (тратит деньги${SYNC ? ', синхронно — без скидки батча' : ''})` : 'сухой прогон, трат нет'}`);
-console.log(`Событий в очереди: ${selectable.length}${screened ? ` (ещё ${screened} отсеяно фильтром значимости)` : ''}, беру ${queue.length}\n`);
+console.log(`Событий в очереди: ${selectable.length}${screened ? ` (ещё ${screened} отсеяно фильтром значимости)` : ''}, в слоты — до ${LIMIT}, чистых по заголовку: ${cleanIds.size}\n`);
 
-if (!queue.length) {
+if (!selectable.length) {
   console.log('Пригодных событий нет. Это нормально: правило 2+ независимых подтверждений');
   console.log('отсекает около 85 % потока, а журнал — то, о чём уже писали.\n');
   process.exit(0);
 }
 
-let client = null;
-if (LIVE) {
-  const made = makeClient();
-  client = made.client;
-  console.log(`Доступ к API: ${made.source}`);
-  if (made.warning) console.log(`  ! ${made.warning}`);
-}
+if (LIVE) makeApiClient();
 
-console.log('Догружаю исходники (тела не хранятся, только хэши):');
-const docs = new Map();
-for (const e of queue) {
-  console.log(`  ${e.id} ${e.title.slice(0, 60)}`);
-  docs.set(e.id, LIVE || argv.includes('--fetch') ? await fetchDocuments(e) : []);
-}
+// Слот 1 — только из чистых; затем остальные слоты по силе подтверждения.
+for (const e of selectable) { if (cleanIds.has(e.id)) { if (await take(e)) break; } if (queue.length >= LIMIT) break; }
+for (const e of selectable) { if (queue.length >= LIMIT) break; await take(e); }
+for (const d of postponed) console.log(`  ⤷ ${d.id} отложено: возможный дубль события ${d.of}`);
 
-// Событие без единого прочитанного текста не обрабатываем вовсе: модель получила бы название и
-// «подтвердили три группы» и добросовестно сочинила бы факты, а проверка, читая тот же
-// сочинённый список, нашла бы текст безупречно согласованным с ним. Платить за это незачем.
-const unread = new Set(LIVE ? queue.filter((e) => !(docs.get(e.id)?.length)).map((e) => e.id) : []);
-for (const id of unread) console.log(`    ✗ ${id} выбывает: ни один источник не отдал текст`);
+if (!queue.length) {
+  if (unreadDropped.size) {
+    // Ни одно событие не прочитано: красный прогон, как и раньше, когда выбывали все.
+    console.log(`\nНи одно из ${unreadDropped.size} событий очереди не отдало текст — генерировать нечего.\n`);
+    if (LIVE) {
+      writeFileSync(join(PIPE, 'generate-report.json'), JSON.stringify({
+        at: new Date().toISOString(), mode: SYNC ? 'sync' : 'batch', cost: 0, produced: [], failures: Object.fromEntries(unreadDropped),
+      }, null, 1) + '\n');
+      process.exit(1);
+    }
+  }
+  console.log('Пригодных событий нет. Это нормально: правило 2+ независимых подтверждений');
+  console.log('отсекает около 85 % потока, а журнал — то, о чём уже писали.\n');
+  process.exit(0);
+}
+console.log(`\nВ работе: ${queue.length} из ${LIMIT} слотов${unreadDropped.size ? `, не читаются и пропущены: ${unreadDropped.size}` : ''}\n`);
 
 if (!LIVE) {
   console.log('\nСмета сухого прогона:');
@@ -414,8 +474,8 @@ if (!LIVE) {
  * получали пустую строку или оборванный JSON и спокойно платили за их
  * обработку: черновик «по фактам {}» стоит столько же, сколько настоящий.
  */
-const alive = new Set(queue.filter((e) => !unread.has(e.id)).map((e) => e.id));
-const failures = new Map([...unread].map((id) => [id, 'fetch: ни один источник не отдал текст']));
+const alive = new Set(queue.map((e) => e.id));
+const failures = new Map(unreadDropped);
 const living = () => queue.filter((e) => alive.has(e.id));
 
 function drop(e, step, why) {
@@ -598,8 +658,10 @@ if (LIVE) {
     produced: report.map((r) => r.id), failures: Object.fromEntries(failures),
   }, null, 1) + '\n');
 }
+const droppedLater = failures.size - unreadDropped.size;
 console.log(`\n${LIVE ? 'Потрачено' : 'Оценка'}: $${total.toFixed(3)} на ${queue.length} событий ` +
-  `(${living().length} дошли до конца${failures.size ? `, ${failures.size} выбыли` : ''})`);
+  `(${living().length} дошли до конца${droppedLater ? `, ${droppedLater} выбыли` : ''}` +
+  `${unreadDropped.size ? `; не читались и пропущены без трат: ${unreadDropped.size}` : ''})`);
 if (LIVE) {
   if (report.length) console.table(report);
   console.log(`\nЗаписи: ${OUT}`);

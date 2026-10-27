@@ -273,6 +273,39 @@ const voices = await run([event('lowv', 'Event syndicated', ['a', 'b', 'c', 'd']
 ok(existsSync(join(voices.dir, 'drafts', 'highv.json')) && !existsSync(join(voices.dir, 'drafts', 'lowv.json')),
   'при лимите 1 берётся событие с двумя настоящими голосами, а не с четырьмя перепечатками');
 
+console.log('\nНечитаемое событие не съедает слот: берётся следующее');
+seen.phases.length = 0;
+const deadFirst = await run([
+  event('deadtop', 'Event unreachable top', ['a', 'b', 'c', 'd'], { members: [{ source: 'a', group: 'a', sourceType: 'editorial', url: `${host}/article/dead` }] }),
+  event('livenext', 'Event live next', ['a', 'b']),
+], {}, ['--limit=1']);
+ok(existsSync(join(deadFirst.dir, 'drafts', 'livenext.json')), 'слот достался читаемому событию, а не пропал', deadFirst.out.slice(-400));
+ok(!existsSync(join(deadFirst.dir, 'drafts', 'deadtop.json')), 'нечитаемое событие записи не получило');
+ok(deadFirst.code === 0, `прогон не красный: частичный успех (код ${deadFirst.code})`);
+ok(/беру следующее событие/.test(deadFirst.out), 'в логе названо, что слот передан дальше');
+const deadReport = JSON.parse(readFileSync(join(deadFirst.dir, 'generate-report.json'), 'utf8'));
+ok(deadReport.failures?.deadtop && deadReport.produced.includes('livenext'), 'в отчёте: причина выбывшего и список созданных');
+
+console.log('\nДве дорожки слотов: первый слот — событие, чей заголовок без слов «только человек»');
+const lanes1 = await run([
+  event('heldstrong', 'Operator founder found guilty of fraud', ['a', 'b', 'c', 'd']),
+  event('cleanweaker', 'Regulator publishes new licence conditions', ['a', 'b', 'c']),
+], {}, ['--limit=1']);
+ok(existsSync(join(lanes1.dir, 'drafts', 'cleanweaker.json')) && !existsSync(join(lanes1.dir, 'drafts', 'heldstrong.json')),
+  'при одном слоте идёт чистое событие, хотя «громкое» подтверждено сильнее', lanes1.out.slice(-300));
+const lanes2 = await run([
+  event('heldstrong', 'Operator founder found guilty of fraud', ['a', 'b', 'c', 'd']),
+  event('cleanweaker', 'Regulator publishes new licence conditions', ['a', 'b', 'c']),
+  event('heldweak', 'Executive sentenced over betting scheme', ['a', 'b']),
+], {}, ['--limit=2']);
+ok(existsSync(join(lanes2.dir, 'drafts', 'cleanweaker.json')) && existsSync(join(lanes2.dir, 'drafts', 'heldstrong.json')) && !existsSync(join(lanes2.dir, 'drafts', 'heldweak.json')),
+  'при двух слотах: чистое + самое сильное из остальных, редактор не остаётся без судебных сюжетов');
+const lanes3 = await run([
+  event('h1', 'Operator founder found guilty of fraud', ['a', 'b', 'c', 'd']),
+  event('h2', 'Executive sentenced over betting scheme', ['a', 'b', 'c']),
+], {}, ['--limit=1']);
+ok(existsSync(join(lanes3.dir, 'drafts', 'h1.json')), 'чистых нет — порядок прежний, по силе подтверждения');
+
 // ── 6. предохранитель бюджета ─────────────────────────────────────────────
 console.log('\nПредохранитель бюджета');
 const budget = await run([event('p1', 'Event p'), event('p2', 'Event q')], { NEWS_RUN_BUDGET: '0.0001' }, ['--limit=2']);

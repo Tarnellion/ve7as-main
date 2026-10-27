@@ -29,7 +29,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, appendFileSync, m
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createClient } from '@sanity/client';
-import { decide, SECTIONS, maxPerRun } from './policy.mjs';
+import { decide, SECTIONS, maxPerRun, holdMatches, eventDateIssue, absenceClaims } from './policy.mjs';
 import { modeEnv } from './env.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -69,6 +69,20 @@ function reviewNotes(record, decision, mode, now) {
 
   lines.push('', `Источники (${record.eventMeta?.confirmingGroups?.length ?? 0} независимых групп, вердикт ${record.eventMeta?.verdict ?? '—'}):`);
   for (const s of record.sources) lines.push(`  ${s.group}  ${s.url}`);
+
+  // ДИАГНОСТИКА для редактора и для калибровки гейтов. Только в приватном newsReview (draft-документ): слова
+  // и тексты в публичный лог Actions не попадают, там остаются коды. Без этого блока причину «hold-topic»
+  // приходилось восстанавливать прогоном списка по текстам (так «a su juicio» нашли вручную), а решение
+  // по Бразилии и Kalshi нельзя было пересчитать — что реально прочитано, нигде не хранилось.
+  lines.push('', 'Диагностика:');
+  lines.push(`  прочитано: ${(record.fetched ?? []).map((x) => `${x.group} ${x.chars}${x.suspicious ? ' (!инструкция)' : ''}`).join('; ') || 'нет сведений'}`);
+  lines.push(`  фактов в основном списке: ${f?.facts?.length ?? '—'}; из одного источника: ${f?.unconfirmed?.length ?? '—'}`);
+  const held = holdMatches(record);
+  if (held.length) for (const h of held) lines.push(`  слова «только человек» [${h.why}]: ${h.words.join(', ')}`);
+  const dateIssue = eventDateIssue(record);
+  if (f?.event) lines.push(`  событие по фактам: ${clip(f.event, 200)}; первое упоминание: ${record.eventMeta?.firstSeen ?? '—'}${dateIssue ? ' — ДАТА ПОЗЖЕ ПЕРВОГО УПОМИНАНИЯ' : ''}`);
+  const absence = absenceClaims(record);
+  if (absence.length) lines.push(`  фразы «других источников нет»: ${absence.map((a) => `«${a}»`).join(', ')}`);
 
   if (f?.unconfirmed?.length) {
     lines.push('', 'ПРОВЕРИТЬ ВРУЧНУЮ — утверждения из одного источника:');

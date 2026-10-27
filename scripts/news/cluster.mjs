@@ -183,7 +183,9 @@ const events = clusters.map((c) => {
     nearestKnown: known
       ? { title: known.entry.title, score: Number(known.score.toFixed(4)), worst: Number(known.worst.toFixed(4)) }
       : null,
-    firstSeen: seed.pubDate,
+    // Минимум по непустым датам, а не дата seed: запись без даты сортируется первой, становится seed и обнуляла firstSeen
+    // всему кластеру, из-за чего гейт даты молчал (ревью 27.10.2026).
+    firstSeen: members.map((m) => m.pubDate).filter(Boolean).sort()[0] ?? null,
     title: seed.title,
     lang: seed.lang,
     groups,

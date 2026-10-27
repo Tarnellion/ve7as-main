@@ -137,6 +137,8 @@ ok(reviews.length === docs.length, `на каждую статью один до
 ok(reviews.every((r) => r._id.startsWith('drafts.news-review-')), 'документы заметок — только черновики (drafts.), их не отдаёт анонимный API');
 ok(reviews.every((r) => r._type === 'newsReview' && Array.isArray(r.sourceUrls) && r.sourceUrls.length > 0), 'заметки лежат в закрытом newsReview и хранят адреса источников');
 ok(reviews.every((r) => r.notes.includes('Создано конвейером')), 'заметки редактора приложены ко всем');
+ok(reviews.every((r) => r.notes.includes('Диагностика:') && r.notes.includes('прочитано:')), 'в заметках есть блок диагностики: что реально прочитано');
+ok(docs.every((d) => !JSON.stringify(d).includes('Диагностика:')), 'диагностики нет в документе статьи (она только в приватном newsReview)');
 const holdNotes = reviews.find((r) => r._id.endsWith('hold')).notes;
 ok(/частный человек/.test(holdNotes) && /X Y/.test(holdNotes), 'в закрытых заметках названа причина и имя');
 const order = mutations.map((m) => (m.createIfNotExists._type === 'newsReview' ? 'R' : 'A')).join('');

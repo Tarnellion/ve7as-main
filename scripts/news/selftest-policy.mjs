@@ -9,7 +9,7 @@
  *
  *   node scripts/news/selftest-policy.mjs
  */
-import { decide, holdTopics } from './policy.mjs';
+import { decide, holdTopics, holdMatches, firstDateIn, eventDateIssue, absenceClaims } from './policy.mjs';
 
 let failed = 0;
 const ok = (cond, label, detail = '') => {
@@ -126,6 +126,105 @@ for (const s of ['The MGA fined the licensee EUR 5 million for AML failures afte
   'Nieuwe recordboete illegaal kansspelaanbod opgelegd: 37 miljoen voor EOD Code', 'Operator pays a licence fee of EUR 5 million']) {
   ok(!hold(s), `не держит: ${s.slice(0, 70)}`);
 }
+
+console.log('\nЛожные срабатывания списка тем, найденные разбором живых черновиков (27.10.2026)');
+const labelsOf = (t) => holdMatches({ event: t });
+ok(!hold('Sue Young, Executive Director of Operations, said the licensee failed its duties'), 'имя «Sue» (директор в релизах регулятора) не гражданский иск');
+ok(hold('Kalshi will sue the regulator'), 'глагол «sue» по-прежнему держит');
+ok(hold('Kalshi sued the regulator') && hold('Operator is suing its former partner'), 'sued / suing держат');
+ok(!hold('y qué debería decir, a su juicio, una advertencia'), '«a su juicio» («по его мнению») не процесс');
+ok(hold('Comienza el juicio contra el dueño de una casa de apuestas') && hold('Los juicios están previstos para 2028'), '«juicio» как суд держит');
+ok(!hold('A mortgage lender sponsored the brick-and-mortar casino and its mortality tables'), 'mortgage / brick-and-mortar / mortality не «смерть»');
+ok(hold('Le joueur est mort') && hold('Les morts sont nombreux'), 'французское «mort/morts» по-прежнему держит');
+ok(hold('He took his own life after losing') && hold('Bij berichtgeving over suïcide') && hold('Het aantal zelfdoding is gestegen'), 'добавлены формы суицида: took his own life, suïcide, zelfdoding');
+ok(labelsOf('The defendants thanked the court')[0]?.why === 'судебное разбирательство', 'defendant — «судебное разбирательство», а не «гражданский иск»');
+ok(labelsOf('Los acusados fueron escuchados')[0]?.why === 'судебное разбирательство', 'acusados — «судебное разбирательство», а не «обвинения»');
+ok(labelsOf('He pleaded guilty and was sentenced')[0]?.why === 'уголовное производство', 'holdMatches возвращает метку темы')
+ok(labelsOf('He pleaded guilty and was sentenced')[0]?.words.includes('guilty'), 'holdMatches возвращает САМО слово — редактор видит, что сработало');
+const quoted = clone(good());
+quoted.en.text = 'The regulator fined the operator. Sue Young, Executive Director of Operations, said: "Operators must protect players."';
+ok(decide(quoted, 'auto').publish, 'релиз регулятора с цитатой «Sue Young» проходит все гейты (раньше удерживался)');
+
+console.log('\nПоправки по ревью: что список обязан продолжать держать');
+for (const t of ['Kalshi Plans to Sue Louisiana Regulator', 'OPERATOR TO SUE REGULATOR OVER FINE', 'Players can Sue the operator for refunds', 'The operator will Sue the authority']) {
+  ok(hold(t), `«sue» в Title Case / КАПСОМ / после modal держит: ${t}`);
+}
+for (const t of ['Sue Young and Sue Gray attended the hearing', 'Interview with Sue Smith, head of compliance']) ok(!hold(t), `имя «Sue» не держит: ${t}`);
+for (const t of ['La víctima mortal era un jugador', 'Houve três mortos', 'Jogador é encontrado morto', 'Les blessures mortelles', 'Il a été blessé mortellement', 'Giocatore morto',
+  'He was mortally wounded', 'The executive passed away last week', 'He lost his life in the crash', 'Murió el presidente del operador', 'Perdió la vida en un accidente']) {
+  ok(hold(t), `форма смерти держит: ${t}`);
+}
+ok(!hold('The mortgage lender, mortality tables and a brick-and-mortar shop'), 'mortgage / mortality / brick-and-mortar по-прежнему не «смерть»');
+ok(hold('El empresario acudió a su juicio ayer') && hold('El caso irá a juicio oral'), '«acudió a su juicio» и «irá a juicio» — суд, держит');
+ok(!hold('El regulador dijo que sí. A su juicio, la medida es proporcionada.') && !hold('La medida, a juicio de la DGOJ, es proporcionada.'), 'вводные «A su juicio,» / «, a juicio de» — мнение, не суд');
+
+console.log('\nДата события не позже первого упоминания');
+const dated = (eventSentence, firstSeen = '2026-10-23T12:28:00Z') => {
+  const r = clone(good());
+  r.factsParsed.event = eventSentence;
+  r.eventMeta.firstSeen = firstSeen;
+  return r;
+};
+ok(codes(decide(dated('On 26 October 2026, President Lula reiterated that betting will not return.'), 'auto')).includes('date-vs-first-seen'),
+  'Бразилия: заявление 22.10, а в тексте 26.10 (дата выхода страницы) — держится');
+ok(!codes(decide(dated('On 22 October 2026, President Lula reiterated that betting will not return.'), 'auto')).includes('date-vs-first-seen'), 'верная дата проходит');
+ok(!codes(decide(dated('On 24 October 2026, the regulator fined an operator.'), 'auto')).includes('date-vs-first-seen'), 'сутки запаса: пояса и ночная публикация не удерживают');
+ok(codes(decide(dated('On 25 October the regulator fined an operator.'), 'auto')).includes('date-vs-first-seen'), 'дата без года тоже сверяется (год берётся у первого упоминания)');
+ok(!codes(decide(dated('The regulator fined an operator.'), 'auto')).includes('date-vs-first-seen'), 'в предложении нет даты — сверять нечего');
+const noFirst = dated('On 26 October 2026 the regulator fined an operator.'); delete noFirst.eventMeta.firstSeen;
+ok(codes(decide(noFirst, 'auto')).includes('date-unverifiable') && !codes(decide(noFirst, 'auto')).includes('date-vs-first-seen'),
+  'дата в предложении есть, а даты первого упоминания нет — гейт не молчит (раньше пропускал)');
+const noFirstNoDate = dated('The regulator fined an operator.'); delete noFirstNoDate.eventMeta.firstSeen;
+ok(!codes(decide(noFirstNoDate, 'auto')).some((c) => c.startsWith('date-')), 'нет ни даты в предложении, ни firstSeen — сверять нечего');
+const garbageFirst = dated('On 26 October 2026 the regulator fined an operator.', 'garbage');
+ok(codes(decide(garbageFirst, 'auto')).includes('date-unverifiable'), 'нечитаемый firstSeen — тоже date-unverifiable');
+ok(!codes(decide(dated('Three days before the 25 October runoff, Lula said on 22 October that betting will not return.'), 'auto')).some((c) => c.startsWith('date-')), 'дата после «on» важнее более ранней в предложении (будущий срок не удерживает)');
+ok(!codes(decide(dated('From 1 January 2027 operators must register; the rule was announced on 22 October 2026.'), 'auto')).some((c) => c.startsWith('date-')), 'срок «From 1 January 2027» — не дата события');
+ok(codes(decide(dated('Since 1 January 2026 the regulator has fined operators; on 26 October 2026 it fined X.'), 'auto')).includes('date-vs-first-seen'), 'ранняя посторонняя дата не прячет неверную дату события («on 26 October»)');
+ok(!codes(decide(dated('Операторы may 5 times'), 'auto')).includes('date-vs-first-seen'), '«may 5» с маленькой буквы — не дата');
+ok(firstDateIn('The MGA fined an operator on 1 Sept 2026', Date.parse('2026-10-01')) === Date.UTC(2026, 8, 1), 'сокращение месяца и год разбираются');
+ok(firstDateIn('Decided on 31 February', Date.parse('2026-10-01')) === null, '31 февраля — не дата');
+ok(firstDateIn('Decided on 28 December', Date.parse('2027-01-03')) === Date.UTC(2026, 11, 28), 'декабрьское событие в январской заметке — прошлый год');
+ok(eventDateIssue(dated('On 26 October 2026, x.'))?.eventDate === '2026-10-26', 'проблема называет обе даты для заметки редактору');
+
+console.log('\nУтверждение «других источников нет» допустимо, только если прочитаны все издания события');
+const claim = (en, es = good().es.text, read = ['a', 'b', 'c'], groups = ['a', 'b', 'c', 'd']) => {
+  const r = clone(good());
+  r.eventMeta.confirmingGroups = groups; r.eventMeta.voices = groups.length;
+  r.fetched = read.map((g) => ({ group: g, chars: 2000 }));
+  r.factsParsed.facts[0].sourceGroups = read;
+  r.en.text = en; r.es.text = es;
+  return r;
+};
+ok(codes(decide(claim('It offers figures no other source repeats.'), 'auto')).includes('absence-claim'), '«no other source repeats» при непрочитанной группе — держится');
+ok(codes(decide(claim('According to Yogonet alone, 85 authorizations lapsed.'), 'auto')).includes('absence-claim'), '«According to Yogonet alone» — держится');
+ok(codes(decide(claim('No second source we checked has confirmed it.'), 'auto')).includes('absence-claim'), '«No second source we checked» — держится');
+ok(codes(decide(claim('Only Yogonet reports the figure.'), 'auto')).includes('absence-claim'), '«Only Yogonet reports» — держится');
+ok(codes(decide(claim('ok.', 'Ninguna otra fuente lo confirma.'), 'auto')).includes('absence-claim'), 'испанское «ninguna otra fuente» — держится');
+ok(codes(decide(claim('ok.', 'Solo Yogonet informa de la cifra.'), 'auto')).includes('absence-claim'), 'испанское «Solo Yogonet informa» — держится');
+ok(!codes(decide(claim('It offers figures no other source repeats.', undefined, ['a', 'b', 'c', 'd']), 'auto')).includes('absence-claim'), 'прочитаны ВСЕ группы — фраза проверяема и допустима');
+ok(!codes(decide(claim('According to Yogonet, 85 authorizations lapsed. The guide itself was not seen.'), 'auto')).includes('absence-claim'), 'атрибуция «по данным X» и честное «не видели» — не отсутствие');
+ok(absenceClaims({ en: { text: 'Only a court can decide.' } }).length === 0, '«Only a court» — не издание');
+
+console.log('\nФразы «других источников нет»: расширения по ревью');
+const claimMeta = (field, text, read = ['a', 'b', 'c']) => {
+  const r = claim('ok.', undefined, read);
+  r.en.meta = { ...r.en.meta, [field]: text };
+  return r;
+};
+ok(codes(decide(claimMeta('description', 'The regulator fined an operator EUR 37m, a figure no other source repeats.'), 'auto')).includes('absence-claim'), 'фраза в описании меты ловится (раньше только в теле)');
+ok(codes(decide(claimMeta('title', 'Only Yogonet reports the fine'), 'auto')).includes('absence-claim'), 'фраза в заголовке меты ловится');
+for (const t of ['Only iGB reported the figure.', 'Only iGaming Business reports the figure.', 'Only Legal Sports Report has reported the figure.', 'According to Focus Gaming News alone, the fine is EUR 5m.',
+  'Only one outlet reports the figure.', 'No one else has reported the figure.', 'The figure has not been confirmed elsewhere.', 'It was reported by a single outlet.', 'No second source confirms it.']) {
+  ok(codes(decide(claim(t), 'auto')).includes('absence-claim'), `ловится: ${t}`);
+}
+for (const t of ['Solo Yogonet ha publicado la cifra.', 'Una sola fuente lo cuenta.', 'Otros medios no la recogen.']) {
+  ok(codes(decide(claim('ok.', t), 'auto')).includes('absence-claim'), `ловится по-испански: ${t}`);
+}
+for (const t of ['No other source of income was disclosed.', 'No other reports of fraud were found.', 'There are no other sources of revenue.']) {
+  ok(!codes(decide(claim(t), 'auto')).includes('absence-claim'), `не путает с деньгами: ${t}`);
+}
+ok(!codes(decide(claim('ok.', 'No hay otra fuente de ingresos declarada.'), 'auto')).includes('absence-claim') && !codes(decide(claim('ok.', 'Ningún otro medio de pago está disponible.'), 'auto')).includes('absence-claim'), 'испанские «fuente de ingresos» / «medio de pago» — не издания');
 
 console.log('\nГраницы и переменные окружения');
 const regulator = clone(good());
