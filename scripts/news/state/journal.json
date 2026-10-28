@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-28T11:20:12.806Z",
+  "updatedAt": "2026-10-28T11:28:10.336Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -482,6 +482,58 @@
       "vectors": [
         "O/vbuysTPUY/Dk/3I8rg/0P218QN7u0wO2DP6Buy5NI47isrwARC68cKEjsoNt08wfLFJvIGUPHKxM8XOA3sCCwuQg7RDcRDH8gTIB/zNeCbywoUvDEexkz6I0TWwYfGx0FCwxDhNb3bFSvcT9TjHAsHpeLq2lf8QPu8y/buAj479xJFLCozYtTq8vD3Cu0wUCJS7QXdIu4WJ0Tn67MCKsTiwfrN91RDyKzgEMU11k3FCVs2/97iz9jco/cEx/skra7qKJkzHysX1Bb3Pe/rMtg5GcGtMhrT5zEHDjsJE8rIIT7B5Ar148O809YdBynRyt896jfG6i3VLRLi1trbJUAW1vsoxjHuMv3k7LnUpRI/3fPS/Du+0CADJEQm1fMxywPM1iriTi/3Htso/eQnHwEZAUn6K0IuvA9ETP0K0s+51vznAS3+/B8BHMrEJrjN6kLuzPUP2z/+5wy47BxfgSEjzhrMzStG7PoYL0NI4xcfySs30wHc3NwpvNkuBAUJ",
         "Mf/bxEAILEI8JEfaE7LYIFX/8Z0T8P5HKGze2Rm2zu8d0joUvyZF3cH9GikmM9kczgPUMO74P+PCtsMKTRIDJCojQx3LCbUwANAUIhrfBtOp6fMotTUitTwDLiyqsJnBwSw2zgHQPKLyMi36XMjlExgWutn/yTzsP/3Sr+zJ5So13y04PxpHdb/v++72K/s3QD1a8hrkQPMGFUjYwL8IN8gBs//P6VJYwdLi/tE71znQGFcRCuP1wtjwl/YTxws+vZrtG58tHy4RxDv8OwzySARBErS0LCLR8EH8DV4QHNPmLTzXwgjo4L67uPAD4DDIwuVC90fO5RreH/jh3+ncECMgvxwoxDcILADv6qvcuRJG7dnBBESozS0UKlUw3eQv1+/JySfQTx79IcYb9tweJggT61IIPTgwnQJEQQAhycq71f/3D0EG8k8SEcWhJ87S5zHivPgX5Tn/3R+70y5ygSc0zBDUyTZJ8+EDIzdP1Rwn1x5JyBTY28shyt8xKgUC"
+      ]
+    },
+    {
+      "id": "95b6439cf17a",
+      "publishedAt": "2026-10-28T11:28:10.335Z",
+      "title": "Paraguay: El Senado avanza en la creación de la Dinajzar para modernizar el sector y frenar la ilegalidad",
+      "lang": "es",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_latam",
+          "url": "https://www.yogonet.com/latinoamerica/noticias/2026/10/27/111280-paraguay-el-senado-avanza-en-la-creacion-de-la-dinajzar-para-modernizar-el-sector-y-frenar-la-ilegalidad"
+        },
+        {
+          "source": "sbcnoticias",
+          "url": "https://sbcnoticias.com/juegos-paraguay-busca-modernizar-regulacion"
+        }
+      ],
+      "centroid": "MxrW4Sj0Pw0tDS4qTsbl/lbs3dQH4N0oQUTi7BC22/U72ho5te8azM8TJ2ZNNLpgnuXnOQ4lC5+84+FJLgf0GS8OIBXP5NZL8fMdSy3YNufl+/Uq6EdEs1TkNSrb2r3A4h023izJK6TFO/vVVODuFTwRxezwxVyzVBv2m9DhMyg++QZIDjlYUtUD8+vFFNcTBCQ90B3gDO4bLDnMzvUoAL/mzt/G2EI51KTRLOMZ6kLPSDn83um+263gqBUQ1uQw1sbNTs4cCjrt3B8gL+/4QsUnENy0PQgCECDCRTf1Np3qEAfQ2SLZBLuwvs8nGCjPu80azG3T6S/aNCq1x7jaKTEY8A/40EEgHPPF6PYDwCRb8Av1CjPQ0jcUQUQcv/gw6Ma+1xjMGgzNL8wvEuILHcUpBi8kNj02zPgXSgchsd+x2ALXTR/4v0cpJMzJNJvu8iXOuhkd8kjy0A3B0x4MgQYA8SzRCEsb0vcnLTQx1vIivOA24Q4p1sMHrNkxOBsL",
+      "vectors": [
+        "NQ/Q6SPWPREpGCEeQ7Xn/lnzz+AG3uMhSU/q7BXA2vY63BI2uesbstQaEnVBOadWm9noLhkiH6K41+FYJgP1GDkQGx7M1dhE9/giUDTeOtjU+f8f50tevFflMxbn3cKw4yNL1Su+NbfIQvXHWeTpKEAI0ufvv1e8WB8FiMvmMipF+flPBylQUNAB9+vKHswL+jBUyRLZCgAhKi7F0/Is/rTn1OW8x0VBxqXSP+P/40TWRzsI3uyw2ararRgL0uMy687MV80W+znm4yUoRen/QMksEMOxRBAADCm9SjPmQJXoEhvc1C/PEMGusdMeHijDrtIV2W3U7jrPMiy0sMLWGjcV9QT/xy8mEfG73vEcyDFQ7QoIEj7EzFEbP0kgwvkn5cGt4yPDKwnBPbwyDO0LIssV6TQmPEBCxf4iOwwUpdq73ADPXSn8uU4jH8rDN6jg8C7dwiYiAlrxzhfCyR8JgQcN8TraE1wczfg4GTQuze8YteUy3Bwb0boHnOU/Mhn6",
+        "MSTc2i4RQgkwBDk1V9bj/1Pm68kJ49cuOjra7Aut3PU92CE7svIZ5MoMOlhXMMtoofHmQwMo+JzA7+I7NgvzGiUNJg3R89RS6u8ZRybTNPb2/Osz6UMsq1LjODzQ1rnP4hcj5y3UIpPCNADiT9z0BDgZuPDxy2CrURfordPbNCU4+RJBFEhfVNoE7+rACuIZDRgp2CbnDd0WLkPSyfglAcrmyNnQ6UAx4aTRG+Qx8UDISTfw3ubL3bDmoxIU2uUuw77PRs8hGTz01hkZG/XwQ8EiEPO2NwAEFBjHQDsELaXrDvXF3hbk+bayy8suEinayMgfwGzT5iXkNSm33a/eNy0b7Bjy2FEaJvXP8fvsuRhm8wzkAina2B4PQj8XvPY568vOzA7UCxDYIdssGdgKGcA7ISsiMDor1PIMVwItveSn1QTfPhb0xUEwKM3PMo/68xzAsg0Y4zfz0wPA3B4QgQb18R/K/jsa1/UXQDM03/Qrw9s65gI228wHu84jPR0a"
+      ]
+    },
+    {
+      "id": "c2b9b6708808",
+      "publishedAt": "2026-10-28T11:28:10.336Z",
+      "title": "SBC Summit Europe 2027 to bring Europe’s regulated gaming industry together in Amsterdam",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127020-sbc-summit-europe-2027-to-bring-europes-regulated-gaming-industry-together-in-amsterdam"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/events/sbcevents/2026/10/28/sbc-summit-europe-casinonieuws"
+        }
+      ],
+      "centroid": "9Q3S1CLOTS0RDx8JQMIBLzrg0dE1/uk6KSqu/BWzuwc0xDYkvNpFzNzzEDQoHulN7dXTQQImMLvRwNAePxLzFTcoIDyp3togDPkQOh/iKdm7zN8dyEApzSQLGim84sq77UYNzzPZFL3P/ATkMdDYHCUcssUCwSMDRd3f0gfqAyUnBigfPh0bRdf/4+jmLtk+QDBRvycEKvoVBUPoy+Q7Ra7QpO3N5TlDrADWK+kq1DHWGyhP69fgx87bufgL19Uhm6LZUesoKiwG3hIVN/f5OugkH8vSHgjn+SneBC36L8fXJVHZ+TgD+NHcyOIHEwP3uOc09jjt3iXnKAPhtL3bFBQfuxIe4i8EMxDs6uj0uAw05evyEjzDylQPGCYrFLsm1srY4yDpOxzyK9IU9fEvI90NGCISET0w1QMxTAYV5tLI6ebpLhkA3yv/FJ7QHdT45SLbvxoX3kL53wjG6P1FgTAk9wmf0T02yAASKxo15+4+3gtK6f3rzeIp4fYrPDcU",
+      "vectors": [
+        "9Q3PzirORDAfFRcIVrUEMkHf1+A7At9CLyWZAB2snvsywDkkv9Y9ztDoGTMxJNxT59XAQvwdJrrEztMlQwcFFzEnJjaw49wbGPoTNh/SJOC8xeIrz0U0zDAQCy7B3cfF9TQZ1DHaFsTQ++ngNtPWFCQUw7cAzCr6ROfe1vnv9CYkBCgnUiIePtj44+zjL91CSzZVxy4HIAgbAjHj1ttSQbDXmObL9CJMp/LcNe4s0SbLDBxP7OTvvcTfw/IZ1dwrp6bbQ+MkMCQFywMPM/H0N+EWKNbMMBLzCTHa9Sz1NNPdKl7NAUAPA8nVzNQLBwTbm8YjCEb17TbcMwnoq8jnKhgcrCcQ4TjxNBjt9ez0sx8/1vvvHk+3xVoNJTEx/rsz0Mrh4i3iRyHuMr4K+vswHNATLCYDGTQ52AI1R/kS1cq51uXdKhgJ3iUFIJ/fC9b+3B7OwiIQ6jPv3f7G7wFagSYh9QaX10MtxwoJLhBH89s/3BI/4vztxu0f3fw2QT8I",
+        "9A3V2hrOVSsDCCYKKs/9LTLiy8Iv+fIzIy/D+Q252BM1xzIkud5Nyuj+CDUeGPVI8tTlQAgvObzdtM0YPB3hEz0pG0Gk2dkk//cOPh/xLdK61NwPwjsezRkGKCW3582w5lcCyjbYErXO/B7oLc3bIyckotIDth0LRdPfzhXlESQrCSkXLBgXTNYG4+XoLtY7NitMtyEBNO0QCVXtwe0mSa3Jr/PP2E86sQ3QIuUo2DvgKTRP6cvS0djXrv392c4Xj57XYPItIzMH8B8aOvz+Pu8yFsDXDv7c6iDhES7+KbvSIUXk8jD47tjiw/AEHwER1AZE5Cvl0BTxH/3avLLPABAiyf4s4ycXMgnr4OX1vvkp9Nv1ByrPz00RCxwkKLsZ3MvO5BPxMBj2JeUe8OcuKukHBh8hC0Un0wQtUBIX99nW++b0Mhr43zH6B57CLtPx7SbnvBId1FAB4BHG4fgygToo+QuozDg/yPgaJyQl3P894ARV8f3q1Ngz5vAgNy8h"
       ]
     }
   ]
