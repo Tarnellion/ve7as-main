@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-27T12:38:58.379Z",
+  "updatedAt": "2026-10-28T10:46:19.206Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -259,6 +259,177 @@
       "centroid": "LOiBrR3vLmMgClINO9TvMme4xroQ6dEsaj3a6Sy/xQhpnSI4o8s/7Z4WKyZYCehAzcUBQw8HVZbwq9VFSeTnKRUrQC/D65kwANU6YFH3FdHRyMQq5TQk2z/YCSbhtpXJ0ydM4i/IN7XsQhCwONLxA0kA9wbsv0LDaPe2tb349Fs8CBBBPTBCN8gY0dXTQPwTMwlx7joAB/IaGVjN6MUsHcLapeHJ9ixRwunS/d05vTy2LDku3Onhz+DRjyEA2PkQ1dbUabAhC/8n0jYcEh60EbktGZ25Sxf4+hvYzTnmGLX6E0nN8Rjt0M7AzJ8ANAnemugPC0D/4xXYPP/B1uC4NEc2ty8e1ksNTv7n4ejwuhtM4/na/E3m6VbbKx0uCNBJ1AT86DLbACvZNr3ZBdQ1Rq8BNkP4PU82zhA0ROkLxLzG+vjVOT/73hj+Hsi7Fabh6QXNrS0mylX07xTT2BpWhyocpUeP8TE55ucJJgtn9AYvwhwt6wrn+usv5AEOCzU3",
       "vectors": [
         "LOiBrR3vLmMgClINO9TvMme4xroQ6dEsaj3a6Sy/xQhpnSI4o8s/7Z4WKyZYCehAzcUBQw8HVZbwq9VFSeTnKRUrQC/D65kwANU6YFH3FdHRyMQq5TQk2z/YCSbhtpXJ0ydM4i/IN7XsQhCwONLxA0kA9wbsv0LDaPe2tb349Fs8CBBBPTBCN8gY0dXTQPwTMwlx7joAB/IaGVjN6MUsHcLapeHJ9ixRwunS/d05vTy2LDku3Onhz+DRjyEA2PkQ1dbUabAhC/8n0jYcEh60EbktGZ25Sxf4+hvYzTnmGLX6E0nN8Rjt0M7AzJ8ANAnemugPC0D/4xXYPP/B1uC4NEc2ty8e1ksNTv7n4ejwuhtM4/na/E3m6VbbKx0uCNBJ1AT86DLbACvZNr3ZBdQ1Rq8BNkP4PU82zhA0ROkLxLzG+vjVOT/73hj+Hsi7Fabh6QXNrS0mylX07xTT2BpWhyocpUeP8TE55ucJJgtn9AYvwhwt6wrn+usv5AEOCzU3"
+      ]
+    },
+    {
+      "id": "b04506611620",
+      "publishedAt": "2026-10-28T10:46:19.206Z",
+      "title": "Why has the NBA chosen to work with prediction market operators, CFTC?",
+      "lang": "en",
+      "voices": 5,
+      "groups": [
+        "sbc",
+        "igamingbusiness",
+        "gamblinginsider",
+        "yogonet",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "sbcamericas",
+          "url": "https://sbcamericas.com/2026/10/26/nba-prediction-market-cftc-partnerships"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/prediction-markets/nba-prediction-markets-cftc-deal-october-2026"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/sportsbook/2026/10/27/nba-prediction-markets"
+        },
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/197628/cftc-sues-utah-nba-kalshi-polymarket-prediction-markets"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127029-nba-names-kalshi-and-polymarket-preferred-prediction-market-exchanges"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/nba-kalshi-polymarket-preferred-exchanges"
+        }
+      ],
+      "centroid": "Ige150f7PUgeLEgEP7vKQC67wMsE7/Q0SH/N3DPcvOhGzT4xwMJC0N8F8jV6QdYuvg3FRQIqTMOkussqRO0DGFMpJzSgBcMtG8cuSyfUKL+q1MFcrTwLxWbuMy7X5Z+ouEInzWXVJqLfQA6sW8fmGFj+krrsuGf8KhWnteD9GTZA/xQnSCQ1Y8wO6d7AROb6FzpL1V0FT8gPKFTCptY9Xp7osdy/8TVPsPjBGtAz+k/FMEwy4s+1tM/UphYLqdj8wbXWN9wZMxMuuUMAGBjFU8hBKbPBC/HHDhq55FLUT63jE0TK51DL4sattprYIRXSueJH5D7G2gbaTB3rtpnHOTs0qAYmDl5MPwTr77H9qxsX09P7JFyctD77QzY8LdNK3NOhkT/BbiTvMNr9HNpLHp0ODTcRCC41svgUTwMW6dTfrO3lMhfi4kkFGsm0NNrc8jS4mC4Wsjfs5DDSBDJ4jB9V6yHD+VREvfQpPzQ81R9arDsb4wvxyNwg29kjO0It",
+      "vectors": [
+        "B+/D/UAQN0YfNDT6RMvWUiu9v7UE1/EkPn/Hzjrcv/MyyTsiscs/0+AECR50LcsxyxXEOfEtLMivyssqIuz+GWAxJT+iFLo4GLkfTRnRJ8vB2sNOu0YcxV/lJSPD+J6tujgWxmnTJ7ncRf6tSNblDloDnK/xvWULIw+svN3xDjlB+h8tSyU6a+MY2eLIN/ACHjI+1EXrVcwdKEXJqt1IXJrvkeXD8UZXyv/JJtBM/T7MKkg/7snBsdHKlQocs+P6xrjgON0uQxgrqkr7CRLKX75KIarJEeTcDyvE3EjdP7nlCT68+VbA6cq0s47dERHPsdtAzUHF+QHdQiTtvqjBPCwpsBIFE0xQNgvU87v9txQIz+b0E1SQt1UHM0UjIutW4tSXnT/DcSQHNNr3KPQ9E6IBIEAPEjwwu/0TOhcT6NndtODmMRnm6EwbENm7MMji+DS/mh4FrBr40DjxBxN0nx9X2C6442JBvu4dRzJJ5BxSqjsg4gHr1eYu3dYeQEMo",
+        "Hg3E7VjwQT4aOkMiM63OKzO/yLPy8+soRXvP0CLYw+VGzUox1bhB0On29zl3MMomtgDNPhUfT8e5tMkzRPb7AkUgKTeqB9ETDcwjRRjjJsGo+cFjrlH56HblLTfE65/Eskc3vVLoKJ3YJhOpVs/6F0nnl7Xutn/1PBqmvP7qExA2CBYnTgAtW7T05OTDStwABjs5wWgKQeAIIlbJoOlLVZLxxNmuD0I9pPnBFLwZClvPOU0w5MS4tsHuqxrnh+kByb7PRd0ENfwmyy8AGiy3S85aKr/Q9QOnDRTD1lTaTMraD0/P4kfL7sC4zLHsHBLu0QND8VnZ1/bhUBnynqTrNUAcpglEEGxmORLl7q3npSwc69MFLlmjoTfkMzo9P7484decm0HLXSztHeABFeZGLqAaADEDBR0fqPMoS/gfANLWsPXsQQbb3lwDB7W1LwLS4zq/rjoouz3c5TTDAjhtgQ9Y8Q3JB1k7te4vOz0vzwtatBkm7gz9wewQ1eYuKEwr",
+        "Eva090HuMz0WFz8PLsrSMyPPwtYMB/4SQ2/z5kX6wtk7zh0ow8NA2tIM6hR/QfUywQbTMwonQ8aTwsUOYN7+LUcgHjSbA84uIOU4QzPNH7u42MZYrCkWu0zrMijp7ZeayzMf32DNJanvMBe1Q8XbGFEFnszpwFILNQ26wOnwGz8+AQwhPDwwZNwR8uHCR/P6IThQ5FIXSMLvI0u3wdQtbqTosdrW6ztM0AG+FdYq3DvKL0gv4eCxxtLIlRD+tt32yMDRQvgTJR4UskYHGAPgV+QpL6m8Cv/QAf+n80fXULDcJTTI8DHf4Mu9zbXNKiPJvtxH2SXA2wzFOxj2uo3INSoox/cbDEhNKQcRAbsHqBj/0OfwJledwj4ONR5CJ9xW78+llkvKbRTyLtT/D9lBIKgPDiUYCigyr/sfTRch2NvrwOf3JiDp4DUBKsPGGs7mDTC5jh4WsjPs+h3LESBRiS4y5ibg/U061fMuQSsq3ihRrT8Y9ynkze8g4+gVNC4Y",
+        "PS293yj2NTwsDUz2Q5nSQTDO3wMZ7/lbPHvO+BjWxNxDwTIfyt824ej+C2lxS7IZxQS9LAQlTdOn1dcvPf7rDkotIya08Lc8HMUeYxj8BdG0sNQ/rCYLxlnWL1r139G8uCxE5lzWIL3wPBO1WM33Il38gbPisk74OhOhqdMhFzEw+wIjOCA/U7H1993CRuwGDjxZ30sRR8kTHFzGv/03QcP5x9zU5RJMr+O4FONBFS67LTYq3si7ru7Y2xEn3NQIx6nXI90QLRgyyEfyIBLNRtcn+8GwIOLb+Tbo9i/DMpL6DCvSy1fX3d6vuqPlEw3gpdkr5zDJ2vH1Rijr17SyL0lZshQyFmYrSunu3bf4wiks3sUJClKxs0MFOiAmGdE4xd+vmSjAeRv4MuAAD7VcJZ4P/igbCz01uO7LQ/Ub69vbtPPNNCbv6zH7INCjU9nZEg+4oSsQrkb73Rrj5TB3khdK8QLc7ks3tfAbLzdR1y1JjUjr5BUB4tMZ6NUiTSpK",
+        "Ofm71FYGUE0VP1f3Scq2NiygxsL9++YzVHzA3ELMw+BH3UJOtq07yeEQ1zdsSN4xvBfKVQQkYsOkrNc1POkbIFQaHDGeDc4hH8klPTS7Rq2T5Mdxn0gJy3AHKxjK2I6jr1EY1GfYHpbLQwewe7TmDUUSm7/1xHj8CiGisdT+HD1FBhEpSDQsWM8W6O64NtrtGzFM1G79VccTNE7FkbxCVYzews248CxgmPvNL80h7V64NmA15ty0sL/gsiX7jd7/t73UMckQOBI0xj4IIyW8UbhJObvIIfjIJxSa2WzSXavcGz7P7GC+3bScoIW9Ig/Tydxf9zrH2BrYUR3qqYfLNkEsk/4qCmtOQRDw6qYOqgEe08oAOG+euSLgWjxJOM9A4N6lj0LNZyvSNtL+J9hOF5sGFT4I7yY3tggsXv/97cvfnfHkMw/W41j+CcKuMOHaz0e4lDgIvibr8DfED01/lhZm7DKk+VVRugUzRzUyxxBgyjwsyQLrvs0f1NccOlYt",
+        "Fw2o3jz6L0wXLUD+ONLQQCu6qs3+5wI5RW/I2SnitQlQ3EgzzclDyeQK4yRpPvcxxRfIXPMvRLmvstEfPu0UEksyMSmoBcspFsZIMy7LLMusybhSxiv8u1kHPxDn36Wmx0YWxFzaJZnkTQ62VNHWGVr2pM/wv1DqEg67xuAGID0/+xwbRRYoW+Il8NDMPeXwFTY94FkCRcQbJUvQpMAlX7TYtfG96iw5svvOBN0v92DZHj8g4djAwtfRoRUWt8Tzx7rmIdckIg06uTgGDBPEQMA2PcDP8O/IFw+86lTmWbzoB1nZ8kLU5sqzsqHiLxXFw+pA7zbMzBLZTQnexaLMOjExqfsa/0g2P/rd9sAAsRMZx9LzJ0WqyC39TjtGK9xE4M65lDC5UyPqKef8Hew7D6wQCj4SDR4/xPUjTvgM5tjrrvbwHgzm4ToGKOLLKtnl4jbAqDAewz7m5zbWCjR/oSJV/Ce/CDdDzvshKx4t3h9YxDQn4+7xwNIf3dQnKz4d"
+      ]
+    },
+    {
+      "id": "b3d519f41506",
+      "publishedAt": "2026-10-28T10:46:19.206Z",
+      "title": "IAGR launches first Illegal Gambling Awareness Week to warn consumers about unlicensed online gambling",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "yogonet",
+        "gamblingnews",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127024-iagr-launches-first-illegal-gambling-awareness-week-to-warn-consumers-about-unlicensed-online-gambling"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/iagr-unveils-international-illegal-gambling-awareness-week-initiative"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/iagr-illegal-gambling-awareness-week"
+        }
+      ],
+      "centroid": "Nv7SsEXnIT4LCT8NasgBKVbkvOUOCu8yVkTU5Ty2pdUXv2g0xdIm1dQR/zJPL8t/pvnEQ+szIKbDvb4kagf/GDo3ID2U6bst/LAuQEHUMNXNpuY24DI9oWXJLUPIwcrd4TQ/sjTKKKLcFPXCZ9TlFS8SysjozzLjXdW6q8LsGCI7+fg4IzNjRMMB98f8PPc9TQ9Y1z70I98TNk3lyeAMFL3KkfHA8RU5vdHEJ/kl20q2Ml8249LUzsDqq/MMrd8ul7bEWMkeMQsYwh4mLuzXCMkoKsbFWBTdISsE+kfqOsvJGz+u1yDmzLujyscNDDD9nvkE5lD10QT3RPLZtbD6ITI89hMz2EQnNvbV7cLwyRZM4dDSDWmu71TwHghu+94r493fyhzcKUXcQq785+wmQ9UZKCoUGipO6fwXWNkd1tjJyPLESRnw1ToMRMjTFr7iCBmmxQMO+EXT7P+vuCYwmSIY2Rqx8Fo5vQsBMiVN4vVJpzVMxtcH9e1B5Nw7Xisg",
+      "vectors": [
+        "OgHTskfpIEUNFUL9aM3+IFfnyt8VFOkxVD3R7C/BrMwZvGc7zNsf5NURAClOO89/sfbCQO4wEKPFvMcdZQcAEy47IDKa8cUx9LUlMj3WJ+XOruE51DMyqFnOKkTG0cze3ydEuSzUIaXiC/HZXtDuDBscv8rj1C3iVdCwstPpEiI/7wIxDjNdK8YK/MLuM+ovPP5Q3T3vJeMTNULhzOMJD8LPovDB8BY4tt7DK/cZ5UXBMFwy59Lkzr/qsfkSpt4rpsjHT8QbMQwW2xYsLPPjCM8hFsvYWRTnHiL+70LsNtzMDiu3zxfp18+w2M0LDij2o/UO7lf11gYAPfHlwaXzKCoz9hQd2EgpKvbk8MjvzR5V383TDGGr71fsGxdg+eUt4djvyyHgIkbnNbr57PIbRNsLIzETESdC+f4fUOQZ4OTC1vfNPxn71D0WPMzbFcjkARaqz/sJ9EDY8/mxwSouoRsd1hSs51UvxBz3NSBB4O9JryhLydb/9O896dsiVykd",
+        "OP/IpE7wK0kZDzEkbdkAIU/er+4HAf4wWUvT3DW8nN0d0Ww0vsMuxM0L9jxIJ9p7nfnIRN49P7O6yL0saAgBEUU3G0yP6rIsAqU4UkLAQcPHpedJ2z9Dl2fILkTUtM7i1So/qUy/OrHaFfGyacjTIjwN3L7t4DHyZNXEtbHuJB46/QNHKyxlWs7v68v6QRRcXyZZ0Dv9LtYNO0zkxeMTIsjEgea34Qg9yMasFfM0yFSsNGgyz8bN2sn2nvMhr9ggjKa7S8QeOgsbrigmLfTKG7kvMrO4YgbQLiz3/lDvPLPOIDuy6irQxrSZucolIDcTofT23UPvyBP9Ru7Tor3kGDBO8BBZ1VMpSPHH7brlww9A5+rYAmuh8VHsGAp7++Ev4ODBwhfeMUPcRpf49+oxTssdKikNHDFl5xIKWtEew7zar+m4YRXYxy/6TMOxFqjZDCGYuQEUAkrU8QKrsx4mkSQd2iq3/GA7r+0NOSJb4Qo2rDpXv+QMBNxI4eNPYS8j",
+        "LfvbujreGiv990UKZbUFOljovOQLCOk1U0LY5VCoqNkOs2Irx9Ym1tsUBzFUKbt/pfzEQ/MrFKDLt7ckbQX8IjwyJDiU4bwoALkuPELmKdXToewh8yVBpW7HLz/AvsbW8Ew2tSTLHZTZHv67bOTsEjYLyNHruzbYW929msLtEyQ2/+QvMDlkSLkH/MsMPuwuTQxc2EDwFeMYMVfsy9sJC7DLkv7JASE1vc/dMQIj40W2MVg+8t7JxLvgs+zwtec9k7PMbNMgKQkVuh0fMd7Y99MmONO+SiDgFzMWA0PkPc/BJlej0R/3xqyjzsH3+DHwmQMH5lH71fPoSffSvLQVIDsy+xUn2y8iMfvT7MT9zBNM3r3NGGy/7lD4J/ds/dUl6uHp0xnWJ0TRS7gD1OcmN9klKyEcIiRD2+YYXNcf3OfB0fbIPBz75UAQQ8rsFcnpChSzxgsM8kTP3wKxtCo6myYO3hCy71dAxhQBKC1M5edXnT1Bys0M6fo+5NhDXyog"
+      ]
+    },
+    {
+      "id": "8292ebd7b298",
+      "publishedAt": "2026-10-28T10:46:19.206Z",
+      "title": "Kalshi pre-emptively sues Louisiana, noting state s new illegal gambling laws",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "sbc",
+        "gamblinginsider",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "sbcamericas",
+          "url": "https://sbcamericas.com/2026/10/26/kalshi-sues-louisiana-illegal-gambling"
+        },
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/197550/kalshi-louisiana-lawsuit-alberta-igaming-revenue"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127028-kalshi-sues-louisiana-officials-in-federal-court-to-block-enforcement-against-its-sports-event-contracts"
+        }
+      ],
+      "centroid": "RBLYwD8JNi8cB1YUU7n3GiDO0/U02wpDKnLYAyvF3ek6tSUrvcNF6bQa8Fg0PsgosBXLMQIfM6ayvcQmQeMZDD41MiuT3NBZGNk9UDr7IwOmoNI7ziELv1fVQjv6pMusykop31/WM5/vLRaZYdPVK0sLnL7ZzQ3mTt+ytekgGxo97hc0LS07SMYBA+PLLvEcH0JzzTryOtkbHEq9r+QjS+DqueHU6StXwdTg+M5l9E3CITgaxd7dzvnhvAg84tEdx6foM8kbJBUiwST+Kwm+KuUgHrCcGOz1GzXUBEXTJbHXCUjx3BzQ28vJlb/yCzPaudkN7g7I1Rn1PSvJ5Le5QURN4BAgAFEYXPboxLTcxDcvzsYC/C2s/k8eUAIq5+RWxcbLsCq6PRf7Rdck7tRiL7cu+DTkFyUm0PIPZQoRx9LjzvTOGhzx4jP2P+7VU6fQBwfGqRMkqCb77QDtwSp0gTw76gDC7ixDqusOUjhL2CMxqEny7fIR6ckU6+ooTQoo",
+      "vectors": [
+        "PwPZ0Cb/Iy0iBVQdUbYKKiTa1/Q33AVANHjjCRfW5ecqsiMiutg88L4d5kcoNMstrRDgLQEWJbm+vcdAMdgEDCshNyqj09g5FukvRyv6CwW1r9o41RcAvj7RPzvquuG8zkIn5znjK6/yIwurWN3WKVcHm7/kvRH3U+TKwOoaEhMn+QMvIBo0RcIMBenXHu8IDj5y1TX4JeEOKUvNvPwnQeT5vujqAy5RxNDY7eZS9TnFHTQJw9bW0gTssv4v39gX067mONcMLAoQxCD8PgTIG+0oIcyiGuv4FTnRDUnbKdDP+DHz0wnb9czYjdvyATbcufAJAPPP5RztMTbi5dHJPzo66A8hCkMVUOvqzMbt1TQa378SBRyx91cpTPcl6edKy9PUqBXMOA3yP+MZ9dRjLsEp9TTrGgwazfQNVw8Nw9jlzOnSHhTk9jX/MvfeXLfMEgS1r/QVrB0C9vgBxi1pgUkz5u3a9jYvtuP/NS8/0DAvpEfs7/wP+tIS6fEtSQA1",
+        "NhHcwUkALEAP61gFQLL0BSbh2vhB3BU2IEfhDyzC2ucyvTYNx8FG48gL90gmItIgsxfPMPMkOq6pvLgER/A0BEQ4MyyY5N1kBsE5WDUPMwCeqdku2xIXt1DbQTAKnMWv3TYZ2mbYNq3vKBycT9LeIzsQl9rf3hToTuCqtPIVOSlE+iI8IUYyQc8AC9fXLucoND1/zy/lM9weHUu9udkPRN7nwtnN0xVXxdnhBcld3kLFIjcZz+jR2Pfb0AYy4MMuxrT2L8smHSAm2x4LBQ25Se8RGq+aCw/qIynsESzYJa7jGEnx4SjF0NDEq8b5Ay/hwdQM6BPdzAQNNS3K4c65KEJE8gof9kEbUvfuvcLZvCo4z8/79zGpG0gMOO0x7+JIzdzWwCauOxXzV8Qi4+ZTK7cq/yrlBicj2un8agcWvdXmzPfSHyj61CAHOebRQKviAAq9uhwusC3o3AHVzSFuizE08QnD8B9Kr/ggUTo/5iMtqzn88+Ue3c4o9Pk0QAsj",
+        "SyDcu0IbShQdJUQUWdTnGA630fYX4QFEIX/K7zjD4PFGwQ1LxLo97qQi9mhEWMcgwhW7LRUdMJzBzNsjPekQEUE7ISGU5sReKOhDQEPnJQSxnMw/wjUK1mfcNzv9psSrvlgz5GzOLZTwNBaXaNLSKz0GuK3Q1/7WON+wueUs/wxB2RwnPh0/RM71+O68NgIfFD1OzT77TdQiBjm6qdouT+PiuefK6TZJx93t+MJsDV/JHzEoyeb5yvDhwRRJ7eILxqbfJsQZGxAqsCfxMwjIEtghGKSuHcv+FDHG6kzPGqPdDFHy6B/Z0tDKnaXtHSnZwc4Q5CW41yjnRhS37pK4T0RdyhQaAWATXwTl0aHTyDsxxdH39zS86DoeXSYe4epgw63Cuj/EOB8OKugq9chbK7sv9jXgIjcu1fsjWgcM5NDj3f/QCxT44TncRvHYTKTLAAbvoiciryIJ+Qb1uylskis+7Q205iVDquwIYjRV3A0svU7w5/cB6MT86NUMURAX"
+      ]
+    },
+    {
+      "id": "89c4cd998c6f",
+      "publishedAt": "2026-10-28T10:46:19.206Z",
+      "title": "Denmark takes aim at gambling-like features in kids’ games with new campaign",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "igamingbusiness",
+        "sbc",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/sustainable-gambling/denmark-gambling-like-features-kids-games-new-campaign"
+        },
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/10/27/denmark-gambling-elements-childrens-gaming-campaign"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127034-denmark-launches-campaign-warning-of-gamblinglike-features-in-childrens-games"
+        }
+      ],
+      "centroid": "OPrDm1TrTDpBITf0XMTVIUjy5s8y4S06QTDpAPWw0vAivllCmdI+vtQJLztGD9xdyu/DVf4zW7Pex9oNdPcHJkJSFS+f7tgdGts3WQ7QKunTytQ01C1VmSfiKz3Jx63P0iAu0j7bKarcEhzUS7bsG1AKrdzityTqTffK4730FjBZ9CpSGxtBZ9YezOXzY+QEQCM75SvkLdgbKGjPq+8iH7zopvHc4zA+2uzBCfYlvD/ROkop2+rBwsbisQ8g0dQOrYrHVbs0EyYG4jP6Bd7SNtgPK8K7KgHWFiH/9FjxNs/ZKkLW9BED7ces5dr8+BLxxd031i3yryLdVwzoxbHKF0wrzz0u3UgoSArf8MHapxBD5vTSATu02ifzBEpE1uwrzvXdwScEHzvaU70bHsUoH9U6Kkj3EDU5zO0bYOUBv8ur1+/WB/zL6SAXLMbrJrT29RnFsSANx0L86BDPtSIxgTsIwQ2o1kNJww4hORoqsgQ7miUz0PoL29Ap3q8LSEI1",
+      "vectors": [
+        "O/bKnVLxRDM8HSr8VsjgIVbz6s0p5i4xPTXnCfGz2vYexVVBrNs6zMcMLSc0De5ly/PVV/o6Ub/Yw94TcfUDK0ZLCyS27OETGNYoUBDLJvDTydoyzy1ImSPjJTjNy6DVzxoq1zDfOKneDxPTRbfmF08RteX0uSTsTAHN6sb5DDFY+ypUJR5AZOAgyuL0VN0LPigv5iHlK+MHH2jSrO8YEsTovOvY6Sk93uO0CAAetjbcOj4m2OzPzNLtvBUMztYHtpnTTMUrGSL/3yf4B9zSKsoJLb/BKvfXCBz16037L9DlIEHd9BP+9NKy294B9w/4xeRD2C37vCToTwfrvrjHFD4izjcr11AvPw7e/8XgsQs/6PzQBjS62Rv2/jxF1+wu1fvfzikOEjfiPsUZI80kFuE8JkXzDDcv0fUSWN31ws+45PXV//zM7hUXHtDkJLv/+CLKrxQNzj367QrWwSEvgTn+wQuq2D5H0wEbNw0ltQQ2phw43PgG3uYm48IQRkU0",
+        "IgHIo0/fTDg4Ijv2U8HUGjPw5NYz2SY5PyXuAfyy1u4mw1o6gsw9uuUEMkdSF89J1PK4TP4nYbro3doUZ/78Gy5EHy+X9csaIOVKVwPTLOXe0Ng02ylqpybsMULMzsTT5x0v1j/eDMHaEh3lQ7r3HlAIsM7gsyfuR+/U2rnjGh9O7ytHEgk6W80Y2/bsZuP9OxxE6S/mJtomLFXGvvUsM8Hzm/jj7jM23gDU+esyxEXKOFMl3eiuvL7QrQIs3OseuIHJX7o9DSMK3zUCAePGPu8VFdXJLQrgKCUL+WDhQ9TSI0HMAA8F5LK1+twE8AfsxdAj4ibrqBHYXAvc3sbbD1gt2UAy7S0aQwPk4LfophdA7e3fBzm32jfyDk9E0fQbz/nfvxwDIDHNY8cRBLclI8w5KUT6HR84x+MhXQIUvcKiyOneDPrN5zgUM7zrIr/u4BDMySsXwToK1hPJqCQpgzUKygGy4zdGuQ0YKSIitfo7mywk2QIO3MAs4Kr0ND8n",
+        "Sve4lVj0UEBNJD/oaMbLKUvz58045jBCRDPn9vSuxu0itFdHpNBAttQMK0NLCdhlwei/WAM2WqLbt9j8f/MWKlFmFTmT698sFNYvXxjVKefJx8ox1C9IkCrYKjnDvqfGwigwyEfVNZffFSTGWLTnG04EpeLSvCDlUPO+6L0AGz5g8yZXGCpHcdUhwtf6a+4CQyI64i/jNcskLHnYmOoeFrLenfDc0jNF0uG+GvgevkDOOkou3+rLwsXrrhQnyroEm4m8T7MyECoJ6Tz0CNzjN9IOPbOqJQTOEiH8+Ff5LMvWOkDc6Q8I79ah3NfvAx/xyOU7yjPvqzHYVxDztpe+Ikkyxz0q1VgtUg3b8MzFow1G3PTH80Cv3SLx/1E+3eU1yOzcuC/4LEfhVa4mM9AsI9Q0LUv3BkhDzvAcZ8/6wdOs2u/RDP/L6A8aM8nzKaX1CBa7nB4Cy0zu9xLQuR85hz8Rux2fx1RJwBwvSB42rw0+kiY7u/QN2c0m2KMdWz9E"
+      ]
+    },
+    {
+      "id": "ec2acc2ee89d",
+      "publishedAt": "2026-10-28T10:46:19.206Z",
+      "title": "Tennis Legend Rafael Nadal Exits Retirement to Play ‘MGM Slam’ in Vegas",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/tennis-legend-rafael-nadal-exits-retirement-to-play-mgm-slam-in-vegas"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/rafael-nadal-to-return-to-las-vegas-for-2027-mgm-slam"
+        }
+      ],
+      "centroid": "FiDut0PXISk0HDf8Esv0HGv7r+kVHfZAVlLL+DGv1+wdtiEiq9lC29EVKCtcHNYi8emPMSQ3H9Gu98QhKugCMipDBCyxzqRC9LT8PxThE8nTxMgK110euGAEJyvjycDFzxQi0lTa9JyyOiXkLcvqEQkWgczkwynvOBLCzcUoCjhGEBMaRio0PsHryOjuOtwYNSta00PTDqksKD3y1coUHrjW5f7W0xwZtvPXAskr9hHICh5b9OvJz+UDo/c9t/wQz9IDR+EQKCvw5hsqEyDPReseJenJPNYCFT7vJS3rFNnEKhq82Rn16L3O/c4KCjzPvPMaxx/oxSPMKym0rZzsIDctthgpDEJHVQTQ05zO2iwaBOj++E/QzT0FHxhF/Mc339ES2kjxOjn7RMTx3OpTOsgnOTgVHmEIy/YOUfsYBKrXy/nWLDf0uzISD6jeNtn+BBuiyxUn1Szq1zTY0wxckP9R+O6+yTMY3vkuIU8i+/ky2CIh0urazOEk3NcVRlFI",
+      "vectors": [
+        "HCrxv0bVGSY0EivzGNj2ImL5teQaJfw/T1DT9Ci1z+wWtRoipNhD09sZIS1YHNAo8emRLys5GtK1/MQfJd0IOhtGDDSn2qBF8bj4QxviGM/TzcoRy10bu1kHLyvg0bXL0R8X1k/a+Zq3PSLpLsztFwQbgcvkviPiNhe508UvBjE9FBQePiw6PMjsx+rtQtkjORlW1ULYCKgrIzry0cMMILjR3vvb1hoXtfbbAros+xHP/SJT9u3TzuYAqgFDse0U29MEQeQWKT3q9h4mCyLNS+geKODGNMkBHDvuJDHuG9HLKhvA0hcB38DQ/s4EBTbNugAPzCjkvx/YIyyys5vrLDgvsg8iDjhKUf3K1pvO4TUND+j441TNyy4RFBNLA8ow3dMM2Uf3PjH8Wcbz6u5VMMghMj8XHFUAz/kVTeca/6Daxv7aMDf4wS4ND63vNcsFCBap0BIp0zDk2jvY1fxgmAVS9PW/xzkW3fctIFMj+vAk2xUZ0fXZzeAl4tYkR01J",
+        "Dxbqrj/YKyw0JkQFDL3xF3T8qe8PFe9BXVTD/Dup3u0ktykisdpB48YRLilgHdsb8eiMNBw0JM+m8sMiL/T7KjlA+yW7w6g+9rAAOw3fD8PSusYC41whtmgAHivlwMq/zAgtzlna756sNyjeLMrnCg4SgczkxzD8Og3Mx8QhDj9PCxIWTSkuQLrpyefwMt4MMT5e0UXNFKouLUDy2tEcHLjb7QLRzx0cuPDTAdgp8hHBGBpj8um/0OQFnO04vgwNwtEBTt0JJxn21RgvGx7RPu4eIvLMReUCD0HxJiroDeK9Khi44Bvp8bvM+84REEHRv+UmwhXrzCfANCa2p57sFDYsuiEwC01FWAvXz57O0iMo+ukFDUnUz035KR0+9sQ+4c8X3EnrNkL7LcLvzudRRcctQDISIG0Rx/IIVg8XCLTT0PTSKTfxtTUXDqLMOOf3/yGaxxgl1yjw1C3Z0R1Yh/hR/Oa9zC4b4PouIksi/QNA1TAp097czOEk1tgFRFVG"
       ]
     }
   ]
