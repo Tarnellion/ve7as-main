@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-28T10:46:19.206Z",
+  "updatedAt": "2026-10-28T11:20:12.806Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -430,6 +430,58 @@
       "vectors": [
         "HCrxv0bVGSY0EivzGNj2ImL5teQaJfw/T1DT9Ci1z+wWtRoipNhD09sZIS1YHNAo8emRLys5GtK1/MQfJd0IOhtGDDSn2qBF8bj4QxviGM/TzcoRy10bu1kHLyvg0bXL0R8X1k/a+Zq3PSLpLsztFwQbgcvkviPiNhe508UvBjE9FBQePiw6PMjsx+rtQtkjORlW1ULYCKgrIzry0cMMILjR3vvb1hoXtfbbAros+xHP/SJT9u3TzuYAqgFDse0U29MEQeQWKT3q9h4mCyLNS+geKODGNMkBHDvuJDHuG9HLKhvA0hcB38DQ/s4EBTbNugAPzCjkvx/YIyyys5vrLDgvsg8iDjhKUf3K1pvO4TUND+j441TNyy4RFBNLA8ow3dMM2Uf3PjH8Wcbz6u5VMMghMj8XHFUAz/kVTeca/6Daxv7aMDf4wS4ND63vNcsFCBap0BIp0zDk2jvY1fxgmAVS9PW/xzkW3fctIFMj+vAk2xUZ0fXZzeAl4tYkR01J",
         "Dxbqrj/YKyw0JkQFDL3xF3T8qe8PFe9BXVTD/Dup3u0ktykisdpB48YRLilgHdsb8eiMNBw0JM+m8sMiL/T7KjlA+yW7w6g+9rAAOw3fD8PSusYC41whtmgAHivlwMq/zAgtzlna756sNyjeLMrnCg4SgczkxzD8Og3Mx8QhDj9PCxIWTSkuQLrpyefwMt4MMT5e0UXNFKouLUDy2tEcHLjb7QLRzx0cuPDTAdgp8hHBGBpj8um/0OQFnO04vgwNwtEBTt0JJxn21RgvGx7RPu4eIvLMReUCD0HxJiroDeK9Khi44Bvp8bvM+84REEHRv+UmwhXrzCfANCa2p57sFDYsuiEwC01FWAvXz57O0iMo+ukFDUnUz035KR0+9sQ+4c8X3EnrNkL7LcLvzudRRcctQDISIG0Rx/IIVg8XCLTT0PTSKTfxtTUXDqLMOOf3/yGaxxgl1yjw1C3Z0R1Yh/hR/Oa9zC4b4PouIksi/QNA1TAp097czOEk1tgFRFVG"
+      ]
+    },
+    {
+      "id": "47ad2623a411",
+      "publishedAt": "2026-10-28T11:20:12.806Z",
+      "title": "Flutter’s Junglee Games Fails to Appeal India’s Gaming Ban",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "gamblingnews",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/flutters-junglee-games-fails-to-appeal-indias-gaming-ban"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/igaming/2026/10/28/india-flutter-junglee-games"
+        }
+      ],
+      "centroid": "OBXn30EZNRdDG1QRRtXfMDfH+t8U9vk0REPGGSSg8AMK0SsMsMhG5b8PF14zMeA/0grDQfxEH9HR48cZPNMZHTNpDRyw7tFb/dcKPQfYDuHG0OMpyzQtu0DaIhrlzLjNyTQW5lvOG67QJQXFSeTq/B0GlLvOvTPZP/Cl3On8LilJ8BoREkhFSej/9b7KRAMiIQl/3lDuLNc+Bjvbzf4UN77dqs3F8iJU3PvWBdE28jrBFUU14MzYyuHVsvkf7No40LnWC9knISMm+EcRGA3EUcopBcKrNM8I+i34HxbZGaHOByvi0DT07eTRztQFCCvXsdYj1TLNyhXpPS3V38K/Qj1QyyQL8TcbTwXyxrnv1DJE3Oju7z+30kU3Mwwr+upgu9CvyBnQQAz1NKgwFts7EbInPSIV9x8z1/YUQNwr9abGtf3xG/383wUBLtTJM6gDDRq/1wkMyTD/yxntyAVBnwgj6DyPzysgqvgrOP5O2ggwtRcx8A38+N8v8tohXwsk",
+      "vectors": [
+        "Oxzn4kkePB0/GUcWQs/dLCvD8tEf/vssQUHBFSaP7/sK0S0MsdtH3bwLFmE0L9o60QXJS/pCGs/Q6MceNdMWGDFqECmt89po9NcHKfjdEuTNz90lxD0ouzjeJSLm1r/Vxi0P+FrGELbbJvXIPOb0ChwLkrLjxyjcOPOs5OP6HR879RgMBjU8VusE7LvTRgQtJAR/21DsLdRBCzPV1fcZNMXcq9LH8yNE4PvMFdc27TrAJTgz4cza0d/cuPsP5+I5x7jcDeEkIyQn/lQYIAu/Ucsp/ruiMMUNDiQBIRXOC6TKByPl1DP77Ozd3tQCESvns9Ml0TnaxQjuPy7U2MHNSC9QzykPADMTPQvmx7Tl3zk74e7v7UKq20knJhEu9upfy8qpzRLRPxHwOaswI+gwELEhOyAR9xs01+8NONonCrPFrvn4EQMD5AoDJ+HGM6wOFx+92v8Yzx3yzBntyQE/mgsV6UiQ0DMZpQAhNQBM0BEzrSIr6xQL+Nk75uQcUAom",
+        "NAzm2zkULhFHHmEMS9viNETMAu0J7fc9R0bKHiGy8gwK0SgNr7VF7cMTF1sxMudF0xC8N/5GJNPS3ccTRNMdIjRoCg6z6MdMB9YOUxjUCt6/0eku0ywyu0jWHhLjwbHEzTwd1FvYJqfEJRbCV+Hf7R4AlcS5sz/XRu6e1PD/QTRZ6x0XHl1OO+P7/sHAQQMXHw5/4lHwKts7AEPhxAcPObbeqMjD8SJk1vvg9co19zrCBFI4383WwuPNq/Yw8dE32rnPCtArHyMl8TgJEQ/IUcopDcq1OtsD5TjuHBbkJ53SBjTfzDTs7tvFvtQI/irHrtkg2Sq/0CPjOy3W5sKxOkxRxx8H4TslYf//xL35yCxO1+Lt8jzGyEBHQAYn/+lhqda2wyHPQAX6MKUwCc1GEbMuPyQa+CQx1/4bSd8v35nGvAHoJfb12v//NcbMM6P4AxXB1RQAwkQNyhjsxglDpAUy5y+OzSMnr/A3O/tP5f8tvgw49gTs+eYi/tAnbgwg"
+      ]
+    },
+    {
+      "id": "3c0602b676ce",
+      "publishedAt": "2026-10-28T11:20:12.806Z",
+      "title": "Petersburg creates Local Advisory Board to recommend uses for Live! Casino & Hotel Virginia benefit funds",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127022-petersburg-creates-local-advisory-board-to-recommend-uses-for-live-casino-hotel-virginia-benefit-funds"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/petersburg-live-casino-advisory-board"
+        }
+      ],
+      "centroid": "Nv3bvzUONUQ9GUvpG77cD0z75LEQ7/U7MmbX4Rq02eAr4DIgvxVD5MQEFjInNNssyPrMK/D/R+rGvckRQg/3FisoQhbOC705EMwTIR3pHtmi2v8euTMgvkT+KDnAuZDExDY9yAnYObDmIyzqVc7kGBEOr9700kr0P/zHvfHc8zU46x8/NSI9a8rs9u/2GvQzSC9W7w/gMPAPHkbg1rkFMMbxuvzO8FNNxb7hB8s41kPKEVkkBOHrydjmnfcLxwIxtaTrIZwwHywUzCj6PP3uPO09FbuxLx7S7DkCDkwMF87WJz3M0wnv4sC8xuMQ9CzNxuI/8D/K5yTZJgXi2+HbGzIbywsoxTT7L/7p67LYrhJC5ObKAD+zzicLJ00r2esw0fnL0CjZTif6H9Eh+eAjIgUW900BND0vrQlER/8Vzcy61f7uCDcC9zYJF8ezJ8PQ6TroxPcT4Dz+4ha64CVpgSQrzRXQyzBH8O4OKT1M3Bkj0CU/zQra29Qlw9wvFwUG",
+      "vectors": [
+        "O/vbuysTPUY/Dk/3I8rg/0P218QN7u0wO2DP6Buy5NI47isrwARC68cKEjsoNt08wfLFJvIGUPHKxM8XOA3sCCwuQg7RDcRDH8gTIB/zNeCbywoUvDEexkz6I0TWwYfGx0FCwxDhNb3bFSvcT9TjHAsHpeLq2lf8QPu8y/buAj479xJFLCozYtTq8vD3Cu0wUCJS7QXdIu4WJ0Tn67MCKsTiwfrN91RDyKzgEMU11k3FCVs2/97iz9jco/cEx/skra7qKJkzHysX1Bb3Pe/rMtg5GcGtMhrT5zEHDjsJE8rIIT7B5Ar148O809YdBynRyt896jfG6i3VLRLi1trbJUAW1vsoxjHuMv3k7LnUpRI/3fPS/Du+0CADJEQm1fMxywPM1iriTi/3Htso/eQnHwEZAUn6K0IuvA9ETP0K0s+51vznAS3+/B8BHMrEJrjN6kLuzPUP2z/+5wy47BxfgSEjzhrMzStG7PoYL0NI4xcfySs30wHc3NwpvNkuBAUJ",
+        "Mf/bxEAILEI8JEfaE7LYIFX/8Z0T8P5HKGze2Rm2zu8d0joUvyZF3cH9GikmM9kczgPUMO74P+PCtsMKTRIDJCojQx3LCbUwANAUIhrfBtOp6fMotTUitTwDLiyqsJnBwSw2zgHQPKLyMi36XMjlExgWutn/yTzsP/3Sr+zJ5So13y04PxpHdb/v++72K/s3QD1a8hrkQPMGFUjYwL8IN8gBs//P6VJYwdLi/tE71znQGFcRCuP1wtjwl/YTxws+vZrtG58tHy4RxDv8OwzySARBErS0LCLR8EH8DV4QHNPmLTzXwgjo4L67uPAD4DDIwuVC90fO5RreH/jh3+ncECMgvxwoxDcILADv6qvcuRJG7dnBBESozS0UKlUw3eQv1+/JySfQTx79IcYb9tweJggT61IIPTgwnQJEQQAhycq71f/3D0EG8k8SEcWhJ87S5zHivPgX5Tn/3R+70y5ygSc0zBDUyTZJ8+EDIzdP1Rwn1x5JyBTY28shyt8xKgUC"
       ]
     }
   ]
