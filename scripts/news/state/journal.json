@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-28T11:28:10.336Z",
+  "updatedAt": "2026-10-29T08:22:47.720Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -534,6 +534,303 @@
       "vectors": [
         "9Q3PzirORDAfFRcIVrUEMkHf1+A7At9CLyWZAB2snvsywDkkv9Y9ztDoGTMxJNxT59XAQvwdJrrEztMlQwcFFzEnJjaw49wbGPoTNh/SJOC8xeIrz0U0zDAQCy7B3cfF9TQZ1DHaFsTQ++ngNtPWFCQUw7cAzCr6ROfe1vnv9CYkBCgnUiIePtj44+zjL91CSzZVxy4HIAgbAjHj1ttSQbDXmObL9CJMp/LcNe4s0SbLDBxP7OTvvcTfw/IZ1dwrp6bbQ+MkMCQFywMPM/H0N+EWKNbMMBLzCTHa9Sz1NNPdKl7NAUAPA8nVzNQLBwTbm8YjCEb17TbcMwnoq8jnKhgcrCcQ4TjxNBjt9ez0sx8/1vvvHk+3xVoNJTEx/rsz0Mrh4i3iRyHuMr4K+vswHNATLCYDGTQ52AI1R/kS1cq51uXdKhgJ3iUFIJ/fC9b+3B7OwiIQ6jPv3f7G7wFagSYh9QaX10MtxwoJLhBH89s/3BI/4vztxu0f3fw2QT8I",
         "9A3V2hrOVSsDCCYKKs/9LTLiy8Iv+fIzIy/D+Q252BM1xzIkud5Nyuj+CDUeGPVI8tTlQAgvObzdtM0YPB3hEz0pG0Gk2dkk//cOPh/xLdK61NwPwjsezRkGKCW3582w5lcCyjbYErXO/B7oLc3bIyckotIDth0LRdPfzhXlESQrCSkXLBgXTNYG4+XoLtY7NitMtyEBNO0QCVXtwe0mSa3Jr/PP2E86sQ3QIuUo2DvgKTRP6cvS0djXrv392c4Xj57XYPItIzMH8B8aOvz+Pu8yFsDXDv7c6iDhES7+KbvSIUXk8jD47tjiw/AEHwER1AZE5Cvl0BTxH/3avLLPABAiyf4s4ycXMgnr4OX1vvkp9Nv1ByrPz00RCxwkKLsZ3MvO5BPxMBj2JeUe8OcuKukHBh8hC0Un0wQtUBIX99nW++b0Mhr43zH6B57CLtPx7SbnvBId1FAB4BHG4fgygToo+QuozDg/yPgaJyQl3P894ARV8f3q1Ngz5vAgNy8h"
+      ]
+    },
+    {
+      "id": "85fe03b99990",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "Caesars net loss doubles in Q3, analysts say Digital lost market share",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "sbc",
+        "igamingbusiness",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "sbcamericas",
+          "url": "https://sbcamericas.com/2026/10/27/caesars-q3-2026-revenue-report"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/finance/caesars-q3-results"
+        },
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/10/28/caesars-q3-las-vegas-earnings-slide-while-regional-and-digital-units-keep-growing"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/28/127047-caesars-reports-123-million-q3-loss-as-las-vegas-weakness-offsets-regional-and-digital-gains"
+        }
+      ],
+      "centroid": "Qxri0En0OiUyJy/yG8euOhq8vsQNFetAXXq6DyyI2skTsQ4Wp/056LUaOmM+MdZTz9vHSvNnNLuUwMUhddcmPFBEDgXPAbFpBcoVMzL+D++yz9Qn3UIXkETHPkfU3KK+pk1Ayla0KsP3OUe4TbG5IlUElKjmlDb0ReXUper/Ixo96C4zFTdyZdDs1uDqNfwsNzJLE1nmMOc4HXWfo84WQ5TpsPvuyEUgq+bDBNJA2FW8JWIrrw6/ztutjBQg8wgu1rbPSNxTTT8F0j38VBa2d80oGKTYB9393CEPDH/1RJzOFELdyircwKasm7gHPzu3rrgM10u+5gfUSDu5vZz0VjJUmRUf6ykzPh74nKzNoSsa07vs8C2R2jTmQhE16t5O0rzD3zHcIDHcQ8ggC/wmSsM4BVL3HT0otfEcShRH1cLCtBe9DET60TYlFry2Dp/jLyCovw8qwiEE7hbz2El0iSpWABbGyU0zus5RTFNU1QkduyU5+RPnzO0t7q4cLkMr",
+      "vectors": [
+        "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"
+      ]
+    },
+    {
+      "id": "8201ab49c627",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "Red faces at the SMF? Draft shows think tank’s boss questioned machine tax jobs claim",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "igamingbusiness",
+        "yogonet",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/finance/red-faces-at-the-smf-draft-shows-think-tanks-boss-questioned-machine-tax-jobs-claim"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/finance/uk-2026-autumn-budget-gambling-implications"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/finance/uk-gaming-operators-dodge-feared-40-tax-shock-as-mgd-rises-to-25"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/28/127058-uk-lifts-machine-games-duty-to-25-on-higherstakes-machines-short-of-feared-40-rate"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/uk-mgd-rise-triggers-job-loss-fears-despite-relief-over-smaller-hike"
+        }
+      ],
+      "centroid": "PALByDnYKi5WHVMHVLbHJm3L6awv5PRZQ1fGBDCWuPhLnhg1sb1S9MkBJkxBIckv3dLWTesoM6SIsakicvXxP0JiISC+3cpC2dgyWS/SL7vYxcQiukxOuGDZP0y7sMaPxzBG42DUS7C4LSzjQKvdKU0np8DP50LnXP6WttTzBj9E/TlBRAVcf+QBt7HKdtRDXyZnu2bEUdIbFknXu8FKMq+ziuKczT5YrAXBI9k+vGfF+koXvdSqztjNo/40/OojuZjBPeQRPAUVvzsTOv7JReJFPZLKJPPq9lz+C2L2KKDeQz/X2TLO7Kq949XtHjXfosoQyUvmzP/OMSG3krrBMSwZmBwY8VQ6RSjowMbLoDRPE8Dh9122wEn0JTpOAANl2sK3tSbfUVrrUpPlFM5LE6QMNEL+O00TtdNQbOA6/YaorgbEMz/t1EszN7XFQaP8LAGvrhEm6R73+APrxSJSiCwm5zaW1zNPs+Q5O1JT4/cnvxFK2iDqu+4Gw74bQSNW",
+      "vectors": [
+        "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"
+      ]
+    },
+    {
+      "id": "3b82f90a8f96",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "Rhinoplay enters iGaming market, announces initial slot games portfolio",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/28/127056-rhinoplay-enters-igaming-market-announces-initial-slot-games-portfolio"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/rhinoplay-announces-official-launch-and-introduces-its-slot-game-portfolio"
+        }
+      ],
+      "centroid": "GvrhxFLoTCAp/DDhSfDXJ0jgsLUmCO8JTEjX+DzKxt0QnGMpu+tQzswUES8/Cus0sfW0Yf1HGp261+UfSQEHNjVPDkGB5MQv77wbLy/XPNCo3vFPwjUwwVDdRSq7xpDU3jA30V7zH53qHv/GQdfjCzkqtcgQtSjsZt+orNrpRhs70RIwKUk/JOQG5LDvSwIXUhhW2zH1PgMqDlTG9doFFsLXmOqlyUJUqOukJ9pQ0TrPNC8o0gmrwKHruAr6u9tMvpmzO9UqHB7pyjL+Jim7VQ4bKrS9B+/1FS32ED0RIOfOLVa6/inw/rG3tMsLDUMA0v0k1VwHuvUDRA7U3LDQETAQyuoy5BhDKRHRyr/u1zpK+AL0CHGg5lb6KTtS6skw1sPZ3DbhJjLtUrkUAu0zHqwZCicYKRo4w/QlZ/wSveHtzuftJiHj6TgZFrflAsbtGTu1xw0d4STkyf3AzfFRizoU8RWvsVQhwuEYODY2/Aoxtig30eDx1QU+3dAaYEcd",
+      "vectors": [
+        "FPnpy1DjWxMr/j7dUPTYJVbfr686DOQWYFbV+UXHttcNk3Ixt+ZRzcQYBStREuY+quSmcf1VFZC30+slYf71Oj9aCkKB3sE18bIHODfVP9Cc0PRfvDI2tV3MRzS0vYHL0zFC0WzrGovaIQDCU8nRB0w7or4UpjLdXe6ao9/sUDA90Qs6P145K+EM5qThS/EJWhVl1TbtRAYpDnPD7cv+ErPUieiiwUpeluugKd9SwTzDQDks1QylsKPjrgQFutVLs5OvP8IpJCrkyTMBKym4ZAMcOqa8DvfuFTXtC0EQI+fPOGKx/C7i+7Cyrsz8FUMGwvUn0lwUsQL5Uh7M1KbZGDgax+cz3BJEJhHGxbL80ERP/w73BnyQ7G4AL0VV3sw0z8LL30DgMDvZWq8L9/YxJ64dBiQYLx01vfMlfAYUrNnnyeTrMBzn6zocErTo/L7lFzWpvQsc3izfxu25yvRbgUMU8RKkt2Ajx/UhPz85/BQzsSY5yOP43Ac+38ESZ2Ib",
+        "H/rbv1PtQCon+iTlROzWKDzhsbsWBfn/PD3a9jTM0uISpFciv+9QztQRGjEvBPAstwPAVP08Hai92uAbNQQVMy1HEj+B6cYq7cUrKCnZOc+z6e5BxzgrykbrQyPAzZ3b5y8u0VL6JKv3HP3JM+PyDykcxdANwR/4bdO0s9fmPwk50hgoFzhDHuYB4rv8SxAjTBtK4C37OAErDjrJ++YLGM/apeun0DxMtuuoJdZO3TjZKicl0QawzqDywA/wvOBNxp62N+QqFRTsyjL7Iii+SBcaHL+/AOj6FSf+EzoSHefNJE3B/yX7AbO7uMsYBkL73gMh11z9weoLOQHa5LjJCykJzewx6xxDKxHazsri3TJF8vnwCmit4UL1IzJP9MYt3MTl2S7iHiv+S8IcC+c0F6oWDCkYIxg6x/YmVfQRyujz0urvHiTg5zYVGrnkB83yGkC/0A8e4xzozAvH0O9JkzIV8Re4q0kfvtERMi8z/AIvuio02d3rzwI93NwgWTAe"
+      ]
+    },
+    {
+      "id": "0f6ac8d4b838",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "Argentina: Proponen arancelar el ingreso a los sitios de apuestas de la provincia de Buenos Aires",
+      "lang": "es",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_latam",
+          "url": "https://www.yogonet.com/latinoamerica/noticias/2026/10/28/111289-argentina-proponen-arancelar-el-ingreso-a-los-sitios-de-apuestas-de-la-provincia-de-buenos-aires"
+        },
+        {
+          "source": "sbcnoticias",
+          "url": "https://sbcnoticias.com/buenos-aires-arancel-apuestas-online"
+        }
+      ],
+      "centroid": "Pf3OmljlQhVPHFT1esrRGlixsdwC0sZCZUbuEim39OUgxVIsnvYuvqL0Nn1fNcpTu+vfVAFMK6yu6qggTioCOSUs+RqpFMlk8uMeO0G/O+vUydtN4ycjv1TtVzfRqq+r1ik5zUzRO6upNha+UMbs+1kbrfD1k0zCXffUttLNIDgs+QZTPV4+eNwT5Mq8Mub+SDxS7RLcFr3pM0W7v9g3LLDgmga/yjBPzaTIL85J/zvTN1opJMfPrd3YwPUI3d0krtDXLKIhAiQL3z8UUQPQOeoYIN2TVPfzCxDLIigCSp/cSDDLuR/eJ8uK3rIpERGlt8QdzUTAyx3CSjShsLX1ODUc0C4Nu2AhUd6j8+nsxQtiyBjI9Eid1z8gNVRA1PpW1OW75DDMGTn9RtQ5JrwgJLFADzcXRkdK2dMCPvoUlfifxL/oTCbswEvzFbvXOqvh+iWiriQq2yXz0+/B00UVgQwI3CzG118r9+0dQUYd8vQy1yRGxvwI8qf6898qSyIi",
+      "vectors": [
+        "OwHSl0zoRitNFkn2cdLMC1SvtucC48tAZUzpEEax+e4Xx0k0m+4cxKbrMnRWLcRNwPnWUPg9IrKv5bgpQyL+Oigr+RqrEdZh8ecaND3LOe/TzOFJ4CIly0jwWz/Wpq202y87y0rYMbunLRW+V9bu80cprPUErT3IUvLhvNPRJi8u+f1WMFU7etcS4NC+MOzyODpN4w/YHMPhMU26utk6IbrcowDA1SdGyLrKFtRIBkLNL1IwJMvUtd3WtuMI5ekUss3RMqwfBBgE3UUQVgjZOfQND+COTf73/gvHJhwDTqHmSCHVsinVKNiW5LcxBRejw84j0zTI1xrUTziyrb7uNkQK2B//xF8TTvGh6erdzAZdwwvW7kOh1EQcNkI2xgFa3ue97S/NCz37R84vJrwuGbdCDzUSSkdB29sHRgMHr/6v0rrlSijvwj37EMTjOafrAR6aphYj4Sz+3uHN2D8NgQUD6B3W1k8n9eomREgT+fYx1jA0yAAB6K71+9s4TB0r",
+        "O/rOpV7kOP1LIVr2esbaJ1a4stIBxMY+XTv1EwjC8dwmyFUfqf8/vaX+N35iOdRUut7sUglXMayz8p8VUy8GMyAr+xiuFsBg9eAgPUG3OenYy9hM6SoeuFnsTSvQtLeo1SAz00nOQaCyOxXCQrrrBGUKtOzmgVbAYvzLttTNFz0n+g5KR2E9bOQS6si/MOILVDtR+hPjDrzyMTjBydkwNKvlmAzCwjZS15PLRsxF9y/ePFofIcbNq9/dzgkH2NQxsNfhI54hAC4R4zQXRf3JNeEjL9ygVfDwGBTTGzIBP6XVQzzFxBLrIsKH2rMeGwmur70VylC8wh20PyyVu7H+NiEtyzsct1ouTs2sAOr+wRBg0SS9+0ig3TUhMGFF5/NLzOa+3S7OJjIAQd0/IsEOLbE6DjUbPUNO2s79MfEggfOVucntSSLrw1TsGbXNNrbZ8ymxvTEt2Bzoyf+60UcbixEM0jm72mgr+vESOT8k7PQx2xVTyPgQ/af/6+YZRCUW"
+      ]
+    },
+    {
+      "id": "00820e3cc12e",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "The Star Entertainment Group to pay AU$260 million penalty",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "igamingbusiness",
+        "casinoorg"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/the-star-entertainment-group-pay-a260-million-penalty-civil-proceedings"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/star-entertainment-fined-a260m-money-laundering-failures"
+        }
+      ],
+      "centroid": "NB/OzSPzPCRN4yXcSNmuNx7Qz+cK4eVJUSTaBRej5s4YqzIxttYW5cohFGlGL+ZO1t65QBA1PsDKwunwf/zqERtDNQaxALZJF8QkSTfU6riY478T3kwzz2ziSSndw8r23C1X0FrPTd/tLiHDWczhES8MkrXy3SnPZuK5wNzyGURSzBcXQzc3M8zq9+nPMgBHLCRN5EDnTedCKUHKnbMTNs34vPvNxS0x0NPIEeohDDHcEjZT2PLWwN7ewg4X18YNwebgNuwsOioX5Bb1ExXAP9w0HtqrP+wNKEDjGzbRJMD6I0K0yALs4s/HwuH4DxqyoMIAqSDs1ywPLwyRy7zJOkVHxSEp40ghGgHIwq7ywjg65dDz9UC7x0QZTA1R6fRDvp/GuQTLQRUnLbsN+rNVIMwbIiwcLy/18hP1KAER1fvOw7nnMgf53CEjGMmvS8gE/QvI0B9U2z/v5jHc4C1ZlQg14Cyt7D45z/cQPRxS4P1F7Bgm2QrhzNg25MYERv1B",
+      "vectors": [
+        "LiTIuyjtOypN4RvhS9yuNSLK1eAK1eBIRCDPBBSl5dAOrjM8uc4X8comFmpBK9xP3eLBMAo+N8PPwOLqf/zyEBUzOQSrDrc5F8MyUjnS4LKj5Lgi2FIx2nLiSibaxtH/4DNVzF7WSNb0MRjEWM3wFTALmrzq5SjJbNy+w9jpGjZO3CQjRSVANcru+t7MJgBEIzE130jtV+8+JDHUoLMPOcf9vP/LvR433NnMFfAYFjTpFzRN2e/YutrixBER3NUNxuDkNfMxOi4U1xfpHxDAOtQ1E+akP+wQLEH2BDTSIb7/I06xz/fy5sjLwen0DRWyn8QCsyzd1TgTNPuV1cPIMUNCwBwh4EIPFQvNxLLvvTo47t74Bz7DxkUOTQxM8fA3wpu+rAPFNRMlNMgA/rZaJtwnFisKMzDz9BjzHwAazwTV0a/iOQT+4CAYEcy3SML0/RDKyy5Q4UXv+0Ln2ipTkwQm2y+p/Dk14O0QKhVL6PE87A4n4Qfcz9sy4tsQSPxA",
+        "OhrU4B35Ph1N5i/XRdauOhrXyO0K7upKXifmBhqh6M0jqTElst4V2coaE2hLNPJNz9qyURYrRb3Exe/3f/3iESFUMQi48rZYGMQVQDXX9b2M48cE5UU0wmXiRy3gv8Lt2CZZ1FXHUujmKynDWcrRDC4Niq371CnVYOi0vuD7GFNXuwoLQkktMc7m8/XTPwBKNBZm6TjiQ99HLVK/m7MYMtTyvfbQzT0rw8zEDeMrAS7QCzhZ2PTUx+PawAoe0LcNu+zbN+UmOyYa8hUDBxq/ROUyKs+yP+0LJD/QMzfPKML0IzW4wQ/l3dfDw9n+ER+xocD9nhT82SALKh6NwbXLRUhNyycx5k4zH/bEwKn1xzU83MHv4kKyyEMlSw5W4fdPuqTOxwTSThcpJa4c9rBQGrwOLywuKy748Q33MgMH2/PGtcPsKwv02CMvH8enTs4V/QbF1RBY1Dnw0B/R5zBflw1F5Six2kQ9vQERUSRa1wlO7CIm0AzlyNU557D3RP5D"
+      ]
+    },
+    {
+      "id": "2cd1c3976a5b",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "1xCare partners up with Spanish rehab federation",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "sbc",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/social-responsibility/2026/10/28/1xcare-spanish-mou"
+        },
+        {
+          "source": "sbcnoticias",
+          "url": "https://sbcnoticias.com/1xcare-fejar-espana-juego-problematico"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/1xcare-and-fejar-partner-on-gambling-harm-prevention"
+        },
+        {
+          "source": "g3newswire",
+          "url": "https://g3newswire.com/1xcare-and-fejar-partner-on-gambling-harm-prevention"
+        }
+      ],
+      "centroid": "MQ3C1TzjLy8UCw8hQdrhLl3Jys3z1RM0SUDb7RzAxPk73TY22NI9vOMhH0w1DMI/wtjfOBUxPJ+lyeEbLhTqJTMbEQa78N8+7NQrUSfeMeG4zL8s4U0HvjzjS/7Q5ai73FNI0i7RJrjGI+vTHLblDzcBr/byukvxIhLdyNHUJBFEFQYtJDZBTs0p9cPpLegUMxVf4EbmAPMKKj/MuN0mGMTZo+HO20guxM/VDQMR3krWMU0v8ffN1qPUnxQUp+kV0t7bQMUyFB4rzTEWNPbcPdMuNKawLQr2JBy4EjcGLM7xFEHWBxvk5L7N07/aEzT/zrsS3hwJ0h39P+zdw8DYExsivicg1Cs+KC/Y2NIGyAYn4OTw51HL1D/0IUc1BuY3yw/M2g3cDCjoQ/r79tsrHNQbHSn5GSMk2vkqThMJxtbP0erwNhbUyzYJOK7iN9bv+R61xiIr7CfR70jW6TpGgQsk3zGr9TM61AH+E1Ey2/AhyDsb4ebn9MIx2vNNMTgt",
+      "vectors": [
+        "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"
+      ]
+    },
+    {
+      "id": "95154ed98fb5",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "BOS urges Swedish gambling regulator to rethink ‘heavy-handed’ AML approach",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "igamingbusiness",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/bos-urge-swedish-gambling-regulator-rethink-heavy-handed-aml"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/igaming/2026/10/28/swedish-gambling-enforcement"
+        }
+      ],
+      "centroid": "SOm4qgTiXS8oFTcNTNDtEE/R3dge1PMuUFfd+TGe99YunT8wttNJ/rsLL10wT+Yn3NLXJAopO77iwccfXBT/Dxk0GjKd8tJND+A0VyfhAdnUyNo45DIzt0rjIEjp2si83hY21TTHN8vdEgS5SMTlE2UPsev2wVMCVuK6u8LMFjNZ5BgyKSY+P+cSxebRIfYNMRs+1zHzBwEaMmHDuOYxOcbimeHU/ilby87AGs0j1i/NCU9D37/P4crpsw0KxuwXsYH4Ub05ISwj0CIVEA7XK8YMNLPFPBDWFwvjDlH2HdT6JEzM3h7m/8jA68URGg7fvsMq4yH63BHlNATnv/btFy4i0DMf5jEEPR3L4NHi0SA559T49WrO2Dj3GwM5/OtO2v3r4RPyQSrZScsA+cM7IroUNiMVJDEj+N/4Pvcd5bHTxPfZFArg7RYGF77WO5/s7iLDzCYJxUcK2AbL2w5DlR0C0Den+xE0v9wNMyRk2vA+viwhz/kI4scg5NoHLDUk",
+      "vectors": [
+        "PvOsmxHYWCklHzUeTNvhFk7j1NoX3vwlVFb08yGs+eMvlEI7xM1A/dH9HE4qQu0t783UKgYvMMLgtMYiXRMIHBhHGyef7NdABdg7XS/mAcvA1OA92Tw6qFTtLkff2MzB3hRBuy3JLsvTD/erQ7rlB1b4tt7s1mADWNy3tsjOFCte5iQ8KCs3Peodx+vRGP8RIx1LwizyAwYfN2LCvOUrML/rpvLS9CNnytm0G9EW4zjS/jZH2cvb69DzuhoGz+0Jp4H/R8owJS8tzxUcCwbUIsYLQLm3WQjhHAvrB1b7GsfyH0fD0A7tCr3J/MYJFQzZu7kl4Sz4wBb4RgLvv+7rGy0lzjAZ4zUURhLC4tPYyydK7tT0/WnQ2jHoC/g/+vBH1fHn4gD1ODnRUMfz99Y0H64bPzYRFCkTAd4MOOoR5KrYx//IIgzS5iAHFbXUNaH07yS72CYP0kUI3gzO2hRHlQAO30OjDBU8utYYMx5h8+5FzB4qxgIX4McM3csFIzMn",
+        "U+DFuvbsYzQrCjn8TMT5ClDA5tYmyeo4TVfF/0KP9cgtpTsmp9hS/6MZQ2s3XN8hydfZHg8kRrvjz8gcXBX1AxsgGD6b98xbGOctUR/cAOjou9My7ygrxkDaEUn03cW33xgq7zvGQMrnFRHHTs/kIHQnrPgAqkYCVei9wLzKGTtU4g0pKiFFQuMGw+HRKu0KQBgx7Tb0C/wVLGDEs+g3Qc7XjNDWCS9PzcPNGcgxyCXJFGg/5bPD18TfqwAOveslu4HxWq5BHioZ0S8NFRfaNsYNKK7UHxjMEgvaFkvxH+ICKFHW7C7g89O42cQZHxDlwswu5hX8+AzRIgbfv/7vEjAe0zYk6C3zMynV3c/t1hgn4dX97GzM1UAGKw4z/+VU4Avu4SfuSxrhQc8O+7BBJMUMLQ8aMzkz7+DjRQUq5rnOwe/qBQfv9Q0EGcfYQpzj7R/KwCYEuEkM0QDH3Qc+ljv1wCqr6g0rxeECMytnwPI2rzoY2PH548c16+oKNjgh"
+      ]
+    },
+    {
+      "id": "3e25fc62012f",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "DEAD MAN’S POCKETS: Unseen Bugsy Siegel Murder Evidence Heading to Mob Museum",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/dead-mans-pockets-bugsy-siegels-post-murder-possessions-coming-to-vegas-mob-museum"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/las-vegas-mob-museum-to-display-personal-items-of-mobster-bugsy-siegel"
+        }
+      ],
+      "centroid": "aOTWvD69MkZV9DQNQbv3D03EsAIj+QYnWDefBU3cqNYrojIotuIs8djeBkxO+cg/1ePPVtkmRbLl4sYeNbLQAz47JT3O7aFCGM76Mw3XE+C479ZCx1MnvlnsFEjd0MutwRgQxUrKLdawRETMas3NWTZMwcsBxQD5SO+gyNUjAiNe9hhWJhhNbLvz9KfHVgw6JjxWy0z1KxgPMCOqwKQkR8jdywer3Usat9HG/tcb1jvARzMp+xu+p+/jrysrv/o/2MLV+tEnLUL3zxAHK+LSVNk6SaS4Dr7UFjfcPmDsFsvFKB7r5yLG4putvdLSHhqri/YOyznUzCvOKBOgv7LvNCtMnUMWxldGQz7Jv7Tk3R3+rrfWAVm/tjIjRyw76BVY8cf1t1jGMzfeUuL1ye1JNsRLDh8XKEEe4O8wLb/48cvQwRTjGibw0ioJP7zGXr8YySzi0PIuzGHL+TuK1T1TgVA65BLvujQ66A04PR5J7+ws5x4Y4AcBvt4v7OQvIR44",
+      "vectors": [
+        "dfXnoETMDktd+TwbQb77FjbGwf8nBgQmXDSq4lLRo/MvoiQiytMTCNne+kdG/dE14/HkYt4sQav45roYK7bqBkVNGkTo86otEMkFMhjUAc+179IwylQozV/zGTjjy720xCITxUXIMtPCPUvMddTNSThAztf6z//yQ/Ob3tcuCx9Y6AhOJSFBX8L4AJ/dVw0sITI/yU/vLwsLJxutmaEpS7ne1RGxyzopyde+Ed0n7TvOSSog7CG+qRHSyDkgweJA1M3O8dwhOkAHyiUBEObfPuZDRLPQELHTEz7tOkn3CuPPJxbY0C7P4Ky1tMzXExq9peAi0DC7uifcCxKvu7PfMi48pysTzl1OPTvJybDv4CHvorTU9Fa7vjwXViM/5CNP7rnstEi6IS7jUsz+2+9QKLE4DhsYJTkf6fMxIND/+MfUwhPbJxbt0C0JRra+XckT1SPa3v4w6lHDAFaj1C9YgTwq3yLRw0RK3Bk1PRlTBPYq6x8P5BP6teYr2dEqJBIw",
+        "TtfM4DC3TzlC8SX9OMD1B1rLqgQb7gcjSTKgJz/susAirjgprfQ+3d3iEEZM9sZBztjBP9obQMLW4tkfObm9/y8iKy+76qZNHNnwLQHfIvXF8uBKzEYhuUfnDU/b2+CxxgwLzUTTIt2qQTTTUc7UXS1NvMYHwwEBQ+2zutkU+SNXBiVTIwtOab3x6rq5SQo/Jj5i1D/9IiESMyez77MbOd3iyPyx81EHrtLV7NgMxTO7OzQsChLIsM/2oBcwxRI14sDiA80oGzvp2voMQeLKXtIpRaKpC9PbFSnQOmnjHrrDIyL/ARHF6Jiwzt/TJBalgQ75zDvy5CrHQBGfzLwBLiNQoVIWxkU0PzjRvsHd3xYNxcXeDlDMuCAqLy8w7wVW9tz/xFzZPTjeSPztvuw6PN9UDR8TJT8Z3O0oM7by7dXSyRLuCjD02SEJMcvVU70ZxS7uyekmtWTa9BmB2kJDkllD7QEQuh0k9wA0NR813OYp5Rod4foJz9ssAvouGiY5"
+      ]
+    },
+    {
+      "id": "dec1ad867e8a",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "Prince George s Approves $215M Financing for $1.4B National Harbor Sphere",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/prince-georges-authorizes-215m-for-sphere-national-harbor"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/prince-george-county-approved-215m-for-las-vegas-style-sphere-in-maryland"
+        }
+      ],
+      "centroid": "LOjmz08EWj9A9CTwKtW0WE/Zq8sI3/lOVWL7DyC6zclqxRc3s7Eo1L8zQCwkOwkau+ioVRMUX7rBxLY0a8naFVRaFg6ODLk66KksJyPHHcqlyO0kuG5C1VbiLTDgwJSu1DFAyV/NQt/W4TLOWZnMFywtktny3B3jWvCYrbz1KkA47SFGK0dMSNfHtPTjQOQ2RVo8yyrnIe3gGDnukpcaLNILvLi880c+4K7RRNg1y1XB/k0s0hb38sTkhhMq0NcYvqXNQMYvPTkKqybtJ/7gYP0jOLiyJQb8AWnqEFu/JIj0Myrd5RbJ6JS7vbwPFXfGx8w7sSPX8A63PA7It44IL1lEpwUi6zFYFAHtodzKuxwnyebd7kzC0k43Wx0x7e9R29TQzirNJzAQTd45BOBnJMcg/VcKPljWt/4NQ/EG08Lfuvu4CCcB3jsfKL6bYNreAifu2xYp3z7W0SLd+EltgQA80h2+uig35fgMNk9N9Rk+sUYp0yj04e4m1KkuPxoh",
+      "vectors": [
+        "HfAB0E0CWUtG9TbrLtetVEnTrMMJ5/JNS1n2AibF1stxzAk8xLUh3c07RSQqNgAbxemqUxoOW7+8xLglZs3jCj5XGw6VCcE/4bQvISa8H8ugy+4iu2BJ1FD1NCfaxpqjyTk6zWPFSNTT2iPJZpzPEDItktvv7hnoY+6etLbzMjI84CBDLzpUQdnUuuPhPd8wR2BIzC7SEOHlFTX1n5kiLtAMxbi82kk74qrhRtI83lu/A04n3AwE9MjijgsryeQOubjQSMwiQTcSrCf1H/rfVvspMsa5FAjzAmLfDGO8FonmNSjb4RPQ4pe0yMIRFX/Q3c4+tyHj8wLDPQnStosLHlQ6qwoS6ChvEgL8sNjHvQc7u+vj8kKp2lEkUSk26/RK28rEzijLMS8bRNpD/85nHsESAE4LTFXWvPAOPfsH1cfowAWyEh0G7jUpKciiWejV9yPq3RM06EvVyyLg90RxgfYz0xy1syA32/kONFVE+hoxpk4d3Cz52uIx1LItPBkV",
+        "OuHMz1AHWjA59BH2JNS9W1ThrNQG2AFNXWkAHBmxxMlfvyUwoq4vy7MrOjMdPhIYs+moVAwaYLjIxrZCbcbSH2hcEA6KELMy8J8oLR/UG8uux+0mt3k62FrQJjjmu5C84ChFxlnWOuza6EDUS5jKHSUsldn0yiDfUPKVp8T4Ikwz+yJHJlJCTta7rwXmQOo7QlMuyyX9M/rbGzvohpgQKdUJtLi9DkQ/37TBQN4tuUzE+Uowyh/q8MHmgRsn2cshxJTLN8I8NzoBrCPlLgLjaAAcPaysNQQGAW/3E1HDMYkCMCrg6hjE75PEs7cNFWy9sMs3rCTL7RqsOhO+upMEP1xOpQAy7zk+FQDelOHOujES2eLY61Xdy0lKYxAr8OpW2+DdzyzQHDEDVOMtCfJkKc4u+V0KLVnXtQwMR+YG0b7WtfHA/TD7zkAUJrWWZs3nDSrz2xgc1zDY2CLa+k1mhAtD0h3Jwy838PgKN0dV8BZKvjw0yyPw6foZ1aIvQRos"
+      ]
+    },
+    {
+      "id": "7fc0705f556b",
+      "publishedAt": "2026-10-29T08:22:47.719Z",
+      "title": "The Star Gold Coast casino licence suspension deadline extended again to March 2027",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "igamingbusiness",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/star-gold-coast-casino-licence-suspension-extended"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/27/127038-the-star-gold-coast-casino-licence-suspension-deferred-to-march-2027-as-regulatory-scrutiny-continues"
+        }
+      ],
+      "centroid": "Fx3Jvyn4Kgg9CyIBKbTIJiTV18s12/Y+OCnK406k5s0wph0uvvAx2aT+JUooEbpWw9PANf0mGc+80MYySObaMRFSOB/Cy7tBMusbO0AD796+td8py2JKzjzwLTjQ0cvf2xYr2D/OObDiNP7kKujKGjX6tZr7pSvVZeuq2efw5jNF/hYSRhQsUqvs3+LTI9UQIzJG2kcBUN9LLkbUxNQeKdvqyNnk+U8wvAXqDttT7inYFyw5798EtNfeoQgnzuke7L35b+QeKhge4RQcFwLqMcMzDcu7Kwr1EDvdM17zOM3UHEuc8RYZ28zb4t4NL0HZqvss2UPhyfTPKfOuocTSMkJRxyUa6UcjJOfVxcnasUIl99D/AULB0DsiFgQ6481G2cbT6B/xGRzjK60O6tkwHNb//zoSPz3w4PwZUgAz8MfRzevAIR4o2xgW/cutKMvT+w/s5gpW8jcF8DPe2xE0gR80zTioA0IWvBISPTtR6AY71Sg08gvq3NEf4+AdPAz+",
+      "vectors": [
+        "FybRtykAJAA+CiIFLavDJzfe2co91vc1OSfG406e4Msupycstuc1xJ4AME0oE7hQxcy5LvckFMq91sI6RvLWOR1rSCW7vbZLN+0UOz8F7tm1qdkizGNO0TntNDjEytDO1ww02jnOPZvZOPvqH+rJFTP6sJb0oR7XY+yr097t6zRA/iAaTBAjWp714NbUJdQLHjJc2Ej5R9xLLEDXvcwrK9/rvOflB1U5sfjuB91d6i7NJiU1+8r8sdrpoAMl0+MZ4rz1fuYiMhQx4xYuFgXmPcQzE8m1NBD0GkHTQGn5SMzDH06V7SAf1sTZ5dcRNEjdr/4020jgxPTXJeyxnL7ULElV0yYf40QoKOnGxMPYsUMh8cj8/Tm9zkEuFwQy4MlQ1bnU9h3wGybcJ6YF5swuIdb59TkcTkLr1/sdYgFA/MrIy++6HBkv3R8d9tOeL9zTAw/t6AZV5zoF3Tjk3g1IgSY5zy2V/EwbxBYXO0ZQ7Qw90CIx/Qbv0ski09okPhb2",
+        "FxTBxinyMA87DCL9Jr3NJBPM1swt3/VGNyzO4k+q7M8ypRMvxvcv7an8G0coD7xbwtnHOwIoHtO7yssrStveKQc7KhnI1784LuohO0AC8OLGweUvymFGyz7zJjfa2Mbu3h8j1kTPNcTrLwHeM+XLHTb5up0BqDbSaOqp3/Dz4jFK/w4KQRgzSrfk3+zRIdUVKDIy20YHWeJLMEzRy9wTJ9jp08zk7EkpxxDmFNpJ8SXiCjE94/ILt9XUog0oy+8j9L38YuMaIxwN3xMMGP/uJsIzCM3BIwX3BzXmJlXvKs7jGkej9A4T39Tc3+MJLDrWpfgl2D7jzPXJLvqrpcjRNzxOuyQU70sfIebixs/csUAo/NcBBUrE0TYYFARB5tA93tLS3CDyGBPpL7QW7uQzGNYFCTsJMjj06PwVRAAn5cTZz+fGJiMh2REPA8W8Ir3T9A7q5Q1X+zMFAS/Z2BUhgRkvzEG4CTkRtA8NPjJR4wA62i436A/n5Ncd8eUXOwQG"
       ]
     }
   ]
