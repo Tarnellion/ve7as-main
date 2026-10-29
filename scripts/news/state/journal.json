@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-29T08:22:47.720Z",
+  "updatedAt": "2026-10-29T11:39:28.640Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -831,6 +831,46 @@
       "vectors": [
         "FybRtykAJAA+CiIFLavDJzfe2co91vc1OSfG406e4Msupycstuc1xJ4AME0oE7hQxcy5LvckFMq91sI6RvLWOR1rSCW7vbZLN+0UOz8F7tm1qdkizGNO0TntNDjEytDO1ww02jnOPZvZOPvqH+rJFTP6sJb0oR7XY+yr097t6zRA/iAaTBAjWp714NbUJdQLHjJc2Ej5R9xLLEDXvcwrK9/rvOflB1U5sfjuB91d6i7NJiU1+8r8sdrpoAMl0+MZ4rz1fuYiMhQx4xYuFgXmPcQzE8m1NBD0GkHTQGn5SMzDH06V7SAf1sTZ5dcRNEjdr/4020jgxPTXJeyxnL7ULElV0yYf40QoKOnGxMPYsUMh8cj8/Tm9zkEuFwQy4MlQ1bnU9h3wGybcJ6YF5swuIdb59TkcTkLr1/sdYgFA/MrIy++6HBkv3R8d9tOeL9zTAw/t6AZV5zoF3Tjk3g1IgSY5zy2V/EwbxBYXO0ZQ7Qw90CIx/Qbv0ski09okPhb2",
         "FxTBxinyMA87DCL9Jr3NJBPM1swt3/VGNyzO4k+q7M8ypRMvxvcv7an8G0coD7xbwtnHOwIoHtO7yssrStveKQc7KhnI1784LuohO0AC8OLGweUvymFGyz7zJjfa2Mbu3h8j1kTPNcTrLwHeM+XLHTb5up0BqDbSaOqp3/Dz4jFK/w4KQRgzSrfk3+zRIdUVKDIy20YHWeJLMEzRy9wTJ9jp08zk7EkpxxDmFNpJ8SXiCjE94/ILt9XUog0oy+8j9L38YuMaIxwN3xMMGP/uJsIzCM3BIwX3BzXmJlXvKs7jGkej9A4T39Tc3+MJLDrWpfgl2D7jzPXJLvqrpcjRNzxOuyQU70sfIebixs/csUAo/NcBBUrE0TYYFARB5tA93tLS3CDyGBPpL7QW7uQzGNYFCTsJMjj06PwVRAAn5cTZz+fGJiMh2REPA8W8Ir3T9A7q5Q1X+zMFAS/Z2BUhgRkvzEG4CTkRtA8NPjJR4wA62i436A/n5Ncd8eUXOwQG"
+      ]
+    },
+    {
+      "id": "1b58a10ef4c8",
+      "publishedAt": "2026-10-29T11:39:28.640Z",
+      "title": "Stand van zaken Nederlandse gokmarkt 2025 - 2026",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/stand-van-zaken-nederlandse-gokmarkt-2025-2026"
+        }
+      ],
+      "centroid": "IuDr1kbkLzgmJU/0S77IJzvc5bobHeM3XUDWDwa/394fqDgmj+FL6eAcK0JjMu1Gy9rtSfYvELniwNYKXh/7FFdQ7RGj3vg7Av4PNTv8Hu/DwbwyvBsYrTb1RmPZtdeXzx8u6knYHp3MDSm2WbmgJR8Pq9ECtSjNYejFxeUHN0ZJ7SINKVFVKNH/+8XAKaL+IiRG2z3ZZvJAJlzm2MkeLK3Wnd7/4l8lsvLOPesg1U7N/1o6xNykwc3NlRL8scQXqJLRX9oKQykj/koeGAXbQegLTtK1Uw3CExq+Fk/cOaQaLBe/9CTw7dLk6MHrCP/ftv430jzuofwBQ0OJ15TO/yJcsBdHA2EiFQ3n1db0sD4s8vXXECLH3UEFMP9wArpO8dTA00HeICfMP8kI5vEQObsqCjgYJU1Dt9NBfwQtx9K7zOneSzgU6CcGGrixCNHvEPvC8PcfryH91QPNvS/3jiwI3i2nw1Qr1QwPUERR7uU0tzAk2RgW0tsT8MsiIkMt",
+      "vectors": [
+        "IuDr1kbkLzgmJU/0S77IJzvc5bobHeM3XUDWDwa/394fqDgmj+FL6eAcK0JjMu1Gy9rtSfYvELniwNYKXh/7FFdQ7RGj3vg7Av4PNTv8Hu/DwbwyvBsYrTb1RmPZtdeXzx8u6knYHp3MDSm2WbmgJR8Pq9ECtSjNYejFxeUHN0ZJ7SINKVFVKNH/+8XAKaL+IiRG2z3ZZvJAJlzm2MkeLK3Wnd7/4l8lsvLOPesg1U7N/1o6xNykwc3NlRL8scQXqJLRX9oKQykj/koeGAXbQegLTtK1Uw3CExq+Fk/cOaQaLBe/9CTw7dLk6MHrCP/ftv430jzuofwBQ0OJ15TO/yJcsBdHA2EiFQ3n1db0sD4s8vXXECLH3UEFMP9wArpO8dTA00HeICfMP8kI5vEQObsqCjgYJU1Dt9NBfwQtx9K7zOneSzgU6CcGGrixCNHvEPvC8PcfryH91QPNvS/3jiwI3i2nw1Qr1QwPUERR7uU0tzAk2RgW0tsT8MsiIkMt"
+      ]
+    },
+    {
+      "id": "463d96b702d0",
+      "publishedAt": "2026-10-29T11:39:28.640Z",
+      "title": "MGA Concludes Consultation on Proposed Updates to Recognition Notice Framework",
+      "lang": "en",
+      "voices": 1,
+      "groups": [
+        "mga"
+      ],
+      "sources": [
+        {
+          "source": "mga",
+          "url": "https://www.mga.org.mt/mga-concludes-consultation-on-proposed-updates-to-recognition-notice-framework"
+        }
+      ],
+      "centroid": "GATRrizmSjcrBSsGMMfeFFjq0tIf9/4rWznDCTO83v4tvCIu2NUy6MwXCjVEAt1C3c3IKRIfOKTQys8sM/rEICMkGy7GANAs3N4cRCflKu243Ps51TQf5kH0MhnM0bzX2xM45CrLFMDcEAXSJ9z4EioHudrX5jTZXQLN48TvCBk89B0YNCwhPubv6tvdK/gUPDA21UvwFRMR9jfP7dUxJdHovOPXxDhKyPLINeM48hzA+yoJ4fni2bTasij6zvYQ2LXJTNQgIgYI6ysQEwTeF98VCdrKRRYf5i75Ajn7C8foMRC/8xnt9cPTxsD3IxbU4NUe7T/53grnOAnZ8NHPJT4NrRUU5jQuKfbd5d/4tfgW4O/z9T7W5ELpDRQzAuMw5vHq7voBGBj8JsEB6+EtF7UIB0P6US0s1SQ+Qtfx4N/g2u7iLjoC7g8EJdzCDq/99CnO2SMW8zL0Aynd5/1OpSg6vkWB4Cgv4+sHKhck+OAh1R0y5PwA6v0c0wc1JiVB",
+      "vectors": [
+        "GATRrizmSjcrBSsGMMfeFFjq0tIf9/4rWznDCTO83v4tvCIu2NUy6MwXCjVEAt1C3c3IKRIfOKTQys8sM/rEICMkGy7GANAs3N4cRCflKu243Ps51TQf5kH0MhnM0bzX2xM45CrLFMDcEAXSJ9z4EioHudrX5jTZXQLN48TvCBk89B0YNCwhPubv6tvdK/gUPDA21UvwFRMR9jfP7dUxJdHovOPXxDhKyPLINeM48hzA+yoJ4fni2bTasij6zvYQ2LXJTNQgIgYI6ysQEwTeF98VCdrKRRYf5i75Ajn7C8foMRC/8xnt9cPTxsD3IxbU4NUe7T/53grnOAnZ8NHPJT4NrRUU5jQuKfbd5d/4tfgW4O/z9T7W5ELpDRQzAuMw5vHq7voBGBj8JsEB6+EtF7UIB0P6US0s1SQ+Qtfx4N/g2u7iLjoC7g8EJdzCDq/99CnO2SMW8zL0Aynd5/1OpSg6vkWB4Cgv4+sHKhck+OAh1R0y5PwA6v0c0wc1JiVB"
       ]
     }
   ]
