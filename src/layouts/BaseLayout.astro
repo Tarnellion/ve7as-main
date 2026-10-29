@@ -100,6 +100,17 @@ const graph = [
   ))}
   {emitXDefault && <link rel="alternate" hreflang="x-default" href={new URL(path(PRIMARY_LANGUAGE, currentPath), Astro.site)} />}
 
+  {/*
+    Фид локали. Это второй канал обнаружения новых материалов после sitemap и
+    единственный, на который можно подписаться: конвейер публикует без
+    деплоя, а sitemap на домене без внешних ссылок перечитывается редко.
+    Объявляется только у индексируемых локалей — у остальных фида нет
+    (см. `src/pages/[lang]/rss.xml.ts`).
+  */}
+  {isIndexable(lang) && (
+    <link rel="alternate" type="application/rss+xml" title="Ve7as" href={new URL(`${path(lang)}rss.xml`, Astro.site)} />
+  )}
+
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />

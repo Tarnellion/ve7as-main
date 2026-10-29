@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { INDEXED_LANGUAGES, PRIMARY_LANGUAGE, HTML_LANG, type Language } from '../i18n/languages';
 import { path } from '../i18n/utils';
 import { getSitemapContent, type SitemapContent } from '../lib/sanity';
+import { xmlText } from '../lib/xml';
 import { TOOLS, TOOL_SEGMENTS, TOOL_UPDATED } from '../data/tools';
 
 /**
@@ -13,22 +14,15 @@ const CONTENT_PAGES = ['about', 'contacts', 'privacy', 'terms', 'editorial-polic
 
 /**
  * The sitemap spec requires escaped URLs, and the XML itself must stay
- * well-formed. Slugs come from Sanity and are not guaranteed to be ASCII —
- * one article slug contains an invisible U+2060 WORD JOINER — so percent-encode
+ * well-formed. Slugs come from Sanity and are not guaranteed to be ASCII — one
+ * article slug used to carry an invisible U+2060 WORD JOINER — so percent-encode
  * the path first (matching the page's own canonical, which goes through `new URL`)
  * and then escape the XML metacharacters that survive `encodeURI` (`&` and `'`).
+ * The escaping itself lives in `src/lib/xml.ts`: the news sitemap and the RSS
+ * feeds need exactly the same rules.
  */
-function xmlEscape(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
 function url(base: string, lang: Language, segments: string): string {
-  return xmlEscape(base + encodeURI(path(lang, segments)));
+  return xmlText(base + encodeURI(path(lang, segments)));
 }
 
 /**

@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://ve7as.com/sitemap.xml
+Sitemap: https://ve7as.com/sitemap-news.xml
