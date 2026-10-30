@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-29T11:39:28.640Z",
+  "updatedAt": "2026-10-30T11:33:13.729Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -871,6 +871,82 @@
       "centroid": "GATRrizmSjcrBSsGMMfeFFjq0tIf9/4rWznDCTO83v4tvCIu2NUy6MwXCjVEAt1C3c3IKRIfOKTQys8sM/rEICMkGy7GANAs3N4cRCflKu243Ps51TQf5kH0MhnM0bzX2xM45CrLFMDcEAXSJ9z4EioHudrX5jTZXQLN48TvCBk89B0YNCwhPubv6tvdK/gUPDA21UvwFRMR9jfP7dUxJdHovOPXxDhKyPLINeM48hzA+yoJ4fni2bTasij6zvYQ2LXJTNQgIgYI6ysQEwTeF98VCdrKRRYf5i75Ajn7C8foMRC/8xnt9cPTxsD3IxbU4NUe7T/53grnOAnZ8NHPJT4NrRUU5jQuKfbd5d/4tfgW4O/z9T7W5ELpDRQzAuMw5vHq7voBGBj8JsEB6+EtF7UIB0P6US0s1SQ+Qtfx4N/g2u7iLjoC7g8EJdzCDq/99CnO2SMW8zL0Aynd5/1OpSg6vkWB4Cgv4+sHKhck+OAh1R0y5PwA6v0c0wc1JiVB",
       "vectors": [
         "GATRrizmSjcrBSsGMMfeFFjq0tIf9/4rWznDCTO83v4tvCIu2NUy6MwXCjVEAt1C3c3IKRIfOKTQys8sM/rEICMkGy7GANAs3N4cRCflKu243Ps51TQf5kH0MhnM0bzX2xM45CrLFMDcEAXSJ9z4EioHudrX5jTZXQLN48TvCBk89B0YNCwhPubv6tvdK/gUPDA21UvwFRMR9jfP7dUxJdHovOPXxDhKyPLINeM48hzA+yoJ4fni2bTasij6zvYQ2LXJTNQgIgYI6ysQEwTeF98VCdrKRRYf5i75Ajn7C8foMRC/8xnt9cPTxsD3IxbU4NUe7T/53grnOAnZ8NHPJT4NrRUU5jQuKfbd5d/4tfgW4O/z9T7W5ELpDRQzAuMw5vHq7voBGBj8JsEB6+EtF7UIB0P6US0s1SQ+Qtfx4N/g2u7iLjoC7g8EJdzCDq/99CnO2SMW8zL0Aynd5/1OpSg6vkWB4Cgv4+sHKhck+OAh1R0y5PwA6v0c0wc1JiVB"
+      ]
+    },
+    {
+      "id": "2d6b49fdeff7",
+      "publishedAt": "2026-10-30T11:33:13.729Z",
+      "title": "Tight Slots Lift Las Vegas Strip Gaming Revenue Despite Flat Tourism",
+      "lang": "en",
+      "voices": 4,
+      "groups": [
+        "casinoorg",
+        "yogonet",
+        "igamingbusiness",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/tight-slots-lift-las-vegas-strip-gaming-revenue-september"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/29/127089-nevada-gaming-win-flat-at-128-billion-in-september-visitation-slightly-up"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/finance/las-vegas-september-results"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/nevada-gaming-revenue-in-september-remained-flat"
+        }
+      ],
+      "centroid": "J/nZwzfhQzVDBUvcK9C2O07Hus0lAfxOaVrH8SWc0dUvokAqptNKu7L/IUFQGM9GttG7Tu4jQdavyL4kbOTlU0RkJVWO8MBh+cE1XTDrLNDYt9JD3UFRkTDBKmTM37O73CU6yF+2L83BOjezctfrEv0eh774sjvnYvGev9D96Tg76BMkHDNKdb8W8QjSQ+76PDZk7mLAPNcHE2q6ydg2HM/tpfHIzw9OtfnB/epF5FapGzYs5PbRzNvXh+U12uIwxJ3dNtQrFxwVviYOMQnaf9MxN5OjDPwV2yoYLkPeJqbhKCW34A/Fx5/Ts8QCBEfgr7wa4ETkzAzpTRzDr4b1FF5UwDQ5y0svHOPoi7bOpzYp57L191G90zfrMwhS2K5w0MHYwhrPTjfiPef158BFFdwkLT1DMUsmutgebAcJC7fTqQ3PBTsi4jwEO8bJOLr0HknCxwhN0Tvs0QnLtjhxkSolCSG7qTQozOU9aT1f0vZFnDNQ0CPayhAf0bcTMiw0",
+      "vectors": [
+        "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"
+      ]
+    },
+    {
+      "id": "fd9b654e89fe",
+      "publishedAt": "2026-10-30T11:33:13.729Z",
+      "title": "MGM Alters Diller Voting Agreement, Door Open for Him to Approve Third-Party Takeover",
+      "lang": "en",
+      "voices": 4,
+      "groups": [
+        "casinoorg",
+        "igamingbusiness",
+        "yogonet",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/mgm-alters-diller-voting-agreement-door-open-for-him-to-approve-third-party-takeover"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/finance/mgm-pares-losses-in-q3-2026"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/29/127077-mgm-ends-takeover-talks-with-largest-shareholder-people-inc-after-18b-bid-withdrawal"
+        },
+        {
+          "source": "sbcamericas",
+          "url": "https://sbcamericas.com/2026/10/29/mgm-resorts-hornbuckle-people-inc"
+        }
+      ],
+      "centroid": "EhTqzjoLEBEpGjr8JcrSGkLo3r8VGftDXlurAka+zAE8pgEswOM2zrgRAiFLJ/cquunERwYzHLKj0rI0MtIGHSc7JTrXD8Ix6+UkNSbcA+vHyMgpxkEwqkPKKCzc5M6+5hQZy0WYKs7dH/7HO8zgIygT0sT95RvZQyO66/EDEQ038BshHgcdQ9f2ytXUMA0zLTA/40HmOs8u/C7NyM8QKN/rn/Ta0EEhwALKLsYsyUbkKEQhwe/P0Nzuvxcd2Akn8KLQJ+4dPB4QvyINKiTkLe9ZGL3pBtb/Ey/mFDjqLcrJK0nJ0xrmwLvH7rMKKlbMrv5A4jLS9CDfMwqjydTfOjM7tgUY5is1MCr9yMHZyBQk4sXv7kituSQPFz0z+uJKycW6sDHfKDIBRMAkGyEaBsMNHjn3KzEk19g4OhA087K9yQTIKjn02T4nKdblKs0R9j3FwxcZBioA8yTb4Sh3gRAv+Qfayh8uyMsXMTI23vw52QxC9BzP6s0z87cYGhkR",
+      "vectors": [
+        "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"
       ]
     }
   ]
