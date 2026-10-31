@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-30T11:33:13.729Z",
+  "updatedAt": "2026-10-31T10:16:00.119Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -947,6 +947,219 @@
         "Bw/k2kMTCvgqBSv7Eq3QIz7bzscgPAc7Y1Cg9E6+0A9PogIixtE21MUiFiBPJgMmsfjERhA2CqiP2bwpMsH+ISVTITbQBNAy8NYgPDLhAv3UwM4htzccrUHFKR/y6dip4g8T3DqEM+7fIQvCOM7MMDAD3cAB3hbbOC2t5PP4GBEs9h0cHxAfPOLs3LzENRo5My474lLlSM49DCS/xdgLJtXqoPnyyDUivvbWP8oUx0jzIEIfp/LJ09nnwhw1zAcp97PbH/cwQjULvhQXMhvaQOdLGsrr89DsFS7vISsBNNHbJUvYxh7axKvd6b4GN0fGq/NP4RTDCRLEIx+tx8fqUB9EsQkb+jBHL0sAssjtvQwZ8LTu7z2gryUQHTovAelAvr24oTfpKSsGQ8kUETQMEcEEGTwDLjEryMc2LiM+5qm2x/qtFDz76kwRHc/sF7oT+EC4yyQnDTAM6Bbf4y9/gyE99RTvujcfxbQtQ09N8v060Ak97xrC/NUr7bMCHRYm",
         "JB3w3zT8FSBGIjf/IeDBFznZ1cYFFeZCWE6pDTS/0Ok3tPw3u+8wyKwR+CtAQewiuem0Rgc+Ibaj2ZooNNQWFTo5JzDpH680+94jJRzbC/650MkntzcxoFPKMTDc6NO50hcZr1mbLtPXJPjHLsTaKDAXz8wB6xrVSR/B//MQFg4q+hAXKQ8iTtz5vdzTMBEzND1A2DjPP90x8SrM2MYBNuD1oe/Rxzkb0AO+KLU+1lHaH0QhxPfP0dvlqQ8x3hAuA6HZL+IWPigdxC7/KzLeHPJpEavdCMoCAzXsFz31J7nJQS68xBDwxLa5+aACJ0nCuwJB1Djg3CvjJwOpws7fQS5btwEa7CcrTjoSusTc0Bgv1dwA4mWpxxwWKz8zB9pQ17/Bt0HeKjX+U7wsJSksArgDKSoBKUMh0+I3Hwsz88DPuwO/LD/v0jUoHsTKOrwn+j/BtAwHCzPz+ije2DZ/kAQj/hnXzRgev9UQMDA94+8Y2/1G7S7B3bkp77goHA4N",
         "ChzpwUj5DRQbID78KdfbDEX71bYmJeRWWGC2DEy+vRkpofAwvfsw1qUK+yFbLP0rst3VTAUrKbKxzao+L9sGHSE6Kz7lGscx4+AqRhv0AOLMxbUn2UY3qULLKTnb5s64+Q8nwki7LLbbHAS/L9XfITAgzrIG7RvaRyy+/PQMCfs89x8VGugjQsUDw9PWI/8wLBxK40PkL8Uk9TLfwckfIejqov3a2koarhq/Lcc6v0PnEkEr0PnSyev1uw4Y2BYu657SKe0PNAYQrS8KGCftFvNUC7X0B8L4ETztECvmKtLBLFHC3CDyv7i75q0fFVjOrQkm5EbP7BrkQA6NyePaQjMuwwwd6zUkMB8C0cbOyAIw5bjm6kKryDEPB00x995eys29rSTmFjAGSs4sCwwsBLoNHzHpOiEp4NJBOw88DbfG2BHSLTzm1EIxNOjzMtER3mLbwwYTEiP67zPZ3hpZgfwpBvHO1BQxxNYVJx4TzwA1ygxK6y7cytA57qIfHx8I"
+      ]
+    },
+    {
+      "id": "42b653483034",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "El Supremo de Brasil debatirá el 3 de noviembre el impacto económico de la prohibición de las apuestas",
+      "lang": "es",
+      "voices": 3,
+      "groups": [
+        "gruporandom",
+        "sbc",
+        "igamingbrazil"
+      ],
+      "sources": [
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/el-supremo-de-brasil-debatira-el-3-de-noviembre-el-impacto-economico-de-la-prohibicion-de-las-apuestas"
+        },
+        {
+          "source": "sbcnoticias",
+          "url": "https://sbcnoticias.com/ibjr-mercado-regulado-brasil-no-volvera-igual"
+        },
+        {
+          "source": "igamingbrazil",
+          "url": "https://igamingbrazil.com/legislacao/2026/10/30/stf-divulga-programacao-da-audiencia-publica-sobre-bets-no-dia-3-de-novembro"
+        }
+      ],
+      "centroid": "Kv0GzB3hLiouHj4BcL3iKSvTyuUa9s9NTzjd7USo294gmkQiqdkp674U/FJnSelFrPHaTgg0GLzGx6tBRA0THzYcFz2tA80+7wEdKzW9K+LR0sgkxygn2V/FakLe0byl7To+51WeR6/i/wzsar7mEzggrvHhkEO8V+Lonc7mFRUjGCAjIBtGWs0P5LfAH9YEFTRSz0DiC7osNkeusbgeNKfZp+nV4iI6qe7aK9c470mcKk9A0tHSvMrQ2xD43ug7tbzFP7wZMCYB3TcFPxzaJcMLEsyeQPL8EC7TLiPiMZoIKyTanhP+G7zNwKkhHCDFtN4i32PT1kHKLjm4oqXVJyIzzyQl6GsxZhHX9eD3zTtV0v3bM1C9nn0OHj8x5uM53cfsx1PmBiIFS7om8OseF8BGKhcuNElZyO4NURpCxeGf99fQNDECzCXoJMzPULnZ4Ay8rCkv3S77zBzZ2yIigR7v8Sa7+F0ZzvohJz5C5bo2whgW2h/95MowxeYfXh0U",
+      "vectors": [
+        "QPIFvRP5KiIlBTkQcLvrJyPZ5/oJ6tJfTyrn1ju059oYkysnuvAg7awJ/lFlWew7xAHcNwoqGuPN6584OhQOFxsbGiPHEsY//v4YKCjKNObf38YezyAh5GPCUDzW172u6VJG6VScR7vv9A/mf8DxHjwbvfnriSOyXuLqrOT09g0eJzQfGiNEUscU5ri+HPgdIT9CzDgD/rcoIDG1or0FLqrhpO/f3yIypun3Jdou4j2jM0JE6t3h0c3f3wX86eYqvMi+TLsaIDoR8kMUQRrxEssNBNyZPeIGHSTUOBDhK6D6EgfWrPcBDrzerrAaLB6lt94M2VPZ1TvFHjqduJ/dGh0e0TAa3mEnXRfU+ub1yzhQ2gnWJE27rX0IJDUR8e0y1sbYxkLqDRoLRLgX6vEhIM0+FSQWL0Zn2esMTBkzw++SB97JJiYBzB/ZKczbWq7m5PTGuSs45TkB3CPm2B8ojSzX5BnE61weyuEZKzoy27xC1xIU9hMH7NQsyegXWhER",
+        "LgsA1SPEOB9JOyQLfKvYGCPJn9k498dPLTzhGGCh0Nk4qmAalMUr8NQJ/11fKOVQpt/cbBU+FpS1urRgRwkoJC8hDi+h/8tHx9wgQSu1JPXNtNIv1zQr1G+0ckzstMOo/iU962aCSLbvBALyTbTeBU4Rm+EAqGK0UOTrgsLpLx1JBiMwGBZIaecAxbXMEsDmAx5VyFS+CaE2O2Wjprc8LpPglefJ6Ssvm+XIN9RD+16pJVUxuM/cuL3B2w/u2+1HnM3LQqMSGB0HyBoIMSXTR7EkJaefWwvuGTK/MhXjKJgXSizzjkLYIrfDvYYrBjXqy+Qi7GHGwlTDJ0fMk7jaLBk1wCso7XgndAjQ6Mb7y0VX5x75OFrFgXwtDkpD3edC7c7mzlrbCS/sWrNA7/gWDcEqPfw8T0NsqwcTWQ9Jytiv4uTESD8MwzP4Kd3DNrHP6DihrjUs2BnzvB66yxUUggcGBTTVHmQM2/Q0MCxW6MMmtQ8w1zcV5q8pxO0QZyD1",
+        "DPsK2B7lJjYaGlPpW9XlNzTb2NwQAtcyZD7S4C6q2+gPnj4htNcq5cQl+EFmTus/ovPaQ/ovF77UtbgqRAcFH1AWGVyn+NswBSQdFkS/I9HL48cctyIn10Tdczje6Lyi5Sww5T7DP6bNBhHvYsvkExwvufi/jkHTTuPnr8fXGhUDGAYYKxY+TMIU/sC+K8oGFTZX3THiF9khRDu40boaOb7Owejb4hVFwP3RI9sz9TyUIU9C1Mu+sdfU2xv92Ok8y6rNJ9obUBft3j7zQxPMF9HyDuGrJu/++y/mGz7mOqEIJTfLqAYcHsfK28oeHQzMpdwz3Wrc7C/cPyXJo6TNLStB3w4p8GA+WRDk/fT11S5PvtTLOEK/s3D5Izg+5Ngy2sYIyVXu/RoVPcob+N0gE7lfKx41HUsy1t8HSCNFyt6q+cnmLCv62hvtGMPUU9TY2P3Rphgk3jH7zhHq7ywkgSD27yKl5U4czBkXGUo677czvyL/xBTe3dw2yeAyUSUv"
+      ]
+    },
+    {
+      "id": "ab4d5fdc4b58",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "NCAA joins sportsbooks, prediction markets in IC360 s Bad Actor Program",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "sbc",
+        "casinoorg"
+      ],
+      "sources": [
+        {
+          "source": "sbcamericas",
+          "url": "https://sbcamericas.com/2026/10/30/ncaa-ic360-bad-actor-program-abuse"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/ncaa-joins-bad-actor-program-to-crack-down-bettor-harassment"
+        }
+      ],
+      "centroid": "IvrCwEoPFhwiLkMnUejfK0rO3ukA/uMyXBvo6D+nz+YtsT00yMMV6MEvKUhwJ9Ep2RjTXf0/NJmTqsEePM4CCjUlHEydELUpAeIVSC/fD/TdytY8xT0nmVzbRQuvz5rnzUowz0TbKbjLMRK2T7jrRTghpsS5tCT+WfLCx+X7NyZA8RMiPj5JXcHZ+t/UNeQ6MDZU2jzcJ8X+IVfExtIkN8fNquHP/S5A7OnZDOA3CT/YJFA52/+9q73j3A4ztwMTy7S4QuQlRQT87kMLGSrIMO8kWLuzDvjUBhTP5DHnG7/dMjfbEyy918W3tMMTFwLaudUOzyH0z0MWVyWs4ZzRKzdK8v8t+zMcRBfwC6PnrAY3xOjg/kug8D0VQCRfHOVEyvOzzxvJVBwROfoAMeA/Q9odPz0RDzMTwNYIM+MB2+DGvArbBDa8xT4VBbTDDrviFB/Urfwqqz3k5SLB1CRpgR8RugGj1TcowQMdLv4u2QULuy8u0QHX5uYj6fNMJT4n",
+      "vectors": [
+        "FfjMxkQGHCcTKTwZM+HkF0jO6ub7A/8zTyTj3Du51+EwoC01yr0U+8ctJSthGtIjyyDRTPE6NJOZsbUkOc32DDUPK06WHLkfAOIVVx7vHvDQyd8ywEIYo0vnTxKrx6ro1k8q2j/gJrfDJ/7CTbvpLS0bqr/OuCcKRvbT3Of1Ojw++RQhPihLWbzm+OPoHt8wMC9N5jvmLtbwJFq53s82N7vRqtbOCCdB+OzjAOFHCTjiKTo36fi8q8Dj2QcVxgwi0sTEVO8bPfsC50kOHSu/LfUlVrzCBAfW8wzU5TT6DcrWKSboFh/F4b3Bw8oKDBTPwuAGyxgB1UQGVhil463RGi069wYs/iQVRhzzFabssQke1fLrBU6i9zwVMjVPFehB2vy1yRvDTxoZIg/yOOo9JuAkLC8JHi4XxN0QNO4O1+DIxwDeBzO+1kgRE8LTC8fYJhXGq/Usqzvn5Q++zipVgTgFw+yx5DYQ0gISMfwuzgMVwSYq1RTp8uUk7wZAITsf",
+        "MP63uk8ZDw8zMks3c/LZQUzP0O0F+MIvahHv9kGVyO0nxk4yxswV1LswLml/NdAw6w7VbwxEM6OQotAYP88PBzQ+CUeoA7I1AuIVNULN/vntzMxHzDY4jm3POQK12ojmxEE1xEjWLLzVPCmqUbXtYEMnpMuisSHwbO2vr+QCMwxC5xEiPFZFYMfL/dq9TutEMD5azTzRH7EOHVHTq9YONdfJre/S8DU93ufOGuAiCUXMHmg6ywfArLzk4BZVp/gAxaOqK9gvTA/19zoIFCnTMugjWbyjGebUHB3K4yvRK7TmPEnNDjm1zdCspLwcI+3osMoX1izlyEEoVTS33orSPkFb7PYt90MjQRLt/6HiqQNTstzU90ah6DwVTg5xJOJGuOiy1xrRVx4IUuERKNRBY9MUVUwZ/jcMvdD+Mdby4eDFsRTYADi7sjAZ9qWyEq/v/ivlsQUorj7j5TjG3B5/hAEfsRiUxjdDrQQpKQAu6Ab+tjgzzevC2Ocg5N5ZKEAw"
+      ]
+    },
+    {
+      "id": "0c99be7c1fd5",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "Polymarket Hack Drains Estimated $2.7M From Hundreds of Traders",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/polymarket-hack-drains-estimated-2-7m-from-hundreds-of-traders"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/polymarket-had-to-pause-trading-after-hackers-stole-2-7m-from-the-platform"
+        }
+      ],
+      "centroid": "Heji1Tj2BTNUADD8RNPYOzW9u9kp2uc8U1fc+iOxv/wr3Ckj0OE2xesOEE40KOYw1vXUVBZCKc2luscOLe8UHE5BGU/SC9oSE9MtAijDHMaq1sc77yg4vlLjPx3YsMKd1xMuzXDKK73oJRHCT8PBNFkQzeLg4QzKHtm01Nv+Lyw4AhwNHUYrY+oQ0cPtNAYVSVMs2kjdVLtE9iHWtKMhKc0BtiTK0hdKuNvxJukv2mHCEzk1xenLzOnSzSRP+MoKyrzaCdkgMz4l/CMUIBzBL9cmSLHG/+QZLyLmE0DrRMwBGFC/3CTH4sC31q0EKQLet+Ud41Pv3OXQOyfeycT0HCxItwUk/TciKvn32tLduBwny8fU+ErDyjL6WBpOAtw01cPVsxvTMBHXS9QLENYwA7ELHTUh/k055uYeKusD6vDf0ufkBC34zx86KOrVIaryDibA1i4f0y7f4kHq6Cc3gREkwiaZzR0swOwfOSYy2yg72C861enpye4syNcxLCIa",
+      "vectors": [
+        "JOXaxUP/DD9LACwCV9HQODO8qeEp2exATlPS+jCeswE04Cwi0OFBwOYPGkY2L+Ym2vnLWR88NNOes8f9OfUMIktDH1zHCdIIEtUp/SzIJdKeyNc58ShAy1vYRh7Xrrugygouy3XNMrPlHRK3Wr23MVoExtzZ3wrSFNqsyNH/MiBA+SAjKzojaOgQ2MPqPQoNSmgv0EjdSLFP8RnZuJYhL8b+vS3N2BVdvdXvMuox12DCEzQ/uNzmv/vaySNQ9sgY1bu/FOEcPTUf6h4MHxXSL9sxTbK2+OEnMB/lDUfwQOMEIlG03R3M5brC250AIgjnwNgl6Vjb5OTRSRvewbn2GS9Fqfgm/EAkJg4M1sfathYnuLTJ71O+zTfoYxVcBuA528rJpiXeOB7SQs4SFtsvA7oMHiwT/VU25uMkIN8O4e7jxtroFSvwzSRGKvPbFqP0BCjD0zIV4zfh4Erl5DE6gSUgxCKJyhkutecWNzAz1i1A0jZC0+nlx+szwcg/Nikl",
+        "Furo5C7u/yhcADT1M9XfPza9y9Io3OM3WFvl+hbDyvgj2SYk0OAryfANCFUxIOY50/LcTw1IH8eqwMcfIuocF1E/FEPbDuAcFNEwCCO/FLu047k87SgyskvtOB3Zssma5Botz2vHJcbqLA/NRcjKNlgb1Ofn5A7DJ9i73uX9LDYxChn4EVEyXusQysPwLAMbSEAq4kndYMQ7+yjTsK8gJNQDrx3IzRk4tODzHOkt3mLCEj4t0PWz19jK0SVN+cz+v77z/9EkKkYsDSgbISOyLtQbQ7DUBegMLSXoGTrlR7f+EE/K2yvC4Mat0bsIL/3WrvAV3k8B1efPLjHf0M/yHihKwxAi/i8gL+bk3dzguiAo3NneAUHHyC0LTR1B/tcwz73hvhHIJwTcU9kFC9IwA6gLHD0u/0c75ekYNPb58/Hc3fLh8y8A0BovJ+HQLLHwGCW92CooxSfd4zru7B40gQApvymm0CEryvEnOx0x4CM33Sg01+nsy/Emz+QkIhsP"
+      ]
+    },
+    {
+      "id": "24772d20b0f0",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "Fraud at second zero: Why waiting until cashout to detect abuse is a fatal strategic mistake",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "focusgn",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/second-zero-fraud-prevention-cashout"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/10/30/127110-your-antifraud-setup-is-killing-user-ltv-why-the-34block-everything-34-paradigm-is-obsolete"
+        }
+      ],
+      "centroid": "Iv3VvUHRNAIwGBHvZ+zjIkDYsdovE708PlXZ6SKyy+EPlhokzcsqvvQCFlxACfc51c68MwBAEMijobEtL+XaCUVXIjTIF8xjGfMqPhfj8MTQutpK9E42r3HwFB7HorGrxzge217LQJH/OAnXUOLrNm0+yc/VrRLGXMPKwMDxKBhI7AgSEENuftQB5uTLT+U3Kx5duUCiW85FHjW6v6UoLLHqqSLAyEA8q9jGHfY160fOBUo72t27v+XAvDYe3Pc5zb3LLbIqIREa3hAqIfvRQdwzI7K/N/PqM0UFKGjQKbbXCzyrrjPY/bvT5qv5LRC9qLUQyVXTzhoAJyq30tDsMUJktPAJ6DoTMyrb3MPgvzgn39TXE1imzT0DJEJK9uRR0bzOuDbRVDXzSwQWKME4KK4mG0QMKXBQ4bwTLNoQ2c/RvunELEPU5D8VW9bL+avu7z+itv0ggVrr1ivG41NchSk1tD2r3kVPoOQtM0N76Sv82U4G0f0R0uo52rZTPxAx",
+      "vectors": [
+        "J/71xijoIQItJRTpUPzeFDHitOEaCtFCNjrq/Ca50dYXphET09AvxOgCBD45E/Uk5cbVLQAyF8+vqawlLujN+DlPKCXOKb9dDfsORBLu38bXydw59FAtt2j0EyTau8S9yScp41/GKKUYKf7VTOrvEH89zNjYqBjcTLzr0dD3IgpD3P/8Fi5VcNsCBAPUQP4uOR1TxjeuRtY+F0O9xaEWIqzuxRrR2j9AsOLSMAQp5UnREUI92eC1yuO/whMm7vcwztfSNMISIhUW4wsXIfTWP+cmKLPJJwTmJ0gDKWbeMLvoDyKuxSno59PX7LT1JgrBrrAP0EPh2B8DDiy229DkMDFSswIJ+zwRJBzY7c7UwDAa7cHZIE+j2EL+JTxL8+xF4snGwiTJRivyTQ4ZJ98iKbQeEjr3HVdH3METMcsm49PPyPS+JT7j8SwCRNTX9cYC6Tiq1AAmoUby2SbZ90dLliopsTqu3UA3uO8sLzpl8Rv65U4F1PgJ6eIp3blBPAwk",
+        "Ff2/xkrFOgEmBQn6ZODvKD/Xwt04GLomN1rS2xa/0/QDoR0s1dMayAMAI2M2/Ps/0OSzLAE+Bc+vsMoqJOrxGUFJFDbQ/uZQHu48JxfgBdLUvONI9jcyu17vDxHCoLKu1TsL3EXeSJnmORLjP+HtUD8w1NLdxwe+Vdu2v8DvIx87AQ8lBkhsbNkAzsvQStMzERdPvjiuWtM7HhjJysEwKsvroyG/xDAou9fIAuk09zPY+D8q5eTUxO7Rx0sO0vo02rTSGrY4GQkY4xEzGQPYMdo0FcXFOeX0Mi8GHU/OF8XQBUe+qzDSFbTa5rj+KBLKuM0N0FLR0Q7+NhzL1d36JkJcyOIH2ykQNi7o08j1zzIq2fPhAUvA0CgHGjg2++JJy8HjwDrlTTL4NfoOH7JAHLwlHj0eK21F7skPHPP12NjfxuLZJzfP30IkWuPN/6Xf+Dayq/sSgVjp3SXD1UlXlB40yzG+6DhUoOAjKjtz5zEA1zkF2gMVxfg84MZQMg8x"
+      ]
+    },
+    {
+      "id": "b1fa4751d5a9",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "Altenar presentará sus soluciones de apuestas deportivas en SiGMA World 2026",
+      "lang": "es",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_latam",
+          "url": "https://www.yogonet.com/latinoamerica/noticias/2026/10/30/111327-altenar-presentara-sus-soluciones-de-apuestas-deportivas-en-sigma-world-2026"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/sigma-world-2026-speakers"
+        }
+      ],
+      "centroid": "HxHXyz3ULi8RBEYAWMUJHz3L574S/NE7T0Ws3yi6t/UGqT4jvdBEy/EW+Dg2LvhWyufbMhsuJMvDxs4pOR4UFkwsGBOz5sE36LQFMDPMLPS7vOsW40Eh1UMGOCLCyrDA2Eg85zu8IZfeDhvoOrztKjIVgcb4yijfSv3os8HIGRktDiAmKi4jOcPpAcIAXtgaPjw75B78EtQHH0TUu9wrQ6r1uNLU5joUqvHQPO4W0y3MPU4o5gHDyb70kxMPw90bwMbbTdn0OiTo3SESNgznTe0fA8bPEwL+Ci3nCzz/S8H1JBThvioP8tGz4N8GEijSqPgh6jD30CjiLkbE2LfVJC4VxCwiADAEMBQA6d3eoydT0/nsHyu6/z/2Lz9FAsdN6Mbu6S3mJTEDPtkb5PgQG9smMTIIFScqvQUuRAQn6em29NbOQzHw8h/7GajnEsvT8DDTsxoy0EX91inG2yQrmDUP7RG02VYzx//9JSD94sszyBwl1vf0vvsu4t4gVkxA",
+      "vectors": [
+        "JhbR4D3HIysIDj7+WscAIznK57kN+M0yXlGkyzrGtPEMnUUeuM9LxvUj7kQ9Ke9guuvrIg8bIcK539I7LikbIDgnACC55sQ928n1IzfIOP65wuoa6DEj00IWQivE2ay32khA2ESyJZ7gCgrfOMXfJTUVgc4AsjPgSPzxq73LEQA2FCUuH0gtNs/56bQBU94CLT9HzSMD9NoOJDfay+snR5/wsszW2zkUpe3VS94lxiLBN0kk8PXJ0sPspBkevsgewMbeVtbtLij43i0dNRj2TucaB8XSIwwBDDHxDToMQMr7IQnXrisX/tyv89f5Bi7JsO8a8xv13SLTKk/J4LjQIx8UxSYo7DYEPgb86ufvszBW3QbwLCLCBU7rLEI6+8BJ7tj67SvtIioJQ9sv3/7zFuAiMiIEFys4wPglRg882+er7sG4UDL56CP+D5/mF9Ta8y3XviYv40fxzizA3SoYkjIB6Se62mkiyfTyJCLp9cAptxwz0v8Jzu0h5OAiUkBL",
+        "GAzetT3iOjMa+04DVsQSGkHM58MYAdVDQDmz8hWuufgAtTcnwtE+z+0IAyswMwFM2uLKQydCKNXOrMoXRRIODGAyLwat5r8y9p4WPTDQIeq9tuwS3VEe10P2LhnAurTJ1kg59jHGHY/bEizxO7P8Ly8Vgb7v4x3eS//evMXFIjIkCRsdNhMZO7jYGdD+adIzTjov+xr1Ms4BGlDOq80vPrb7vtjS8joUrvXLLP4H4TnYQ1Qt3Q28v7n8ggwAx/IYwMfXQ9z7Rh/W3BUHOAHYTfUl/8fLA/j7CCncCj3xVrfwKB7qzSgI5cW3zugTHiLboAEo4ET4wy7wMj2+0LbZJD0WwzIdFCoEIiED6dPMkh9QyevpEjOx+TABMztQCc1S4rPh5S/eKDf9ONgH6PMuINYqMEILEyMduRM4QvkS9+rB+urlNTDo/Bv4I7HpDMHM7TPPqA42vUIK3ibM2R0+nzgd8vqu2UNExQsJJR4S0Nc+2RwY2e/erQo74NweWlg2"
+      ]
+    },
+    {
+      "id": "c6d3090ae1e5",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "Cirsa ofrecerá 13,20 euros por acción a los accionistas que rechacen la fusión con Lottomatica",
+      "lang": "es",
+      "voices": 2,
+      "groups": [
+        "gruporandom",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/cirsa-ofrecera-1320-euros-por-accion-a-los-accionistas-que-rechacen-la-fusion-con-lottomatica"
+        },
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/cirsa-retrasa-la-junta-sobre-su-fusion-con-lottomatica-y-sometera-a-votacion-un-dividendo-de-156-euros-por-accion"
+        },
+        {
+          "source": "sbcnoticias",
+          "url": "https://sbcnoticias.com/cirsa-convoca-junta-noviembre-lottomatica"
+        }
+      ],
+      "centroid": "S+jBw0HjQCQK+UDxS+frMDW30sz68cImTEqt9zyt4NwglQonp/laxMI6/k1NNuxIs+vrRiRCIpayuxAqLAYYKUENICPI16szBMgLNEHvIcGiofYA7FA4whwJORjC1bHBEU0v+VbAMMkFKvHFLqAAQC/3w+gIhzy3ZOPsgeDtGBgP61Y8WFNLeLoX3bPXJ+f3Cj9V4z3jDcAnQ/ebwbQlW43Mu9boyU4szdvOJtFR4FTVNDRBvcaz6KXZsfcf0Oc1C7vWMts2MiT+50MaTh3jXddGQb3TGuMNIRTeNyXaQ8z9Ei+xwN0UCJrI2NABKE+0usUU1DfU3SXfUB2w4KHTGB79zB9D31QaZjfS7N35r0FBo9kABCPYyz/rNVEh2vBvw+LU2UbbDz8FOb4eAAf3A7UFEkYaGCU1t/4ISCtlq8+l2wzlRigb92PhHp65Fb0K+Q7wjigZDCj08C7ZzEj7giZM1SjPxGI20fUbIyAO9+wYuzktxQ3/vNMc37gZYQFA",
+      "vectors": [
+        "R9vIvDjdPDH9+D4ANe7YJCm+ytgHAs4iNULA+jbF7+8cpgMguA1Dy64fDFlZKulDv+n1OBcoH5OozyAZK/chLzwNGRXJ3ckv7NIYES3vG9O3wvX98DwnyxUCQA7D8brHCD8k/0nEJ80QKffLNrMGKzjt2esZijqyXOThmfLsIyEE8khBRVZnbcQQyajoE+HkBTtQ6TDYFtMoKQqlv8QXcIvUytvpy0Ep3t7fIOxE6lTKIBo8tMrC5bXR0AYBzM8wCMLeG9Q/Qi0M1U4VSBjmdtc+Q8jFHdj1Iv7pNijROMsTHie57uQKFKLY2LEACD+qvswL4zHr5Q7zRh63067v+SD00Ckv/UwqWjHU9eUAvDBHy+cEDSTf0kX5LUkx6wVP0dnUyUDoESrxKdIKCgT/A8kDETAOKis7sPMQSzhsrsbD4QTqRhgZ/TnDGIy1HKYBEwXnjiMt+CX+9yrmy0b8gSQ8uyXL11tAzO4fDSsM//8DwzsUxxEJxdYM17wOVwM3",
+        "RfTLyUPqNxcV+kDrSO77MjK9283t88IiUEar9Tqq1dgcmw0jqOteyc9L9EhHNOpBs+3nRiZJIai7twcxJQ0PJj0LHCvH16EvF8oGPknxH72lk/UB71s3wCAOMCHKy7PAF1EwBVO+Mc75K+vKHZr8PSj8uugEjjLBXuD3gdfzFRAV7FYzXUw2c78V5rvRLPgFCz1V2z/iBLQmTfKjybImSpPQrtTvyk4ozdrILsxQ31HhOT1DxMm27K7Ysekz2fk3D7/SOeIlIxvz9TodUh7oSttMNsDlHOUbHB7dMh7kQ9D3ADKwtd8WAJvA3uIGN06+ucwSyDTP4C/VTCC08J3CIRQDyxhE11ASZDPP6Nn4qko3ldsF+hzW0T/jMU0U0d15v+bU5kfRDUgIPL0k9wb0ArEEFlQeDh40uQj9RCBYsOCe3QniPjET+nTtJrfFDM4W8BD3mCIKDSHt6SrV1Ef3iR5A5inUv14u2PIbMBMP9tgnujM3ygf4v9Ah7r0bVwRF",
+        "Ru69zz3oQRwL+zXpVt30MDq528n638EmT0et+Tmp4tQhkw0qqPNcxdY6+jg4OPVFt+3qRylIIZzFtwYuKw0THD0NJCLU2aYxCsgCQ0LxIb2boPoB6EtAyBoLMBbGyrXJE0cw6FbKMMsFIfPGLqX+SyMAwOr5lDvAX+nwgd3sChIR51QzVkc0cLob8cXULuMADTlI6zv0CsYeSOidyLQsRKDJx9rm000pxuDNHsRP3EXdOTw4zMmw657pofgk1PMvCL7aOeQyJh368DQYQhvhRNs8PbzaD/IXHx3bMiDfQNLsFSu7pdsZAqXJ2+j7MVLDxcEb2TXJ2CvcThS15arPKSEC0RZKzU8MXzXc6uD1tT03mdH3AyHbyCznNk0V1/BxxO3e5EDgDD8VPLgm/grzA7MIDUIeDB4lygEKOx9VstCd2xboQSYf8Wr6F62/E9MI6BP3misNHirz9C3Yzzz+lShZ5yTZwFkq2QERKBwL8O4cwDE1yQ76vN0g4L0eYf04"
+      ]
+    },
+    {
+      "id": "f6c526361448",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "Jason Robins, CEO de DraftKings: Todos los padres deberían hablar del Juego con sus hijos",
+      "lang": "es",
+      "voices": 2,
+      "groups": [
+        "gruporandom",
+        "casinoorg"
+      ],
+      "sources": [
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/jason-robins-ceo-de-draftkings-todos-los-padres-deberian-hablar-del-juego-con-sus-hijos"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/draftkings-jason-robins-urges-parents-talk-kids-about-gambling"
+        }
+      ],
+      "centroid": "DQm6zCLVKS05OTXjf8XaPTjM1M0oB+pAJzbPESDK9dsotVIemtMsxtEmHjNSGu5QxfvVOvRSUouj1r8DMwAVHC0//v+9CtJM9to8Nx3sIfnT7dxDzD9PyDXVK//b0bKt1B0p4UHHEszsEwbrN9vl/lUUvtUBtyjrQN7RxskT9wM3BicKIEhhU+MI5OvNJO4lNh1J2TDPJdc1B1a7xu8YKMLlqdnPwT493dzLMNY86CXlSjgeBem80dDUtxY2+v8P47CtL9AvHhr4zDgM/OfmSvAuG8S8AfXw+CnYESLfGLzqJxvi5h7o+sXO5ckAETTFrdUh4FXdzBfQTi6yv9riNR0vyiIn5SwPKQLy9uT32hEl2QX4ATSs8SkHCEY/AeJC6urXxFzeMhX9NOk6EeYiAM8aICH5KkBU1twgK/cQ0eK52QPPHDrP9UMjGtPcGrb8wk/Tsf4g1DTs6BG9t/lLkikg2BXW+Dw1wAEVHjMv2h8SrUIc0RsC38oex74cMDEX",
+      "vectors": [
+        "Efy/1jW6NiguNTD0f7/VMjjc0dcoBN45HyrMGhvS/+A3t1Mkksoyx9IZIypWIOVUwAzoN/tXR4i0078LHvkNJyMz9frAENJM5+U1NjDnIwHl7ehF0UJTxS3bLf7XzK6t6BYs50bIDtTlFg7xKtn5/08Hvd0VoyrsQOnlw9L69gYyFC0HJEJcVO8M4eHTIOoZHBU/yDPNG9g+EVXFw/IZLsrwsdLXzTlL4t7HL9M17BfpSTwVCenE0cnXuSAu8wsS7rivRdEvHyPpxUQVAOPqUuMmEsO9//AC8yLDGxHoIbPrIxHh4B75EMrQ6sQLDSLIqM8s5Vfezxe/SzOlu+HqOQ4X0Bwa5yoMOPjt7/T+0Bcn6R7/DiW27jjvE0pB/ug/9/LkxmHfKw0JN+4/Cu4B89IZGBXyQEdayeEdJAQTyNqt2QHQJkvX8VMgI9jPHbX0s0rhrwAbyjbt7Q/Ds/ouhTcN1xjY8EUpyfQkFjcY6AQHrTwP0CkE5cgLvMAVMC0h",
+        "CRa2wg7yHDNFPDvRf8zeSTe718MoC/dHLkHRCSbB6tcYs1EZo9wmxtE0FzxOE/hLyunAPexMXY6R2b/6SQceETdMCAS6A9JMBc5DOQnyHvDB7NFByDxKyz7PKQDf1raswCMm2z3FFsT0Ef3lRt7R/VsiwMzszSbpQNO8ysAs+AA8+CEMHU5nU9YF6PXGKPExUiZV6yzRL9cs/Fevye0XIbvaoeHHtUMv2NrQMNhD4jPhSzMoAum10dbRtQs/AfIM1qiqGM4wHREH1CsD+eviQvw2I8a7A/ve/THuBjXUDsXpKyXk7R7W48DN4M30FkbBtNwW21LbyhfiUSrAwtTZMC1Jwik14y8TGw33/dPw5Qskyevw9EOi9Rkg+0I+BdxF3OHKwVbeOR7wMeQ1GN5ED8sbKS0BFDlN49cjMuoN2urH2gTPESnH+TIlEM7pF7gE0VXDsvwm3zHr4hK2u/looRo02hPUADNCtg8FJS9HyzserUop0gz/2M0x1LwjMDUM"
+      ]
+    },
+    {
+      "id": "570e8e2152e0",
+      "publishedAt": "2026-10-31T10:16:00.118Z",
+      "title": "The MGA publishes notice on multiple unauthorised URLs",
+      "lang": "en",
+      "voices": 1,
+      "groups": [
+        "mga"
+      ],
+      "sources": [
+        {
+          "source": "mga",
+          "url": "https://www.mga.org.mt/the-mga-publishes-notice-on-multiple-unauthorised-urls-21"
+        }
+      ],
+      "centroid": "GwOw00wCETwR2E3hLvHfLGwE0s4pI9FGSk/W/UeNvO0aojlIw8s14agtPkFh/ete0r3yOQxGGIvfpdxMXNPrFyQsISqr1Lc+4LQeZyTvGMm/3sgd4E8+0EngHTTttqu0+S422UC3NKrFNQadNsgGIyEWudQB1jCzOOq+r8jbKR8yJBYzD0khNaD5/OHaNdseRx5/41vYOOAnJ1W51cQ4S73cqsfQFS8vzOHnKd9hESqjK2ogCd+/rea3rB0AwtYo0NPMZLEWARMezhwGIxTcCdUsGueyLffVMlkAEkvgHLXTDDDK3ivn79zG0afqIBrkmgD//kbj8Cy6OCi/79/lRkUdtiQo9ms7K/LO29zXmhlF4+jo5CjF40fmHCZGBM1Y4tfP4QHO6SjXFcYJ4MZPIdICNWATGCUn3RAtb98w9b3M8vnUITze8Bz1Gd7gKbIO6Q29xA8xzkv52hProzo9ohMsuyqY3DAtpPkTOCMvCv1AwA1M0fb3Cukn4psGIiAu",
+      "vectors": [
+        "GwOw00wCETwR2E3hLvHfLGwE0s4pI9FGSk/W/UeNvO0aojlIw8s14agtPkFh/ete0r3yOQxGGIvfpdxMXNPrFyQsISqr1Lc+4LQeZyTvGMm/3sgd4E8+0EngHTTttqu0+S422UC3NKrFNQadNsgGIyEWudQB1jCzOOq+r8jbKR8yJBYzD0khNaD5/OHaNdseRx5/41vYOOAnJ1W51cQ4S73cqsfQFS8vzOHnKd9hESqjK2ogCd+/rea3rB0AwtYo0NPMZLEWARMezhwGIxTcCdUsGueyLffVMlkAEkvgHLXTDDDK3ivn79zG0afqIBrkmgD//kbj8Cy6OCi/79/lRkUdtiQo9ms7K/LO29zXmhlF4+jo5CjF40fmHCZGBM1Y4tfP4QHO6SjXFcYJ4MZPIdICNWATGCUn3RAtb98w9b3M8vnUITze8Bz1Gd7gKbIO6Q29xA8xzkv52hProzo9ohMsuyqY3DAtpPkTOCMvCv1AwA1M0fb3Cukn4psGIiAu"
       ]
     }
   ]
