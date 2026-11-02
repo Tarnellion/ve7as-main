@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-31T10:16:00.119Z",
+  "updatedAt": "2026-11-02T13:36:25.100Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1160,6 +1160,26 @@
       "centroid": "GwOw00wCETwR2E3hLvHfLGwE0s4pI9FGSk/W/UeNvO0aojlIw8s14agtPkFh/ete0r3yOQxGGIvfpdxMXNPrFyQsISqr1Lc+4LQeZyTvGMm/3sgd4E8+0EngHTTttqu0+S422UC3NKrFNQadNsgGIyEWudQB1jCzOOq+r8jbKR8yJBYzD0khNaD5/OHaNdseRx5/41vYOOAnJ1W51cQ4S73cqsfQFS8vzOHnKd9hESqjK2ogCd+/rea3rB0AwtYo0NPMZLEWARMezhwGIxTcCdUsGueyLffVMlkAEkvgHLXTDDDK3ivn79zG0afqIBrkmgD//kbj8Cy6OCi/79/lRkUdtiQo9ms7K/LO29zXmhlF4+jo5CjF40fmHCZGBM1Y4tfP4QHO6SjXFcYJ4MZPIdICNWATGCUn3RAtb98w9b3M8vnUITze8Bz1Gd7gKbIO6Q29xA8xzkv52hProzo9ohMsuyqY3DAtpPkTOCMvCv1AwA1M0fb3Cukn4psGIiAu",
       "vectors": [
         "GwOw00wCETwR2E3hLvHfLGwE0s4pI9FGSk/W/UeNvO0aojlIw8s14agtPkFh/ete0r3yOQxGGIvfpdxMXNPrFyQsISqr1Lc+4LQeZyTvGMm/3sgd4E8+0EngHTTttqu0+S422UC3NKrFNQadNsgGIyEWudQB1jCzOOq+r8jbKR8yJBYzD0khNaD5/OHaNdseRx5/41vYOOAnJ1W51cQ4S73cqsfQFS8vzOHnKd9hESqjK2ogCd+/rea3rB0AwtYo0NPMZLEWARMezhwGIxTcCdUsGueyLffVMlkAEkvgHLXTDDDK3ivn79zG0afqIBrkmgD//kbj8Cy6OCi/79/lRkUdtiQo9ms7K/LO29zXmhlF4+jo5CjF40fmHCZGBM1Y4tfP4QHO6SjXFcYJ4MZPIdICNWATGCUn3RAtb98w9b3M8vnUITze8Bz1Gd7gKbIO6Q29xA8xzkv52hProzo9ohMsuyqY3DAtpPkTOCMvCv1AwA1M0fb3Cukn4psGIiAu"
+      ]
+    },
+    {
+      "id": "b9cc19262e08",
+      "publishedAt": "2026-11-02T13:36:25.100Z",
+      "title": "Endorphina Limited en Endorphina Ltd.",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/endorphina-limited-en-endorphina-ltd"
+        }
+      ],
+      "centroid": "VfDE0z33LjoTDSrzQ9nVKyfs4bYO688TOi4AG/7L29QpvEI5j8I/5esmCktHEww96B7hOug6Jrrmzt4qL/YTIkEoHhWk3eUr8OMHNyoDNuXSzswJ7iYlyij8I0Ha1rew+Sw76EDBPdPrKQvJFMDd/jUYye4FzRXQQdbovu7gJw9E6RITFkkwE9cD/ejvAuc2EihU6zPzQvQiMzTp4OIdEKABqrrvC0oly+fXEbNM6ErFNUIg3dPrxeLEuusD2NwV37vyNc5EDRQx51chOQHMK9QvEOfNNN/ZHA++KTnVJLP6/CXg3Rn9383f47z28BXUwMge1kj7zxzaKzLD7tjRM0cztw8m4VULQwXH4e/mujw39QX+5Brm2EMTRB1J38w82PbO7RLZEwnbJ+AdFcQyGMIGFRoSNB4k4cksXPwkteLB2fjkIxXv2CcMR8jZMr7r3xm42QkEzjvwuAbzxh49gTgMuia33DUUxfvzXSkZ+Q0r0jAl6iLyD9EL6NEzOQgy",
+      "vectors": [
+        "VfDE0z33LjoTDSrzQ9nVKyfs4bYO688TOi4AG/7L29QpvEI5j8I/5esmCktHEww96B7hOug6Jrrmzt4qL/YTIkEoHhWk3eUr8OMHNyoDNuXSzswJ7iYlyij8I0Ha1rew+Sw76EDBPdPrKQvJFMDd/jUYye4FzRXQQdbovu7gJw9E6RITFkkwE9cD/ejvAuc2EihU6zPzQvQiMzTp4OIdEKABqrrvC0oly+fXEbNM6ErFNUIg3dPrxeLEuusD2NwV37vyNc5EDRQx51chOQHMK9QvEOfNNN/ZHA++KTnVJLP6/CXg3Rn9383f47z28BXUwMge1kj7zxzaKzLD7tjRM0cztw8m4VULQwXH4e/mujw39QX+5Brm2EMTRB1J38w82PbO7RLZEwnbJ+AdFcQyGMIGFRoSNB4k4cksXPwkteLB2fjkIxXv2CcMR8jZMr7r3xm42QkEzjvwuAbzxh49gTgMuia33DUUxfvzXSkZ+Q0r0jAl6iLyD9EL6NEzOQgy"
       ]
     }
   ]
