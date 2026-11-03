@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-02T13:36:25.100Z",
+  "updatedAt": "2026-11-03T12:53:51.687Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1180,6 +1180,38 @@
       "centroid": "VfDE0z33LjoTDSrzQ9nVKyfs4bYO688TOi4AG/7L29QpvEI5j8I/5esmCktHEww96B7hOug6Jrrmzt4qL/YTIkEoHhWk3eUr8OMHNyoDNuXSzswJ7iYlyij8I0Ha1rew+Sw76EDBPdPrKQvJFMDd/jUYye4FzRXQQdbovu7gJw9E6RITFkkwE9cD/ejvAuc2EihU6zPzQvQiMzTp4OIdEKABqrrvC0oly+fXEbNM6ErFNUIg3dPrxeLEuusD2NwV37vyNc5EDRQx51chOQHMK9QvEOfNNN/ZHA++KTnVJLP6/CXg3Rn9383f47z28BXUwMge1kj7zxzaKzLD7tjRM0cztw8m4VULQwXH4e/mujw39QX+5Brm2EMTRB1J38w82PbO7RLZEwnbJ+AdFcQyGMIGFRoSNB4k4cksXPwkteLB2fjkIxXv2CcMR8jZMr7r3xm42QkEzjvwuAbzxh49gTgMuia33DUUxfvzXSkZ+Q0r0jAl6iLyD9EL6NEzOQgy",
       "vectors": [
         "VfDE0z33LjoTDSrzQ9nVKyfs4bYO688TOi4AG/7L29QpvEI5j8I/5esmCktHEww96B7hOug6Jrrmzt4qL/YTIkEoHhWk3eUr8OMHNyoDNuXSzswJ7iYlyij8I0Ha1rew+Sw76EDBPdPrKQvJFMDd/jUYye4FzRXQQdbovu7gJw9E6RITFkkwE9cD/ejvAuc2EihU6zPzQvQiMzTp4OIdEKABqrrvC0oly+fXEbNM6ErFNUIg3dPrxeLEuusD2NwV37vyNc5EDRQx51chOQHMK9QvEOfNNN/ZHA++KTnVJLP6/CXg3Rn9383f47z28BXUwMge1kj7zxzaKzLD7tjRM0cztw8m4VULQwXH4e/mujw39QX+5Brm2EMTRB1J38w82PbO7RLZEwnbJ+AdFcQyGMIGFRoSNB4k4cksXPwkteLB2fjkIxXv2CcMR8jZMr7r3xm42QkEzjvwuAbzxh49gTgMuia33DUUxfvzXSkZ+Q0r0jAl6iLyD9EL6NEzOQgy"
+      ]
+    },
+    {
+      "id": "c0c750afcb04",
+      "publishedAt": "2026-11-03T12:53:51.686Z",
+      "title": "Problem Gambling Seven Times More Common on Illegal Sites, UK Regulator Finds",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "casinoorg",
+        "sbc",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/problem-gambling-seven-times-more-common-on-illegal-sites-uk-regulator-finds"
+        },
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/11/01/gambling-commission-payment-data-91-of-repeat-illegal-site-users-still-bet-with-licensed-sites"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/02/127118-illegal-gambling-users-seven-times-more-likely-to-show-problem-gambling-behavior-ukgc-finds"
+        }
+      ],
+      "centroid": "LvDBsVDdJElNBkMNYs/RR27Ft+Uq7PkxS2XP5DGRo/UxtSs8zshO3Lv6N086Fuw+wfPaU/gfQKS/rawgPsYDEUVVH0Ck48dBAL0PWx/pE6/+z7hM5Uggo1nQLj/Pt8CP1i870Ua/PsTkJw/PXt62KTQZtsrxz1L/YeKduroW/EI7+AVKSUxNYKof5sPnStA3Tjdq7GrGLdYtQ1zWvucoFrXGgfqr3CNPycT99AYg00bTOkUO1MDGsf22tfwi3tsiw6XjJcpCNBM+oxkxJdOkQOItL77JSSzwGzEKG0rtLJjjMW7AwDXH0qa6w7v4AvrfsuoZ7jX28hL3VibHvsflM05ZzyU00j0mHAnOu9X0tCNR4cng4Smi2TQHKyxXA8pGs/bOoQXKSirXVNLnCN4oCsYiGyrmDhpO2MwTVdkc58nc0QLGHCrq2ULxQLSmGLD8Dx6SsA0buivb5wq9wCNOkA0LxEGjAmJKoO4OYzhozSM2v1JFzhr5/u4+09IQRi1C",
+      "vectors": [
+        "L/G2u1DOIFJfDEIWXNHhVXjDv+I25fFFSnjF+S+Qm9w+ziFB19RW4ND7LFIzGehK1/PhSvMsQrbHr7IgQMb6Dz9UG0GozM1G+LH2ZQcCG7D/zr9M3kIqq2W6MFGyu8iB4xw2zEvIMcjgKQrkUte5ES8Vss39zVPwaMqnw8YT/j84EQlGXk1CWpkc4b7sU9oxby5Y8mfPMuE4R1/Vs/YeA6+3iv+74SlR2br5AgAf1k3POzwd3L7BqfC7svQX0uQlxJTpHM1CJRpHmwUqOraeQuAqNcXBVirxIi4FIUjyKpbcQ3C2uTPAzqet1bYL9wLkr+UU8EPw+gb1TSbHv8HkOVRn0xtN0kgSFfrCp9z5xSJZ1szv3zql2SMaIihrAsg7twXepAXLUjnHT8ja/dQoEsEqEx/t+h5c580Lb8oU6r3Z0Qa2Gi3jy0nxRcCnHpkDBBqcrQ4Tth/a8xW2nCxJhQYSykiRCltCj/0Haz5oyyRFwDtMyB0ACt41s8YiTy8+",
+        "Iv/JrlT9GUJBBj75X8/AQ2rKtecj8wkfQ0vw3RqEqgY0nTwcyr9L5Z77OVE9BesjsOvDXP4ZOKCurq0fKs4PCklbHSie8MFKCssnQi3WALDy0LBL+1UOm1joJS/7wMGR3jwz0EjCVMbiHwnCU/jFTEcwtrvtx0MBW/ipp68b9S4t3hhDMU1Wcb0g9cfjN8hGLjJ/426/J9ArLj7cy/Q8H8Xihu+m6yZZys4B7/8z5z/eMkwO1b/QvQmvxf8f8uUj0LTOP90yQAwiuSQ3F/O8Re4mE8PYJh/yGyAXEkPmMZPxKmjFxUTZ456/uq3cCejGs/0g5yEI/BD8YzfIvdjmLElB0DYW5i1EGg7V1dTnnS9M7b3g2BOZyjcFHh9DC9dJttPCm/7LRCXaVeAEA+ctBdkgDi/dJww8zN0VSucb19fu0/jUHCoD2zruNZ+0AsXsGSSOxQQewjbs2gjD6RlVpA34xCXO5l1CsuALSDhW6iguv1k81Bn38/pD5d3/OBc+",
+        "NePLskXNMEJCAUEYYNHZOF3Huegi7fEsTGO82kWrrvsevh5TzsxB0sz4OkI4IvFIxPzuS/gVQJ/QsqwfTMX9Fz9GIVOv784s/MIMYiToHLcI08FH2Dolr0fSMTfCsr6kxDBC2je7LsXsKhnObM2tGCEBw9zt3VYKVuaSzMARAlJF/e9MRkNHSq8e38vpTNQqRz9Z8WDMKNUfTm3Wws8YG7G+gQGqzRY7vcn97BQKwkDRPEEA0MnItPzBrwIt2s4au7D1ELhLMBJLnR0sGtOcMtoxQLnHVzbwEj//G0zyJKnfI2jMyCLByLbHw9UDBQX2vN0T9jbr4x3zSg/LxcDoL0Rc0Bg1wj0XIxLYu9T9whRF4tnW8C2x7jr2PjlO+sRHtQvPrQzOQhznUNLYFeIeB7wbLCvrBSNK28AWPtwh9szP0wfMHCPZ6D32QMaeJrkFDRiWpRMdvijP6wHFvSJCkRMWxVGRGGVRp+8VbC5vthgsxFlB0hb0/vI65NYQRDxF"
       ]
     }
   ]
