@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-03T12:53:51.687Z",
+  "updatedAt": "2026-11-04T13:05:51.070Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1212,6 +1212,32 @@
         "L/G2u1DOIFJfDEIWXNHhVXjDv+I25fFFSnjF+S+Qm9w+ziFB19RW4ND7LFIzGehK1/PhSvMsQrbHr7IgQMb6Dz9UG0GozM1G+LH2ZQcCG7D/zr9M3kIqq2W6MFGyu8iB4xw2zEvIMcjgKQrkUte5ES8Vss39zVPwaMqnw8YT/j84EQlGXk1CWpkc4b7sU9oxby5Y8mfPMuE4R1/Vs/YeA6+3iv+74SlR2br5AgAf1k3POzwd3L7BqfC7svQX0uQlxJTpHM1CJRpHmwUqOraeQuAqNcXBVirxIi4FIUjyKpbcQ3C2uTPAzqet1bYL9wLkr+UU8EPw+gb1TSbHv8HkOVRn0xtN0kgSFfrCp9z5xSJZ1szv3zql2SMaIihrAsg7twXepAXLUjnHT8ja/dQoEsEqEx/t+h5c580Lb8oU6r3Z0Qa2Gi3jy0nxRcCnHpkDBBqcrQ4Tth/a8xW2nCxJhQYSykiRCltCj/0Haz5oyyRFwDtMyB0ACt41s8YiTy8+",
         "Iv/JrlT9GUJBBj75X8/AQ2rKtecj8wkfQ0vw3RqEqgY0nTwcyr9L5Z77OVE9BesjsOvDXP4ZOKCurq0fKs4PCklbHSie8MFKCssnQi3WALDy0LBL+1UOm1joJS/7wMGR3jwz0EjCVMbiHwnCU/jFTEcwtrvtx0MBW/ipp68b9S4t3hhDMU1Wcb0g9cfjN8hGLjJ/426/J9ArLj7cy/Q8H8Xihu+m6yZZys4B7/8z5z/eMkwO1b/QvQmvxf8f8uUj0LTOP90yQAwiuSQ3F/O8Re4mE8PYJh/yGyAXEkPmMZPxKmjFxUTZ456/uq3cCejGs/0g5yEI/BD8YzfIvdjmLElB0DYW5i1EGg7V1dTnnS9M7b3g2BOZyjcFHh9DC9dJttPCm/7LRCXaVeAEA+ctBdkgDi/dJww8zN0VSucb19fu0/jUHCoD2zruNZ+0AsXsGSSOxQQewjbs2gjD6RlVpA34xCXO5l1CsuALSDhW6iguv1k81Bn38/pD5d3/OBc+",
         "NePLskXNMEJCAUEYYNHZOF3Huegi7fEsTGO82kWrrvsevh5TzsxB0sz4OkI4IvFIxPzuS/gVQJ/QsqwfTMX9Fz9GIVOv784s/MIMYiToHLcI08FH2Dolr0fSMTfCsr6kxDBC2je7LsXsKhnObM2tGCEBw9zt3VYKVuaSzMARAlJF/e9MRkNHSq8e38vpTNQqRz9Z8WDMKNUfTm3Wws8YG7G+gQGqzRY7vcn97BQKwkDRPEEA0MnItPzBrwIt2s4au7D1ELhLMBJLnR0sGtOcMtoxQLnHVzbwEj//G0zyJKnfI2jMyCLByLbHw9UDBQX2vN0T9jbr4x3zSg/LxcDoL0Rc0Bg1wj0XIxLYu9T9whRF4tnW8C2x7jr2PjlO+sRHtQvPrQzOQhznUNLYFeIeB7wbLCvrBSNK28AWPtwh9szP0wfMHCPZ6D32QMaeJrkFDRiWpRMdvijP6wHFvSJCkRMWxVGRGGVRp+8VbC5vthgsxFlB0hb0/vI65NYQRDxF"
+      ]
+    },
+    {
+      "id": "737590fac6e6",
+      "publishedAt": "2026-11-04T13:05:51.070Z",
+      "title": "Colorado Gov. Polis Targets High-Earning Casinos in Final Budget Proposal",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/colorado-gov-polis-proposes-boosting-casino-taxes"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/colorado-governor-seeks-to-raise-taxes-on-state-casinos-ahead-of-term-end"
+        }
+      ],
+      "centroid": "GA7yyjPnLg5XQDcRKsnwH1HS6N8U3fxdYDTd9i2mx+75rBMmstwa8eThNjQqH9w0wfvaWvssQMmOyLz3aPYTQjhXGUfLG99KANMsQzX+NN3W7Ognv0s6wj7GQDe7tcPXvBQGw1XBUsHUKRPaSLnqAFohrPzEwivcXQmmv+4DAS5B6yAzMS9Abd8J2eviQM4mNUxR1CTcJMzdHTnpuskRHdG8s+bQ0mUt4NbXDsg+zTPCG0cd2u661vfftBgk3+8Ym4G9B8sQLSc8z0EYCh74VtwcOcGvHAAG8jvgLEQDIsHKMCPE0ivw3rfHtMEJDyTP5dcu5Drc1fzTJSO71LK/DTMltzX52kpEMvDnzMXatiwy98bv9Cvb+RIbHTIu7Q1SzNHfzy3IXE33McYjEckpCc4LETwbNWXq2+MAUegP4tHPwwO9Dhjl1johPq7cOsnwDDHC0hcc2SDuzvvSzxBQqAcu4R24zxRJyQAKLjhZ+AsTzyI70fwIpdA23cMAQxIT",
+      "vectors": [
+        "Fhvx1S/kPhNcSTINKtHrKGPP4t0Z2QRhYCrX9jCqv+79sxcstuEU6+LcOTgnJtZAuvrJVfcvQMOSzbztY/McRjRaGk/HINhLB9QoQCz/Od7Z6ukouUI+t0HHPzW9t7DAshYOuFvDXMrOKQ/SU7Xz/l8YqfW8tjDkXgWky+0F/y495h04NjxDat0J3PXpPtAcPUlY0yTgI9HfGjfowMQRHtHGtfXO0Ws96tLaF75Q0zW7FEcO0fS42e/fsQww1OsUmIG/A8YbJiY60j8QEiD3W9ohQMevEvMN7T3cI1IAMs3KLyS81y7s5bfAwMH+DhvM5dY320Lhz//JKiO80624ETYuuDn51EBAKfThz8Tary8x/Mfl8irb+wYNJDc27AhTyc3YxDjTVkn5K70wFLkyBswMGjgVM2zq1d0FTu4G38rFxPW5BRjt4jwiSqjqP8X0Ej24zxEi0C7szPvWzxBMpws24yK6yhVQufgTKjdQ8wkV2iA82/UIpM4107sJQBIQ",
+        "GgLzwDfpHwlSNzsUKsD0Fj/V7uAP4fRZYD3i9iqizu32pg8hrtgf9+XlMzEtGOIoxvzrXgApQM+Lw7wAbfkKPTtVGT7OFuZI+tIvRT79L9zU7ecnxVQ3zTzGQji5stTtxhL+z0/ASbjaKRbhPbzhAVQqsAPNzibUWw2os+8AAi1E7yQvLCM8ceAK1eHbQcswLk9L1CTYJsfbHzzrs80RG9GysdfS018d1trUBtEtxzLII0cs4+m81P7ftyQY6fMbn4G8CtEGNCk9zEMgARz6Ud4XM7qvJgz/9zjkNDYFErfLMCLLzij12LjNqcIUES3S5Ncl7DPY2/ncHyK51LfFCDEctTH531RJO+zuysbZvSk08sX59iva+B4pFi0n7xBRztbm2yK9YVD1Ns8WD9cgDdAKB0AiNl/q4On9VOMZ5dnZwhHBFhjdyjgfMrPPNMzsBiXM1RwX4RLw0PrOzxBTqgMn3xm11RNC2AkBMjli/Q0RxSQ6xgIJp9I258z4RREW"
       ]
     }
   ]
