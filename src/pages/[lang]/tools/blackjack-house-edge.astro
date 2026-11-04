@@ -5,6 +5,11 @@ import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+import { BJ_MODEL_TOLERANCE } from '../../../data/blackjack-house-edge';
+
+/** Источник дельт. Указан ссылкой, а не только прозой: читатель должен
+ *  иметь возможность проверить числа, не читая исходники. */
+const WOO_CALCULATOR = 'https://wizardofodds.com/games/blackjack/calculator/';
 
 /**
  * Калькулятор house edge блэкджека — четвёртый инструмент фазы 4.
@@ -36,14 +41,14 @@ type Copy = {
   edge: string; edgeHint: string;
   per100: string; per100Hint: string;
   negativeNote: string;
-  method: string;
+  methodBefore: string; methodLink: string; methodAfter: string;
   articleLink: string;
 };
 
 const COPY: Record<Language, Copy> = {
   ru: {
     title: 'Калькулятор house edge: блэкджек',
-    description: 'Считает преимущество казино по правилам стола: выплата 3:2 или 6:5, S17/H17, DAS, число колод, сдача. Данные сверены с Wizard of Odds.',
+    description: 'Считает преимущество казино по правилам стола: выплата 3:2 или 6:5, S17/H17, DAS, число колод, сдача. Дельты правил взяты из калькулятора Wizard of Odds.',
     lede: 'Соберите правила стола — калькулятор покажет кромку казино и её цену за 100 рук. Ниже кромка — меньше средний проигрыш, а не способ выиграть.',
     payout: 'Выплата за блэкджек', decks: 'Колод', soft17: 'Дилер на soft 17', s17: 'Стоит (S17)', h17: 'Берёт (H17)',
     das: 'Дабл после сплита (DAS)', yes: 'Да', no: 'Нет',
@@ -52,15 +57,16 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Респлит тузов', hsa: 'Добор к сплит-тузам',
     peek: 'Блэкджек дилера', peekYes: 'Проверяется (peek) / теряется только ставка', peekNo: 'Европейское правило: теряется всё (ENHC)',
     surrender: 'Сдача', surNone: 'Нет', surLate: 'Поздняя (late)',
-    edge: 'Кромка казино', edgeHint: 'Базовая стратегия, total-dependent, с cut card. Аддитивная модель, отклонение от точного расчёта ≤ 0.013 п.п.',
+    edge: 'Кромка казино', edgeHint: `Базовая стратегия, total-dependent, с cut card. Аддитивная модель: на проверенных наборах правил расхождение с точным расчётом не превышало ${BJ_MODEL_TOLERANCE} п.п.`,
     per100: 'Ожидаемые потери за 100 рук', per100Hint: 'В юнитах, при ставке 1 юнит на руку. Средняя цена ста рук за этим столом.',
     negativeNote: 'Кромка вышла отрицательной — в плюс игроку. Столы с таким сочетанием правил в реальности не предлагаются: проверьте, не приукрашены ли правила.',
-    method: 'Данные: дельты правил сняты с калькулятора Wizard of Odds (27.08.2026) и проверены на стековых наборах. Любой реальный набор правил отрицателен для игрока.',
+    methodBefore: 'Данные: дельты правил сняты 27.08.2026 с калькулятора ', methodLink: 'Wizard of Odds',
+    methodAfter: ' и проверены на стековых наборах. Штраф за выплату 6:5 — наш собственный расчёт в замкнутой форме. Любой реальный набор правил отрицателен для игрока.',
     articleLink: 'Базовая стратегия блэкджека',
   },
   en: {
     title: 'Blackjack house edge calculator',
-    description: 'Computes the house edge from table rules: 3:2 or 6:5 payout, S17/H17, DAS, decks, surrender. Figures verified against Wizard of Odds.',
+    description: 'Computes the house edge from table rules: 3:2 or 6:5 payout, S17/H17, DAS, decks, surrender. Rule deltas taken from the Wizard of Odds calculator.',
     lede: 'Set the table rules — the calculator shows the house edge and its cost per 100 hands. A lower edge means losing less on average, not a way to win.',
     payout: 'Blackjack pays', decks: 'Decks', soft17: 'Dealer on soft 17', s17: 'Stands (S17)', h17: 'Hits (H17)',
     das: 'Double after split (DAS)', yes: 'Yes', no: 'No',
@@ -69,15 +75,16 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Resplit aces', hsa: 'Hit split aces',
     peek: 'Dealer blackjack', peekYes: 'Peek / original bet only', peekNo: 'European no hole card: all bets lost (ENHC)',
     surrender: 'Surrender', surNone: 'None', surLate: 'Late',
-    edge: 'House edge', edgeHint: 'Total-dependent basic strategy with a cut card. Additive model, within ≤ 0.013 pp of the exact figure.',
+    edge: 'House edge', edgeHint: `Total-dependent basic strategy with a cut card. Additive model: on the rule sets we checked it stayed within ${BJ_MODEL_TOLERANCE} pp of the exact figure.`,
     per100: 'Expected loss per 100 hands', per100Hint: 'In units, flat 1-unit bets. The average price of a hundred hands at this table.',
     negativeNote: 'The edge came out negative — in the player’s favour. Tables with this rule combination are not offered in practice: check whether the rules are overstated.',
-    method: 'Data: rule deltas captured from the Wizard of Odds calculator (2026-08-27) and validated on stacked rule sets. Every real rule set is negative for the player.',
+    methodBefore: 'Data: rule deltas captured on 2026-08-27 from the ', methodLink: 'Wizard of Odds calculator',
+    methodAfter: ', validated on stacked rule sets. The 6:5 penalty is our own closed-form calculation. Every real rule set is negative for the player.',
     articleLink: 'Blackjack basic strategy',
   },
   es: {
     title: 'Calculadora de ventaja de la casa: blackjack',
-    description: 'Calcula la ventaja de la casa según las reglas de la mesa: pago 3:2 o 6:5, S17/H17, DAS, barajas, rendición. Cifras verificadas con Wizard of Odds.',
+    description: 'Calcula la ventaja de la casa según las reglas de la mesa: pago 3:2 o 6:5, S17/H17, DAS, barajas, rendición. Deltas de reglas tomadas de la calculadora de Wizard of Odds.',
     lede: 'Configure las reglas de la mesa: la calculadora muestra la ventaja de la casa y su coste por 100 manos. Menos ventaja significa perder menos de media, no una forma de ganar.',
     payout: 'El blackjack paga', decks: 'Barajas', soft17: 'Crupier con 17 blando', s17: 'Se planta (S17)', h17: 'Pide (H17)',
     das: 'Doblar tras dividir (DAS)', yes: 'Sí', no: 'No',
@@ -86,15 +93,16 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Redividir ases', hsa: 'Pedir a ases divididos',
     peek: 'Blackjack del crupier', peekYes: 'Con comprobación (peek) / solo la apuesta original', peekNo: 'Regla europea: se pierde todo (ENHC)',
     surrender: 'Rendición', surNone: 'No', surLate: 'Tardía (late)',
-    edge: 'Ventaja de la casa', edgeHint: 'Estrategia básica total-dependent con cut card. Modelo aditivo, desviación ≤ 0.013 pp del valor exacto.',
+    edge: 'Ventaja de la casa', edgeHint: `Estrategia básica total-dependent con cut card. Modelo aditivo: en los conjuntos comprobados la desviación no superó ${BJ_MODEL_TOLERANCE} pp del valor exacto.`,
     per100: 'Pérdida esperada por 100 manos', per100Hint: 'En unidades, apostando 1 unidad por mano. El precio medio de cien manos en esta mesa.',
     negativeNote: 'La ventaja salió negativa — a favor del jugador. Mesas con esta combinación no se ofrecen en la práctica: compruebe si las reglas están exageradas.',
-    method: 'Datos: deltas capturadas de la calculadora de Wizard of Odds (27-08-2026) y validadas en conjuntos combinados. Toda mesa real es negativa para el jugador.',
+    methodBefore: 'Datos: deltas capturadas el 27-08-2026 de la calculadora de ', methodLink: 'Wizard of Odds',
+    methodAfter: ' y validadas en conjuntos combinados. La penalización del pago 6:5 es cálculo propio en forma cerrada. Toda mesa real es negativa para el jugador.',
     articleLink: 'Estrategia básica de blackjack',
   },
   pt: {
     title: 'Calculadora de vantagem da casa: blackjack',
-    description: 'Calcula a vantagem da casa pelas regras da mesa: pagamento 3:2 ou 6:5, S17/H17, DAS, baralhos, rendição. Números verificados com o Wizard of Odds.',
+    description: 'Calcula a vantagem da casa pelas regras da mesa: pagamento 3:2 ou 6:5, S17/H17, DAS, baralhos, rendição. Deltas das regras obtidas da calculadora do Wizard of Odds.',
     lede: 'Defina as regras da mesa — a calculadora mostra a vantagem da casa e o seu custo por 100 mãos. Menos vantagem significa perder menos em média, não uma forma de ganhar.',
     payout: 'O blackjack paga', decks: 'Baralhos', soft17: 'Dealer no 17 suave', s17: 'Fica (S17)', h17: 'Pede (H17)',
     das: 'Dobrar após dividir (DAS)', yes: 'Sim', no: 'Não',
@@ -103,15 +111,16 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Redividir ases', hsa: 'Pedir em ases divididos',
     peek: 'Blackjack do dealer', peekYes: 'Com verificação (peek) / só a aposta original', peekNo: 'Regra europeia: perde-se tudo (ENHC)',
     surrender: 'Rendição', surNone: 'Não', surLate: 'Tardia (late)',
-    edge: 'Vantagem da casa', edgeHint: 'Estratégia básica total-dependent com cut card. Modelo aditivo, desvio ≤ 0.013 pp do valor exato.',
+    edge: 'Vantagem da casa', edgeHint: `Estratégia básica total-dependent com cut card. Modelo aditivo: nos conjuntos verificados o desvio não passou de ${BJ_MODEL_TOLERANCE} pp do valor exato.`,
     per100: 'Perda esperada por 100 mãos', per100Hint: 'Em unidades, apostando 1 unidade por mão. O preço médio de cem mãos nesta mesa.',
     negativeNote: 'A vantagem saiu negativa — a favor do jogador. Mesas com esta combinação não existem na prática: verifique se as regras não estão exageradas.',
-    method: 'Dados: deltas capturadas da calculadora do Wizard of Odds (27-08-2026) e validadas em conjuntos empilhados. Toda mesa real é negativa para o jogador.',
+    methodBefore: 'Dados: deltas capturadas em 27-08-2026 da calculadora do ', methodLink: 'Wizard of Odds',
+    methodAfter: ' e validadas em conjuntos empilhados. A penalização do pagamento 6:5 é cálculo próprio em forma fechada. Toda mesa real é negativa para o jogador.',
     articleLink: 'Estratégia básica de blackjack',
   },
   de: {
     title: 'Blackjack-Hausvorteil-Rechner',
-    description: 'Berechnet den Hausvorteil aus den Tischregeln: 3:2- oder 6:5-Auszahlung, S17/H17, DAS, Decks, Aufgabe. Zahlen gegen Wizard of Odds geprüft.',
+    description: 'Berechnet den Hausvorteil aus den Tischregeln: 3:2- oder 6:5-Auszahlung, S17/H17, DAS, Decks, Aufgabe. Regel-Deltas aus dem Wizard-of-Odds-Rechner übernommen.',
     lede: 'Stellen Sie die Tischregeln ein — der Rechner zeigt den Hausvorteil und seinen Preis pro 100 Händen. Weniger Hausvorteil heißt im Schnitt weniger verlieren, nicht gewinnen.',
     payout: 'Blackjack zahlt', decks: 'Decks', soft17: 'Dealer bei Soft 17', s17: 'Bleibt stehen (S17)', h17: 'Zieht (H17)',
     das: 'Verdoppeln nach Teilen (DAS)', yes: 'Ja', no: 'Nein',
@@ -120,15 +129,16 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Asse erneut teilen', hsa: 'Zu geteilten Assen ziehen',
     peek: 'Dealer-Blackjack', peekYes: 'Mit Prüfung (Peek) / nur Grundeinsatz verloren', peekNo: 'Europäische Regel: alles verloren (ENHC)',
     surrender: 'Aufgabe', surNone: 'Keine', surLate: 'Späte (Late)',
-    edge: 'Hausvorteil', edgeHint: 'Total-dependent Basisstrategie mit Cut Card. Additives Modell, Abweichung ≤ 0.013 Pp vom exakten Wert.',
+    edge: 'Hausvorteil', edgeHint: `Total-dependent Basisstrategie mit Cut Card. Additives Modell: bei den geprüften Regelsätzen lag die Abweichung unter ${BJ_MODEL_TOLERANCE} Pp vom exakten Wert.`,
     per100: 'Erwarteter Verlust pro 100 Händen', per100Hint: 'In Einheiten, bei 1 Einheit pro Hand. Der Durchschnittspreis von hundert Händen an diesem Tisch.',
     negativeNote: 'Der Hausvorteil ist negativ — zugunsten des Spielers. Tische mit dieser Regelkombination gibt es in der Praxis nicht: prüfen Sie, ob die Regeln beschönigt sind.',
-    method: 'Daten: Regel-Deltas am 27.08.2026 vom Wizard-of-Odds-Rechner erfasst und an kombinierten Regelsätzen validiert. Jeder reale Regelsatz ist für den Spieler negativ.',
+    methodBefore: 'Daten: Regel-Deltas am 27.08.2026 erfasst vom Rechner von ', methodLink: 'Wizard of Odds',
+    methodAfter: ', validiert an kombinierten Regelsätzen. Der 6:5-Abschlag ist unsere eigene Berechnung in geschlossener Form. Jeder reale Regelsatz ist für den Spieler negativ.',
     articleLink: 'Blackjack-Basisstrategie',
   },
   fr: {
     title: 'Calculateur d’avantage maison : blackjack',
-    description: 'Calcule l’avantage de la maison selon les règles de la table : paiement 3:2 ou 6:5, S17/H17, DAS, jeux de cartes, abandon. Chiffres vérifiés avec Wizard of Odds.',
+    description: 'Calcule l’avantage de la maison selon les règles de la table : paiement 3:2 ou 6:5, S17/H17, DAS, jeux de cartes, abandon. Deltas de règles repris du calculateur Wizard of Odds.',
     lede: 'Réglez les règles de la table — le calculateur montre l’avantage maison et son prix pour 100 mains. Un avantage plus faible signifie perdre moins en moyenne, pas gagner.',
     payout: 'Le blackjack paie', decks: 'Jeux de cartes', soft17: 'Croupier sur 17 souple', s17: 'Reste (S17)', h17: 'Tire (H17)',
     das: 'Doubler après partage (DAS)', yes: 'Oui', no: 'Non',
@@ -137,15 +147,16 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Repartager les as', hsa: 'Tirer sur as partagés',
     peek: 'Blackjack du croupier', peekYes: 'Avec vérification (peek) / seule la mise initiale perdue', peekNo: 'Règle européenne : tout est perdu (ENHC)',
     surrender: 'Abandon', surNone: 'Aucun', surLate: 'Tardif (late)',
-    edge: 'Avantage de la maison', edgeHint: 'Stratégie de base total-dependent avec cut card. Modèle additif, écart ≤ 0.013 pp de la valeur exacte.',
+    edge: 'Avantage de la maison', edgeHint: `Stratégie de base total-dependent avec cut card. Modèle additif : sur les ensembles vérifiés, l’écart n’a pas dépassé ${BJ_MODEL_TOLERANCE} pp de la valeur exacte.`,
     per100: 'Perte attendue sur 100 mains', per100Hint: 'En unités, à 1 unité par main. Le prix moyen de cent mains à cette table.',
     negativeNote: 'L’avantage est négatif — en faveur du joueur. Les tables avec cette combinaison n’existent pas en pratique : vérifiez si les règles ne sont pas embellies.',
-    method: 'Données : deltas relevés le 27/08/2026 sur le calculateur Wizard of Odds et validés sur des ensembles combinés. Toute table réelle est négative pour le joueur.',
+    methodBefore: 'Données : deltas relevés le 27/08/2026 sur le calculateur ', methodLink: 'Wizard of Odds',
+    methodAfter: ', validés sur des ensembles combinés. La pénalité du paiement 6:5 est notre propre calcul en forme close. Toute table réelle est négative pour le joueur.',
     articleLink: 'Stratégie de base du blackjack',
   },
   br: {
     title: 'Calculadora de vantagem da casa: blackjack',
-    description: 'Calcula a vantagem da casa pelas regras da mesa: pagamento 3:2 ou 6:5, S17/H17, DAS, baralhos, rendição. Números conferidos com o Wizard of Odds.',
+    description: 'Calcula a vantagem da casa pelas regras da mesa: pagamento 3:2 ou 6:5, S17/H17, DAS, baralhos, rendição. Deltas das regras obtidas da calculadora do Wizard of Odds.',
     lede: 'Configure as regras da mesa — a calculadora mostra a vantagem da casa e o custo dela a cada 100 mãos. Menos vantagem é perder menos na média, não um jeito de ganhar.',
     payout: 'O blackjack paga', decks: 'Baralhos', soft17: 'Dealer no 17 suave', s17: 'Para (S17)', h17: 'Compra (H17)',
     das: 'Dobrar após dividir (DAS)', yes: 'Sim', no: 'Não',
@@ -154,10 +165,11 @@ const COPY: Record<Language, Copy> = {
     rsa: 'Redividir ases', hsa: 'Comprar em ases divididos',
     peek: 'Blackjack do dealer', peekYes: 'Com verificação (peek) / só a aposta original', peekNo: 'Regra europeia: perde tudo (ENHC)',
     surrender: 'Rendição', surNone: 'Não', surLate: 'Tardia (late)',
-    edge: 'Vantagem da casa', edgeHint: 'Estratégia básica total-dependent com cut card. Modelo aditivo, desvio ≤ 0.013 pp do valor exato.',
+    edge: 'Vantagem da casa', edgeHint: `Estratégia básica total-dependent com cut card. Modelo aditivo: nos conjuntos verificados o desvio não passou de ${BJ_MODEL_TOLERANCE} pp do valor exato.`,
     per100: 'Perda esperada a cada 100 mãos', per100Hint: 'Em unidades, apostando 1 unidade por mão. O preço médio de cem mãos nessa mesa.',
     negativeNote: 'A vantagem deu negativa — a favor do jogador. Mesas com essa combinação não existem na prática: confira se as regras não estão exageradas.',
-    method: 'Dados: deltas capturadas da calculadora do Wizard of Odds (27/08/2026) e validadas em conjuntos empilhados. Toda mesa real é negativa para o jogador.',
+    methodBefore: 'Dados: deltas capturadas em 27/08/2026 da calculadora do ', methodLink: 'Wizard of Odds',
+    methodAfter: ' e validadas em conjuntos empilhados. A penalização do pagamento 6:5 é cálculo próprio em forma fechada. Toda mesa real é negativa para o jogador.',
     articleLink: 'Estratégia básica de blackjack',
   },
 };
@@ -285,7 +297,7 @@ const schema = [
             <small>{c.per100Hint}</small>
           </div>
           <p class="calc-note" id="bj-negative" hidden>{c.negativeNote}</p>
-          <p class="calc-note">{c.method}</p>
+          <p class="calc-note">{c.methodBefore}<a href={WOO_CALCULATOR} rel="noopener" target="_blank">{c.methodLink}</a>{c.methodAfter}</p>
         </div>
       </div>
 
@@ -305,8 +317,12 @@ const schema = [
   const out = (id: string) => document.getElementById(id)!;
 
   function recalc() {
+    // Число колод читается один раз: от него зависит не только собственная
+    // дельта, но и штраф за выплату 6:5 (см. шапку blackjack-house-edge.ts).
+    const decks = Number($('bj-decks').value) as keyof typeof BJ_DELTAS.decks;
+
     let edge = BJ_BASE_EDGE;
-    edge += BJ_DELTAS.decks[Number($('bj-decks').value) as keyof typeof BJ_DELTAS.decks];
+    edge += BJ_DELTAS.decks[decks];
     if ($('bj-soft17').value === 'h17') edge += BJ_DELTAS.h17;
     if ($('bj-das').value === 'no') edge += BJ_DELTAS.noDas;
     edge += BJ_DELTAS.double[$('bj-double').value as keyof typeof BJ_DELTAS.double];
@@ -315,7 +331,7 @@ const schema = [
     if ($('bj-hsa').value === 'yes') edge += BJ_DELTAS.hsa;
     if ($('bj-peek').value === 'enhc') edge += BJ_DELTAS.enhcFullLoss;
     if ($('bj-surrender').value === 'late') edge += BJ_DELTAS.lateSurrender;
-    if ($('bj-payout').value === '65') edge += BJ_DELTAS.pay65;
+    if ($('bj-payout').value === '65') edge += BJ_DELTAS.pay65[decks];
 
     out('bj-edge').textContent = `${edge.toFixed(2)} %`;
     out('bj-per100').textContent = edge.toFixed(1);

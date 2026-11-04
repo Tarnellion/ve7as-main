@@ -115,7 +115,7 @@ export const TOOLS: readonly Tool[] = [
     id: 'blackjack-house-edge',
     segments: ['tools', 'blackjack-house-edge'],
     section: 'poker-table-games',
-    updated: '2026-08-27',
+    updated: '2026-11-04',
     name: {
       ru: 'Калькулятор house edge: блэкджек',
       en: 'Blackjack house edge calculator',

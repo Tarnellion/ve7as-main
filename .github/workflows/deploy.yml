@@ -69,6 +69,13 @@ jobs:
       - name: Typecheck
         run: npx astro check
 
+      # Гейт данных калькуляторов. Запускается здесь, а не руками: прецедент
+      # verify-lottery-data.mjs показал, что скрипт, который никто не вызывает,
+      # регрессию не ловит. Падает, если числа инструмента разойдутся с
+      # независимым расчётом или модель станет хуже обещанного читателю.
+      - name: Verify tool data
+        run: node --experimental-strip-types scripts/verify-blackjack-data.mjs
+
       - name: Build Astro
         run: npm run build
 
