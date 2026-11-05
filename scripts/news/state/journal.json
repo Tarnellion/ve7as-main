@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-04T13:05:51.070Z",
+  "updatedAt": "2026-11-05T13:17:41.366Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1238,6 +1238,26 @@
       "vectors": [
         "Fhvx1S/kPhNcSTINKtHrKGPP4t0Z2QRhYCrX9jCqv+79sxcstuEU6+LcOTgnJtZAuvrJVfcvQMOSzbztY/McRjRaGk/HINhLB9QoQCz/Od7Z6ukouUI+t0HHPzW9t7DAshYOuFvDXMrOKQ/SU7Xz/l8YqfW8tjDkXgWky+0F/y495h04NjxDat0J3PXpPtAcPUlY0yTgI9HfGjfowMQRHtHGtfXO0Ws96tLaF75Q0zW7FEcO0fS42e/fsQww1OsUmIG/A8YbJiY60j8QEiD3W9ohQMevEvMN7T3cI1IAMs3KLyS81y7s5bfAwMH+DhvM5dY320Lhz//JKiO80624ETYuuDn51EBAKfThz8Tary8x/Mfl8irb+wYNJDc27AhTyc3YxDjTVkn5K70wFLkyBswMGjgVM2zq1d0FTu4G38rFxPW5BRjt4jwiSqjqP8X0Ej24zxEi0C7szPvWzxBMpws24yK6yhVQufgTKjdQ8wkV2iA82/UIpM4107sJQBIQ",
         "GgLzwDfpHwlSNzsUKsD0Fj/V7uAP4fRZYD3i9iqizu32pg8hrtgf9+XlMzEtGOIoxvzrXgApQM+Lw7wAbfkKPTtVGT7OFuZI+tIvRT79L9zU7ecnxVQ3zTzGQji5stTtxhL+z0/ASbjaKRbhPbzhAVQqsAPNzibUWw2os+8AAi1E7yQvLCM8ceAK1eHbQcswLk9L1CTYJsfbHzzrs80RG9GysdfS018d1trUBtEtxzLII0cs4+m81P7ftyQY6fMbn4G8CtEGNCk9zEMgARz6Ud4XM7qvJgz/9zjkNDYFErfLMCLLzij12LjNqcIUES3S5Ncl7DPY2/ncHyK51LfFCDEctTH531RJO+zuysbZvSk08sX59iva+B4pFi0n7xBRztbm2yK9YVD1Ns8WD9cgDdAKB0AiNl/q4On9VOMZ5dnZwhHBFhjdyjgfMrPPNMzsBiXM1RwX4RLw0PrOzxBTqgMn3xm11RNC2AkBMjli/Q0RxSQ6xgIJp9I258z4RREW"
+      ]
+    },
+    {
+      "id": "2307423f0930",
+      "publishedAt": "2026-11-05T13:17:41.366Z",
+      "title": "European Regulators Roundtable in Halle: Glücksspielaufsichtsbehörden stärken grenzüberschreitende Zusammenarbeit",
+      "lang": "de",
+      "voices": 1,
+      "groups": [
+        "ggl"
+      ],
+      "sources": [
+        {
+          "source": "ggl",
+          "url": "https://www.gluecksspiel-behoerde.de/de/news/european-regulators-roundtable-in-halle-gluecksspielaufsichtsbehoerden-staerken-grenzueberschreitende-zusammenarbeit"
+        }
+      ],
+      "centroid": "N+rPxlm0TXAS82T7XrnFKVjx49sD2+ArbzGyACO6x/Yqq0gmq+pO4NMi/h8uYeVGshDrNvYxBKvDzM1BRx34JQ487Tm+4LswD+T8bij3Fd+btMAt5VNU7krYIELj7MqmBy0w2yqRDMHQJPjJYJnUSg8Sj9Ttz0v0Uu7/pazr+R0oAAwSNhdAXKfz7u/ZPNEgNDBZ/jzdFPMvB1vT58kwSavDks0BBTtBzPHPR9grzxfGHE9R8gew3sbjuOQDpPEojq3NRrIKNS8esxQOOvr4E9McF67dWwTtDCbuLCvgUKoDKF8H4ivS9bjjz8HY8f3jq9sy/C7YxSHKNAquxbcIJRtHwSAx0C4OHBbm8ev9wwRP6+ziI0y73FIAOA5QD7s53M/F1QDrFFT2T40U4QkcBLsEEh80IgBECv5NWAoyvtHw1O63ODwI1jT9Fq7MT84G2gac0x47+SIN5habxQE0gTEcBD6a6V4tvjn5F1kj48QruxUu1w/7ytkFCtsrSwpF",
+      "vectors": [
+        "N+rPxlm0TXAS82T7XrnFKVjx49sD2+ArbzGyACO6x/Yqq0gmq+pO4NMi/h8uYeVGshDrNvYxBKvDzM1BRx34JQ487Tm+4LswD+T8bij3Fd+btMAt5VNU7krYIELj7MqmBy0w2yqRDMHQJPjJYJnUSg8Sj9Ttz0v0Uu7/pazr+R0oAAwSNhdAXKfz7u/ZPNEgNDBZ/jzdFPMvB1vT58kwSavDks0BBTtBzPHPR9grzxfGHE9R8gew3sbjuOQDpPEojq3NRrIKNS8esxQOOvr4E9McF67dWwTtDCbuLCvgUKoDKF8H4ivS9bjjz8HY8f3jq9sy/C7YxSHKNAquxbcIJRtHwSAx0C4OHBbm8ev9wwRP6+ziI0y73FIAOA5QD7s53M/F1QDrFFT2T40U4QkcBLsEEh80IgBECv5NWAoyvtHw1O63ODwI1jT9Fq7MT84G2gac0x47+SIN5habxQE0gTEcBD6a6V4tvjn5F1kj48QruxUu1w/7ytkFCtsrSwpF"
       ]
     }
   ]
