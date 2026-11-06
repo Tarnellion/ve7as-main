@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-05T13:17:41.366Z",
+  "updatedAt": "2026-11-06T13:02:44.455Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1258,6 +1258,32 @@
       "centroid": "N+rPxlm0TXAS82T7XrnFKVjx49sD2+ArbzGyACO6x/Yqq0gmq+pO4NMi/h8uYeVGshDrNvYxBKvDzM1BRx34JQ487Tm+4LswD+T8bij3Fd+btMAt5VNU7krYIELj7MqmBy0w2yqRDMHQJPjJYJnUSg8Sj9Ttz0v0Uu7/pazr+R0oAAwSNhdAXKfz7u/ZPNEgNDBZ/jzdFPMvB1vT58kwSavDks0BBTtBzPHPR9grzxfGHE9R8gew3sbjuOQDpPEojq3NRrIKNS8esxQOOvr4E9McF67dWwTtDCbuLCvgUKoDKF8H4ivS9bjjz8HY8f3jq9sy/C7YxSHKNAquxbcIJRtHwSAx0C4OHBbm8ev9wwRP6+ziI0y73FIAOA5QD7s53M/F1QDrFFT2T40U4QkcBLsEEh80IgBECv5NWAoyvtHw1O63ODwI1jT9Fq7MT84G2gac0x47+SIN5habxQE0gTEcBD6a6V4tvjn5F1kj48QruxUu1w/7ytkFCtsrSwpF",
       "vectors": [
         "N+rPxlm0TXAS82T7XrnFKVjx49sD2+ArbzGyACO6x/Yqq0gmq+pO4NMi/h8uYeVGshDrNvYxBKvDzM1BRx34JQ487Tm+4LswD+T8bij3Fd+btMAt5VNU7krYIELj7MqmBy0w2yqRDMHQJPjJYJnUSg8Sj9Ttz0v0Uu7/pazr+R0oAAwSNhdAXKfz7u/ZPNEgNDBZ/jzdFPMvB1vT58kwSavDks0BBTtBzPHPR9grzxfGHE9R8gew3sbjuOQDpPEojq3NRrIKNS8esxQOOvr4E9McF67dWwTtDCbuLCvgUKoDKF8H4ivS9bjjz8HY8f3jq9sy/C7YxSHKNAquxbcIJRtHwSAx0C4OHBbm8ev9wwRP6+ziI0y73FIAOA5QD7s53M/F1QDrFFT2T40U4QkcBLsEEh80IgBECv5NWAoyvtHw1O63ODwI1jT9Fq7MT84G2gac0x47+SIN5habxQE0gTEcBD6a6V4tvjn5F1kj48QruxUu1w/7ytkFCtsrSwpF"
+      ]
+    },
+    {
+      "id": "0f408a4e74f4",
+      "publishedAt": "2026-11-06T13:02:44.454Z",
+      "title": "Two Months Later: Wynn Resorts Settles Boston Casino Strike",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "gamblingnews",
+        "casinoorg"
+      ],
+      "sources": [
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/two-months-later-wynn-resorts-settles-boston-casino-strike"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/encore-boston-harbor-strike-ends-after-1300-workers-ratify-new-contract"
+        }
+      ],
+      "centroid": "G/vW5jLsF/xKJDnoM8nYE0rTytz9CwZOUUvcHiKs094ZqhcvtMsntLIuB0omOtxa3M7GPQ9ALs6zupw0QAHyNSJ5LiLZCcs7B8EWSxzzFs6i3N4soXQur1LeR0Lrutas2BAa0j6rQrjgRPfCTbrwHCAJsMbuwinfNe221uv1AzZH5gUJLEgZSNX+AdHAFOYhVFRY3FvJPdotGjm6pdcIN8bnzenB5ktj0uzFJNxYBEbWEEFEyufT1tTNsPk+9+0zw67hNugWIjsQ3UomFUbsWcpEGp6pE+Ya7CXHJWX+S8jnGjex+xnhspe0xLMAGTLixNYqv1DL6xDpMSLDoan9BUZksfgrzzAyTOHH27LbqyITxK7k8n+m3zsONyk32rs2vq2y7yj1SyTmSskJ+NA7J8b7JEA1ITIJ5vEoTfYs3sbgw/DHFjAJ2i4nFrqjPq31/ToCv/kxBTLq00bN9ihxmB8e+yqwrCf/uv4XR1Ax5wo2si0n/ybt2Okeur1EPg4q",
+      "vectors": [
+        "HvXf6j/nG+k3IUPoONbNCVDWz+H48gNNR1jdICKq1N4Zsxo4stEjsK0991AvL8lU3tfXOgk3NeSyrZEzPxP6KhFmLhbxB8owAMQhUwcEDs6R6dYzm3k1rVDlPEzlxNCtzQ8a2zG2SbvuNwPcPLcNGCwcu8LrwS/rO+K13P3v/y1N5PwFJDIUUtUV+eDDEugjO1VR21/ZPOsbHjXArdsJPtD53ujJ5lBbzu7BHNhG/0TLHzBG1ODY29DarQcTAeczzaTdOuwZGDce3EIfGUr7VNA+D5+qIekc9y7RFWL4UNriG0ysAxjvqpGzzrr4ETrZw94gw0Pj7gvZNBK5lbj1+UdIpPAuzjUvT+bL3qvMvSEJzrnqAn+11UIMKyEv3Lgjtaqs/CP0TCrtMdEP9so9JrwQHD0qHyD+3/knWf4328XuxPDWDTMf7zsiEsKaPrz35kD9vAIiFjzl6jfNCydnlR8b9R20rx/tv/EeOFYi4/c3tCQuBiL34uEfsL87Mg0m",
+        "FgHR5SDzEBBWJCrrKcPnGzzUytsCJAlIUjbfGiC41uEWqRIivcsov78aFT4aQPNY3sq6OhRDIr68zrEwOu7rOTF/KSrFCtJADMQIOy7kG9K70+ogsmMjuUzbSzLzt+Gz5w4XzkWpNLzWSuyuVsTWHBH2rdDzyh/XKvq/1Nv8Bzo66w0MMFgbN9noCsfDE+YcZUpW4U6+OM07FTe8ptcHK8HZwe3A6D5h2+zQKeNgCEHl/0w7xfDT1tzGu+ti7fYtv8DpLeYRKTkB4UspDjrfVMhDIaaxA+YW4xrDMl0DPrzuFx6+9BfWwqe9wLQIHybuytMwwlW56hT7KC/UtqMFED11xgAk1SUwQt7K3MDuoyAbwKvh43Kg7C8PPC063MVDzbi/4yj4QxriW8YB+tsyJNXnKT07Hz4T8OwkOe8e5M3WyPK9HinzyRwoGLi1Oaf1FC8GyfA78yTywU7S4yVwpRwfAjKzsSsRvAsOT0M87hswuDEd9ybl0/QazMJFRA0q"
       ]
     }
   ]
