@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-06T13:02:44.455Z",
+  "updatedAt": "2026-11-07T11:48:58.880Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1284,6 +1284,32 @@
       "vectors": [
         "HvXf6j/nG+k3IUPoONbNCVDWz+H48gNNR1jdICKq1N4Zsxo4stEjsK0991AvL8lU3tfXOgk3NeSyrZEzPxP6KhFmLhbxB8owAMQhUwcEDs6R6dYzm3k1rVDlPEzlxNCtzQ8a2zG2SbvuNwPcPLcNGCwcu8LrwS/rO+K13P3v/y1N5PwFJDIUUtUV+eDDEugjO1VR21/ZPOsbHjXArdsJPtD53ujJ5lBbzu7BHNhG/0TLHzBG1ODY29DarQcTAeczzaTdOuwZGDce3EIfGUr7VNA+D5+qIekc9y7RFWL4UNriG0ysAxjvqpGzzrr4ETrZw94gw0Pj7gvZNBK5lbj1+UdIpPAuzjUvT+bL3qvMvSEJzrnqAn+11UIMKyEv3Lgjtaqs/CP0TCrtMdEP9so9JrwQHD0qHyD+3/knWf4328XuxPDWDTMf7zsiEsKaPrz35kD9vAIiFjzl6jfNCydnlR8b9R20rx/tv/EeOFYi4/c3tCQuBiL34uEfsL87Mg0m",
         "FgHR5SDzEBBWJCrrKcPnGzzUytsCJAlIUjbfGiC41uEWqRIivcsov78aFT4aQPNY3sq6OhRDIr68zrEwOu7rOTF/KSrFCtJADMQIOy7kG9K70+ogsmMjuUzbSzLzt+Gz5w4XzkWpNLzWSuyuVsTWHBH2rdDzyh/XKvq/1Nv8Bzo66w0MMFgbN9noCsfDE+YcZUpW4U6+OM07FTe8ptcHK8HZwe3A6D5h2+zQKeNgCEHl/0w7xfDT1tzGu+ti7fYtv8DpLeYRKTkB4UspDjrfVMhDIaaxA+YW4xrDMl0DPrzuFx6+9BfWwqe9wLQIHybuytMwwlW56hT7KC/UtqMFED11xgAk1SUwQt7K3MDuoyAbwKvh43Kg7C8PPC063MVDzbi/4yj4QxriW8YB+tsyJNXnKT07Hz4T8OwkOe8e5M3WyPK9HinzyRwoGLi1Oaf1FC8GyfA78yTywU7S4yVwpRwfAjKzsSsRvAsOT0M87hswuDEd9ybl0/QazMJFRA0q"
+      ]
+    },
+    {
+      "id": "7bd663b0c52f",
+      "publishedAt": "2026-11-07T11:48:58.880Z",
+      "title": "La Secretaría General de Consumo y Juego explica cómo funciona su algoritmo para detectar conductas de riesgo",
+      "lang": "es",
+      "voices": 2,
+      "groups": [
+        "gruporandom",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/la-secretaria-general-de-consumo-y-juego-explica-como-funciona-su-algoritmo-para-detectar-conductas-de-riesgo"
+        },
+        {
+          "source": "sbcnoticias",
+          "url": "https://sbcnoticias.com/dgoj-como-funciona-algoritmo-proteccion-jugadores"
+        }
+      ],
+      "centroid": "MuWk1UfpUzMuAzL5eLfWIkf8xuoBCN4lZzvY/yvO1tw3kVxGrNhGwscvLVdVItc8qebzNwo3RaCzw9NBR/HCMFUW7DC5x8kz5d0pLke5MPfqrfRO5yE6wFD6YSzSwq+q0ypY20vIK43vPfW5MZrpGnYsresCoB+4fv3EwbrPJyY1CCFHRVJmVsEqt6nSVP0iNyYzrC/rIdYlLzfAosg6P7S+ktauwCJhyaXnBeARzEDHMz8r5+TEvNPMvxXvt/Urw97EMZgwHigBzCI2I/jcMLAYGqulWhvfADfHI0nkP7PbRRCfzj3U7Myh67sGOSbuobAix1j6vRnPPBWuoqXiLxc/0Bkf5F0rOgS85+Pyzic++wbNIDTN61DqQjg98tBa6eO0uyL1IynzUuIHHtr1Db8uKSMXXk85EughSP8bnNCbwRXeKUbi43oANdfdFoTj9frZwjoXyAUXsA/BzSFBgSkErEalyXhA1+onNUBN5OQsuR1LrAkdAOIf6chLQDoy",
+      "vectors": [
+        "OvWm1TX2WC888jL2d67uKTv/0PAKFcshUyfFAS7Q1dg3j1RAxOxAytAoHVNTKeg/qtHqNwYsO57MxuRBROXMOkwP8SiqwNot1dgwLTbDN+75su1N6x43ulQSVTXVy7K71SZH3iraIpzhP/jEN4zoEX4lw/YKq/7IfuPA08rfJScp/x49Q1FaTsEpv7bZS/IjLwo1uDbxEtQpHDzBss46OsbEgdetwhVNsrfrCO4Wyj3CKTkx5tPPx97K0Az7qwE/x9m0MYksJR3/1h0wI/ruJ7sYCraiWB3l5zPKJSvoJr7aRgCoyjrK4smn6sb4IiXpp8AtxlvzvyTQLg67qrHtQRYw2iQf2mEtORfN3ODw0S4z9gjeGjDL5EbuRS0389VU8enBux3tHi/tSuf6Hdn9EcE6IBsXWlAyEO4UO/UeuuOnwAPYKEPl824NN+TYD5Lb/RLyxioGzhIdtxLPySNCjy0As0mxxXQ24vEwOzlC2u0mwBVKqAAS+PIc7MhUNS45",
+        "JNiu21HeRTEaFS7+a8rCFkv5wub3+vcmcErw/STS3OQxn1tDncdDwsUxOFBOFssysQD9MA48R66iyMg6Q/+/IFUb6TLR1b40+eYcKU+3IwLesv1G5SE3zkPhYh3VwLSi1ilg3WW7L4oAM/O2JbbtIGAtoeP6nz2wbxjPtbHDJiA8ESJJQEpmVMkntqXPVAkdOT4qqiLoLNwdPCvGnMg0Pqq/sdu5xixq5pzlAdUK0zzTNz4f7Pm/t83TtB3lzOsSxujcLLMuEy8CxyQ2H/jONK8UJ6qyUhbdGzXLHWDkUbHgPR+h2Drk+NWm7rYVSyL2pqgTz0sCwgrUQxqrpaPaFxVHywsc8U4kNPCx9er20RtCAAPBIzLV9FLpNz4889BW5OCvwyP/JB/6UOAVHODuCMYcLSgUV0U5EuUqTgsUicGayCboJUHj1njxLc/mG4Tv7eHDxkUmyfYOsgu61xs3gSAHrzuj021D0eYZKj9Q8d0uuyJDuhIkCdYe6c85RD8k"
       ]
     }
   ]
