@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-07T11:48:58.880Z",
+  "updatedAt": "2026-11-08T12:01:02.762Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1310,6 +1310,38 @@
       "vectors": [
         "OvWm1TX2WC888jL2d67uKTv/0PAKFcshUyfFAS7Q1dg3j1RAxOxAytAoHVNTKeg/qtHqNwYsO57MxuRBROXMOkwP8SiqwNot1dgwLTbDN+75su1N6x43ulQSVTXVy7K71SZH3iraIpzhP/jEN4zoEX4lw/YKq/7IfuPA08rfJScp/x49Q1FaTsEpv7bZS/IjLwo1uDbxEtQpHDzBss46OsbEgdetwhVNsrfrCO4Wyj3CKTkx5tPPx97K0Az7qwE/x9m0MYksJR3/1h0wI/ruJ7sYCraiWB3l5zPKJSvoJr7aRgCoyjrK4smn6sb4IiXpp8AtxlvzvyTQLg67qrHtQRYw2iQf2mEtORfN3ODw0S4z9gjeGjDL5EbuRS0389VU8enBux3tHi/tSuf6Hdn9EcE6IBsXWlAyEO4UO/UeuuOnwAPYKEPl824NN+TYD5Lb/RLyxioGzhIdtxLPySNCjy0As0mxxXQ24vEwOzlC2u0mwBVKqAAS+PIc7MhUNS45",
         "JNiu21HeRTEaFS7+a8rCFkv5wub3+vcmcErw/STS3OQxn1tDncdDwsUxOFBOFssysQD9MA48R66iyMg6Q/+/IFUb6TLR1b40+eYcKU+3IwLesv1G5SE3zkPhYh3VwLSi1ilg3WW7L4oAM/O2JbbtIGAtoeP6nz2wbxjPtbHDJiA8ESJJQEpmVMkntqXPVAkdOT4qqiLoLNwdPCvGnMg0Pqq/sdu5xixq5pzlAdUK0zzTNz4f7Pm/t83TtB3lzOsSxujcLLMuEy8CxyQ2H/jONK8UJ6qyUhbdGzXLHWDkUbHgPR+h2Drk+NWm7rYVSyL2pqgTz0sCwgrUQxqrpaPaFxVHywsc8U4kNPCx9er20RtCAAPBIzLV9FLpNz4889BW5OCvwyP/JB/6UOAVHODuCMYcLSgUV0U5EuUqTgsUicGayCboJUHj1njxLc/mG4Tv7eHDxkUmyfYOsgu61xs3gSAHrzuj021D0eYZKj9Q8d0uuyJDuhIkCdYe6c85RD8k"
+      ]
+    },
+    {
+      "id": "055fa7845bb9",
+      "publishedAt": "2026-11-08T12:01:02.762Z",
+      "title": "Austrian gambling reform delayed at EU level after Malta intervention",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "igamingbusiness",
+        "yogonet",
+        "isaguide"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/legal-compliance/austrian-gambling-reform-delayed-at-eu-level-after-malta-intervention"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/06/127184-maltas-objection-delays-austrias-gambling-reform-tightens-licensing-timeline-ahead-of-2027-rollout"
+        },
+        {
+          "source": "isaguide",
+          "url": "https://www.isa-guide.de/english-news/gambling-reform-in-austria-delayed-following-objections-from-malta"
+        }
+      ],
+      "centroid": "KgLfm0HtOCBDJG7vXsLgG1DP7cMez+oqRmnN9S6cztsgiiwtoO1R3roOIllo6cNbwNHYNv0+D8rDra8xVh3nMR9IMzC9885GIbsISWDi98i/18gjsHQzvlTjJmDg6qW8zzhC51GjKYTKGgLTUMDtIzbxoNTvzzy/UvnO2c36+/ZnByUWEjhSYcoN88HQTPAjQUlC01vTI9M6Jlayr9JAKr3NjNQC7TwovQDWO9JH4jbUGUVW9cvF1bfXlvszzu0hs6fqbN85EyAZ7DQQHw7mVOMxG8GwQRX7FkvxFlDaQ73iKVSn2Sj32si/vrn4FhnirNYr9VTdyxLcMg7VwbLjOzQvxDcH9nYeLeHE5srfgVxR7MPSFC/M9FAGDQxB6MtYuc268xL0PjjOKrIG/6pcKckALFQE9CkizAwYctk809bAxPLUHy8B4hPsObnMZrzx7hmsthYO3T7c2RDRxhwygiwNwVOB2E47sxMVYBZd4vU8swc23vvhztYr1LYhOBUk",
+      "vectors": [
+        "QvbnnyLcNxlSIW38RrzcE1HW98wP3gMtU1TY9Buqw+MQjyEkqt1R6dILE19x49Fez+HnJgFDEdbQurk5QBn0MxZDOjLV98RBK78ZSFXg/tLH19IOtXAqvV7gKmTkz7DMxDo961G+I5e2EQbgSL79HzHpkOT+zD65Vvze4Mr8BO9jBB8SCTFOSs4T7s3URP8mODg24WXpC88kH1WwsuFMIM3Jmtj2/SciwffYI9hA6ETOF0Q+8cPN1rjTofcnyfUbuJ7taN07EBwg7DkYGhnfPN8sI9KoTRgMFzwCDEjgR83kH0q23STl4tPFv7/wDBvrsdAv8lndygDrOQjfz7nqKiomvTwC+m8cO9bQ5MvdgU9F/M3ZDC/f+UcFDPxF6L5HvMS0/hQJJC3SJbMVCKVVLNv2MFkN+SkZzRMNctY10uDJvPPXGBgH7h3mLsPOaLHo8AqhthUO4Dfh1xDVyh4WjTz/y1SO10EysAEaUwRZ7PI/w/kx/e3q7N4z168hJQYg",
+        "GALckEb4NhRGJmjuYNTlKTzX6bwm188yR2LZ+jKc1N8nhS0xqfVE4LYIJEptAcNRw8rjLPM8C9m9tLYmWw3YKRhCIjKy68xLNb/7Pl7v/9TM4M0wrHEzwkPsFlvX+am60Dk+7T6gHonRKffQVdLyDi/nr8z7zC+/PPnS19785P9gDx0iEDJHVsET9MHXSPceQktIzE3TJ9g8JUq+uNIuGbneks8N5jo6yQTSRNM55zTcFTVnD8vD2MTaovg31OcftsHuZelDCh8Z7x8LGQDvVuQsFdK3QQrrEU/qFUfWQ8PkJl+c1SUG5MjAzbL1Fwzlm9sh9knh2hjRLv/XtbHfODoyxjX89mcnJdu35dHUgWVM7sDWFiXK70oPBQc769Zasc658hruRzi/F7z0+79cItoILmQD8y4d1QkQceE7zNK+xf3THjUB3BHkPL7VZbb05w22xhEU2D/b2grZ2SI9iSsMxVaC2kJAsyEbcS5U3PUtsAky4gHj0tQc27QXRRYn",
+        "HQ/eslH3MS8kIGHlZMLkEVbH68wiwfAXLHO+8zWe3NYini4snPpP1bMWKlNI3L5TudHGRgUxD7nGqKwrWCzsLipINCO7+uQ6/b8BSF3d6r221MQlvWczxkriLE/p/Ke64Ss/4lacMoHiDwjPRbvaNjkFstTX3j3PVPbC28j2C/ZgACsKGztTc9cA+MHMS90fPUs+007DMthCKVO2sck7Pr3Ki9wC5kkUuQXeQdNQ3SHaGklO4NzI2rXgkAQz1u4juqbmZdwjHB8O7jsLIwzoXOwwFajAKhn6F0joHFTdMrPlL0S04Cj9z8bCucYFHCDdxt0r+0zgxRvfJiDQybrlRS8u1CoX9XkUH/fP7svxl09U3cfPFTHF91D9FB836tZYyt7O6gTmRDrgO7UH+qhSJ64EHzD78xwqyQcnX9w65djF1efbIDj74Af9NrTLVNv59jG7tBkF5jnd4BLOug47hRYavkGL31k3xRYHSw1a5fs+sRM2wATcttgq0cwmNh8d"
       ]
     }
   ]
