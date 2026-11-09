@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-08T12:01:02.762Z",
+  "updatedAt": "2026-11-09T13:59:39.320Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1342,6 +1342,43 @@
         "QvbnnyLcNxlSIW38RrzcE1HW98wP3gMtU1TY9Buqw+MQjyEkqt1R6dILE19x49Fez+HnJgFDEdbQurk5QBn0MxZDOjLV98RBK78ZSFXg/tLH19IOtXAqvV7gKmTkz7DMxDo961G+I5e2EQbgSL79HzHpkOT+zD65Vvze4Mr8BO9jBB8SCTFOSs4T7s3URP8mODg24WXpC88kH1WwsuFMIM3Jmtj2/SciwffYI9hA6ETOF0Q+8cPN1rjTofcnyfUbuJ7taN07EBwg7DkYGhnfPN8sI9KoTRgMFzwCDEjgR83kH0q23STl4tPFv7/wDBvrsdAv8lndygDrOQjfz7nqKiomvTwC+m8cO9bQ5MvdgU9F/M3ZDC/f+UcFDPxF6L5HvMS0/hQJJC3SJbMVCKVVLNv2MFkN+SkZzRMNctY10uDJvPPXGBgH7h3mLsPOaLHo8AqhthUO4Dfh1xDVyh4WjTz/y1SO10EysAEaUwRZ7PI/w/kx/e3q7N4z168hJQYg",
         "GALckEb4NhRGJmjuYNTlKTzX6bwm188yR2LZ+jKc1N8nhS0xqfVE4LYIJEptAcNRw8rjLPM8C9m9tLYmWw3YKRhCIjKy68xLNb/7Pl7v/9TM4M0wrHEzwkPsFlvX+am60Dk+7T6gHonRKffQVdLyDi/nr8z7zC+/PPnS19785P9gDx0iEDJHVsET9MHXSPceQktIzE3TJ9g8JUq+uNIuGbneks8N5jo6yQTSRNM55zTcFTVnD8vD2MTaovg31OcftsHuZelDCh8Z7x8LGQDvVuQsFdK3QQrrEU/qFUfWQ8PkJl+c1SUG5MjAzbL1Fwzlm9sh9knh2hjRLv/XtbHfODoyxjX89mcnJdu35dHUgWVM7sDWFiXK70oPBQc769Zasc658hruRzi/F7z0+79cItoILmQD8y4d1QkQceE7zNK+xf3THjUB3BHkPL7VZbb05w22xhEU2D/b2grZ2SI9iSsMxVaC2kJAsyEbcS5U3PUtsAky4gHj0tQc27QXRRYn",
         "HQ/eslH3MS8kIGHlZMLkEVbH68wiwfAXLHO+8zWe3NYini4snPpP1bMWKlNI3L5TudHGRgUxD7nGqKwrWCzsLipINCO7+uQ6/b8BSF3d6r221MQlvWczxkriLE/p/Ke64Ss/4lacMoHiDwjPRbvaNjkFstTX3j3PVPbC28j2C/ZgACsKGztTc9cA+MHMS90fPUs+007DMthCKVO2sck7Pr3Ki9wC5kkUuQXeQdNQ3SHaGklO4NzI2rXgkAQz1u4juqbmZdwjHB8O7jsLIwzoXOwwFajAKhn6F0joHFTdMrPlL0S04Cj9z8bCucYFHCDdxt0r+0zgxRvfJiDQybrlRS8u1CoX9XkUH/fP7svxl09U3cfPFTHF91D9FB836tZYyt7O6gTmRDrgO7UH+qhSJ64EHzD78xwqyQcnX9w65djF1efbIDj74Af9NrTLVNv59jG7tBkF5jnd4BLOug47hRYavkGL31k3xRYHSw1a5fs+sRM2wATcttgq0cwmNh8d"
+      ]
+    },
+    {
+      "id": "a67e5c966e1f",
+      "publishedAt": "2026-11-09T13:59:39.320Z",
+      "title": "France clears Banijay Gaming’s acquisition of casino operator Joa",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "igamingbusiness",
+        "sbc",
+        "focusgn"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/strategy/france-clears-banijay-gamings-acquisition-joa"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/retail/2026/11/06/banijay-joa-casino-approval"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/banijay-joa-acquisition-approval"
+        },
+        {
+          "source": "g3newswire",
+          "url": "https://g3newswire.com/banijays-takeover-of-joa-approved-by-the-competition-authority"
+        }
+      ],
+      "centroid": "He/bwT/rQ0AoBkEoQtHWDEL4ysMX7/9DYDznAQ6gzCEIxSghzeAb3LQM9FdcG/BG1um3W+JNKbKn2uAbOPYDDikgHiXH+MhV7d8mLgntJNDAwfAR7TMHwErhGyjXwsLguUEh4TTdLMbtFRLIF+L9Jk8Mpsbj1yjQVPDQyuTSBhNE6PMtHxw3NukU9+TFNtoeOi5D1DLeLd4QEkXAuN4jH8Lix+XIGFVUwuTkJdw93j/wIUoEz+PMvLHYtBH36AUQy67PO9pFJSQSwy4JOfbXbt4KF8rESvb1JBcCKFXCE83sD0nh8Eny+MnO19v+ISPWxu856Sngwh/uTBrtwc/GHT4c0QYn3jIOKALmwcYEwB428N738i/L4FAIJiE5ANkuzOCuyQ7pDB/yXNcKHNwfIdcDCUoJLCQxz/smLwItxb322uL9ITYIxysXK9C9NbPp9h2wvvwlzi/q/QLm2hZJgSJB8Rmv3Ck01d0eEUhP2O0/risa+g0OyNkl4rkXMhwe",
+      "vectors": [
+        "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"
       ]
     }
   ]
