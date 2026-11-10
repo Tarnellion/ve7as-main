@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-09T13:59:39.320Z",
+  "updatedAt": "2026-11-10T13:33:06.576Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1379,6 +1379,26 @@
         "GPHivj3ZRS0j/DMcNtrbDz/61ccU5fc8UTL0+hPLzxEI0ikd5uci0s79/0tGEvs/zfnCXtBNLKyzyeINMwkJGCUKGyLq+sc98eEfNgvqNN3Dzu8L3i8Yx0DrIy/UzMr1yTwP3ijpI8z7DhnbAeIBKEkMqMr11x3vVvffv+nD/hlC7PYsJgQqQuj89N3EScQfPkE73in7NfUJDznCtucWGMz00PnOFkZDwOTeF9Ao1jzqLD730+LQza3wxRjp4gYPzrTHOgAfJSEJzSMEKPvebur+DajHMgDtISD5L1a7EdUBBS3x9Eb979Taz/H8Gyjv3fM79yjbxCEAKBD5q9TVLDsE1vcv2SkpLwLzzMD6uhkq+OQA7jvl0zcSFSkzEdYvzuGfyQfvAyPwO88KGeohJtr6A0kGIyMYsgM3Jw41wcPw0OQAJT7/zCsgIMzCIsP19x+5uxAj4DHrBQLw3iExgRVABRbG7Bg72ukMFDBDxOswsR4W8hMCuvcY79QLNQkb",
         "IenVtjvmVlEoD0Y5VtHJAkr4uLYV+wRHX0/+/ASMySINuCYmw8oQ8qsV8FJyHtVT0tWtY+tLPaiq7ckxOe0A+icuJSepA8lz1+IoNfrtGM+5t/Ab8S0NrUzaKDTau6PJuVgx0THjK9XdBxC9J+MBEWAZkcXi5TDAU9vEy+vAGwpX6PkvBio+Nvc3DOu9OtUeOx1Bvjm9JM0QD1vRtds5McvjvNm7D3B3svLWMe1B8jv3MksIw9TEq5rEqhHl6wMuw7bANtdaIyYEtjsMRO3EcNMREOi5Wef0GA4QGVW8Hc/cE3PV5V/k+rK638r+HRnHx/w91x/mvBH0fxzq29q9B00gxBwi0S74GPvTuKsUxxY47tzeEEe21XnoLxE58eQ2xeCnuRLKEB3uaegEF802L7gRFUgURCdD2QA2Qfg0xb0A5+byHEcgwCsPO8/MOLLU5iObtfAyzzbm9/TW7BJZgTJW4xqJ0you2tolDGlI0/dbm0MREBETvdEn5KEUPh03",
         "Fejm4DbxLUAj/D4hHtHpDTL118YV7ftHXynTCRCZ0ij9yzEawPcl0rEJ7FReFQY63e20R+dKH8ej5e8nK94CDiYVFh7L9NA7/dYkGxvwI8/HwvML+jEE2UjYAxrVw9vovCwm6C/VOsf1MBPIE+j3M0IFyMDb1jXFWPXW0+TiARAk4uoiJRsyKtYJ7urWFOohNjVM4yjwMeIPITK80+YhF7XY1OjZLUZB3dLsG9pB2jrlBlIEzenExcvOsxEF5wkC2qztQsRQLB8MyCAEPPbUb+UDKs7VRQ3vJBcIO1LPDNDwFzzm9y/zAtDX4dT5LC7btOsv8C7i0jDaRBvjvNvFJi0n2fsy6jQEJAfzx+j8xSkq6NcJ1gfR70YXHyk8/tYq0eTA2gQBAx7zbM4OIuISHfYDB0YGJCgr5uoULAobvrXw1uEGKify1zYMJ9qyQKLi8xa1xPsduy3+8wPywxFJgSQx6h/Y0Swx3NIjATla7vktvCIY9A4L29co3bQbGBkK"
+      ]
+    },
+    {
+      "id": "147c307bf91c",
+      "publishedAt": "2026-11-10T13:33:06.576Z",
+      "title": "Onderhoud aan het BSN-register: 15 en 22 november 2026",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/onderhoud-aan-het-bsn-register-15-en-22-november-2026"
+        }
+      ],
+      "centroid": "Sevb5CjA+DgZDj4uP7npKEbT6tr/HbA8PiS4Lki9uPIfkh4lo+oV5ugpAllYStVH7ujtRhMm/LXRsMgeU/8SFVBaMhGo88kiEPMDMVffFQrUzNk+1jw4w0PgMifBouq4zxo84C64TYHKVRPpK8qtAz8opwAD7QC+XPTTsNEJIytAAgcRJDI4LbHuytbmGt8SOBE/x0nRJv48Lx3CzPH+NtXhmQT0+EQ+pMbXQfQ45lzQDUgi1OKrtdrG2hwi0QE2waLRZ8ceUSDq4DY7LQTcDNQY/ufbRf3dCyfPIznoIJrUFB2q3AAX49rIz87uGj7WkQE8qzXdxg3nLBjGw6HvHQJMwT4YC1ATFyDW9uv9wBvf1NHMBDbyw04PNEhi8sY1BvD/2CfYDA3zN68O3d0eMckHHR80Nl5M8+MOTwM+2tvC6RHoPzsU5CsHFNbJHd3qxhDpCB4GyxP+yhTjzibrsScT3kOV2UkH0Aj/LUJJ7uML1D8g6ufm0cIS2s1GGys6",
+      "vectors": [
+        "Sevb5CjA+DgZDj4uP7npKEbT6tr/HbA8PiS4Lki9uPIfkh4lo+oV5ugpAllYStVH7ujtRhMm/LXRsMgeU/8SFVBaMhGo88kiEPMDMVffFQrUzNk+1jw4w0PgMifBouq4zxo84C64TYHKVRPpK8qtAz8opwAD7QC+XPTTsNEJIytAAgcRJDI4LbHuytbmGt8SOBE/x0nRJv48Lx3CzPH+NtXhmQT0+EQ+pMbXQfQ45lzQDUgi1OKrtdrG2hwi0QE2waLRZ8ceUSDq4DY7LQTcDNQY/ufbRf3dCyfPIznoIJrUFB2q3AAX49rIz87uGj7WkQE8qzXdxg3nLBjGw6HvHQJMwT4YC1ATFyDW9uv9wBvf1NHMBDbyw04PNEhi8sY1BvD/2CfYDA3zN68O3d0eMckHHR80Nl5M8+MOTwM+2tvC6RHoPzsU5CsHFNbJHd3qxhDpCB4GyxP+yhTjzibrsScT3kOV2UkH0Aj/LUJJ7uML1D8g6ufm0cIS2s1GGys6"
       ]
     }
   ]
