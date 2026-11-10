@@ -2,11 +2,12 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
 import { useTranslations } from '../../../i18n/ui';
-import { isLanguage, type Language } from '../../../i18n/languages';
+import { isLanguage, isIndexable, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { type SectionId } from '../../../i18n/sections';
 import { toolsForSection } from '../../../data/tools';
-import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY, renderMarkdown } from '../../../lib/sanity';
+import { getSections, getIndexLists, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY, renderMarkdown, type SanityArticleCard } from '../../../lib/sanity';
+import { breadcrumbs } from '../../../lib/schema';
 
 const { lang, section: sectionId } = Astro.params as { lang: Language; section: string };
 
@@ -19,9 +20,9 @@ const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
 // Список разделов и статьи раздела — одним заходом. Фильтр по разделу теперь
 // в GROQ: раньше страница забирала все статьи портала и отсеивала чужие в JS.
-const [sectionsResult, articlesResult] = await Promise.all([
+const [sectionsResult, listsResult] = await Promise.all([
   getSections({ bodyLang: lang }),
-  getArticles(lang, { section: sectionId }),
+  getIndexLists(lang, { section: sectionId }),
 ]);
 
 // Порядок проверок важен. Если список разделов не загрузился, «раздел не
@@ -42,17 +43,40 @@ const knownId = (section?.id ?? sectionId) as SectionId;
 const sectionTitle = t.sections[knownId] ?? section?.title ?? sectionId;
 const sectionDesc = t.sectionDescriptions[knownId] ?? section?.description ?? '';
 
-const articles = articlesResult.data.filter((a) => !isBlockedInCountry(a.blockedIn, country));
+// На индексируемой локали карточка без перевода — это русский заголовок на
+// странице другого языка и ссылка на статью, которая сама ответит noindex.
+// Пять noindex-локалей фолбэк оставляют: там он и есть содержимое хаба.
+const visible = (a: SanityArticleCard) =>
+  !isBlockedInCountry(a.blockedIn, country) && (!isIndexable(lang) || a.hasTranslation !== false);
+const guides = listsResult.data.guides.filter(visible);
+const news = listsResult.data.news.filter(visible);
 
 // Текст хаба. Пустой body — норма (хаб ещё не наполнен), рендерим просто
 // список; это не то же самое, что сбой CMS, который обрабатывается выше.
 const hubHtml = section?.body ? renderMarkdown(section.body) : '';
 const hubIsFallback = Boolean(section?.body) && section?.hasTranslation === false;
 
-// Список статей и есть содержимое страницы: его пропажа — тоже 503.
-const dataFailed = sectionsResult.failed || articlesResult.failed;
+// Описательный <title> включается сам, когда у хаба появляется текст на языке
+// страницы. Пока текста нет (или он русский фолбэк), остаётся голое название
+// рубрики: заголовок в выдаче не должен обещать разбор, которого здесь нет.
+// <h1>, крошки и навигация всегда на sectionTitle.
+const pageTitle = hubHtml && !hubIsFallback ? (t.sectionSeoTitles?.[knownId] ?? sectionTitle) : sectionTitle;
+
+// Разметка повторяет видимую цепочку над <h1>. При сбое CMS раздела нет —
+// размечать крошки для страницы, отдающей 503, нечем и незачем.
+const schema = section
+  ? [
+      breadcrumbs([
+        { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+        { name: sectionTitle, url: new URL(path(lang, sectionId), Astro.site).toString() },
+      ]),
+    ]
+  : [];
+
+// Списки статей и есть содержимое страницы: их пропажа — тоже 503.
+const dataFailed = sectionsResult.failed || listsResult.failed;
 const errorCopy = DATA_ERROR_COPY[lang];
-if (articlesResult.failed) markContentUnavailable(Astro.response);
+if (listsResult.failed) markContentUnavailable(Astro.response);
 
 // Калькуляторы этой рубрики. Тематическая ссылка с хаба — второй вход для
 // краулера к страницам, которые он до сих пор ни разу не сканировал, и
@@ -61,10 +85,10 @@ const sectionTools = toolsForSection(knownId);
 
 ---
 
-<BaseLayout lang={lang} title={sectionTitle} description={sectionDesc} currentPath={sectionId}>
+<BaseLayout lang={lang} title={pageTitle} description={sectionDesc} currentPath={sectionId} schema={schema}>
   <header class="page-head">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
+      <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
         <a href={path(lang)}>{t.nav.home}</a>
         <span class="sep">/</span>
         <span>{sectionTitle}</span>
@@ -74,25 +98,50 @@ const sectionTools = toolsForSection(knownId);
     </div>
   </header>
 
-  <section class="section">
-    <div class="container">
-      {dataFailed && (
-        <p class="notice notice--error">
-          <strong>{errorCopy.title}.</strong> {errorCopy.body}
-        </p>
-      )}
+  {/*
+    Прочерк — это «в разделе пока пусто». При сбое вместо него стоит плашка,
+    так что пустота от сбоя и пустота по сути читаются по-разному.
+  */}
+  {(dataFailed || (guides.length === 0 && news.length === 0)) && (
+    <section class="section">
+      <div class="container">
+        {dataFailed ? (
+          <p class="notice notice--error">
+            <strong>{errorCopy.title}.</strong> {errorCopy.body}
+          </p>
+        ) : (
+          <p class="section-sub">—</p>
+        )}
+      </div>
+    </section>
+  )}
 
-      {articles.length > 0 ? (
+  {/*
+    Разборы выше новостей: новость в рубрике появляется каждый день, и в общей
+    хронологической ленте разборы уходили на дно списка, а затем и за его лимит.
+    Хаб без новостей показывает один список — пустой заголовок не рендерим.
+  */}
+  {guides.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="nf-sections-title">{t.index.guides}</h2>
         <div class="idx">
-          {articles.map((article) => <ArticleCard lang={lang} article={article} />)}
+          {guides.map((article) => <ArticleCard lang={lang} article={article} />)}
         </div>
-      ) : (
-        // Прочерк — это «в разделе пока пусто». При сбое выше стоит плашка,
-        // так что пустота от сбоя и пустота по сути читаются по-разному.
-        !dataFailed && <p class="section-sub">—</p>
-      )}
-    </div>
-  </section>
+      </div>
+    </section>
+  )}
+
+  {news.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="nf-sections-title">{t.index.news}</h2>
+        <div class="idx">
+          {news.map((article) => <ArticleCard lang={lang} article={article} />)}
+        </div>
+      </div>
+    </section>
+  )}
 
   {sectionTools.length > 0 && (
     <section class="section">

@@ -29,6 +29,8 @@ pnpm-debug.log*
 # playwright artifacts
 .playwright-mcp/
 *.png
+# карточка для соцсетей — единственный PNG, который должен уехать в деплой
+!public/og/default.png
 
 # studio build artifacts
 studio/.sanity/

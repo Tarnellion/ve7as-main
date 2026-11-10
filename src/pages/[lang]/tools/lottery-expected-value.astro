@@ -5,6 +5,8 @@ import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import { TOOLS_INDEX_TITLE } from '../../../data/tools';
 
 /**
  * Калькулятор матожидания лотерейного билета — пятый инструмент фазы 4.
@@ -31,7 +33,7 @@ if (!isLanguage(lang)) return Astro.rewrite('/404');
 const t = useTranslations(lang);
 
 type Copy = {
-  title: string; description: string; lede: string;
+  title: string; metaTitle?: string; description: string; lede: string;
   game: string; custom: string;
   mainPick: string; bonusPick: string; of: string;
   jackpot: string; jackpotHint: string;
@@ -40,11 +42,13 @@ type Copy = {
   tax: string; taxHint: string; threshold: string;
   honest: string; honestHint: string;
   ev: string; rtp: string; rtpHint: string; oddsAny: string; oddsAnyHint: string;
-  breakEven: string; breakEvenHint: string; breakEvenCaveat: string;
+  breakEven: string; breakEvenHint: string; breakEvenCaveat: string; cashShort: string;
   tiers: string; tierMatch: string; tierOdds: string; tierPrize: string; tierEv: string;
   jackpotRow: string; tierTotal: string;
   mandatory: string; plusEv: string; pariNote: string; noStrategies: string;
   method: string; articleLink: string;
+  exampleTitle: string; example: string; howTitle: string; how: string;
+  faqTitle: string; faq: { q: string; a: string }[];
 };
 
 /**
@@ -60,7 +64,7 @@ type CopyLang = 'en' | 'es';
 const COPY: Record<CopyLang, Copy> = {
   en: {
     title: 'Lottery expected value calculator',
-    description: 'Works out what a lottery ticket really costs: odds, tax, jackpot splitting and the cash-value discount. Powerball, Mega Millions, EuroMillions.',
+    description: 'Expected value of a Powerball, Mega Millions or EuroMillions ticket after tax, jackpot splitting and the cash-value discount, plus the break-even jackpot.',
     lede: 'Set the draw up and the calculator shows what the ticket actually costs. That figure is the size of the average loss, not a way to avoid it.',
     game: 'Game', custom: 'Custom game',
     mainPick: 'Main balls', bonusPick: 'Bonus balls', of: 'of',
@@ -73,7 +77,7 @@ const COPY: Record<CopyLang, Copy> = {
     honest: 'What the ticket really costs', honestHint: 'The average loss per ticket: price minus the expected payout. That is the price of entering this draw.',
     ev: 'Expected value per ticket', rtp: 'Return per unit staked', rtpHint: 'How much comes back on average from what you pay — the same idea as a slot’s RTP.',
     oddsAny: 'Chance of any prize', oddsAnyHint: 'Including prizes smaller than the ticket price.',
-    breakEven: 'Break-even jackpot', breakEvenHint: 'Under the current assumptions',
+    breakEven: 'Break-even jackpot', breakEvenHint: 'Under the current assumptions', cashShort: 'cash',
     breakEvenCaveat: 'The threshold is a mirage that recedes as you approach it: at that jackpot size sales surge, and the higher chance of splitting eats the edge.',
     tiers: 'Prize tiers in full', tierMatch: 'Match', tierOdds: 'Odds', tierPrize: 'Prize', tierEv: 'Contribution to EV',
     jackpotRow: 'jackpot', tierTotal: 'Tiers combined',
@@ -83,32 +87,73 @@ const COPY: Record<CopyLang, Copy> = {
     noStrategies: 'No hot or cold numbers, no systems, no wheeling — not here and not later: balls do not remember past draws, and picking numbers never changes the expected value, only who you split a prize with.',
     method: 'Every tier’s odds are recomputed from the hypergeometric formula and cross-checked against the official charts on 2026-10-26; the share of a won jackpot comes from a Poisson model. Gate: scripts/verify-lottery-data.mjs.',
     articleLink: 'Lottery formats: what you are actually buying',
+    // Числа примера — приёмочный сценарий scripts/verify-lottery-data.mjs
+    // и значения формы по умолчанию. Меняется одно — меняются все три,
+    // иначе текст под калькулятором спорит с самим калькулятором.
+    exampleTitle: 'Worked example: a $500 million Powerball draw',
+    example: 'Advertised jackpot $500M, cash value $230M, 25 million tickets sold, a 37% federal tax rate (the top bracket) assumed on prizes of $5,000 or more, ticket $2. The chance of sharing the jackpot cuts its value by about 4%; after tax the jackpot is worth $0.475 per ticket and the lower tiers add about $0.27. Expected payout: $0.74. The ticket really costs $1.26, or 63% of its price. Under these assumptions the draw would break even only at an advertised jackpot of about $1.82 billion.',
+    howTitle: 'How lottery expected value is calculated',
+    how: 'For each prize tier, multiply the prize (after tax, and for the jackpot after the cash-value discount and the expected split) by the probability of winning it; add the tiers up and subtract the ticket price. A negative result is the average loss per ticket.',
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'Is a lottery ticket ever worth it mathematically?',
+        a: 'Almost never. A positive expected value needs a very large jackpot and few tickets sold at the same time; in practice large jackpots drive sales up and the higher chance of splitting removes the edge. And an average over hundreds of millions of tickets says nothing about one ticket.',
+      },
+      {
+        q: 'Why use the cash value instead of the advertised jackpot?',
+        a: 'For US games the advertised figure is a 30-year annuity. The lump sum actually paid is published for every draw; this calculator defaults to 46% of the advertised amount. EuroMillions pays the advertised amount in cash.',
+      },
+      {
+        q: 'Does choosing different numbers change the expected value?',
+        a: 'No. Every combination has the same probability; the choice only changes how many people you would share a prize with.',
+      },
+    ],
   },
   es: {
-    title: 'Calculadora de valor esperado de la lotería',
-    description: 'Calcula lo que cuesta de verdad un boleto: probabilidades, impuesto, reparto del bote y descuento del pago en efectivo. Powerball, Mega Millions, EuroMillones.',
-    lede: 'Configure el sorteo y la calculadora mostrará lo que cuesta realmente el boleto. Esa cifra es el tamaño de la pérdida media, no una forma de evitarla.',
+    title: 'Calculadora de lotería: probabilidades y valor esperado',
+    description: 'Probabilidad de cada premio y valor esperado de un boleto de Euromillones, Powerball o Mega Millions, con impuestos y reparto del bote. Sin registro.',
+    lede: 'Configura el sorteo y la calculadora mostrará el valor esperado (la esperanza matemática) del boleto y lo que cuesta realmente. Esa cifra es el tamaño de la pérdida media, no una forma de evitarla.',
     game: 'Juego', custom: 'Juego personalizado',
-    mainPick: 'Números principales', bonusPick: 'Números bonus', of: 'de',
+    mainPick: 'Números principales', bonusPick: 'Números adicionales (estrellas, Powerball)', of: 'de',
     jackpot: 'Bote anunciado', jackpotHint: 'En los juegos de EE. UU. es la anualidad a 30 años: la cifra del cartel.',
-    cashValue: 'Pago en efectivo', cashHint: 'Lo que se entrega en un único pago. Se publica en cada sorteo; por defecto el 46 % de la cifra anunciada. EuroMillones paga en efectivo íntegro.',
-    price: 'Precio del boleto', tickets: 'Boletos vendidos', ticketsHint: 'Necesario para estimar la probabilidad de compartir el bote. Si lo deja vacío, no se modela el reparto.',
+    cashValue: 'Pago en efectivo', cashHint: 'Lo que se entrega en un único pago. Se publica en cada sorteo; por defecto el 46 % de la cifra anunciada. Euromillones paga en efectivo íntegro.',
+    price: 'Precio del boleto', tickets: 'Boletos vendidos', ticketsHint: 'Necesario para estimar la probabilidad de compartir el bote. Si lo dejas vacío, no se modela el reparto.',
     noSplit: 'El reparto no se modela: el bote se trata como indiviso. En un sorteo grande eso sobreestima el valor esperado.',
     tax: 'Impuesto sobre el premio', taxHint: 'Una simplificación, no asesoría fiscal: un tipo y un umbral. En España el 20 % grava solo el exceso sobre el mínimo exento.',
     threshold: 'Umbral del impuesto',
     honest: 'Lo que cuesta de verdad el boleto', honestHint: 'La pérdida media por boleto: precio menos el pago esperado. Ese es el precio de entrar en este sorteo.',
-    ev: 'Valor esperado por boleto', rtp: 'Retorno por unidad apostada', rtpHint: 'Cuánto vuelve de media de lo que paga: la misma idea que el RTP de una tragaperras.',
+    ev: 'Valor esperado por boleto', rtp: 'Retorno por unidad apostada', rtpHint: 'Cuánto vuelve de media de lo que pagas: la misma idea que el RTP de una tragaperras.',
     oddsAny: 'Probabilidad de algún premio', oddsAnyHint: 'Incluidos los premios menores que el precio del boleto.',
-    breakEven: 'Bote de equilibrio', breakEvenHint: 'Con los supuestos actuales',
+    breakEven: 'Bote de equilibrio', breakEvenHint: 'Con los supuestos actuales', cashShort: 'en efectivo',
     breakEvenCaveat: 'El umbral es un espejismo que se aleja al acercarse: con un bote así las ventas se disparan y la mayor probabilidad de reparto se come la ventaja.',
     tiers: 'Desglose por categorías', tierMatch: 'Aciertos', tierOdds: 'Probabilidad', tierPrize: 'Premio', tierEv: 'Aporte al valor esperado',
     jackpotRow: 'bote', tierTotal: 'Total de categorías',
     mandatory: 'Casi todos los sorteos de lotería tienen valor esperado negativo. Esta herramienta muestra el tamaño de la pérdida, no una forma de evitarla.',
-    plusEv: 'El valor esperado ha salido no negativo. Es una media sobre cientos de millones de boletos, no una predicción para el suyo: una varianza de 1 entre 292 millones no la soporta ningún bankroll. Las ventanas históricas con valor esperado positivo se cerraron solas, por explosión de ventas y reparto.',
-    pariNote: 'Los premios de este juego son pari-mutuel: cada categoría reparte una porción del fondo, así que las cantidades son medias a largo plazo y varían en cada sorteo.',
-    noStrategies: 'Aquí no hay números «calientes» ni «fríos», ni sistemas, ni ruedas: las bolas no recuerdan sorteos anteriores, y elegir números nunca cambia el valor esperado, solo con quién comparte el premio.',
-    method: 'Las probabilidades de cada categoría se recalculan con la fórmula hipergeométrica y se verifican con los cuadros oficiales el 26-10-2026; la parte del bote al ganar sale de un modelo de Poisson. Control: scripts/verify-lottery-data.mjs.',
-    articleLink: 'Formatos de lotería: qué está comprando en realidad',
+    plusEv: 'El valor esperado sale positivo o nulo. Es una media sobre cientos de millones de boletos, no una predicción para el tuyo: una varianza de 1 entre 292 millones no la aguanta ningún presupuesto. Las ventanas históricas con valor esperado positivo se cerraron solas, por explosión de ventas y reparto.',
+    pariNote: 'Los premios de este juego son de reparto (pari-mutuel): cada categoría se reparte una parte del fondo, así que las cantidades son medias a largo plazo y varían en cada sorteo.',
+    noStrategies: 'Aquí no hay números «calientes» ni «fríos», ni sistemas ni combinaciones reducidas: las bolas no recuerdan sorteos anteriores, y elegir números nunca cambia el valor esperado, solo con quién compartes el premio.',
+    method: 'Las probabilidades de cada categoría se recalculan con la fórmula hipergeométrica y se verificaron con las tablas oficiales el 26/10/2026; la parte del bote al ganar sale de un modelo de Poisson.',
+    articleLink: 'Formatos de lotería: qué estás comprando en realidad',
+    exampleTitle: 'Ejemplo: un sorteo de Powerball con bote de 500 millones',
+    example: 'Bote anunciado de 500 millones de dólares, pago en efectivo de 230 millones, 25 millones de boletos vendidos, se supone un impuesto federal del 37 % (el tipo máximo) sobre los premios desde 5000 $, boleto de 2 $. La probabilidad de compartir el bote reduce su valor alrededor de un 4 %; después de impuestos el bote aporta 0,475 $ por boleto y las categorías inferiores unos 0,27 $. Pago esperado: 0,74 $. El boleto cuesta de verdad 1,26 $, el 63 % de su precio. Con estos supuestos el sorteo solo quedaría a la par con un bote anunciado de unos 1820 millones de dólares.',
+    howTitle: 'Cómo se calcula el valor esperado (esperanza matemática) de la lotería',
+    how: 'Para cada categoría de premio se multiplica el premio (neto de impuestos y, en el bote, tras el descuento del pago en efectivo y el reparto esperado) por la probabilidad de acertarla; se suman todas las categorías y se resta el precio del boleto. Un resultado negativo es la pérdida media por boleto.',
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      {
+        q: '¿Merece la pena jugar a la lotería desde el punto de vista matemático?',
+        a: 'Casi nunca. Un valor esperado positivo exige a la vez un bote muy grande y pocos boletos vendidos; en la práctica los botes grandes disparan las ventas y la mayor probabilidad de reparto elimina la ventaja. Y una media sobre cientos de millones de boletos no dice nada de un boleto concreto.',
+      },
+      {
+        q: '¿Por qué se usa el pago en efectivo y no el bote anunciado?',
+        a: 'En los juegos de EE. UU. la cifra anunciada es una anualidad a 30 años. El pago único real se publica en cada sorteo; la calculadora usa por defecto el 46 % del bote anunciado. Euromillones paga en efectivo la cifra anunciada.',
+      },
+      {
+        q: '¿Elegir otros números cambia el valor esperado?',
+        a: 'No. Todas las combinaciones tienen la misma probabilidad; la elección solo cambia con cuánta gente compartirías el premio.',
+      },
+    ],
   },
 };
 
@@ -126,16 +171,24 @@ const schema = [
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     inLanguage: HTML_LANG[lang],
   },
+  // Три уровня, и средний — указатель: та же цепочка стоит над <h1>.
+  // Разметка обязана повторять видимую иерархию, поэтому правятся они вместе.
   breadcrumbs([
     { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: TOOLS_INDEX_TITLE[lang], url: new URL(path(lang, 'tools'), Astro.site).toString() },
     { name: c.title, url: pageUrl.toString() },
   ]),
 ];
 ---
 
-<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/lottery-expected-value" schema={schema}>
+<BaseLayout lang={lang} title={c.metaTitle ?? c.title} description={c.description} currentPath="tools/lottery-expected-value" schema={schema}>
   <header class="page-head">
     <div class="container">
+      <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        <a href={path(lang, 'tools')}>{TOOLS_INDEX_TITLE[lang]}</a>
+      </nav>
       <h1>{c.title}</h1>
       <p class="lede">{c.lede}</p>
     </div>
@@ -152,7 +205,7 @@ const schema = [
             <select id="lv-preset">
               <option value="powerball" selected>Powerball</option>
               <option value="mega-millions">Mega Millions</option>
-              <option value="euromillions">EuroMillions</option>
+              <option value="euromillions">{lang === 'es' ? 'Euromillones' : 'EuroMillions'}</option>
               <option value="custom">{c.custom}</option>
             </select>
           </div>
@@ -229,7 +282,7 @@ const schema = [
           <div class="calc-row">
             <span class="calc-label">{c.breakEven}</span>
             <span class="calc-value" id="lv-breakeven">—</span>
-            <small id="lv-breakeven-assumptions">—</small>
+            <small id="lv-breakeven-assumptions" data-cash-label={c.cashShort}>—</small>
             <small>{c.breakEvenCaveat}</small>
           </div>
           <p class="calc-note calc-note--warn" id="lv-plusev" hidden>{c.plusEv}</p>
@@ -259,6 +312,24 @@ const schema = [
         </table>
       </div>
 
+      <div class="prose">
+        <h2>{c.exampleTitle}</h2>
+        <p>{c.example}</p>
+        {/* Оговорка повторена здесь намеренно, хотя уже стоит в блоке
+            результатов: по ТЗ порог безубыточности не печатается без неё,
+            а пример называет порог числом. */}
+        <p>{c.breakEvenCaveat}</p>
+        <h2>{c.howTitle}</h2>
+        <p>{c.how}</p>
+        <h2>{c.faqTitle}</h2>
+        {c.faq.map(({ q, a }) => (
+          <Fragment>
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </Fragment>
+        ))}
+      </div>
+
       <p class="calc-note">{c.noStrategies}</p>
       <p class="calc-note">{c.method}</p>
 
@@ -269,6 +340,8 @@ const schema = [
       <ResponsibleGaming lang={lang} />
     </div>
   </section>
+
+  <RelatedTools lang={lang} current="lottery-expected-value" />
 </BaseLayout>
 
 <script>
@@ -345,8 +418,13 @@ const schema = [
       style: 'currency', currency, notation: 'compact', maximumFractionDigits: 2,
     }).format(v);
 
+  // Дробные числа вне денег тоже идут через локаль, а не через toFixed:
+  // «1 : 24.87» на испанской странице стояло бы рядом с суммами с запятой.
+  const nf = (x: number, n: number) =>
+    new Intl.NumberFormat(locale(), { minimumFractionDigits: n, maximumFractionDigits: n }).format(x);
+
   const fmtOdds = (oneIn: number) =>
-    oneIn >= 1000 ? Math.round(oneIn).toLocaleString(locale()) : oneIn.toFixed(2);
+    oneIn >= 1000 ? Math.round(oneIn).toLocaleString(locale()) : nf(oneIn, 2);
 
   function applyPreset(id: string) {
     current = PRESETS.find((p) => p.id === id) ?? null;
@@ -447,7 +525,7 @@ const schema = [
     const honest = -ev;
 
     out('lv-honest').textContent = fmtMoney(honest, currency);
-    out('lv-rtp').textContent = `${((price + ev) / price * 100).toFixed(1)} %`;
+    out('lv-rtp').textContent = `${nf((price + ev) / price * 100, 1)} %`;
     out('lv-odds').textContent = anyPrize > 0 ? `1 : ${fmtOdds(1 / anyPrize)}` : '—';
     out('lv-tiers').innerHTML = rows.join('');
     out('lv-tier-total').textContent = fmtEv(tierSum, currency);
@@ -458,8 +536,9 @@ const schema = [
     const breakEvenCash = ((price - tierSum) / (share * (1 - rate))) * space;
     const breakEvenAdvertised = breakEvenCash / cashRatio;
     out('lv-breakeven').textContent = breakEvenCash > 0 ? fmtBig(breakEvenAdvertised, currency) : '—';
+    const cashLabel = out('lv-breakeven-assumptions').dataset.cashLabel ?? 'cash';
     out('lv-breakeven-assumptions').textContent =
-      `${(cashRatio * 100).toFixed(0)} % cash · ${tickets ? tickets.toLocaleString(locale()) : '—'} · ${(rate * 100).toFixed(1)} %`;
+      `${nf(cashRatio * 100, 0)} % ${cashLabel} · ${tickets ? tickets.toLocaleString(locale()) : '—'} · ${nf(rate * 100, 1)} %`;
 
     (out('lv-plusev') as HTMLElement).hidden = ev < 0;
     (out('lv-nosplit') as HTMLElement).hidden = tickets !== null;

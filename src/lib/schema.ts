@@ -71,6 +71,12 @@ type ArticleInput = {
   authorName: string;
   /** Страница автора, если она есть: `Person` без `url` почти не даёт сигнала. */
   authorUrl?: string;
+  /**
+   * Автор — сама организация, а не человек. Флаг задаётся явно и не выводится
+   * из отсутствия `authorUrl`: у автора-человека без страницы (строка в старом
+   * поле `author`) адреса тоже нет, и он стал бы организацией.
+   */
+  authorIsOrganization?: boolean;
   imageUrl?: string;
   lang: Language;
   section?: string;
@@ -97,9 +103,13 @@ export function article(site: URL, input: ArticleInput): SchemaNode {
     dateModified: input.dateModified || input.datePublished,
     inLanguage: HTML_LANG[input.lang],
     mainEntityOfPage: { '@type': 'WebPage', '@id': input.url.toString() },
-    author: input.authorUrl
-      ? { '@type': 'Person', name: input.authorName, url: input.authorUrl }
-      : { '@type': 'Person', name: input.authorName },
+    // Редакционный материал ссылается на тот же узел, что и `publisher`:
+    // `Person` с именем «редакция» или «Ve7as» объявлял человека, которого нет.
+    author: input.authorIsOrganization
+      ? { '@id': abs(site, ORG_ID) }
+      : input.authorUrl
+        ? { '@type': 'Person', name: input.authorName, url: input.authorUrl }
+        : { '@type': 'Person', name: input.authorName },
     publisher: { '@id': abs(site, ORG_ID) },
     isPartOf: { '@id': abs(site, SITE_ID) },
   };

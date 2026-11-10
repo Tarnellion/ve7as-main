@@ -81,7 +81,7 @@ const schema = author && pageUrl && personNode
   >
     <header class="page-head">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
+        <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
           <a href={path(lang)}>{t.nav.home}</a>
           <span class="sep">/</span>
           <span>{author.name}</span>

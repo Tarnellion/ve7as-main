@@ -8,6 +8,10 @@ export interface Translation {
     about: string;
     contacts: string;
     menu: string;
+    /** Ссылка «к содержимому» и `aria-label` хлебных крошек: их читает вслух
+     *  скринридер, и английская метка на испанской странице звучит чужим языком. */
+    skip: string;
+    breadcrumb: string;
   };
   sections: {
     'casino-slots': string;
@@ -21,6 +25,14 @@ export interface Translation {
     'poker-table-games': string;
     'lottery-esports': string;
   };
+  /**
+   * Описательный `<title>` хаба. Отдельно от `sections`, потому что то — ещё и
+   * подпись в навигации и на карточках, туда длинная строка не ложится. Хаб
+   * берёт его только когда у рубрики есть текст на этом языке: заголовок не
+   * должен обещать разбор, которого на странице нет. Заполнен лишь для
+   * индексируемых локалей — остальным `<title>` в поиске не нужен.
+   */
+  sectionSeoTitles?: Partial<Record<keyof Translation['sections'], string>>;
   hero: { badge: string; title: string; subtitle: string };
   home: {
     sectionsTitle: string;
@@ -32,6 +44,8 @@ export interface Translation {
     viewAll: string;
   };
   section: { articlesIn: string };
+  /** Заголовки двух списков указателя — на главной и в хабах. */
+  index: { guides: string; news: string };
   notFound: {
     title: string;
     description: string;
@@ -46,6 +60,9 @@ export interface Translation {
     readingUnit: string;
     publishedOn: string;
     author: string;
+    /** Подпись материала без автора-человека. Не для статей конвейера: у них
+     *  подпись «Ve7as» — плашка ИИ может говорить, что редакция текст не читала. */
+    editorialTeam: string;
     /** Строка «Обновлено» перед датой правки; показывается, когда правка заметно позже публикации. */
     updatedOn: string;
     back: string;
@@ -57,6 +74,9 @@ export interface Translation {
     /** То же, но когда единственный источник — собственное сообщение регулятора (`sourceBasis: 'regulator'`). */
     aiAutomatedRegulator: string;
     aiPolicy: string;
+    /** Заголовки блока «по теме» под материалом: разборы портала и новости той же рубрики. */
+    relatedGuides: string;
+    relatedNews: string;
   };
   /**
    * Блок ответственной игры в конце каждого материала. Ссылки на службы
@@ -93,6 +113,8 @@ export const ui: Record<Language, Translation> = {
       about: 'О проекте',
       contacts: 'Контакты',
       menu: 'Меню',
+      skip: 'Перейти к содержимому',
+      breadcrumb: 'Навигационная цепочка',
     },
     sections: {
       'casino-slots': 'Казино и слоты',
@@ -122,6 +144,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Смотреть все',
     },
     section: { articlesIn: 'Статьи в разделе' },
+    index: { guides: 'Разборы', news: 'Новости' },
     notFound: {
       title: 'Страница не найдена',
       description:
@@ -134,6 +157,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'мин',
       publishedOn: 'Опубликовано',
       author: 'Автор',
+      editorialTeam: 'Редакция Ve7as',
       updatedOn: 'Обновлено',
       back: 'Назад к разделу',
       translationNotice:
@@ -144,6 +168,8 @@ export const ui: Record<Language, Translation> = {
       // Текст статей конвейера в ru-локали английский (корень фолбэка, noindex), поэтому и плашка английская.
       aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'Как мы используем ИИ',
+      relatedGuides: 'Разборы по теме',
+      relatedNews: 'Ещё новости раздела',
     },
     common: { readMore: 'Читать', allArticles: 'Все статьи' },
     responsible: {
@@ -175,6 +201,8 @@ export const ui: Record<Language, Translation> = {
       about: 'About',
       contacts: 'Contact',
       menu: 'Menu',
+      skip: 'Skip to content',
+      breadcrumb: 'Breadcrumb',
     },
     sections: {
       'casino-slots': 'Casino & Slots',
@@ -187,6 +215,12 @@ export const ui: Record<Language, Translation> = {
       'sports-betting': 'Types of bets and wagers, bookmaker analytics, bankroll management and strategies — we explain how betting works from the inside.',
       'poker-table-games': 'Poker formats, blackjack, roulette and baccarat — we explain the rules, basic strategies and the math behind table games.',
       'lottery-esports': 'Lottery formats and prize draws, plus the relatively new niche of esports tournament betting. We break down how each works.',
+    },
+    sectionSeoTitles: {
+      'casino-slots': 'Online Casino & Slots Explained: RTP, Volatility, Bonuses',
+      'sports-betting': 'Sports Betting Explained: Odds, Margin and Bankroll',
+      'poker-table-games': 'Poker & Table Games: Rules, House Edge, Basic Strategy',
+      'lottery-esports': 'Lottery Odds and Esports Betting Explained',
     },
     hero: {
       badge: 'Updated: June 2026',
@@ -204,6 +238,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'View all',
     },
     section: { articlesIn: 'Articles in this section' },
+    index: { guides: 'Guides', news: 'News' },
     notFound: {
       title: 'Page not found',
       description:
@@ -216,6 +251,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Published',
       author: 'Author',
+      editorialTeam: 'Ve7as editorial team',
       updatedOn: 'Updated',
       back: 'Back to section',
       translationNotice:
@@ -225,6 +261,8 @@ export const ui: Record<Language, Translation> = {
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
       aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
+      relatedGuides: 'Guides on this topic',
+      relatedNews: 'More news in this section',
     },
     common: { readMore: 'Read', allArticles: 'All articles' },
     responsible: {
@@ -249,13 +287,15 @@ export const ui: Record<Language, Translation> = {
   },
 
   es: {
-    site: { tagline: 'Guía independiente sobre el entretenimiento de azar' },
+    site: { tagline: 'Guía independiente de juegos de azar y apuestas' },
     nav: {
       home: 'Inicio',
       faq: 'Preguntas frecuentes',
       about: 'Sobre nosotros',
       contacts: 'Contacto',
       menu: 'Menú',
+      skip: 'Saltar al contenido',
+      breadcrumb: 'Ruta de navegación',
     },
     sections: {
       'casino-slots': 'Casino y tragaperras',
@@ -264,14 +304,20 @@ export const ui: Record<Language, Translation> = {
       'lottery-esports': 'Loterías y esports',
     },
     sectionDescriptions: {
-      'casino-slots': 'Analizamos la mecánica de las tragaperras, RTP y volatilidad, proveedores y cómo elegir plataformas fiables — sin rankings ni publicidad de operadores.',
-      'sports-betting': 'Tipos de apuestas, análisis de casas de apuestas, gestión del bankroll y estrategias — explicamos cómo funciona el betting por dentro.',
+      'casino-slots': 'Cómo funcionan las tragaperras (tragamonedas o slots): RTP, volatilidad, proveedores y cómo elegir plataformas fiables. Sin rankings ni publicidad de operadores.',
+      'sports-betting': 'Tipos de apuestas, cómo fijan las cuotas las casas de apuestas, gestión del bankroll y estrategias: explicamos cómo funcionan las apuestas deportivas por dentro.',
       'poker-table-games': 'Formatos de póquer, blackjack, ruleta y bacará — explicamos las reglas, estrategias básicas y la matemática de los juegos de mesa.',
-      'lottery-esports': 'Formatos de lotería y sorteos, más la relativamente nueva área de apuestas en torneos de esports. Analizamos su mecánica y particularidades.',
+      'lottery-esports': 'Formatos de lotería y sorteos, y las apuestas en torneos de esports, un terreno todavía reciente. Analizamos cómo funcionan y en qué se diferencian.',
+    },
+    sectionSeoTitles: {
+      'casino-slots': 'Casino y tragaperras: RTP, volatilidad y bonos explicados',
+      'sports-betting': 'Apuestas deportivas: cuotas, margen y gestión del bankroll',
+      'poker-table-games': 'Póquer y juegos de mesa: reglas y ventaja de la casa',
+      'lottery-esports': 'Loterías y apuestas en esports: probabilidades explicadas',
     },
     hero: {
       badge: 'Actualizado: junio de 2026',
-      title: 'Una guía sobre el entretenimiento de azar — sin rankings ni publicidad',
+      title: 'Una guía de juegos de azar y apuestas, sin rankings ni publicidad',
       subtitle:
         'Explicamos cómo funcionan los juegos, las apuestas y las loterías en lenguaje sencillo. Redacción independiente, cero enlaces de afiliados.',
     },
@@ -285,6 +331,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Ver todo',
     },
     section: { articlesIn: 'Artículos de esta sección' },
+    index: { guides: 'Guías', news: 'Noticias' },
     notFound: {
       title: 'Página no encontrada',
       description:
@@ -297,6 +344,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publicado',
       author: 'Autor',
+      editorialTeam: 'Redacción de Ve7as',
       updatedOn: 'Actualizado',
       back: 'Volver a la sección',
       translationNotice:
@@ -306,6 +354,8 @@ export const ui: Record<Language, Translation> = {
       aiAutomated: 'Elaborado con IA a partir de fuentes independientes y publicado automáticamente, sin revisión editorial previa.',
       aiAutomatedRegulator: 'Elaborado con IA a partir del comunicado del propio regulador y publicado automáticamente, sin revisión editorial previa.',
       aiPolicy: 'Cómo usamos la IA',
+      relatedGuides: 'Guías sobre este tema',
+      relatedNews: 'Más noticias de esta sección',
     },
     common: { readMore: 'Leer', allArticles: 'Todos los artículos' },
     responsible: {
@@ -315,7 +365,7 @@ export const ui: Record<Language, Translation> = {
     },
     footer: {
       about:
-        'Portal informativo independiente sobre entretenimiento de azar. No somos un operador de juego.',
+        'Portal informativo independiente sobre juegos de azar y apuestas. No somos un operador de juego.',
       tools: 'Herramientas',
       editorial: 'Política editorial',
       disclaimer:
@@ -337,6 +387,8 @@ export const ui: Record<Language, Translation> = {
       about: 'Sobre nós',
       contacts: 'Contacto',
       menu: 'Menu',
+      skip: 'Saltar para o conteúdo',
+      breadcrumb: 'Navegação estrutural',
     },
     sections: {
       'casino-slots': 'Casino e slots',
@@ -366,6 +418,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Ver tudo',
     },
     section: { articlesIn: 'Artigos desta secção' },
+    index: { guides: 'Guias', news: 'Notícias' },
     notFound: {
       title: 'Página não encontrada',
       description:
@@ -378,6 +431,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publicado',
       author: 'Autor',
+      editorialTeam: 'Redação do Ve7as',
       updatedOn: 'Atualizado',
       back: 'Voltar à secção',
       translationNotice:
@@ -387,6 +441,8 @@ export const ui: Record<Language, Translation> = {
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
       aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
+      relatedGuides: 'Guias sobre este tema',
+      relatedNews: 'Mais notícias desta secção',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
     responsible: {
@@ -418,6 +474,8 @@ export const ui: Record<Language, Translation> = {
       about: 'Über uns',
       contacts: 'Kontakt',
       menu: 'Menü',
+      skip: 'Zum Inhalt springen',
+      breadcrumb: 'Brotkrumennavigation',
     },
     sections: {
       'casino-slots': 'Casino & Slots',
@@ -447,6 +505,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Alle ansehen',
     },
     section: { articlesIn: 'Artikel in diesem Bereich' },
+    index: { guides: 'Ratgeber', news: 'Nachrichten' },
     notFound: {
       title: 'Seite nicht gefunden',
       description:
@@ -459,6 +518,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'Min',
       publishedOn: 'Veröffentlicht',
       author: 'Autor',
+      editorialTeam: 'Ve7as-Redaktion',
       updatedOn: 'Aktualisiert',
       back: 'Zurück zum Bereich',
       translationNotice:
@@ -468,6 +528,8 @@ export const ui: Record<Language, Translation> = {
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
       aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
+      relatedGuides: 'Ratgeber zum Thema',
+      relatedNews: 'Weitere Nachrichten der Rubrik',
     },
     common: { readMore: 'Lesen', allArticles: 'Alle Artikel' },
     responsible: {
@@ -499,6 +561,8 @@ export const ui: Record<Language, Translation> = {
       about: 'À propos',
       contacts: 'Contact',
       menu: 'Menu',
+      skip: 'Aller au contenu',
+      breadcrumb: 'Fil d’Ariane',
     },
     sections: {
       'casino-slots': 'Casino et machines à sous',
@@ -529,6 +593,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Tout voir',
     },
     section: { articlesIn: 'Articles de cette rubrique' },
+    index: { guides: 'Guides', news: 'Actualités' },
     notFound: {
       title: 'Page introuvable',
       description:
@@ -541,6 +606,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publié le',
       author: 'Auteur',
+      editorialTeam: 'Rédaction de Ve7as',
       updatedOn: 'Mis à jour',
       back: 'Retour à la rubrique',
       translationNotice:
@@ -550,6 +616,8 @@ export const ui: Record<Language, Translation> = {
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
       aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
+      relatedGuides: 'Guides sur ce sujet',
+      relatedNews: 'Autres actualités de la rubrique',
     },
     common: { readMore: 'Lire', allArticles: 'Tous les articles' },
     responsible: {
@@ -581,6 +649,8 @@ export const ui: Record<Language, Translation> = {
       about: 'Sobre nós',
       contacts: 'Contato',
       menu: 'Menu',
+      skip: 'Pular para o conteúdo',
+      breadcrumb: 'Navegação estrutural',
     },
     sections: {
       'casino-slots': 'Cassino e caça-níqueis',
@@ -611,6 +681,7 @@ export const ui: Record<Language, Translation> = {
       viewAll: 'Ver tudo',
     },
     section: { articlesIn: 'Artigos desta seção' },
+    index: { guides: 'Guias', news: 'Notícias' },
     notFound: {
       title: 'Página não encontrada',
       description:
@@ -623,6 +694,7 @@ export const ui: Record<Language, Translation> = {
       readingUnit: 'min',
       publishedOn: 'Publicado em',
       author: 'Autor',
+      editorialTeam: 'Redação do Ve7as',
       updatedOn: 'Atualizado',
       back: 'Voltar para a seção',
       translationNotice:
@@ -632,6 +704,8 @@ export const ui: Record<Language, Translation> = {
       aiAutomated: 'Prepared with AI from independent sources and published automatically, without prior editorial review.',
       aiAutomatedRegulator: 'Prepared with AI from the regulator\'s own announcement and published automatically, without prior editorial review.',
       aiPolicy: 'How we use AI',
+      relatedGuides: 'Guias sobre este tema',
+      relatedNews: 'Mais notícias desta seção',
     },
     common: { readMore: 'Ler', allArticles: 'Todos os artigos' },
     responsible: {

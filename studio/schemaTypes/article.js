@@ -74,7 +74,7 @@ export default {
       description: 'Строка на случай, если документа автора нет. Если заполнен Author (person) ниже — он главнее.',
       type: 'string',
       group: 'settings',
-      initialValue: 'редакция',
+      initialValue: 'Ve7as',
     },
     {
       name: 'authorRef',

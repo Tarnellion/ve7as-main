@@ -2,10 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { useTranslations } from '../../i18n/ui';
-import { isLanguage, type Language } from '../../i18n/languages';
+import { isLanguage, isIndexable, type Language } from '../../i18n/languages';
 import { path } from '../../i18n/utils';
 import { TOOLS } from '../../data/tools';
-import { getSections, getArticles, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY } from '../../lib/sanity';
+import { getSections, getIndexLists, isBlockedInCountry, markContentUnavailable, DATA_ERROR_COPY, type SanityArticleCard } from '../../lib/sanity';
 
 const { lang } = Astro.params as { lang: Language };
 
@@ -16,20 +16,26 @@ if (!isLanguage(lang)) return Astro.rewrite('/404');
 const t = useTranslations(lang);
 const country = Astro.request.headers.get('cf-ipcountry') ?? '';
 
-const [sectionsResult, articlesResult] = await Promise.all([
+const [sectionsResult, listsResult] = await Promise.all([
   getSections(),
-  getArticles(lang),
+  getIndexLists(lang),
 ]);
 
-const articles = articlesResult.data.filter((a) => !isBlockedInCountry(a.blockedIn, country));
+// На индексируемой локали карточка без перевода — это русский заголовок на
+// странице другого языка и ссылка на статью, которая сама ответит noindex.
+// Пять noindex-локалей фолбэк оставляют: там он и есть содержимое указателя.
+const visible = (a: SanityArticleCard) =>
+  !isBlockedInCountry(a.blockedIn, country) && (!isIndexable(lang) || a.hasTranslation !== false);
+const guides = listsResult.data.guides.filter(visible);
+const news = listsResult.data.news.filter(visible);
 
 // Сбой CMS не кладёт главную: она рендерится с пустым указателем и явным
 // сообщением. Плашка обязательна — иначе «в CMS пусто» и «CMS недоступна»
 // выглядят одинаково. Статус 503 ставим только когда пропал основной контент
-// (список статей); упавшая навигация по разделам страницу не обессмысливает.
-const dataFailed = sectionsResult.failed || articlesResult.failed;
+// (списки статей); упавшая навигация по разделам страницу не обессмысливает.
+const dataFailed = sectionsResult.failed || listsResult.failed;
 const errorCopy = DATA_ERROR_COPY[lang];
-if (articlesResult.failed) markContentUnavailable(Astro.response);
+if (listsResult.failed) markContentUnavailable(Astro.response);
 ---
 
 {/*
@@ -42,8 +48,13 @@ if (articlesResult.failed) markContentUnavailable(Astro.response);
   {/*
     Главная — указатель, а не витрина. Сетка карточек продаёт, список
     объясняет; для редакции, которая заявляет «ноль партнёрских ссылок»,
-    второе честнее. Порядок хронологический, без выделенного главного
-    материала: у объяснителя нет «горящей новости».
+    второе честнее.
+
+    Списков два, и разборы стоят выше новостей. Конвейер выпускает по новости
+    в день, и в единой хронологической ленте все 24 места занимали новости:
+    на разборы — то, ради чего портал существует, — с главной не вела ни одна
+    ссылка. Внутри каждого списка порядок хронологический, без выделенного
+    главного материала.
   */}
   <header class="page-head">
     <div class="container">
@@ -52,23 +63,41 @@ if (articlesResult.failed) markContentUnavailable(Astro.response);
     </div>
   </header>
 
-  <section class="section">
-    <div class="container">
-      {dataFailed && (
-        <p class="notice notice--error">
-          <strong>{errorCopy.title}.</strong> {errorCopy.body}
-        </p>
-      )}
+  {(dataFailed || (guides.length === 0 && news.length === 0)) && (
+    <section class="section">
+      <div class="container">
+        {dataFailed ? (
+          <p class="notice notice--error">
+            <strong>{errorCopy.title}.</strong> {errorCopy.body}
+          </p>
+        ) : (
+          <p class="section-sub">—</p>
+        )}
+      </div>
+    </section>
+  )}
 
-      {articles.length > 0 ? (
+  {guides.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="nf-sections-title">{t.index.guides}</h2>
         <div class="idx">
-          {articles.map((article) => <ArticleCard lang={lang} article={article} />)}
+          {guides.map((article) => <ArticleCard lang={lang} article={article} />)}
         </div>
-      ) : (
-        !dataFailed && <p class="section-sub">—</p>
-      )}
-    </div>
-  </section>
+      </div>
+    </section>
+  )}
+
+  {news.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="nf-sections-title">{t.index.news}</h2>
+        <div class="idx">
+          {news.map((article) => <ArticleCard lang={lang} article={article} />)}
+        </div>
+      </div>
+    </section>
+  )}
 
   {/*
     Калькуляторы — с главной, каждый своей ссылкой.

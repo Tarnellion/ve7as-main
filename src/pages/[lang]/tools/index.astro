@@ -4,7 +4,7 @@ import { isLanguage, type Language } from '../../../i18n/languages';
 import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
-import { TOOLS } from '../../../data/tools';
+import { TOOLS, TOOLS_INDEX_TITLE } from '../../../data/tools';
 
 /**
  * Указатель инструментов. Страница нарочно устроена как индекс той же породы,
@@ -19,60 +19,54 @@ const t = useTranslations(lang);
 
 /** Список инструментов живёт в `src/data/tools.ts` — им пользуются ещё
  *  главная и хабы рубрик. Здесь остаётся только копия самой страницы. */
-type Copy = { title: string; description: string; lede: string };
+type Copy = { description: string; lede: string };
 
 const COPY: Record<Language, Copy> = {
   ru: {
-    title: 'Инструменты',
     description: 'Бесплатные калькуляторы Ve7as: вейджер и цена отыгрыша, конвертер коэффициентов, маржа букмекера, преимущество казино в блэкджеке, матожидание лотереи. Всё считается в браузере.',
     lede: 'Калькуляторы без регистрации и без сети: все расчёты выполняются в вашем браузере.',
   },
   en: {
-    title: 'Gambling calculators',
     description: 'Free Ve7as calculators: bonus wagering cost, odds converter, bookmaker margin, blackjack house edge, lottery expected value. No sign-up, everything runs in your browser.',
     lede: 'Calculators with no sign-up and no network: everything is computed in your browser.',
   },
   es: {
-    title: 'Calculadoras de apuestas y casino',
-    description: 'Calculadoras gratuitas de Ve7as: rollover y coste de liberación, conversor de cuotas, margen de la casa, ventaja de la casa en blackjack, valor esperado de la lotería. Todo se calcula en su navegador.',
-    lede: 'Calculadoras sin registro y sin red: todo se calcula en su navegador.',
+    description: 'Calculadoras gratuitas de Ve7as: rollover y coste de liberación, conversor de cuotas, margen de las casas de apuestas, ventaja de la casa en blackjack, valor esperado de la lotería. Todo se calcula en tu navegador.',
+    lede: 'Calculadoras sin registro y sin red: todo se calcula en tu navegador.',
   },
   pt: {
-    title: 'Ferramentas',
     description: 'Calculadoras gratuitas do Ve7as: rollover e custo de libertação, conversor de odds, margem da casa, vantagem da casa no blackjack, valor esperado da lotaria. Tudo é calculado no seu navegador.',
     lede: 'Calculadoras sem registo e sem rede: tudo é calculado no seu navegador.',
   },
   de: {
-    title: 'Rechner',
     description: 'Kostenlose Ve7as-Rechner: Umsatzbedingungen und Freispielpreis, Quotenumrechner, Buchmachermarge, Hausvorteil beim Blackjack, Erwartungswert im Lotto. Alles läuft im Browser.',
     lede: 'Rechner ohne Anmeldung und ohne Netz: alles wird in Ihrem Browser berechnet.',
   },
   fr: {
-    title: 'Outils',
     description: 'Calculateurs gratuits Ve7as : wagering et coût du déblocage, convertisseur de cotes, marge du bookmaker, avantage de la maison au blackjack, espérance de gain à la loterie. Tout se calcule dans votre navigateur.',
     lede: 'Calculateurs sans inscription et sans réseau : tout se calcule dans votre navigateur.',
   },
   br: {
-    title: 'Ferramentas',
     description: 'Calculadoras gratuitas do Ve7as: rollover e custo de liberação, conversor de odds, margem da casa, vantagem da casa no blackjack, valor esperado da loteria. Tudo roda no seu navegador.',
     lede: 'Calculadoras sem cadastro e sem rede: tudo é calculado no seu navegador.',
   },
 };
 
 const c = COPY[lang];
+const title = TOOLS_INDEX_TITLE[lang];
 const pageUrl = new URL(path(lang, 'tools'), Astro.site);
 const schema = [
   breadcrumbs([
     { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
-    { name: c.title, url: pageUrl.toString() },
+    { name: title, url: pageUrl.toString() },
   ]),
 ];
 ---
 
-<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools" schema={schema}>
+<BaseLayout lang={lang} title={title} description={c.description} currentPath="tools" schema={schema}>
   <header class="page-head">
     <div class="container">
-      <h1>{c.title}</h1>
+      <h1>{title}</h1>
       <p class="lede">{c.lede}</p>
     </div>
   </header>

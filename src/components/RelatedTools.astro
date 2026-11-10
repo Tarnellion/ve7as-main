@@ -1,0 +1,38 @@
+---
+import type { Language } from '../i18n/languages';
+import { path } from '../i18n/utils';
+import { useTranslations } from '../i18n/ui';
+import { TOOLS } from '../data/tools';
+
+/**
+ * Соседние калькуляторы под инструментом.
+ *
+ * Без блока страница калькулятора была тупиком: с неё вели наружу шапка,
+ * подвал и одна контекстная ссылка, а на остальные инструменты попасть можно
+ * было только через указатель. Для молодого домена без внешних ссылок
+ * внутренняя перелинковка — единственное, чем мы вообще управляем обходом.
+ *
+ * Разметка намеренно повторяет полосу инструментов на главной, один в один:
+ * те же классы и та же подпись из `t.footer.tools`. Список строится из
+ * реестра, поэтому шестой калькулятор появится здесь сам, а числа
+ * инструментов нет нигде в тексте.
+ */
+interface Props { lang: Language; current: string }
+
+const { lang, current } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section">
+  <div class="container">
+    <h2 class="nf-sections-title">{t.footer.tools}</h2>
+    <div class="nf-sections">
+      {TOOLS.filter((tool) => tool.id !== current).map((tool) => (
+        <a href={path(lang, ...tool.segments)} class="nf-section">
+          <strong>{tool.name[lang]}</strong>
+          <span class="section-sub">{tool.blurb[lang]}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

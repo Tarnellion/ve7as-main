@@ -5,6 +5,8 @@ import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import { TOOLS_INDEX_TITLE } from '../../../data/tools';
 
 /**
  * Калькулятор вейджера — первый инструмент-магнит из фазы 4 SEO-роадмапа.
@@ -30,7 +32,7 @@ const t = useTranslations(lang);
 
 type ToolCopy = {
   title: string;
-  metaTitle: string;
+  metaTitle?: string;
   description: string;
   lede: string;
   bonus: string;
@@ -52,12 +54,14 @@ type ToolCopy = {
   verdictNote: string;
   disclaimer: string;
   articleLink: string;
+  explainer?: { h2: string; body: string }[];
+  faqTitle?: string;
+  faq?: { q: string; a: string }[];
 };
 
 const COPY: Record<Language, ToolCopy> = {
   ru: {
     title: 'Калькулятор вейджера',
-    metaTitle: 'Калькулятор вейджера: оборот и цена отыгрыша',
     description: 'Считает оборот по бонусу и честную цену отыгрыша: сколько в среднем теряется на обороте при заданном RTP. Без регистрации.',
     lede: 'Оборот, который требует бонус, — и сколько этот оборот стоит в среднем при заданном RTP. Все расчёты выполняются в браузере.',
     bonus: 'Сумма бонуса',
@@ -82,15 +86,15 @@ const COPY: Record<Language, ToolCopy> = {
   },
   en: {
     title: 'Wagering requirement calculator',
-    metaTitle: 'Wagering calculator: turnover and true cost',
-    description: 'Calculates the bonus turnover and the honest cost of clearing: the expected loss on that turnover at a given RTP. No sign-up.',
-    lede: 'The turnover a bonus demands — and what that turnover costs on average at a given RTP. Everything runs in your browser.',
+    metaTitle: 'Wagering requirement calculator: the cost of a bonus',
+    description: 'Enter the bonus, the multiplier (e.g. 35x), game contribution and RTP: get the turnover you must stake and the expected loss of clearing the bonus. No sign-up.',
+    lede: 'The turnover a bonus demands (its wagering requirement, also called playthrough or rollover) and what that turnover costs on average at a given RTP. Everything runs in your browser.',
     bonus: 'Bonus amount',
     deposit: 'Deposit (if it must be wagered)',
     depositHint: 'Leave 0 if the terms require wagering the bonus only.',
     multiplier: 'Wagering multiplier',
     multiplierHint: 'For example, 35 means "×35".',
-    weighting: 'Game weighting, %',
+    weighting: 'Game contribution (weighting), %',
     weightingHint: 'Slots usually count 100%, table games less. Check the operator’s terms.',
     rtp: 'Game RTP, %',
     rtpHint: 'Return to player. Slots are typically 94–97%.',
@@ -104,19 +108,48 @@ const COPY: Record<Language, ToolCopy> = {
     verdictNote: 'If the expected loss exceeds the bonus, clearing is unprofitable on average.',
     disclaimer: 'The calculator shows mathematical expectation, not a prediction of your session. Bonus terms differ — always check the specific operator’s rules.',
     articleLink: 'What wagering is and how to calculate it',
+    explainer: [
+      {
+        h2: 'How the wagering requirement is calculated',
+        body: 'Required turnover = (bonus + deposit, if the terms say "deposit + bonus") × multiplier. If a game counts for less than 100%, divide by its contribution: at 10% you must stake ten times more. Expected loss = actual turnover × (100% − RTP).',
+      },
+      {
+        h2: 'Worked example: a $100 bonus at 35x',
+        body: 'A $100 bonus with a 35x requirement on the bonus means $3,500 in bets. On a 96% RTP slot the average loss over that turnover is $3,500 × 4% = $140, more than the bonus itself. On average the bonus covers the cost of the full turnover only at an RTP of 1 − 100 / 3,500 = 97.14% or higher. If the same 35x applies to deposit + bonus ($100 + $100), the turnover is $7,000 and the expected loss $280.',
+      },
+    ],
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'What does a 35x wagering requirement mean?',
+        a: 'You must place bets worth 35 times the bonus (or the bonus plus the deposit, depending on the terms) before the bonus money can be withdrawn. $100 at 35x is $3,500 in bets, not $3,500 in losses.',
+      },
+      {
+        q: 'Is wagering the same as playthrough or rollover?',
+        a: 'Yes. Wagering requirement, playthrough and rollover name the same condition.',
+      },
+      {
+        q: 'How do I know whether a bonus is worth taking?',
+        a: 'Compare the bonus with the expected loss on the turnover. If turnover × (100% − RTP) is larger than the bonus, clearing it costs more on average than it gives. This is an average: a single session can end well above or below it.',
+      },
+      {
+        q: 'What does the calculator leave out?',
+        a: 'Maximum-bet rules, win caps, time limits, variance and the chance of losing the balance before the turnover is finished. The figure is the average cost of completing the full turnover; a real outcome can differ in either direction.',
+      },
+    ],
   },
   es: {
-    title: 'Calculadora de requisitos de apuesta',
-    metaTitle: 'Calculadora de rollover: volumen y coste real',
-    description: 'Calcula el volumen de apuestas del bono y el coste real de liberarlo: la pérdida esperada con un RTP dado. Sin registro.',
-    lede: 'El volumen que exige el bono y cuánto cuesta ese volumen de media con un RTP dado. Todo se calcula en su navegador.',
+    title: 'Calculadora de rollover (requisito de apuesta)',
+    metaTitle: 'Calculadora de rollover de bonos (requisito de apuesta)',
+    description: 'Calcula el rollover (requisito de apuesta) de un bono: cuánto hay que apostar con x30, x35… y cuánto cuesta de media según el RTP del juego. Gratis, sin registro.',
+    lede: 'El volumen que exige el bono (su rollover o requisito de apuesta) y cuánto cuesta ese volumen de media con un RTP dado. Todo se calcula en tu navegador.',
     bonus: 'Importe del bono',
     deposit: 'Depósito (si debe apostarse)',
-    depositHint: 'Deje 0 si las condiciones solo exigen apostar el bono.',
+    depositHint: 'Deja 0 si las condiciones solo exigen apostar el bono.',
     multiplier: 'Multiplicador (rollover)',
     multiplierHint: 'Por ejemplo, 35 significa «×35».',
     weighting: 'Contribución del juego, %',
-    weightingHint: 'Las tragaperras suelen contar el 100 %; los juegos de mesa, menos.',
+    weightingHint: 'Las tragaperras (tragamonedas) suelen contar el 100 %; los juegos de mesa, menos.',
     rtp: 'RTP del juego, %',
     rtpHint: 'Retorno al jugador. En tragaperras suele ser 94–97 %.',
     betSize: 'Apuesta media',
@@ -127,12 +160,40 @@ const COPY: Record<Language, ToolCopy> = {
     expectedCost: 'Pérdida esperada en el volumen',
     expectedCostNote: 'Volumen × (100 % − RTP). Es el precio medio de liberar el bono.',
     verdictNote: 'Si la pérdida esperada supera el bono, liberarlo es deficitario de media.',
-    disclaimer: 'La calculadora muestra la esperanza matemática, no una predicción de su sesión. Compruebe siempre las condiciones del operador.',
+    disclaimer: 'La calculadora muestra la esperanza matemática, no una predicción de tu sesión. Comprueba siempre las condiciones del operador.',
     articleLink: 'Qué es el rollover y cómo calcularlo',
+    explainer: [
+      {
+        h2: 'Cómo se calcula el rollover',
+        body: 'Volumen requerido = (bono + depósito, si las condiciones dicen «depósito + bono») × rollover. Si un juego contribuye menos del 100 %, divide por su contribución: con un 10 % hay que apostar diez veces más. Pérdida esperada = volumen real × (100 % − RTP).',
+      },
+      {
+        h2: 'Ejemplo: bono de 100 € con rollover x35',
+        body: 'Un bono de 100 € con rollover x35 sobre el bono exige 3500 € en apuestas. En una tragaperras con RTP del 96 % la pérdida media sobre ese volumen es 3500 € × 4 % = 140 €, más que el propio bono. De media, el bono solo cubre el coste del volumen completo con un RTP de 1 − 100 / 3500 = 97,14 % o superior. Si el mismo x35 se aplica a depósito + bono (100 € + 100 €), el volumen sube a 7000 € y la pérdida esperada a 280 €.',
+      },
+    ],
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      {
+        q: '¿Qué significa un rollover x35?',
+        a: 'Que hay que apostar 35 veces el importe del bono (o del bono más el depósito, según las condiciones) antes de poder retirar. 100 € con x35 son 3500 € en apuestas, no 3500 € de pérdidas.',
+      },
+      {
+        q: '¿Rollover y requisito de apuesta son lo mismo?',
+        a: 'Sí. Rollover, requisito de apuesta, wagering y playthrough nombran la misma condición.',
+      },
+      {
+        q: '¿Cómo saber si un bono compensa?',
+        a: 'Compara el bono con la pérdida esperada: si volumen × (100 % − RTP) supera el bono, liberarlo cuesta de media más de lo que da. Es una media; una sesión concreta puede acabar muy por encima o por debajo.',
+      },
+      {
+        q: '¿Qué no tiene en cuenta la calculadora?',
+        a: 'La apuesta máxima, los topes de ganancia, el plazo, la varianza y la posibilidad de perder el saldo antes de completar el volumen. La cifra es el coste medio de completar todo el volumen; un resultado real puede desviarse en cualquier sentido.',
+      },
+    ],
   },
   pt: {
     title: 'Calculadora de requisitos de apostas',
-    metaTitle: 'Calculadora de rollover: volume e custo real',
     description: 'Calcula o volume de apostas do bónus e o custo real de o libertar: a perda esperada com um dado RTP. Sem registo.',
     lede: 'O volume que o bónus exige e quanto esse volume custa em média com um dado RTP. Tudo é calculado no seu navegador.',
     bonus: 'Valor do bónus',
@@ -157,7 +218,6 @@ const COPY: Record<Language, ToolCopy> = {
   },
   de: {
     title: 'Umsatzbedingungen-Rechner',
-    metaTitle: 'Wagering-Rechner: Umsatz und echter Preis',
     description: 'Berechnet den Bonusumsatz und den ehrlichen Preis der Freispielung: den erwarteten Verlust bei gegebenem RTP. Ohne Anmeldung.',
     lede: 'Der Umsatz, den ein Bonus verlangt — und was dieser Umsatz bei gegebenem RTP im Schnitt kostet. Alles läuft im Browser.',
     bonus: 'Bonusbetrag',
@@ -182,7 +242,6 @@ const COPY: Record<Language, ToolCopy> = {
   },
   fr: {
     title: 'Calculateur de conditions de mise',
-    metaTitle: 'Calculateur de wagering : volume et coût réel',
     description: 'Calcule le volume de mises du bonus et le coût réel du déblocage : la perte attendue à RTP donné. Sans inscription.',
     lede: 'Le volume que le bonus exige — et ce que ce volume coûte en moyenne à RTP donné. Tout se calcule dans votre navigateur.',
     bonus: 'Montant du bonus',
@@ -207,7 +266,6 @@ const COPY: Record<Language, ToolCopy> = {
   },
   br: {
     title: 'Calculadora de rollover',
-    metaTitle: 'Calculadora de rollover: volume e custo real',
     description: 'Calcula o volume de apostas do bônus e o custo real de liberá-lo: a perda esperada com um dado RTP. Sem cadastro.',
     lede: 'O volume que o bônus exige — e quanto esse volume custa em média com um dado RTP. Tudo roda no seu navegador.',
     bonus: 'Valor do bônus',
@@ -246,16 +304,24 @@ const schema = [
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     inLanguage: HTML_LANG[lang],
   },
+  // Три уровня, и средний — указатель: та же цепочка стоит над <h1>.
+  // Разметка обязана повторять видимую иерархию, поэтому правятся они вместе.
   breadcrumbs([
     { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: TOOLS_INDEX_TITLE[lang], url: new URL(path(lang, 'tools'), Astro.site).toString() },
     { name: c.title, url: pageUrl.toString() },
   ]),
 ];
 ---
 
-<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/wagering-calculator" schema={schema}>
+<BaseLayout lang={lang} title={c.metaTitle ?? c.title} description={c.description} currentPath="tools/wagering-calculator" schema={schema}>
   <header class="page-head">
     <div class="container">
+      <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        <a href={path(lang, 'tools')}>{TOOLS_INDEX_TITLE[lang]}</a>
+      </nav>
       <h1>{c.title}</h1>
       <p class="lede">{c.lede}</p>
     </div>
@@ -265,6 +331,7 @@ const schema = [
     <div class="container">
       <div class="calc" id="wagering-calc">
         <form class="calc-form" autocomplete="off">
+          {/* Значения по умолчанию (100, ×35, 100 %, RTP 96) — это пример из прозы ниже (explainer): меняете одно — правьте и другое. */}
           <div class="calc-field">
             <label for="wc-bonus">{c.bonus}</label>
             <input id="wc-bonus" type="number" min="0" step="any" value="100" inputmode="decimal" />
@@ -324,9 +391,19 @@ const schema = [
         <a href={path(lang, 'articles', 'wagering-explained')}>{c.articleLink} →</a>
       </p>
 
+      {(c.explainer || c.faq) && (
+        <div class="prose">
+          {c.explainer?.map((b) => (<><h2>{b.h2}</h2><p>{b.body}</p></>))}
+          {c.faq && <h2>{c.faqTitle}</h2>}
+          {c.faq?.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
+        </div>
+      )}
+
       <ResponsibleGaming lang={lang} />
     </div>
   </section>
+
+  <RelatedTools lang={lang} current="wagering-calculator" />
 </BaseLayout>
 
 <script>

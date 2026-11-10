@@ -1,19 +1,19 @@
 ---
 title: Sobre el proyecto
-description: "Ve7as es un portal independiente sobre el entretenimiento de azar: explicaciones claras de la matemática del juego, sin publicidad de operadores."
-updated: 2026-08-27
+description: "Ve7as es un portal independiente sobre juegos de azar y apuestas: explicaciones claras de la matemática del juego, sin publicidad de operadores."
+updated: 2026-11-10
 ---
 
-Ve7as es un portal informativo y educativo independiente sobre el
-entretenimiento de azar. Escribimos sobre distintos nichos: casinos online y
+Ve7as es un portal informativo y educativo independiente sobre
+juegos de azar y apuestas. Escribimos sobre distintos nichos: casinos online y
 tragaperras, apuestas deportivas, póquer y juegos de mesa, loterías y apuestas
 en eSports.
 
 ## Qué hacemos
 
 Publicamos guías, explicaciones de mecánicas y análisis de nichos: materiales
-que ayudan a entender cómo funcionan los distintos formatos de entretenimiento
-de azar, qué riesgos conllevan y en qué fijarse si decides participar en ellos.
+que ayudan a entender cómo funcionan los distintos juegos de azar y apuestas,
+qué riesgos conllevan y en qué fijarse si decides participar en ellos.
 
 ## Qué no hacemos
 

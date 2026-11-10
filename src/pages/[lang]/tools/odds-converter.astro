@@ -5,6 +5,9 @@ import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import { TOOLS_INDEX_TITLE } from '../../../data/tools';
+import { toAmerican } from '../../../lib/odds';
 
 /**
  * Конвертер коэффициентов — второй инструмент фазы 4.
@@ -24,11 +27,16 @@ if (!isLanguage(lang)) return Astro.rewrite('/404');
 const t = useTranslations(lang);
 
 type Copy = {
-  title: string; description: string; lede: string;
+  title: string; metaTitle?: string; description: string; lede: string;
   decimal: string; american: string; fractional: string; implied: string;
   impliedHint: string; fractionalHint: string;
   marginNote: string; marginLink: string;
   disclaimer: string;
+  // Справочный блок под калькулятором. Необязателен: заполнен только для
+  // индексируемых локалей, остальные рендерят страницу без него.
+  tableTitle?: string; tableCols?: [string, string, string, string];
+  formulasTitle?: string; formulas?: string[];
+  faqTitle?: string; faq?: { q: string; a: string }[];
 };
 
 const COPY: Record<Language, Copy> = {
@@ -45,25 +53,82 @@ const COPY: Record<Language, Copy> = {
   },
   en: {
     title: 'Odds converter',
-    description: 'Converts odds between decimal, American and fractional formats and shows the implied probability. No sign-up.',
+    metaTitle: 'Odds converter: American, decimal, fractional odds',
+    description: 'Convert American (moneyline), decimal and fractional odds in any direction and see the implied probability: +150 = 2.50 = 6/4 = 40%. Free, no ads, no sign-up.',
     lede: 'Edit any field — the rest recalculate. The implied probability includes the bookmaker’s margin.',
-    decimal: 'Decimal', american: 'American', fractional: 'Fractional (UK)', implied: 'Implied probability, %',
+    decimal: 'Decimal', american: 'American (moneyline)', fractional: 'Fractional (UK)', implied: 'Implied probability, %',
     impliedHint: '1 / decimal odds. This is the price the bookmaker set, not the "true" probability.',
     fractionalHint: 'For example, 5/2. Nearest conventional fraction.',
     marginNote: 'The implied probabilities of all outcomes sum to more than 100% — the difference is the bookmaker’s margin.',
     marginLink: 'Calculate the margin of a line',
     disclaimer: 'The converter changes the notation, not the substance: odds in any format contain the bookmaker’s commission. Verify calculations yourself.',
+    tableTitle: 'Odds conversion table',
+    tableCols: ['Decimal', 'American', 'Fractional', 'Implied probability'],
+    formulasTitle: 'Conversion formulas',
+    formulas: [
+      'American to decimal: positive odds ÷ 100 + 1 (+150 → 2.50); negative odds: 100 ÷ |odds| + 1 (−200 → 1.50).',
+      'Decimal to American: (decimal − 1) × 100 when the decimal is 2.00 or more; −100 ÷ (decimal − 1) when it is below 2.00.',
+      'Fractional to decimal: numerator ÷ denominator + 1 (5/2 → 3.50).',
+      'Odds to implied probability: 1 ÷ decimal odds (2.50 → 40%).',
+    ],
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'How do I convert American odds to decimal?',
+        a: 'For plus odds divide by 100 and add 1: +150 is 2.50. For minus odds divide 100 by the number and add 1: −110 is 1.909.',
+      },
+      {
+        q: 'What does +150 mean?',
+        a: 'A 100 stake wins 150 in profit. That is 2.50 in decimal, 6/4 in fractional (bookmakers write 3/2 as 6/4) and an implied probability of 40%.',
+      },
+      {
+        q: 'Is implied probability the real chance of winning?',
+        a: 'No. It is the price the bookmaker set and it includes the margin: the implied probabilities of all outcomes in a market add up to more than 100%.',
+      },
+      {
+        q: 'Why does the fraction sometimes show "≈"?',
+        a: 'Bookmakers quote fractional odds from a traditional ladder (10/11, 15/8, 85/40...). The converter picks the nearest step and marks it with "≈" when it is not exactly equal to the decimal price.',
+      },
+    ],
   },
   es: {
-    title: 'Conversor de cuotas',
-    description: 'Convierte cuotas entre formato decimal, americano y fraccional y muestra la probabilidad implícita. Sin registro.',
-    lede: 'Edite cualquier campo y el resto se recalcula. La probabilidad implícita incluye el margen de la casa.',
-    decimal: 'Decimal', american: 'Americano', fractional: 'Fraccional (UK)', implied: 'Probabilidad implícita, %',
+    title: 'Conversor de cuotas de apuestas (momios)',
+    description: 'Convierte cuotas (momios) entre formato decimal, americano y fraccionario y muestra la probabilidad implícita: +150 = 2,50 = 6/4 = 40 %. Gratis, sin registro.',
+    lede: 'Edita cualquier campo y los demás se recalculan. La probabilidad implícita incluye el margen de la casa de apuestas.',
+    decimal: 'Decimal', american: 'Americano (momio)', fractional: 'Fraccionario (Reino Unido)', implied: 'Probabilidad implícita, %',
     impliedHint: '1 / cuota decimal. Es el precio fijado por la casa, no la probabilidad «real».',
     fractionalHint: 'Por ejemplo, 5/2. La fracción convencional más cercana.',
     marginNote: 'Las probabilidades implícitas de todos los resultados suman más del 100 %: la diferencia es el margen.',
-    marginLink: 'Calcular el margen de una línea',
-    disclaimer: 'El conversor cambia la notación, no el fondo: la cuota en cualquier formato contiene la comisión de la casa. Verifique los cálculos.',
+    marginLink: 'Calcular el margen de un mercado',
+    disclaimer: 'El conversor cambia la notación, no el fondo: la cuota en cualquier formato contiene la comisión de la casa. Verifica los cálculos.',
+    tableTitle: 'Tabla de conversión de cuotas',
+    tableCols: ['Decimal', 'Americano (momio)', 'Fraccionario', 'Probabilidad implícita'],
+    formulasTitle: 'Fórmulas de conversión',
+    formulas: [
+      'De americana a decimal: cuota positiva ÷ 100 + 1 (+150 → 2,50); cuota negativa: 100 ÷ |cuota| + 1 (−200 → 1,50).',
+      'De decimal a americana: (decimal − 1) × 100 si la decimal es 2,00 o más; −100 ÷ (decimal − 1) si es menor que 2,00.',
+      'De fraccionaria a decimal: numerador ÷ denominador + 1 (5/2 → 3,50).',
+      'De cuota a probabilidad implícita: 1 ÷ cuota decimal (2,50 → 40 %).',
+    ],
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      {
+        q: '¿Cómo se convierte una cuota americana (momio) a decimal?',
+        a: 'Si es positiva, divide entre 100 y suma 1: +150 es 2,50. Si es negativa, divide 100 entre el número y suma 1: −110 es 1,909.',
+      },
+      {
+        q: '¿Qué significa un momio de +150?',
+        a: 'Que una apuesta de 100 gana 150 de beneficio. Equivale a 2,50 en decimal, 6/4 en fraccionaria (las casas escriben 3/2 como 6/4) y una probabilidad implícita del 40 %.',
+      },
+      {
+        q: '¿La probabilidad implícita es la probabilidad real?',
+        a: 'No. Es el precio fijado por la casa e incluye su margen: las probabilidades implícitas de todos los resultados de un mercado suman más del 100 %.',
+      },
+      {
+        q: '¿Por qué a veces la fracción lleva «≈»?',
+        a: 'Las casas publican las cuotas fraccionarias con una escala tradicional (10/11, 15/8, 85/40...). El conversor elige el escalón más cercano y lo marca con «≈» cuando no coincide exactamente con la cuota decimal.',
+      },
+    ],
   },
   pt: {
     title: 'Conversor de odds',
@@ -114,6 +179,26 @@ const COPY: Record<Language, Copy> = {
 const c = COPY[lang];
 const pageUrl = new URL(path(lang, 'tools', 'odds-converter'), Astro.site);
 
+// Строки таблицы считаются из дробей букмекерской лестницы, а не из набранных
+// руками десятичных: готовое «1.909» рано или поздно разошлось бы с тем, что
+// поле калькулятора выше показывает для той же 10/11.
+const TABLE_FRACTIONS: [number, number][] = [[1,5],[1,2],[10,11],[1,1],[6,4],[2,1],[3,1],[4,1],[10,1]];
+const decimalComma = lang === 'es';
+const tableRows = TABLE_FRACTIONS.map(([p, q]) => {
+  const d = 1 + p / q;
+  const a = toAmerican(d);
+  const decimal = String(Math.round(d * 1000) / 1000);
+  const implied = (100 / d).toFixed(2);
+  return [
+    decimalComma ? decimal.replace('.', ',') : decimal,
+    // Здесь типографский минус U+2212, а в поле ввода остаётся дефис:
+    // таблица — текст для чтения, а значение поля разбирает Number().
+    a > 0 ? `+${a}` : `−${Math.abs(a)}`,
+    `${p}/${q}`,
+    decimalComma ? `${implied.replace('.', ',')} %` : `${implied}%`,
+  ];
+});
+
 const schema = [
   {
     '@type': 'SoftwareApplication' as const,
@@ -125,16 +210,24 @@ const schema = [
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     inLanguage: HTML_LANG[lang],
   },
+  // Три уровня, и средний — указатель: та же цепочка стоит над <h1>.
+  // Разметка обязана повторять видимую иерархию, поэтому правятся они вместе.
   breadcrumbs([
     { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: TOOLS_INDEX_TITLE[lang], url: new URL(path(lang, 'tools'), Astro.site).toString() },
     { name: c.title, url: pageUrl.toString() },
   ]),
 ];
 ---
 
-<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/odds-converter" schema={schema}>
+<BaseLayout lang={lang} title={c.metaTitle ?? c.title} description={c.description} currentPath="tools/odds-converter" schema={schema}>
   <header class="page-head">
     <div class="container">
+      <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        <a href={path(lang, 'tools')}>{TOOLS_INDEX_TITLE[lang]}</a>
+      </nav>
       <h1>{c.title}</h1>
       <p class="lede">{c.lede}</p>
     </div>
@@ -154,7 +247,10 @@ const schema = [
           </div>
           <div class="calc-field">
             <label for="oc-fractional">{c.fractional}</label>
-            <input id="oc-fractional" type="text" value="3/2" />
+            {/* 6/4, а не сокращённое 3/2: для 2.50 букмекерская лестница в скрипте
+                печатает именно 6/4, и сырой HTML должен совпадать с тем, что
+                останется после гидрации. */}
+            <input id="oc-fractional" type="text" value="6/4" />
             <small>{c.fractionalHint}</small>
           </div>
         </form>
@@ -174,81 +270,62 @@ const schema = [
 
       <p class="notice">{c.disclaimer}</p>
 
+      {c.tableTitle && c.tableCols && c.formulasTitle && c.formulas && c.faqTitle && c.faq && (
+        <div class="prose">
+          <h2>{c.tableTitle}</h2>
+          <table>
+            <thead>
+              <tr>{c.tableCols.map((col) => <th>{col}</th>)}</tr>
+            </thead>
+            <tbody>
+              {tableRows.map((row) => <tr>{row.map((cell) => <td>{cell}</td>)}</tr>)}
+            </tbody>
+          </table>
+          <h2>{c.formulasTitle}</h2>
+          <ul>
+            {c.formulas.map((formula) => <li>{formula}</li>)}
+          </ul>
+          <h2>{c.faqTitle}</h2>
+          {c.faq.map(({ q, a }) => (
+            <>
+              <h3>{q}</h3>
+              <p>{a}</p>
+            </>
+          ))}
+        </div>
+      )}
+
       <ResponsibleGaming lang={lang} />
     </div>
   </section>
+
+  <RelatedTools lang={lang} current="odds-converter" />
 </BaseLayout>
 
 <script>
-  // Все форматы — представления одного десятичного коэффициента d (> 1):
-  //   американский: d >= 2 → +100·(d−1); d < 2 → −100/(d−1)
-  //   дробный:      d − 1, приближённый цепной дробью со знаменателем ≤ 100
-  //   вероятность:  1/d — подразумеваемая, с маржой внутри
+  // Арифметика — в src/lib/odds.ts: ею же фронтматтер считает таблицу
+  // соответствий, и вторая копия формул здесь разошлась бы с таблицей.
+  import { toAmerican, toFraction, fromAmerican, fromFractional } from '../../../lib/odds';
+
   const dec = document.getElementById('oc-decimal') as HTMLInputElement;
   const ame = document.getElementById('oc-american') as HTMLInputElement;
   const fra = document.getElementById('oc-fractional') as HTMLInputElement;
   const imp = document.getElementById('oc-implied')!;
-
-  // Букмекеры не котируют «математически лучшую» дробь — они пользуются
-  // традиционной лестницей (1/5, 2/9, …, 15/8, 85/40, …, 100/1). Поэтому
-  // сначала прищёлкиваем к ближайшей ступени лестницы; Штерн–Броко остаётся
-  // фолбэком для значений за её пределами. Найдено адверсариальной проверкой:
-  // для 2.88 честный ответ букмекера — 15/8, а не «лучшая» 47/25.
-  const LADDER: [number, number][] = [
-    [1,10],[1,9],[1,8],[1,7],[1,6],[2,11],[1,5],[2,9],[1,4],[2,7],[3,10],[1,3],
-    [4,11],[2,5],[4,9],[1,2],[8,15],[4,7],[8,13],[2,3],[4,5],[5,6],[10,11],[20,21],
-    [1,1],[21,20],[11,10],[6,5],[5,4],[11,8],[6,4],[13,8],[7,4],[15,8],[2,1],
-    [85,40],[9,4],[12,5],[5,2],[13,5],[11,4],[3,1],[10,3],[7,2],[4,1],[9,2],[5,1],
-    [11,2],[6,1],[13,2],[7,1],[15,2],[8,1],[17,2],[9,1],[10,1],[11,1],[12,1],
-    [14,1],[16,1],[18,1],[20,1],[25,1],[33,1],[40,1],[50,1],[66,1],[80,1],[100,1],
-  ];
-
-  function sternBrocot(x: number): [number, number] {
-    let pl = 0, ql = 1, ph = 1, qh = 0;
-    // Обход по одному медианту за шаг линеен для целых частей, поэтому
-    // запас итераций больше верхней ступени лестницы (кэфы вида 500/1).
-    for (let i = 0; i < 1200; i++) {
-      const p = pl + ph, q = ql + qh;
-      if (q > 100) break;
-      if (p / q < x) { pl = p; ql = q; } else { ph = p; qh = q; }
-    }
-    return qh === 0 || Math.abs(pl / ql - x) <= Math.abs(ph / qh - x) ? [pl, ql] : [ph, qh];
-  }
-
-  function toFraction(x: number): string {
-    const min = LADDER[0][0] / LADDER[0][1];
-    const max = LADDER[LADDER.length - 1][0] / LADDER[LADDER.length - 1][1];
-    const [p, q] = x >= min && x <= max
-      ? LADDER.reduce((a, b) => Math.abs(a[0] / a[1] - x) <= Math.abs(b[0] / b[1] - x) ? a : b)
-      : sternBrocot(x);
-    // «≈» — честность: ступень лестницы не всегда равна введённому значению.
-    const approx = Math.abs(p / q - x) > 1e-9 ? '≈ ' : '';
-    return `${approx}${p}/${q}`;
-  }
-
-  function fromAmerican(raw: string): number | null {
-    const a = Number(raw.replace(/\s+/g, '').replace('+', ''));
-    if (!Number.isFinite(a) || Math.abs(a) < 100) return null;
-    return a > 0 ? 1 + a / 100 : 1 + 100 / Math.abs(a);
-  }
-
-  function fromFractional(raw: string): number | null {
-    const m = raw.replace(/[≈\s]+/g, '').match(/^(\d+(?:\.\d+)?)[/:](\d+(?:\.\d+)?)$/);
-    if (!m) return null;
-    const q = Number(m[2]);
-    if (q === 0) return null;
-    return 1 + Number(m[1]) / q;
-  }
+  // Только для текста результата: на испанской странице нужна десятичная
+  // запятая. Значения полей ниже остаются с точкой — <input type="number">
+  // запятую не принимает.
+  const nf = (x: number, n: number) =>
+    new Intl.NumberFormat(document.documentElement.lang, { minimumFractionDigits: n, maximumFractionDigits: n }).format(x);
 
   function render(d: number, skip: HTMLElement) {
     if (!(d > 1.001) || !Number.isFinite(d)) { imp.textContent = '—'; return; }
     if (skip !== dec) dec.value = String(Math.round(d * 1000) / 1000);
     if (skip !== ame) {
-      const a = d >= 2 ? Math.round((d - 1) * 100) : -Math.round(100 / (d - 1));
+      const a = toAmerican(d);
       ame.value = a > 0 ? `+${a}` : String(a);
     }
     if (skip !== fra) fra.value = toFraction(d - 1);
-    imp.textContent = `${(100 / d).toFixed(2)} %`;
+    imp.textContent = `${nf(100 / d, 2)} %`;
   }
 
   dec.addEventListener('input', () => render(Number(dec.value), dec));

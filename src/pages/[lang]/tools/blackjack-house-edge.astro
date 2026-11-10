@@ -5,7 +5,9 @@ import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
-import { BJ_MODEL_TOLERANCE } from '../../../data/blackjack-house-edge';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import { TOOLS_INDEX_TITLE } from '../../../data/tools';
+import { BJ_BASE_EDGE, BJ_DELTAS, BJ_MODEL_TOLERANCE } from '../../../data/blackjack-house-edge';
 
 /** Источник дельт. Указан ссылкой, а не только прозой: читатель должен
  *  иметь возможность проверить числа, не читая исходники. */
@@ -30,7 +32,7 @@ if (!isLanguage(lang)) return Astro.rewrite('/404');
 const t = useTranslations(lang);
 
 type Copy = {
-  title: string; description: string; lede: string;
+  title: string; metaTitle?: string; description: string; lede: string;
   payout: string; decks: string; soft17: string; s17: string; h17: string;
   das: string; yes: string; no: string;
   double: string; dblAny: string; dbl911: string; dbl1011: string;
@@ -66,7 +68,8 @@ const COPY: Record<Language, Copy> = {
   },
   en: {
     title: 'Blackjack house edge calculator',
-    description: 'Computes the house edge from table rules: 3:2 or 6:5 payout, S17/H17, DAS, decks, surrender. Rule deltas taken from the Wizard of Odds calculator.',
+    metaTitle: 'Blackjack house edge calculator: 3:2 vs 6:5, any rules',
+    description: 'Set the table rules (decks, 3:2 or 6:5 payout, soft 17, double after split, surrender) and see the house edge and the expected loss per 100 hands.',
     lede: 'Set the table rules — the calculator shows the house edge and its cost per 100 hands. A lower edge means losing less on average, not a way to win.',
     payout: 'Blackjack pays', decks: 'Decks', soft17: 'Dealer on soft 17', s17: 'Stands (S17)', h17: 'Hits (H17)',
     das: 'Double after split (DAS)', yes: 'Yes', no: 'No',
@@ -83,21 +86,21 @@ const COPY: Record<Language, Copy> = {
     articleLink: 'Blackjack basic strategy',
   },
   es: {
-    title: 'Calculadora de ventaja de la casa: blackjack',
-    description: 'Calcula la ventaja de la casa según las reglas de la mesa: pago 3:2 o 6:5, S17/H17, DAS, barajas, rendición. Deltas de reglas tomadas de la calculadora de Wizard of Odds.',
-    lede: 'Configure las reglas de la mesa: la calculadora muestra la ventaja de la casa y su coste por 100 manos. Menos ventaja significa perder menos de media, no una forma de ganar.',
-    payout: 'El blackjack paga', decks: 'Barajas', soft17: 'Crupier con 17 blando', s17: 'Se planta (S17)', h17: 'Pide (H17)',
+    title: 'Calculadora de la ventaja de la casa en blackjack',
+    description: 'Calcula la ventaja de la casa en blackjack según las reglas de la mesa: pago 3:2 o 6:5, barajas, crupier con 17 blando (S17/H17), doblar tras dividir y rendición.',
+    lede: 'Configura las reglas de la mesa: la calculadora muestra la ventaja de la casa y su coste por 100 manos. Menos ventaja significa perder menos de media, no una forma de ganar.',
+    payout: 'El blackjack paga', decks: 'Barajas (mazos)', soft17: 'Crupier con 17 blando', s17: 'Se planta (S17)', h17: 'Pide (H17)',
     das: 'Doblar tras dividir (DAS)', yes: 'Sí', no: 'No',
     double: 'Doblar permitido', dblAny: 'Dos cartas cualesquiera', dbl911: 'Solo 9–11', dbl1011: 'Solo 10–11',
     resplit: 'Dividir hasta', hands: 'manos',
-    rsa: 'Redividir ases', hsa: 'Pedir a ases divididos',
+    rsa: 'Volver a dividir ases', hsa: 'Pedir carta tras dividir ases',
     peek: 'Blackjack del crupier', peekYes: 'Con comprobación (peek) / solo la apuesta original', peekNo: 'Regla europea: se pierde todo (ENHC)',
     surrender: 'Rendición', surNone: 'No', surLate: 'Tardía (late)',
-    edge: 'Ventaja de la casa', edgeHint: `Estrategia básica total-dependent con cut card. Modelo aditivo: en los conjuntos comprobados la desviación no superó ${BJ_MODEL_TOLERANCE} pp del valor exacto.`,
+    edge: 'Ventaja de la casa', edgeHint: `Estrategia básica según el total de la mano (total-dependent), con carta de corte. Modelo aditivo: en los conjuntos comprobados la desviación no superó ${String(BJ_MODEL_TOLERANCE).replace('.', ',')} pp del valor exacto.`,
     per100: 'Pérdida esperada por 100 manos', per100Hint: 'En unidades, apostando 1 unidad por mano. El precio medio de cien manos en esta mesa.',
-    negativeNote: 'La ventaja salió negativa — a favor del jugador. Mesas con esta combinación no se ofrecen en la práctica: compruebe si las reglas están exageradas.',
-    methodBefore: 'Datos: deltas capturadas el 27-08-2026 de la calculadora de ', methodLink: 'Wizard of Odds',
-    methodAfter: ' y validadas en conjuntos combinados. La penalización del pago 6:5 es cálculo propio en forma cerrada. Toda mesa real es negativa para el jugador.',
+    negativeNote: 'La ventaja sale negativa, es decir, a favor del jugador. En la práctica no se ofrecen mesas con esta combinación: comprueba que las reglas elegidas sean reales.',
+    methodBefore: 'Datos: efecto de cada regla tomado el 27/08/2026 de la calculadora de ', methodLink: 'Wizard of Odds',
+    methodAfter: ' y validado en conjuntos combinados. La penalización del pago 6:5 es cálculo propio en forma cerrada. Toda mesa real es negativa para el jugador.',
     articleLink: 'Estrategia básica de blackjack',
   },
   pt: {
@@ -188,16 +191,123 @@ const schema = [
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     inLanguage: HTML_LANG[lang],
   },
+  // Три уровня, и средний — указатель: та же цепочка стоит над <h1>.
+  // Разметка обязана повторять видимую иерархию, поэтому правятся они вместе.
   breadcrumbs([
     { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: TOOLS_INDEX_TITLE[lang], url: new URL(path(lang, 'tools'), Astro.site).toString() },
     { name: c.title, url: pageUrl.toString() },
   ]),
 ];
+
+/**
+ * Справочный блок под калькулятором: таблица влияния правил, пример 6:5, вопросы.
+ *
+ * Числа таблицы и примера не набраны руками — они считаются из BJ_BASE_EDGE и
+ * BJ_DELTAS, тех же данных, по которым считает форма выше. Набранная цифра
+ * разошлась бы с калькулятором при первом же обновлении замеров, и страница
+ * противоречила бы сама себе. Исключение — округлённые диапазоны в первом
+ * вопросе и 1.2 / 1.5 / 0.3 во втором: это проза, её при смене данных надо
+ * перечитать глазами.
+ *
+ * Рамка: это НЕ собственные данные. Эффекты правил сняты с калькулятора
+ * Wizard of Odds, своё здесь только слагаемое 6:5 — поэтому таблица нигде не
+ * названа уникальной или оригинальной, а источник стоит сразу под ней.
+ *
+ * В прозе нет фразы про одну колоду: допуск аддитивной модели на одноколодных
+ * наборах не измерялся (scripts/verify-blackjack-data.mjs). Строка «1 колода»
+ * в таблице — одиночная снятая дельта, а не сумма, к ней допуск не относится.
+ *
+ * Блок есть только у en и es: локаль без копии его не рендерит. Разметки
+ * FAQPage нет намеренно — тип страницы SoftwareApplication.
+ */
+
+// Десятичная запятая для es — в каждом печатаемом числе блока.
+const dec = (s: string) => (lang === 'es' ? s.replace('.', ',') : s);
+// Минус — U+2212, а не дефис: в столбце табличных цифр он равен по ширине «+».
+const sign = (v: number) => (v > 0 ? '+' : '−') + Math.abs(v).toFixed(2);
+
+type RuleRow = { delta: number } & Partial<Record<Language, string>>;
+
+// pay65 берётся для 8 колод: каждая строка меняет одно правило относительно
+// восьмиколодной базы, а не относительно стола из примера ниже.
+const RULE_ROWS: RuleRow[] = [
+  { delta: BJ_DELTAS.pay65[8], en: 'Blackjack pays 6:5 instead of 3:2', es: 'El blackjack paga 6:5 en vez de 3:2' },
+  { delta: BJ_DELTAS.h17, en: 'Dealer hits soft 17 (H17)', es: 'El crupier pide con 17 blando (H17)' },
+  { delta: BJ_DELTAS.double['10-11'], en: 'Double on 10–11 only', es: 'Doblar solo con 10–11' },
+  { delta: BJ_DELTAS.noDas, en: 'No double after split', es: 'Sin doblar tras dividir' },
+  { delta: BJ_DELTAS.enhcFullLoss, en: 'European no hole card, all bets lost', es: 'Regla europea sin carta tapada, se pierde todo' },
+  { delta: BJ_DELTAS.double['9-11'], en: 'Double on 9–11 only', es: 'Doblar solo con 9–11' },
+  { delta: BJ_DELTAS.resplit[2], en: 'Split to 2 hands only', es: 'Dividir solo hasta 2 manos' },
+  { delta: BJ_DELTAS.decks[6], en: '6 decks instead of 8', es: '6 barajas en vez de 8' },
+  { delta: BJ_DELTAS.rsa, en: 'Resplit aces', es: 'Volver a dividir ases' },
+  { delta: BJ_DELTAS.lateSurrender, en: 'Late surrender', es: 'Rendición tardía' },
+  { delta: BJ_DELTAS.hsa, en: 'Hit split aces', es: 'Pedir carta tras dividir ases' },
+  { delta: BJ_DELTAS.decks[2], en: '2 decks', es: '2 barajas' },
+  { delta: BJ_DELTAS.decks[1], en: '1 deck', es: '1 baraja' },
+];
+
+const base = dec(BJ_BASE_EDGE.toFixed(2));
+const e32 = dec((BJ_BASE_EDGE + BJ_DELTAS.decks[6] + BJ_DELTAS.h17).toFixed(2));
+const e65 = dec((BJ_BASE_EDGE + BJ_DELTAS.decks[6] + BJ_DELTAS.h17 + BJ_DELTAS.pay65[6]).toFixed(2));
+const pay65All = Object.values(BJ_DELTAS.pay65);
+const lo = dec(Math.min(...pay65All).toFixed(2));
+const hi = dec(Math.max(...pay65All).toFixed(2));
+const tol = dec(String(BJ_MODEL_TOLERANCE));
+
+type RulesCopy = {
+  title: string; intro: string; colRule: string; colChange: string;
+  sourceBefore: string; sourceLink: string; sourceAfter: string;
+  exampleTitle: string; example: string;
+  faqTitle: string; faq: [question: string, answer: string][];
+};
+
+const RULES_COPY: Partial<Record<Language, RulesCopy>> = {
+  en: {
+    title: 'How much each rule changes the house edge',
+    intro: `Baseline: 8 decks, dealer stands on soft 17, double on any two cards, double after split, split to 4 hands, blackjack pays 3:2. House edge ${base}%. Each row changes one rule.`,
+    colRule: 'Rule', colChange: 'Change, percentage points',
+    sourceBefore: 'Rule effects: ', sourceLink: 'Wizard of Odds calculator',
+    sourceAfter: ', captured 2026-08-27; the 6:5 row is our own closed-form calculation.',
+    exampleTitle: 'Worked example: what 6:5 costs',
+    example: `Six decks, dealer hits soft 17, double after split, blackjack pays 3:2: house edge ${e32}%. The same table paying 6:5: ${e65}%. Per 100 hands of one unit each that is ${e32} units against ${e65} units on average, about three times as much.`,
+    faqTitle: 'Questions',
+    faq: [
+      ['What is the house edge in blackjack?', 'The average share of the initial bet the casino keeps when the player follows basic strategy. With common 6–8 deck rules and a 3:2 payout it is about 0.4–0.7%; with 6:5 about 1.8–2.0%.'],
+      ['Why is 6:5 blackjack worse than 3:2?', `A natural pays 1.2 units instead of 1.5, so the player gives up 0.3 of a bet on every blackjack the dealer does not tie. That adds ${lo}–${hi} percentage points to the house edge, depending on the number of decks.`],
+      ['Does a lower house edge mean I can win?', 'No. Every real rule set is negative for the player; a lower edge only means a smaller average loss per hand.'],
+      ['How accurate is the calculator?', `It adds up rule effects measured on the Wizard of Odds calculator on 2026-08-27. On the combined rule sets we checked the sum stayed within ${tol} percentage points of the exact figure. The 6:5 penalty is our own closed-form calculation.`],
+    ],
+  },
+  es: {
+    title: 'Cuánto cambia la ventaja de la casa cada regla',
+    intro: `Base: 8 barajas (mazos), el crupier se planta con 17 blando (17 suave), doblar con dos cartas cualesquiera, doblar tras dividir, dividir hasta 4 manos, blackjack 3:2. Ventaja de la casa: ${base} %. Cada fila cambia una sola regla.`,
+    colRule: 'Regla', colChange: 'Cambio, puntos porcentuales',
+    sourceBefore: 'Efectos de las reglas: ', sourceLink: 'calculadora de Wizard of Odds',
+    sourceAfter: ', capturados el 27/08/2026; la fila del 6:5 es cálculo propio.',
+    exampleTitle: 'Ejemplo: lo que cuesta el pago 6:5',
+    example: `Seis barajas, el crupier pide con 17 blando, doblar tras dividir, blackjack 3:2: ventaja de la casa ${e32} %. La misma mesa pagando 6:5: ${e65} %. Por cada 100 manos de una unidad son ${e32} unidades frente a ${e65} de media, unas tres veces más.`,
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      ['¿Qué es la ventaja de la casa en el blackjack?', 'La parte media de la apuesta inicial que se queda el casino cuando el jugador sigue la estrategia básica. Con reglas habituales de 6–8 barajas y pago 3:2 ronda el 0,4–0,7 %; con pago 6:5, el 1,8–2,0 %.'],
+      ['¿Por qué el blackjack 6:5 es peor que el 3:2?', `El blackjack natural paga 1,2 unidades en lugar de 1,5: el jugador pierde 0,3 apuestas en cada blackjack que el crupier no empata. Eso suma entre ${lo} y ${hi} puntos porcentuales a la ventaja de la casa, según el número de barajas.`],
+      ['¿Una ventaja menor significa que se puede ganar?', 'No. Toda mesa real es negativa para el jugador; una ventaja menor solo significa una pérdida media más pequeña por mano.'],
+      ['¿Qué precisión tiene la calculadora?', `Suma los efectos de cada regla medidos en la calculadora de Wizard of Odds el 27/08/2026. En los conjuntos combinados que comprobamos, la suma se desvió como máximo ${tol} puntos porcentuales del valor exacto. La penalización del 6:5 es cálculo propio.`],
+    ],
+  },
+};
+
+const rules = RULES_COPY[lang];
 ---
 
-<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/blackjack-house-edge" schema={schema}>
+<BaseLayout lang={lang} title={c.metaTitle ?? c.title} description={c.description} currentPath="tools/blackjack-house-edge" schema={schema}>
   <header class="page-head">
     <div class="container">
+      <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        <a href={path(lang, 'tools')}>{TOOLS_INDEX_TITLE[lang]}</a>
+      </nav>
       <h1>{c.title}</h1>
       <p class="lede">{c.lede}</p>
     </div>
@@ -305,9 +415,38 @@ const schema = [
         <a href={path(lang, 'articles', 'blackjack-basic-strategy')}>{c.articleLink} →</a>
       </p>
 
+      {rules && (
+        <div class="prose">
+          <h2>{rules.title}</h2>
+          <p>{rules.intro}</p>
+          <table>
+            <thead>
+              <tr><th>{rules.colRule}</th><th>{rules.colChange}</th></tr>
+            </thead>
+            <tbody>
+              {RULE_ROWS.map((row) => (
+                <tr><td>{row[lang]}</td><td>{dec(sign(row.delta))}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p>{rules.sourceBefore}<a href={WOO_CALCULATOR} rel="noopener">{rules.sourceLink}</a>{rules.sourceAfter}</p>
+          <h2>{rules.exampleTitle}</h2>
+          <p>{rules.example}</p>
+          <h2>{rules.faqTitle}</h2>
+          {rules.faq.map(([question, answer]) => (
+            <Fragment>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </Fragment>
+          ))}
+        </div>
+      )}
+
       <ResponsibleGaming lang={lang} />
     </div>
   </section>
+
+  <RelatedTools lang={lang} current="blackjack-house-edge" />
 </BaseLayout>
 
 <script>
@@ -315,6 +454,11 @@ const schema = [
 
   const $ = (id: string) => document.getElementById(id) as HTMLSelectElement;
   const out = (id: string) => document.getElementById(id)!;
+  // Результат печатается по локали страницы, а не через toFixed: таблица
+  // правил ниже на испанской странице уже с запятой, и «0.64 %» над ней
+  // выглядел бы числом из другого документа.
+  const nf = (x: number, n: number) =>
+    new Intl.NumberFormat(document.documentElement.lang, { minimumFractionDigits: n, maximumFractionDigits: n }).format(x);
 
   function recalc() {
     // Число колод читается один раз: от него зависит не только собственная
@@ -333,8 +477,8 @@ const schema = [
     if ($('bj-surrender').value === 'late') edge += BJ_DELTAS.lateSurrender;
     if ($('bj-payout').value === '65') edge += BJ_DELTAS.pay65[decks];
 
-    out('bj-edge').textContent = `${edge.toFixed(2)} %`;
-    out('bj-per100').textContent = edge.toFixed(1);
+    out('bj-edge').textContent = `${nf(edge, 2)} %`;
+    out('bj-per100').textContent = nf(edge, 1);
     (out('bj-negative') as HTMLElement).hidden = edge >= 0;
   }
 

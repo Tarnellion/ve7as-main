@@ -5,6 +5,8 @@ import { path } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/ui';
 import { breadcrumbs } from '../../../lib/schema';
 import ResponsibleGaming from '../../../components/ResponsibleGaming.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import { TOOLS_INDEX_TITLE } from '../../../data/tools';
 
 /**
  * Калькулятор маржи букмекера — третий инструмент фазы 4.
@@ -22,23 +24,33 @@ if (!isLanguage(lang)) return Astro.rewrite('/404');
 const t = useTranslations(lang);
 
 type Copy = {
-  title: string; description: string; lede: string;
-  outcome: string; optional: string;
+  title: string; metaTitle?: string; description: string; lede: string;
+  format: string; decimal: string; american: string; fractional: string;
+  outcome: string; add: string;
   sum: string; sumHint: string;
+  overround: string; overroundHint: string;
   margin: string; marginHint: string;
   fair: string; fairHint: string;
   converterLink: string;
   disclaimer: string;
+  // Разбор под калькулятором есть только у индексируемых локалей (en, es);
+  // остальные рендерятся с noindex, поэтому поля необязательные.
+  explainer?: { h2: string; body: string };
+  examplesTitle?: string; examples?: string[];
+  faqTitle?: string; faq?: { q: string; a: string }[];
 };
 
 const COPY: Record<Language, Copy> = {
   ru: {
     title: 'Калькулятор маржи букмекера',
     description: 'Считает маржу линии по десятичным коэффициентам и показывает честные коэффициенты без маржи (no-vig). Без регистрации.',
-    lede: 'Введите десятичные коэффициенты исходов — двух для матчей без ничьей, трёх для линии с ничьей. Третий можно оставить пустым.',
-    outcome: 'Исход', optional: 'необязательно',
+    lede: 'Введите десятичные коэффициенты исходов — двух для матчей без ничьей, трёх для линии с ничьей.',
+    format: 'Формат коэффициента', decimal: 'Десятичный', american: 'Американский', fractional: 'Дробный',
+    outcome: 'Исход', add: 'Добавить исход',
     sum: 'Сумма подразумеваемых вероятностей',
     sumHint: 'У честной линии было бы ровно 100 %. Всё сверх — цена, встроенная в коэффициенты.',
+    overround: 'Оверраунд',
+    overroundHint: 'На сколько сумма подразумеваемых вероятностей превышает 100 %.',
     margin: 'Маржа букмекера',
     marginHint: '(S − 1) / S, где S — сумма вероятностей. Доля оборота, которую линия удерживает в среднем.',
     fair: 'Честные коэффициенты (no-vig)',
@@ -47,40 +59,98 @@ const COPY: Record<Language, Copy> = {
     disclaimer: 'Калькулятор оценивает маржу по методу пропорциональной нормировки. Реальная маржа распределяется по исходам неравномерно, особенно на фаворитах и аутсайдерах. Проверяйте расчёты самостоятельно.',
   },
   en: {
-    title: 'Bookmaker margin calculator',
-    description: 'Calculates a line’s margin from decimal odds and shows the fair no-vig odds. No sign-up.',
-    lede: 'Enter the decimal odds of the outcomes — two for no-draw markets, three for lines with a draw. The third field may stay empty.',
-    outcome: 'Outcome', optional: 'optional',
+    title: 'Bookmaker margin and no-vig calculator',
+    metaTitle: 'No-vig & bookmaker margin calculator (overround)',
+    description: 'Enter a market’s odds (decimal, American or fractional) to get the overround, the bookmaker’s margin and the fair no-vig odds. Free, no sign-up.',
+    lede: 'Enter the odds of every outcome in decimal, American or fractional format: two for a no-draw market, three for 1X2, more for outrights.',
+    format: 'Odds format', decimal: 'Decimal', american: 'American', fractional: 'Fractional',
+    outcome: 'Outcome', add: 'Add outcome',
     sum: 'Sum of implied probabilities',
     sumHint: 'A fair line would sum to exactly 100%. Anything above is the price built into the odds.',
-    margin: 'Bookmaker margin',
+    overround: 'Overround (vig)',
+    overroundHint: 'How far the implied probabilities exceed 100%.',
+    margin: 'Margin (theoretical hold)',
     marginHint: '(S − 1) / S, where S is the probability sum. The share of turnover the line keeps on average.',
     fair: 'Fair odds (no-vig)',
     fairHint: 'Odds after normalising probabilities to 100% — what the line would be without commission.',
     converterLink: 'Odds format converter',
     disclaimer: 'The calculator uses proportional normalisation. Real margin is distributed unevenly across outcomes, especially on favourites and longshots. Verify calculations yourself.',
+    explainer: {
+      h2: 'How bookmaker margin is calculated',
+      body: 'Convert each price to an implied probability (1 ÷ decimal odds) and add them up. A fair market sums to 100%; the excess is the overround, also called vig or juice. Margin, or theoretical hold, is the overround as a share of the total: (S − 1) ÷ S. Fair no-vig odds are each price multiplied by S.',
+    },
+    examplesTitle: 'Worked examples',
+    examples: [
+      'Two-way market at −110 / −110 (decimal 1.909 each): 52.38% + 52.38% = 104.76%. Overround 4.76%, margin 4.55%, fair odds 2.00 / 2.00 (+100 / +100).',
+      'Three-way football market at 2.10 / 3.40 / 3.60: 47.62% + 29.41% + 27.78% = 104.81%. Overround 4.81%, margin 4.59%, fair odds 2.201 / 3.563 / 3.773.',
+    ],
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'What is the difference between margin, overround, vig and hold?',
+        a: 'Overround (vig, juice) is how far the implied probabilities exceed 100%: S − 1. Margin, or theoretical hold, is the share of all stakes the book keeps when its action is balanced: (S − 1) ÷ S. For −110 / −110 they are 4.76% and 4.55%.',
+      },
+      {
+        q: 'What are no-vig odds?',
+        a: 'The prices left after the margin is removed so that the probabilities sum to exactly 100%. They estimate the bookmaker’s own view of the fair price; they are not a guaranteed true probability.',
+      },
+      {
+        q: 'Which method does the calculator use?',
+        a: 'Proportional (multiplicative) normalisation: every probability is divided by the same total. Other models (Shin, power, additive) spread the margin differently and give different fair odds on longshots.',
+      },
+    ],
   },
   es: {
-    title: 'Calculadora de margen de la casa',
-    description: 'Calcula el margen de una línea a partir de cuotas decimales y muestra las cuotas justas sin margen (no-vig). Sin registro.',
-    lede: 'Introduzca las cuotas decimales de los resultados: dos para mercados sin empate, tres para líneas con empate. El tercero puede quedar vacío.',
-    outcome: 'Resultado', optional: 'opcional',
+    title: 'Calculadora de margen de casas de apuestas (overround)',
+    description: 'Introduce las cuotas de un mercado (decimales, americanas o fraccionarias) y obtén el overround, el margen de la casa de apuestas y las cuotas justas sin margen (no-vig).',
+    lede: 'Introduce las cuotas de todos los resultados en formato decimal, americano o fraccionario: dos para un mercado sin empate, tres para un 1X2, más para apuestas a ganador.',
+    format: 'Formato de cuota', decimal: 'Decimal', american: 'Americano', fractional: 'Fraccionario',
+    outcome: 'Resultado', add: 'Añadir resultado',
     sum: 'Suma de probabilidades implícitas',
-    sumHint: 'Una línea justa sumaría exactamente el 100 %. Todo lo que exceda es el precio incorporado en las cuotas.',
-    margin: 'Margen de la casa',
-    marginHint: '(S − 1) / S, donde S es la suma de probabilidades. La parte del volumen que la línea retiene de media.',
-    fair: 'Cuotas justas (no-vig)',
-    fairHint: 'Cuotas tras normalizar las probabilidades al 100 %: cómo sería la línea sin comisión.',
-    converterLink: 'Conversor de formatos de cuotas',
-    disclaimer: 'La calculadora usa normalización proporcional. El margen real se reparte de forma desigual entre resultados. Verifique los cálculos.',
+    sumHint: 'Un mercado sin margen sumaría exactamente el 100 %. Lo que pase de ahí es el margen incluido en las cuotas.',
+    overround: 'Overround (vig)',
+    overroundHint: 'Cuánto superan el 100 % las probabilidades implícitas.',
+    margin: 'Margen de la casa de apuestas',
+    marginHint: '(S − 1) / S, donde S es la suma de probabilidades. La parte de lo apostado que la casa retiene de media.',
+    fair: 'Cuotas justas (sin margen, no-vig)',
+    fairHint: 'Cuotas tras normalizar las probabilidades al 100 %: cómo serían sin comisión.',
+    converterLink: 'Conversor de cuotas de apuestas',
+    disclaimer: 'La calculadora usa normalización proporcional. El margen real se reparte de forma desigual entre resultados. Verifica los cálculos.',
+    explainer: {
+      h2: 'Cómo se calcula el margen de una casa de apuestas',
+      body: 'Convierte cada cuota en probabilidad implícita (1 ÷ cuota decimal) y súmalas. Un mercado justo suma el 100 %; el exceso es el overround, también llamado vig o juice. El margen es ese exceso como parte del total: (S − 1) ÷ S. Las cuotas justas sin margen son cada cuota multiplicada por S.',
+    },
+    examplesTitle: 'Ejemplos',
+    examples: [
+      'Mercado de dos resultados a −110 / −110 en formato americano (1,909 en decimal): 52,38 % + 52,38 % = 104,76 %. Overround 4,76 %, margen 4,55 %, cuotas justas 2,00 / 2,00.',
+      'Mercado 1X2 a 2,10 / 3,40 / 3,60: 47,62 % + 29,41 % + 27,78 % = 104,81 %. Overround 4,81 %, margen 4,59 %, cuotas justas 2,201 / 3,563 / 3,773.',
+    ],
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      {
+        q: '¿Qué diferencia hay entre margen y overround?',
+        a: 'El overround es cuánto superan el 100 % las probabilidades implícitas: S − 1. El margen es la parte de todo lo apostado que retiene la casa cuando el dinero está equilibrado: (S − 1) ÷ S. Para −110 / −110 son 4,76 % y 4,55 %.',
+      },
+      {
+        q: '¿Qué son las cuotas justas o sin margen (no-vig)?',
+        a: 'Las cuotas que quedan al quitar el margen para que las probabilidades sumen exactamente el 100 %. Son una estimación del precio justo según la propia casa, no una probabilidad real garantizada.',
+      },
+      {
+        q: '¿Qué método usa la calculadora?',
+        a: 'Normalización proporcional: todas las probabilidades se dividen por el mismo total. Otros modelos (Shin, potencia, aditivo) reparten el margen de otra forma y dan cuotas justas distintas en los resultados poco probables.',
+      },
+    ],
   },
   pt: {
     title: 'Calculadora de margem da casa',
     description: 'Calcula a margem de uma linha a partir de odds decimais e mostra as odds justas sem margem (no-vig). Sem registo.',
-    lede: 'Introduza as odds decimais dos resultados — duas para mercados sem empate, três para linhas com empate. O terceiro campo pode ficar vazio.',
-    outcome: 'Resultado', optional: 'opcional',
+    lede: 'Introduza as odds decimais dos resultados — duas para mercados sem empate, três para linhas com empate.',
+    format: 'Formato das odds', decimal: 'Decimal', american: 'Americano', fractional: 'Fracionário',
+    outcome: 'Resultado', add: 'Adicionar resultado',
     sum: 'Soma das probabilidades implícitas',
     sumHint: 'Uma linha justa somaria exatamente 100 %. Tudo o que exceder é o preço embutido nas odds.',
+    overround: 'Overround (vig)',
+    overroundHint: 'Quanto as probabilidades implícitas ultrapassam 100 %.',
     margin: 'Margem da casa',
     marginHint: '(S − 1) / S, onde S é a soma das probabilidades. A parte do volume que a linha retém em média.',
     fair: 'Odds justas (no-vig)',
@@ -91,10 +161,13 @@ const COPY: Record<Language, Copy> = {
   de: {
     title: 'Buchmachermargen-Rechner',
     description: 'Berechnet die Marge einer Linie aus Dezimalquoten und zeigt die fairen No-Vig-Quoten. Ohne Anmeldung.',
-    lede: 'Geben Sie die Dezimalquoten der Ausgänge ein — zwei für Märkte ohne Unentschieden, drei für Linien mit Unentschieden. Das dritte Feld darf leer bleiben.',
-    outcome: 'Ausgang', optional: 'optional',
+    lede: 'Geben Sie die Dezimalquoten der Ausgänge ein — zwei für Märkte ohne Unentschieden, drei für Linien mit Unentschieden.',
+    format: 'Quotenformat', decimal: 'Dezimal', american: 'Amerikanisch', fractional: 'Bruch',
+    outcome: 'Ausgang', add: 'Ergebnis hinzufügen',
     sum: 'Summe der impliziten Wahrscheinlichkeiten',
     sumHint: 'Eine faire Linie ergäbe genau 100 %. Alles darüber ist der in die Quoten eingebaute Preis.',
+    overround: 'Overround (Vig)',
+    overroundHint: 'Um wie viel die impliziten Wahrscheinlichkeiten 100 % übersteigen.',
     margin: 'Buchmachermarge',
     marginHint: '(S − 1) / S, wobei S die Wahrscheinlichkeitssumme ist. Der Anteil des Umsatzes, den die Linie im Schnitt einbehält.',
     fair: 'Faire Quoten (No-Vig)',
@@ -105,10 +178,13 @@ const COPY: Record<Language, Copy> = {
   fr: {
     title: 'Calculateur de marge du bookmaker',
     description: 'Calcule la marge d’une ligne à partir des cotes décimales et montre les cotes justes sans marge (no-vig). Sans inscription.',
-    lede: 'Saisissez les cotes décimales des résultats — deux pour les marchés sans nul, trois pour les lignes avec nul. Le troisième champ peut rester vide.',
-    outcome: 'Résultat', optional: 'facultatif',
+    lede: 'Saisissez les cotes décimales des résultats — deux pour les marchés sans nul, trois pour les lignes avec nul.',
+    format: 'Format de cote', decimal: 'Décimale', american: 'Américaine', fractional: 'Fractionnaire',
+    outcome: 'Résultat', add: 'Ajouter une issue',
     sum: 'Somme des probabilités implicites',
     sumHint: 'Une ligne juste totaliserait exactement 100 %. Tout excédent est le prix intégré aux cotes.',
+    overround: 'Overround (vig)',
+    overroundHint: 'De combien les probabilités implicites dépassent 100 %.',
     margin: 'Marge du bookmaker',
     marginHint: '(S − 1) / S, où S est la somme des probabilités. La part du volume que la ligne retient en moyenne.',
     fair: 'Cotes justes (no-vig)',
@@ -119,10 +195,13 @@ const COPY: Record<Language, Copy> = {
   br: {
     title: 'Calculadora de margem da casa',
     description: 'Calcula a margem de uma linha a partir de odds decimais e mostra as odds justas sem margem (no-vig). Sem cadastro.',
-    lede: 'Digite as odds decimais dos resultados — duas para mercados sem empate, três para linhas com empate. O terceiro campo pode ficar vazio.',
-    outcome: 'Resultado', optional: 'opcional',
+    lede: 'Digite as odds decimais dos resultados — duas para mercados sem empate, três para linhas com empate.',
+    format: 'Formato das odds', decimal: 'Decimal', american: 'Americano', fractional: 'Fracionário',
+    outcome: 'Resultado', add: 'Adicionar resultado',
     sum: 'Soma das probabilidades implícitas',
     sumHint: 'Uma linha justa somaria exatamente 100 %. Tudo acima é o preço embutido nas odds.',
+    overround: 'Overround (vig)',
+    overroundHint: 'Quanto as probabilidades implícitas ultrapassam 100 %.',
     margin: 'Margem da casa',
     marginHint: '(S − 1) / S, onde S é a soma das probabilidades. A parte do volume que a linha retém em média.',
     fair: 'Odds justas (no-vig)',
@@ -133,6 +212,7 @@ const COPY: Record<Language, Copy> = {
 };
 
 const c = COPY[lang];
+const hasProse = Boolean(c.explainer || c.examples?.length || c.faq?.length);
 const pageUrl = new URL(path(lang, 'tools', 'margin-calculator'), Astro.site);
 
 const schema = [
@@ -146,16 +226,24 @@ const schema = [
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     inLanguage: HTML_LANG[lang],
   },
+  // Три уровня, и средний — указатель: та же цепочка стоит над <h1>.
+  // Разметка обязана повторять видимую иерархию, поэтому правятся они вместе.
   breadcrumbs([
     { name: t.nav.home, url: new URL(path(lang), Astro.site).toString() },
+    { name: TOOLS_INDEX_TITLE[lang], url: new URL(path(lang, 'tools'), Astro.site).toString() },
     { name: c.title, url: pageUrl.toString() },
   ]),
 ];
 ---
 
-<BaseLayout lang={lang} title={c.title} description={c.description} currentPath="tools/margin-calculator" schema={schema}>
+<BaseLayout lang={lang} title={c.metaTitle ?? c.title} description={c.description} currentPath="tools/margin-calculator" schema={schema}>
   <header class="page-head">
     <div class="container">
+      <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
+        <a href={path(lang)}>{t.nav.home}</a>
+        <span class="sep">/</span>
+        <a href={path(lang, 'tools')}>{TOOLS_INDEX_TITLE[lang]}</a>
+      </nav>
       <h1>{c.title}</h1>
       <p class="lede">{c.lede}</p>
     </div>
@@ -166,17 +254,26 @@ const schema = [
       <div class="calc" id="margin-calc">
         <form class="calc-form" autocomplete="off">
           <div class="calc-field">
+            <label for="mc-format">{c.format}</label>
+            <select id="mc-format">
+              <option value="decimal" selected>{c.decimal}</option>
+              <option value="american">{c.american}</option>
+              <option value="fractional">{c.fractional}</option>
+            </select>
+          </div>
+          {/* type="text", а не number: в числовое поле не ввести ни «10/11»,
+              ни «+150», ни десятичную запятую. */}
+          <div class="calc-field">
             <label for="mc-o1">{c.outcome} 1</label>
-            <input id="mc-o1" type="number" min="1.001" step="any" value="1.90" inputmode="decimal" />
+            <input id="mc-o1" type="text" value="1.90" inputmode="decimal" />
           </div>
           <div class="calc-field">
             <label for="mc-o2">{c.outcome} 2</label>
-            <input id="mc-o2" type="number" min="1.001" step="any" value="1.90" inputmode="decimal" />
+            <input id="mc-o2" type="text" value="1.90" inputmode="decimal" />
           </div>
-          <div class="calc-field">
-            <label for="mc-o3">{c.outcome} 3 ({c.optional})</label>
-            <input id="mc-o3" type="number" min="1.001" step="any" value="" inputmode="decimal" />
-          </div>
+          {/* btn--outline снимает серый системный фон: .btn писался для ссылок
+              и своего фона не задаёт, а у <button> он есть от браузера. */}
+          <button type="button" class="btn btn--outline" id="mc-add" data-outcome={c.outcome}>{c.add}</button>
         </form>
 
         <div class="calc-results" aria-live="polite">
@@ -184,6 +281,11 @@ const schema = [
             <span class="calc-label">{c.sum}</span>
             <span class="calc-value" id="mc-sum">—</span>
             <small>{c.sumHint}</small>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">{c.overround}</span>
+            <span class="calc-value" id="mc-overround">—</span>
+            <small>{c.overroundHint}</small>
           </div>
           <div class="calc-row calc-row--accent">
             <span class="calc-label">{c.margin}</span>
@@ -203,9 +305,39 @@ const schema = [
 
       <p class="notice">{c.disclaimer}</p>
 
+      {hasProse && (
+        <div class="prose">
+          {c.explainer && (
+            <>
+              <h2>{c.explainer.h2}</h2>
+              <p>{c.explainer.body}</p>
+            </>
+          )}
+          {c.examples && c.examples.length > 0 && (
+            <>
+              {c.examplesTitle && <h2>{c.examplesTitle}</h2>}
+              {c.examples.map((example) => <p>{example}</p>)}
+            </>
+          )}
+          {c.faq && c.faq.length > 0 && (
+            <>
+              {c.faqTitle && <h2>{c.faqTitle}</h2>}
+              {c.faq.map((item) => (
+                <>
+                  <h3>{item.q}</h3>
+                  <p>{item.a}</p>
+                </>
+              ))}
+            </>
+          )}
+        </div>
+      )}
+
       <ResponsibleGaming lang={lang} />
     </div>
   </section>
+
+  <RelatedTools lang={lang} current="margin-calculator" />
 </BaseLayout>
 
 <script>
@@ -213,25 +345,83 @@ const schema = [
   // No-vig (пропорциональная нормировка): честная вероятность p_i/S,
   // честный коэффициент 1/(p_i/S) = S·d_i. Проверка: 1.90/1.90 → S≈1.0526,
   // честные 2.00/2.00 — монетка без комиссии.
-  const ids = ['mc-o1', 'mc-o2', 'mc-o3'];
+  // Перевод форматов — из src/lib/odds.ts, тот же, что у конвертера: вторая
+  // копия формул дала бы на двух соседних страницах разные цены.
+  import { toAmerican, toFraction, fromAmerican, fromFractional } from '../../../lib/odds';
+
+  const MAX_OUTCOMES = 12;
+  const form = document.querySelector<HTMLFormElement>('#margin-calc .calc-form')!;
+  const format = document.getElementById('mc-format') as HTMLSelectElement;
+  const add = document.getElementById('mc-add') as HTMLButtonElement;
   const out = (id: string) => document.getElementById(id)!;
+  // Селект формата — не <input>, поэтому в выборку попадают только исходы.
+  const fields = () => Array.from(form.querySelectorAll('input'));
+  // Результат печатается по локали страницы, а не через toFixed: «2.000»
+  // испанский читатель читает как две тысячи, а не как коэффициент два.
+  const nf = (x: number, n: number) =>
+    new Intl.NumberFormat(document.documentElement.lang, { minimumFractionDigits: n, maximumFractionDigits: n }).format(x);
+  // На цифровой клавиатуре телефона нет ни знака, ни косой черты, поэтому
+  // она включается только для десятичного формата.
+  const inputMode = () => (format.value === 'decimal' ? 'decimal' : 'text');
+
+  // Формат задаёт только селект, по виду значения он не угадывается:
+  // десятичный аутсайдер 101 иначе прочитался бы как американские +101.
+  function parse(raw: string): number | null {
+    if (format.value === 'american') return fromAmerican(raw);
+    if (format.value === 'fractional') return fromFractional(raw);
+    return Number(raw.replace(',', '.'));
+  }
+
+  function formatFair(d: number): string {
+    if (format.value === 'american') {
+      // −100 и +100 — одна цена (ровные деньги), а S·d симметричной линии
+      // из-за плавающей точки бывает 1.9999999999999998: −108/−108 без этой
+      // ветки печатались бы как «-100 · -100».
+      const a = toAmerican(d);
+      return a > 0 || a === -100 ? `+${Math.abs(a)}` : String(a);
+    }
+    if (format.value === 'fractional') return toFraction(d - 1);
+    return nf(d, 3);
+  }
 
   function recalc() {
-    const odds = ids
-      .map((id) => Number((document.getElementById(id) as HTMLInputElement).value))
-      .filter((v) => Number.isFinite(v) && v > 1.001);
+    const odds = fields()
+      .map((el) => parse(el.value))
+      .filter((d): d is number => d !== null && Number.isFinite(d) && d > 1.001);
     if (odds.length < 2) {
-      out('mc-sum').textContent = out('mc-margin').textContent = out('mc-fair').textContent = '—';
+      out('mc-sum').textContent = out('mc-overround').textContent = out('mc-margin').textContent = out('mc-fair').textContent = '—';
       return;
     }
     const probs = odds.map((d) => 1 / d);
     const S = probs.reduce((a, b) => a + b, 0);
     const margin = (S - 1) / S;
-    out('mc-sum').textContent = `${(S * 100).toFixed(2)} %`;
-    out('mc-margin').textContent = `${(margin * 100).toFixed(2)} %`;
-    out('mc-fair').textContent = odds.map((d) => (d * S).toFixed(3)).join(' · ');
+    out('mc-sum').textContent = `${nf(S * 100, 2)} %`;
+    out('mc-overround').textContent = `${nf((S - 1) * 100, 2)} %`;
+    out('mc-margin').textContent = `${nf(margin * 100, 2)} %`;
+    out('mc-fair').textContent = odds.map((d) => formatFair(d * S)).join(' · ');
   }
 
-  ids.forEach((id) => document.getElementById(id)!.addEventListener('input', recalc));
+  add.addEventListener('click', () => {
+    const n = fields().length + 1;
+    const field = document.createElement('div');
+    field.className = 'calc-field';
+    const label = document.createElement('label');
+    label.htmlFor = `mc-o${n}`;
+    label.textContent = `${add.dataset.outcome ?? ''} ${n}`;
+    const input = document.createElement('input');
+    input.id = `mc-o${n}`;
+    input.type = 'text';
+    input.setAttribute('inputmode', inputMode());
+    input.addEventListener('input', recalc);
+    field.append(label, input);
+    form.insertBefore(field, add);
+    add.disabled = n >= MAX_OUTCOMES;
+  });
+
+  format.addEventListener('change', () => {
+    fields().forEach((el) => el.setAttribute('inputmode', inputMode()));
+    recalc();
+  });
+  fields().forEach((el) => el.addEventListener('input', recalc));
   recalc();
 </script>

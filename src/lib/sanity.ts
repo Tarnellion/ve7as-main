@@ -2,7 +2,7 @@ import { createClient } from '@sanity/client';
 import { Marked, type RendererObject, type Tokens } from 'marked';
 import { transformSync } from 'ultrahtml';
 import sanitize from 'ultrahtml/transformers/sanitize';
-import { DEFAULT_LANGUAGE, INDEXED_LANGUAGES, isLanguage, type Language } from '../i18n/languages';
+import { DEFAULT_LANGUAGE, INDEXED_LANGUAGES, isIndexable, isLanguage, type Language } from '../i18n/languages';
 
 // Датасет публичный, поэтому токен не нужен: анонимные запросы возвращают
 // опубликованный контент. Токен, наоборот, вредил — он вытягивал drafts.*
@@ -224,8 +224,9 @@ function localized(field: string, lang: Language): string {
  * `"hasTranslation": <перевод действительно есть>` — после схлопывания полей
  * через `select()` страница иначе не отличит перевод от русского фолбэка.
  *
- * Список полей задаётся вызывающим: для карточки достаточно заголовка, а для
- * страницы статьи в него входит и тело. Раньше плашка «перевод отсутствует»
+ * Список полей задаётся вызывающим: карточке на странице автора достаточно
+ * заголовка, а странице статьи и карточкам указателя (`cardProjection()`)
+ * нужно и тело. Раньше плашка «перевод отсутствует»
  * смотрела только на заголовок, и статья с заполненным `title_en`, но пустым
  * `body_en` показывала русский текст вообще без предупреждения.
  */
@@ -322,13 +323,30 @@ export function markContentUnavailable(response: {
 
 // Лимиты запросов. Раньше их не было нигде: главная грузила все статьи и
 // делала `slice(0, 7)` уже над готовым массивом.
-/** Главная показывает 7 карточек; запас нужен на отсев по гео. */
+/** Потолок списка новостей на главной; разборы идут отдельным списком со своим лимитом. */
 const FEED_LIMIT = 24;
+/**
+ * Разборы режутся своим лимитом, а не общим с новостями: конвейер добавляет
+ * по новости в день, и общий потолок хаба (`SECTION_LIMIT`) начал бы
+ * вытеснять из списка именно разборы — они старше любой новости.
+ */
+const GUIDES_LIMIT = 50;
 const SECTION_LIMIT = 60;
 const SECTIONS_LIMIT = 50;
 const FAQ_LIMIT = 100;
 /** Sitemap обязан перечислить всё; предел — только страховка от аномалии. */
 const SITEMAP_LIMIT = 5000;
+
+// Разбор или новость. Поля `articleKind` пока нет ни у одного документа: оно
+// запланировано в docs/news/player-explainers-plan.md, а до тех пор род
+// материала выводится из `aiDisclosure`, который ставит только конвейер
+// новостей. Голый `!defined(aiDisclosure)` для разборов не годится: разборы,
+// написанные конвейером, тоже получат `aiDisclosure` и уехали бы в новости —
+// поэтому явный `articleKind` главнее. Документ, у которого `articleKind` не
+// равен ни одному из двух значений, не попадает ни в один список.
+// Сверено с боевым датасетом 10.11.2026: разборов 9, новостей 48, всего 57.
+export const GUIDE_PREDICATE = '(articleKind == "explainer" || (!defined(articleKind) && !defined(aiDisclosure)))';
+export const NEWS_PREDICATE = '(articleKind == "news" || (!defined(articleKind) && defined(aiDisclosure)))';
 
 // ── Запросы ──────────────────────────────────────────────────────────────────
 
@@ -362,6 +380,30 @@ export async function getSections(options: { bodyLang?: string } = {}): Promise<
 }
 
 /**
+ * Поля карточки — одни на ленту и на оба списка указателя.
+ *
+ * Флаг перевода смотрит и на тело, а не только на заголовок: статья с
+ * заполненным `title_<lang>`, но пустым `body_<lang>` сама отвечает noindex
+ * (см. `getArticleBySlug`), и карточка обязана судить о переводе так же —
+ * иначе указатель, RSS и новостной sitemap зовут на страницу, которая себя
+ * из индекса исключает.
+ */
+function cardProjection(code: Language): string {
+  return `"id": slug.current,
+      "section": section->slug.current,
+      pubDate,
+      readingTime,
+      author,
+      featured,
+      blockedIn,
+      "imageUrl": image.asset->url,
+      youtube,
+      ${localized('title', code)},
+      ${localized('description', code)},
+      ${translationFlag(['title', 'body'], code)}`;
+}
+
+/**
  * Лента карточек. `section` фильтруется в GROQ: страница раздела раньше
  * забирала все статьи портала и отсеивала лишние в JavaScript.
  */
@@ -379,18 +421,39 @@ export async function getArticles(
     `getArticles(${code}${options.section ? `, ${options.section}` : ''})`,
     [],
     `*[${filter}] | order(pubDate desc) [0...${limit}] {
-      "id": slug.current,
-      "section": section->slug.current,
-      pubDate,
-      readingTime,
-      author,
-      featured,
-      blockedIn,
-      "imageUrl": image.asset->url,
-      youtube,
-      ${localized('title', code)},
-      ${localized('description', code)},
-      ${translationFlag(['title'], code)}
+      ${cardProjection(code)}
+    }`,
+    options.section ? { section: options.section } : {},
+  );
+}
+
+/**
+ * Два списка указателя — разборы и новости — для главной и для хаба.
+ *
+ * Один запрос, а не два: списки рендерятся на одной странице, и сбой любого
+ * из них должен дать один и тот же 503, а не страницу с половиной указателя,
+ * которую edge-кэш запомнит как нормальную.
+ */
+export async function getIndexLists(
+  lang: string,
+  options: { section?: string } = {},
+): Promise<Fetched<{ guides: SanityArticleCard[]; news: SanityArticleCard[] }>> {
+  const code = safeLang(lang);
+  const newsLimit = options.section ? SECTION_LIMIT : FEED_LIMIT;
+  const filter = options.section
+    ? '_type == "article" && section->slug.current == $section'
+    : '_type == "article"';
+
+  return fetchOrDegrade<{ guides: SanityArticleCard[]; news: SanityArticleCard[] }>(
+    `getIndexLists(${code}${options.section ? `, ${options.section}` : ''})`,
+    { guides: [], news: [] },
+    `{
+      "guides": *[${filter} && ${GUIDE_PREDICATE}] | order(pubDate desc) [0...${GUIDES_LIMIT}] {
+        ${cardProjection(code)}
+      },
+      "news": *[${filter} && ${NEWS_PREDICATE}] | order(pubDate desc) [0...${newsLimit}] {
+        ${cardProjection(code)}
+      }
     }`,
     options.section ? { section: options.section } : {},
   );
@@ -401,6 +464,14 @@ export async function getArticleBySlug(
   lang: string,
 ): Promise<Fetched<SanityArticleFull | null>> {
   const code = safeLang(lang);
+  // В индексируемой локали блок «по теме» зовёт только на полный перевод:
+  // статья-фолбэк сама отвечает noindex, и ссылка на неё вела бы читателя
+  // английской страницы на русский текст. В остальных локалях фолбэк — норма,
+  // и условие там оставило бы блок пустым. Имя поля собирается только из
+  // `code`, прошедшего `safeLang()`, — то же правило, что у `translationFlag()`.
+  const translated = isIndexable(code)
+    ? ` && defined(title_${code}) && title_${code} != "" && defined(body_${code}) && body_${code} != ""`
+    : '';
 
   return fetchOrDegrade<SanityArticleFull | null>(
     `getArticleBySlug(${code})`,
@@ -426,7 +497,12 @@ export async function getArticleBySlug(
       ${localized('description', code)},
       ${localized('body', code)},
       ${translationFlag(['title', 'body'], code)},
-      ${translationsMap(['title', 'body'])}
+      ${translationsMap(['title', 'body'])},
+      // Оба списка — плоские ключи этой же проекции, а не вложенный объект:
+      // знак ^ обязан указывать на саму статью. Внутри общего объекта-обёртки
+      // он указывал бы на обёртку, и сравнение с ^._id молча стало бы null.
+      "relatedGuides": *[_type == "article" && _id != ^._id && ${GUIDE_PREDICATE}${translated}] | order(pubDate desc) [0...${GUIDES_LIMIT}] { "id": slug.current, "section": section->slug.current, blockedIn, ${localized('title', code)} },
+      "relatedNews": *[_type == "article" && _id != ^._id && section._ref == ^.section._ref && ${NEWS_PREDICATE}${translated}] | order(pubDate desc) [0...3] { "id": slug.current, blockedIn, ${localized('title', code)} }
     }`,
     { slug },
   );
@@ -581,9 +657,15 @@ export type SanityArticleCard = {
   hasTranslation: boolean;
 };
 
+/** Ссылка блока «по теме» под статьёй: заголовок уже сведён к одному языку. */
+export type RelatedLink = { id: string; title: string; section?: string; blockedIn?: string[] };
+
 export type SanityArticleFull = SanityArticleCard & {
   sectionIcon: string;
   body: string;
+  /** Разборы всего портала и свежие новости той же рубрики — без самой статьи. */
+  relatedGuides?: RelatedLink[];
+  relatedNews?: RelatedLink[];
   /** По индексируемым локалям: есть ли там полный перевод (title + body). */
   translations?: Partial<Record<Language, boolean>>;
   /** Слаг документа автора; null у статей, где проставлена только строка. */

@@ -20,7 +20,7 @@ const RELATED_TOOL: Record<string, { segments: string[]; label: Record<Language,
     label: {
       ru: 'Переведите коэффициенты: конвертер форматов',
       en: 'Convert the odds: format converter',
-      es: 'Convierta las cuotas: conversor de formatos',
+      es: 'Convierte las cuotas: conversor de formatos',
       pt: 'Converta as odds: conversor de formatos',
       de: 'Quoten umrechnen: Format-Rechner',
       fr: 'Convertissez les cotes : convertisseur de formats',
@@ -44,7 +44,7 @@ const RELATED_TOOL: Record<string, { segments: string[]; label: Record<Language,
     label: {
       ru: 'Посчитайте кромку вашего стола: калькулятор house edge',
       en: 'Price your table: blackjack house edge calculator',
-      es: 'Calcule la ventaja de su mesa: calculadora de house edge',
+      es: 'Calcula la ventaja de tu mesa: calculadora de la ventaja de la casa',
       pt: 'Calcule a vantagem da sua mesa: calculadora de house edge',
       de: 'Rechnen Sie Ihren Tisch durch: Hausvorteil-Rechner',
       fr: 'Chiffrez votre table : calculateur d’avantage maison',
@@ -56,7 +56,7 @@ const RELATED_TOOL: Record<string, { segments: string[]; label: Record<Language,
     label: {
       ru: 'Посчитайте свой бонус: калькулятор вейджера',
       en: 'Run your own numbers: wagering calculator',
-      es: 'Calcule su bono: calculadora de rollover',
+      es: 'Calcula tu bono: calculadora de rollover',
       pt: 'Calcule o seu bónus: calculadora de rollover',
       de: 'Rechnen Sie selbst nach: Umsatz-Rechner',
       fr: 'Faites le calcul : calculateur de wagering',
@@ -107,7 +107,11 @@ const formattedDate = article
   : '';
 
 const ytId = article?.youtube ? youtubeId(article.youtube) : null;
-const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&auto=format` : undefined;
+// `fm=jpg` задан явно, а не `auto=format`: боты соцсетей и Google не шлют
+// `Accept`, и без `fm` CDN отдаёт им исходный PNG на 1,9 МБ.
+const ogImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=630&fit=crop&fm=jpg&q=80` : undefined;
+// Для разметки — 16:9, отдельный кроп от карточки соцсетей (1,91:1).
+const schemaImage = article?.imageUrl ? `${article.imageUrl}?w=1200&h=675&fit=crop&fm=jpg&q=80` : undefined;
 
 // Дата правки показывается только если она заметно позже публикации: Sanity
 // обновляет `_updatedAt` при любом сохранении, включая правку опечатки через
@@ -138,6 +142,29 @@ const authorUrl = article?.authorSlug
   ? new URL(path(lang, 'authors', article.authorSlug), Astro.site).toString()
   : undefined;
 
+// Подпись материала без автора-человека. В Sanity у таких статей лежит строка
+// «редакция» (старое значение по умолчанию), «Ve7as» или пусто; документы не
+// правятся, строку подменяет шаблон — иначе у всех сдвинулись бы `dateModified`
+// и `lastmod` в sitemap без изменения текста. Статья конвейера остаётся ровно
+// «Ve7as»: плашка ИИ у автоматической публикации говорит, что редакция текст
+// до выпуска не читала, и подпись «редакция» ей противоречила бы.
+const HOUSE = new Set(['', 'редакция', 've7as']);
+const rawAuthor = (article?.author ?? '').trim();
+const isHouse = !!article && !article.authorSlug && HOUSE.has(rawAuthor.toLowerCase());
+const byline = isHouse ? (article.aiDisclosure ? 'Ve7as' : t.article.editorialTeam) : rawAuthor;
+
+// Блок «по теме». Разборы берутся со всего портала, а не из рубрики статьи: в
+// трёх хабах их по два, и «свои» дали бы одну ссылку. Разборы своей рубрики
+// только поднимаются наверх — сортировка устойчива, внутри групп остаётся
+// порядок запроса (свежие первыми). Гео-фильтр стоит до среза: закрытый
+// материал не должен занимать место в пятёрке.
+const guides = (article?.relatedGuides ?? [])
+  .filter((item) => !isBlockedInCountry(item.blockedIn ?? [], country))
+  .sort((a, b) => Number(b.section === article?.section) - Number(a.section === article?.section))
+  .slice(0, 5);
+const news = (article?.relatedNews ?? [])
+  .filter((item) => !isBlockedInCountry(item.blockedIn ?? [], country));
+
 const schema = article && canonical
   ? [
       articleSchema(Astro.site!, {
@@ -146,9 +173,10 @@ const schema = article && canonical
         description: displayDescription,
         datePublished: article.pubDate,
         dateModified: article._updatedAt,
-        authorName: article.author,
+        authorName: byline,
+        authorIsOrganization: isHouse,
         authorUrl,
-        imageUrl: article.imageUrl,
+        imageUrl: schemaImage,
         lang,
         section: sectionName || undefined,
       }),
@@ -189,6 +217,9 @@ const schema = article && canonical
     description={displayDescription}
     currentPath={`articles/${article.id}`}
     ogImage={ogImage}
+    ogType="article"
+    publishedTime={article.pubDate}
+    modifiedTime={article._updatedAt}
     schema={schema}
     noindex={!hasTranslation}
     alternates={alternates}
@@ -201,7 +232,7 @@ const schema = article && canonical
     */}
     <header class="page-head article-head">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
+        <nav class="breadcrumb" aria-label={t.nav.breadcrumb}>
           <a href={path(lang)}>{t.nav.home}</a>
           <span class="sep">/</span>
           {article.section && (
@@ -219,7 +250,7 @@ const schema = article && canonical
             {t.article.author}:{' '}
             {article.authorSlug
               ? <a class="meta-link" href={path(lang, 'authors', article.authorSlug)}>{article.author}</a>
-              : article.author}
+              : byline}
           </span>
           <a href={path(lang, 'editorial-policy')} class="meta-link">{t.footer.editorial}</a>
         </div>
@@ -279,6 +310,31 @@ const schema = article && canonical
             <AiNotice lang={lang} disclosure={article.aiDisclosure} sourceBasis={article.sourceBasis} />
 
             <ResponsibleGaming lang={lang} />
+
+            {(guides.length > 0 || news.length > 0) && (
+              <nav class="related">
+                {guides.length > 0 && (
+                  <>
+                    <h2 class="nf-sections-title">{t.article.relatedGuides}</h2>
+                    <ul>
+                      {guides.map((item) => (
+                        <li><a href={path(lang, 'articles', item.id)}>{item.title}</a></li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {news.length > 0 && (
+                  <>
+                    <h2 class="nf-sections-title">{t.article.relatedNews}</h2>
+                    <ul>
+                      {news.map((item) => (
+                        <li><a href={path(lang, 'articles', item.id)}>{item.title}</a></li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </nav>
+            )}
 
             <div class="prose-foot">
               {article.section && (

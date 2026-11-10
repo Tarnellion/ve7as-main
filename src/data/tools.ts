@@ -43,10 +43,10 @@ export const TOOLS: readonly Tool[] = [
     id: 'wagering-calculator',
     segments: ['tools', 'wagering-calculator'],
     section: 'casino-slots',
-    updated: '2026-08-24',
+    updated: '2026-11-10',
     name: {
       ru: 'Калькулятор вейджера',
-      en: 'Wagering calculator',
+      en: 'Wagering requirement calculator',
       es: 'Calculadora de rollover',
       pt: 'Calculadora de rollover',
       de: 'Umsatzbedingungen-Rechner',
@@ -67,11 +67,11 @@ export const TOOLS: readonly Tool[] = [
     id: 'odds-converter',
     segments: ['tools', 'odds-converter'],
     section: 'sports-betting',
-    updated: '2026-08-27',
+    updated: '2026-11-10',
     name: {
       ru: 'Конвертер коэффициентов',
       en: 'Odds converter',
-      es: 'Conversor de cuotas',
+      es: 'Conversor de cuotas de apuestas',
       pt: 'Conversor de odds',
       de: 'Quotenrechner',
       fr: 'Convertisseur de cotes',
@@ -80,7 +80,7 @@ export const TOOLS: readonly Tool[] = [
     blurb: {
       ru: 'Десятичный, американский и дробный форматы плюс подразумеваемая вероятность.',
       en: 'Decimal, American and fractional formats plus the implied probability.',
-      es: 'Formatos decimal, americano y fraccional más la probabilidad implícita.',
+      es: 'Cuotas decimales, americanas (momios) y fraccionarias, más la probabilidad implícita.',
       pt: 'Formatos decimal, americano e fracionário mais a probabilidade implícita.',
       de: 'Dezimal-, US- und Bruchformat plus implizite Wahrscheinlichkeit.',
       fr: 'Formats décimal, américain et fractionnaire plus la probabilité implicite.',
@@ -91,11 +91,11 @@ export const TOOLS: readonly Tool[] = [
     id: 'margin-calculator',
     segments: ['tools', 'margin-calculator'],
     section: 'sports-betting',
-    updated: '2026-08-25',
+    updated: '2026-11-10',
     name: {
       ru: 'Калькулятор маржи букмекера',
-      en: 'Bookmaker margin calculator',
-      es: 'Calculadora de margen',
+      en: 'Bookmaker margin and no-vig calculator',
+      es: 'Calculadora de margen de casas de apuestas',
       pt: 'Calculadora de margem',
       de: 'Margen-Rechner',
       fr: 'Calculateur de marge',
@@ -104,7 +104,7 @@ export const TOOLS: readonly Tool[] = [
     blurb: {
       ru: 'Маржа линии и честные коэффициенты без маржи (no-vig).',
       en: 'A line’s margin and the fair no-vig odds.',
-      es: 'Margen de una línea y cuotas justas sin margen (no-vig).',
+      es: 'Margen (overround) de un mercado y cuotas justas sin margen (no-vig).',
       pt: 'Margem de uma linha e odds justas sem margem (no-vig).',
       de: 'Marge einer Linie und faire No-Vig-Quoten.',
       fr: 'Marge d’une ligne et cotes justes sans marge (no-vig).',
@@ -115,11 +115,11 @@ export const TOOLS: readonly Tool[] = [
     id: 'blackjack-house-edge',
     segments: ['tools', 'blackjack-house-edge'],
     section: 'poker-table-games',
-    updated: '2026-11-04',
+    updated: '2026-11-10',
     name: {
       ru: 'Калькулятор house edge: блэкджек',
       en: 'Blackjack house edge calculator',
-      es: 'Calculadora de house edge: blackjack',
+      es: 'Calculadora de la ventaja de la casa en blackjack',
       pt: 'Calculadora de house edge: blackjack',
       de: 'Blackjack-Hausvorteil-Rechner',
       fr: 'Calculateur d’avantage maison : blackjack',
@@ -139,11 +139,11 @@ export const TOOLS: readonly Tool[] = [
     id: 'lottery-expected-value',
     segments: ['tools', 'lottery-expected-value'],
     section: 'lottery-esports',
-    updated: '2026-10-26',
+    updated: '2026-11-10',
     name: {
       ru: 'Калькулятор матожидания лотереи',
       en: 'Lottery expected value calculator',
-      es: 'Calculadora de valor esperado de la lotería',
+      es: 'Calculadora de lotería: probabilidades y valor esperado',
       pt: 'Calculadora de valor esperado da lotaria',
       de: 'Lotto-Erwartungswert-Rechner',
       fr: 'Calculateur d’espérance au loto',
@@ -160,6 +160,24 @@ export const TOOLS: readonly Tool[] = [
     },
   },
 ];
+
+/**
+ * Название страницы-указателя `/[lang]/tools/`.
+ *
+ * Лежит здесь, а не в копии самого указателя: тем же именем называют его
+ * хлебные крошки каждого калькулятора — и видимые, и в JSON-LD. Вторая копия
+ * строки разошлась бы с `<h1>` указателя при первой же правке заголовка, и
+ * разметка стала бы называть страницу не так, как она называется.
+ */
+export const TOOLS_INDEX_TITLE: Record<Language, string> = {
+  ru: 'Инструменты',
+  en: 'Gambling calculators',
+  es: 'Calculadoras de apuestas y casino',
+  pt: 'Ferramentas',
+  de: 'Rechner',
+  fr: 'Outils',
+  br: 'Ferramentas',
+};
 
 /** Инструменты рубрики — для блока «посчитать» в хабе. */
 export function toolsForSection(sectionId: string): readonly Tool[] {
