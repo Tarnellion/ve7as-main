@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-10T13:33:06.576Z",
+  "updatedAt": "2026-11-12T13:50:58.137Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1399,6 +1399,43 @@
       "centroid": "Sevb5CjA+DgZDj4uP7npKEbT6tr/HbA8PiS4Lki9uPIfkh4lo+oV5ugpAllYStVH7ujtRhMm/LXRsMgeU/8SFVBaMhGo88kiEPMDMVffFQrUzNk+1jw4w0PgMifBouq4zxo84C64TYHKVRPpK8qtAz8opwAD7QC+XPTTsNEJIytAAgcRJDI4LbHuytbmGt8SOBE/x0nRJv48Lx3CzPH+NtXhmQT0+EQ+pMbXQfQ45lzQDUgi1OKrtdrG2hwi0QE2waLRZ8ceUSDq4DY7LQTcDNQY/ufbRf3dCyfPIznoIJrUFB2q3AAX49rIz87uGj7WkQE8qzXdxg3nLBjGw6HvHQJMwT4YC1ATFyDW9uv9wBvf1NHMBDbyw04PNEhi8sY1BvD/2CfYDA3zN68O3d0eMckHHR80Nl5M8+MOTwM+2tvC6RHoPzsU5CsHFNbJHd3qxhDpCB4GyxP+yhTjzibrsScT3kOV2UkH0Aj/LUJJ7uML1D8g6ufm0cIS2s1GGys6",
       "vectors": [
         "Sevb5CjA+DgZDj4uP7npKEbT6tr/HbA8PiS4Lki9uPIfkh4lo+oV5ugpAllYStVH7ujtRhMm/LXRsMgeU/8SFVBaMhGo88kiEPMDMVffFQrUzNk+1jw4w0PgMifBouq4zxo84C64TYHKVRPpK8qtAz8opwAD7QC+XPTTsNEJIytAAgcRJDI4LbHuytbmGt8SOBE/x0nRJv48Lx3CzPH+NtXhmQT0+EQ+pMbXQfQ45lzQDUgi1OKrtdrG2hwi0QE2waLRZ8ceUSDq4DY7LQTcDNQY/ufbRf3dCyfPIznoIJrUFB2q3AAX49rIz87uGj7WkQE8qzXdxg3nLBjGw6HvHQJMwT4YC1ATFyDW9uv9wBvf1NHMBDbyw04PNEhi8sY1BvD/2CfYDA3zN68O3d0eMckHHR80Nl5M8+MOTwM+2tvC6RHoPzsU5CsHFNbJHd3qxhDpCB4GyxP+yhTjzibrsScT3kOV2UkH0Aj/LUJJ7uML1D8g6ufm0cIS2s1GGys6"
+      ]
+    },
+    {
+      "id": "79c65dab4f44",
+      "publishedAt": "2026-11-12T13:50:58.136Z",
+      "title": "EGT inaugura oficialmente novo escritório em Roma",
+      "lang": "pt",
+      "voices": 3,
+      "groups": [
+        "igamingbrazil",
+        "yogonet",
+        "gruporandom"
+      ],
+      "sources": [
+        {
+          "source": "igamingbrazil",
+          "url": "https://igamingbrazil.com/online/2026/11/11/egt-inaugura-oficialmente-novo-escritorio-em-roma"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/11/127251-egt-opens-rome-office-as-it-seeks-to-expand-presence-in-italys-gaming-market"
+        },
+        {
+          "source": "yogonet_latam",
+          "url": "https://www.yogonet.com/latinoamerica/noticias/2026/11/12/111473-egt-inaugura-una-nueva-oficina-en-roma-y-fortalece-su-presencia-en-el-mercado-del-juego-de-italia"
+        },
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/egt-abre-una-nueva-oficina-en-roma-para-seguir-ganando-terreno-en-italia"
+        }
+      ],
+      "centroid": "KNHL0TfQNT838DARTcoGHmXWtskSBtYQMk6wECfB1OEwmhw4pbk7sKz8EEgiN+lUxu3SQg87BLav5edMLwT/S1AdLS/hz9Qg7NYQPBXSTrq2tto96jgknTH+PEnt5qSg6zkq3x7FLcLTFAXKNqTrQTUdmPQZth4JUubtr/Lh+B4OJTwhOBJMQ90H9ssJOOg5K00m3D7wG+DpKBrDwdMhQsTOmhXT3CoiruXEKNxXzjqtHVYZ2vKw0p7JpSgH0fsms6LFS8gZMSDWqhtCOwvnL9IHCbXbHAgj+zvRHk0RWdT5CCXL0iX7BbzSu7wTN031uvEj4Tn41gzYRTG7udboNBIa1R809yklYyjU9efkxi9CwOj9L0jX81ABOjxB3MBE68vd2T357jH0Yr4g8AUM980IFEjyOTso1/41MhY07tm27ebWIxzq3DDyIKDP+7Pf9SPGvCMv1yUMzgDU3R8lgTpM9iWt1Fsj3eUTPTcU3sg4whEK1PEMwOIF3OFDTy5B",
+      "vectors": [
+        "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"
       ]
     }
   ]
