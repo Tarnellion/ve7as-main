@@ -43,7 +43,7 @@ export const TOOLS: readonly Tool[] = [
     id: 'wagering-calculator',
     segments: ['tools', 'wagering-calculator'],
     section: 'casino-slots',
-    updated: '2026-11-10',
+    updated: '2026-11-12',
     name: {
       ru: 'Калькулятор вейджера',
       en: 'Wagering requirement calculator',
@@ -67,11 +67,11 @@ export const TOOLS: readonly Tool[] = [
     id: 'odds-converter',
     segments: ['tools', 'odds-converter'],
     section: 'sports-betting',
-    updated: '2026-11-10',
+    updated: '2026-11-12',
     name: {
       ru: 'Конвертер коэффициентов',
       en: 'Odds converter',
-      es: 'Conversor de cuotas de apuestas',
+      es: 'Calculadora de momios y conversor de cuotas',
       pt: 'Conversor de odds',
       de: 'Quotenrechner',
       fr: 'Convertisseur de cotes',

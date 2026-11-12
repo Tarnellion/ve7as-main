@@ -24,6 +24,12 @@
   цифра общемировая, а не испаноязычная.
 - «нет данных» значит, что Планировщик не вернул по фразе ничего; обычно это
   очень низкий спрос.
+- Цифра не различает смыслы. «calculadora de cuotas» (1–10 тыс.) — в основном
+  про взносы и рассрочку: подсказки к ней — «de préstamo», «de hipoteca»,
+  «de autónomos», «seguridad social», ставки там одна из десяти.
+  «calculadora de bonos» — про облигации. Про ставки однозначны
+  «calculadora de momios», «conversor de cuotas», «convertidor de momios».
+  Перед выводом сверяйте запрос с его подсказками в `suggest-2026-11-12.csv`.
 - Близкие варианты Планировщик склеивает: «wagering requirement calculator»
   и «wagering requirements calculator» вернулись одной строкой.
 
