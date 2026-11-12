@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-12T13:50:58.137Z",
+  "updatedAt": "2026-11-12T17:28:45.773Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1436,6 +1436,101 @@
         "FNPNxz/VOjpB6T8NOM8WFmPczL4d/PQZLzqo/A7DxOYnoBpItL9IyKz+HywZI+lT0O7DSAI9A9C859Q7LgT8RE0qNzDS0NYf89kQSxHdNL2ts9tH00AhnC0ALj/p6qXC2Dol3xbTJsrWCRnUNrDzRCwml/EJxw0ORejTxun27SkcH0AXK/xELecL7tYQSfJAQUMj5i0OHvLqHyPK1NolN8zTrBDM5B47ufO6Dd5oyDqsKDwf2vq61pzdmy/w19sjs5PLO9sqLwvisBo2GhXfKOINEMPYEggmDjvWEk8aRNnkADPO8yYL7b7Mtc0kITfsye8c5jH+yA/pNBLGtdrmMCEZ3w4l+SUoSx/d6NvgvSVUxMzmHlrU+T4JKy5D4bU/2dvy4Cr8+DfuWMwkAfUa89ICDVb2FCgY3/c/Ru4jDs7OCP7YCQ3s5i8EGK3KCcjtARnHyg0szRkB1f/j5w1MgSpa6guhyEY17PAPSSQb5dpFxRUW1/f+r/wB4uszRjk4",
         "HtvU5zrTOTwtAB4aY7r4GWbVuNT6Et4MMEanEi666OUelC0em8dEsrL7/1clPO9Wv/zzNvU9Epqu5utILv35PDwcDi/w19Qs5dYePQ3HU7yovNk++DAdoScSRUre8KGe+Dgy1DbNJrzYFPnKH6vyI0L8j/cntCITWdrjsubiAhUjHTclPCtTU+ED8MH5OuYhJko51TfzBd7jMwjFw90yOsvbnvvX4CkWuuPRMt5S1TOqHmEN0gKt07PdnjIbywQgvLXFWM4JGh7NriQtPgTwO9cH/7DLEAkT6i7OIjgSV9AWGB7c7CrzENvSvrgWMEb4teEu6T710QzcTzXFsOLlJAYU3hsx/ScZdhTQ+PLszS5L4P//KzDZ41P7Pz5A579W9NPH5jb6CC/dYcMZ7Qv/79USIETrRj8s0P4zKyYu3+e71OzXNiLgwTrvJ5va9rLn/izCzjAuyDUNzw7C1hAOgUg6BCuu52YlytcNQCUK0s40uRf93wEJ2tX55ds7SjAx",
         "LdHUzEvTLzk48hwEVNn4H17Sq8YACskUJV6/ID7D4+oyoh0ppLckmrUDEUUuQeVO2t3WQS0/+cOr3fdNJwERWUMULCL4090a98AVNQvPU63Avek7AzQmpTsAJUT64Kmf6Dsr3ibFLM/SHvnQNKXgQSkLm+oksCUITej4owjl8w0LJTofNhxLUtr+BccNLegxEU4T7EPcAdHjMQ3Nsr8GU8rLgR7Y2UYOssvRK9tC2EDHFmAW1uOp2qHDtBoR2B4zv8XISbMLPSHbtBdCLAb8LtgICK3lLRAd+ELJGlMOXNX6+SjIuij0DbjDurUPOlb2uu8WzzP17wXaNjy00tbxMRQRwCwx9i4bZxvQBezkzDUls/0MJkPk/kL+QD4x4Ng96crI4U3q8TD/assW4wML9dXxGU7mR0Il2ggvLiUu6uWx4NjQJB/34DL2JaHK8abt8C3XrzQ+8icazfXO3iEBjyZF9i61yl0P5OoeMDsa280rzg8G1/EUweIS4uY5ViRH"
+      ]
+    },
+    {
+      "id": "990a6691c2fc",
+      "publishedAt": "2026-11-12T17:28:45.772Z",
+      "title": "Allwyn to bring sportsbook tech in-house, take full ownership of IWG",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "igamingbusiness",
+        "sbc",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/sports-betting/allwyn-sportsbook-kambi-instant-win-gaming-acquisition"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/features/2026/11/12/kambi-ceo-deal-allwyn"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/12/127261-kambi-grants-allwyn-global-licence-to-sportsbook-technology"
+        },
+        {
+          "source": "yogonet_latam",
+          "url": "https://www.yogonet.com/latinoamerica/noticias/2026/11/12/111481-kambi-impulsara-las-operaciones-de-apuestas-deportivas-de-allwyn-con-una-licencia-tecnologica-global-y-servicios-de-ia"
+        }
+      ],
+      "centroid": "Gv2sp1HsMx8LMCgFZdvQJ0fL1sND9tEpOFzB5DK4t/wMmT5Fo9FQ0Lsd2So3Oe1Vs+TlNR4XM7i7sb0OS+IHIEI+KjSy/aQ49csVOiLXIe6x4stAuy4ut1X0MiffzKG74lMetFTJLbjKEQ7WNKfXDlYVpagAmk7rRdqZ0eLLDCdOAxIgPlM6XdQZ/bzvOfofNSdaykPhJ/UJOTXT3+MmHbTio9vK/SM7tt3QHtcj7TDaKjsB4OnC3LfpvSL6zfYU0KTAMegeGBUYtycGJhe3Yfn1H8q8MAfxFCT/HjzlRcnLMWqy0grw4sK22avhHEjd0vEdtDrQ+x0BTxPHzcDhDDoq0S096SMyLgz21crysBRO0QfpHDDUzD4sShYp99dG3Ma7rUrQVyUIUNofGdwkJ8YTHDcLLjBK6/c0R0kf2d+y1goGKxnr+Bf8IrXaK8/6+wDbqdcdzUn+5DEA0iYygTkexC/G30o3zc4CLjAZ1xsvtfVS2O3u398j3NIlQy5M",
+      "vectors": [
+        "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"
+      ]
+    },
+    {
+      "id": "b3ab36945b8a",
+      "publishedAt": "2026-11-12T17:28:45.773Z",
+      "title": "Bragg s Mazij exits as CEO a week before Q3 results as Tonnesen takes interim role",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "sbc",
+        "igamingbusiness",
+        "casinoorg"
+      ],
+      "sources": [
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/11/09/braggs-mazij-exits-as-ceo-a-week-before-q3-results-as-tonnesen-takes-interim-role"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/people/bragg-taps-coo-morten-tonnesen-chief-executive-officer"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/canadian-gaming-mazij-ceo-resigns"
+        }
+      ],
+      "centroid": "JRLkxzfhIQ8d9jPsNt7GNEjtvc4V99Y0LCPH7CuLyuYdqAQ2nts95OL+DT1KC8wzsgfESAA6IMjPx+cLTO3zK0klEynH+sZADeAGPyIHAfDc0+crxz4utVD4OFnluLTCwiQZzUfJPrrbIgfzMLn3IEsUt73t10HEI9y41s7o5d5L5R0ZEzFOf9zv5O2+Jv0oTSZbxifoKd9Q6yzIpBEXE7fWuOTjyyMYvgXHLdsx5U28CEwZuuuwzsr6uSQj1QM8vZu8UPwsWyQRthQtHCnBQNkZBs3aAvj2D0fcLywaEN7SEirb3zTrzavA2+EVOD3cusAB5TXe0xvlKxPIosjbHRxSx/466EYgOBD81LD62xgx3dD0+WfYzzcFFVZWB91c6s/ezzzqNSXrQrMRDcFFGs4VCk/2Okcs2+U5OwMo5dTovfTIIlfj4SsnNNnUDsIYEkXRz/AN603w2hTc0yZDkfswAg+53yMzy+IcNQpD0Ro+0wAn2wL47eQP0s5DNyoR",
+      "vectors": [
+        "JBnh0EHyGwMX9TTiNOO6LDzdyM8XCOMrKR3W8x2B2+wXtwE6o9k66uDyAjdFBNEnv/vGNv4sG8PLyfYYO9v7IzsjDhnLBtIvFNoAPB/+9/Pf1uQswkAjukkANU/xu7zIxiEazDrSQcXaJwn3NMQEKz0Uvcn+3TfBJtu928/o8uw52xQdEkVScujv3/TDCQwiRRNC1ijKLuZY7STFqhUVHcDctPXdwxwiywjRIeYu+U7C+z8kueq52ND0tBgu3fUxway/O/06WSEUwBAeHiPKQdkcDdfhAe30B0PeHiMXBNLaByfe3zLu5K3I1uQOND3lxsQX7yjj3RvmKBfNq8LdFhpMwfku8EUlNg/34sME2xwz2d8C8VLj1CsADURCBeJf6M/nzDbiOx3kPLwUFsQ+GMgYBFMILj0m4+pALAEr6NDxyPPKGVXZ4yoZNuHNCLwgDjXcwvQC9j766hvpwSo+pPYsBRbH6hgm1N8jMiVR2BZH3/ob2vcF7O4A1tE/MSIS",
+        "HQfowC/WJBQP+if6Pt7WLlcRvscO4Mw1LSi84y6iw+cWmAo+leBG3N77ETM9D8s1pRXOWAUzF9PUyOb7SfXiKlIeIjDB7MlEA9oPQC0L9efk1ugxwT4/u0jxOFXftLi+wR4LyEXCNLnmHAn2Hbn1EkoUsLHf0k3aIdrB4NLZ2NVS7xsUEyBFf8/68ee6POgoTC17vCMEJ+ZL+S7cnxkoDbjKy9no5C8UyQLDM9RBxkzBDkwXweiqyLgCuSsJwxsytoe5X/EbSC4MpRRBFzPHRMki99DZBQTtIU/JNSsuFfm8FSTX7CXxwqnG5+kdOzvfsbr64EHhyxnuNQDIrtzLGCJD0ANI2DkbLA7yybT54w4m2cbxD3ff1DgNDGZfAuBZ8c/f2DrpICnpTLES/b1NENQYCFToRz811Ok4RwQo4Nfqx/jMKFHv8SUtLM/OEdoVDE/W2eoZ3Vvx2BPZ4w5Bgfo5+Qyy1iY70+YYJ/Qsxhs90gIq4BP479ISyNo/SDUG",
+        "KBXnyS7dIBcu9DfrK9vIPD3fudkY+9Y5KSDJ7zGOxOQosgEjrtwx6e0PE0VSDc44ugbAQ/9KKsnVytwLWfn7MEcpBy3Q+r5ID/ECOhYNFvbW0esf1zUltFb3Nl3gwbHHxSkh2k7NPLbVIATsObTtH1MRvsPs2jm4HOOyzM755tpR6iYWESdIf+Ho3+3ELAIrTDBNxCfxIdRE3izArAIGC7Pes+DowRsOqwbFMNwh8UW4EFENu/K20Nz6xyUt5PtLyKjCTwYqZBoSxBclHSC3NO0KC8XYAfoCAzzxNTEGFtbjGi7f1z/jw7S429oRMznUv8fw4jDa1hjeHh7ImcHsJxZcy/8x80wdPhIL1qHy2Bw06c7q7WPJzDwCJFBbDtlR59TWzz30Pib3NrQLEcs8I9QOET3wNFAk3t4uNwUf6NresPPJIFTk0y0tM9/nD7kRGUPH2vUM7kfl0AvU3DNDmgInBwq34Sc0vuUWQQBC2hovywUt2v7p7u4a3MVCJiUa"
+      ]
+    },
+    {
+      "id": "f20829dcec04",
+      "publishedAt": "2026-11-12T17:28:45.773Z",
+      "title": "Alabama Man Visits Casino After Murdering Father, Later Commits Suicide",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/alabama-man-visits-casino-after-killing-father-dies-by-suicide"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/alabama-man-goes-to-casino-after-murdering-his-father"
+        }
+      ],
+      "centroid": "ON2/vj8E/w9CCywHJdLMESi43fgyFfFAVUbZJyXO5OQcwTQv1sswvu39JEowD88U5PO+Pec6WK67t9saM9ccCjJMGS3iB8okFeH+Uiv/I+vIzOQf4zIww0flKC3u0tzbvik1xDPQH+PLITLZSsTZICYYgeTq1SoGUfC39tshDjNe5RQyFxciR7wOAN7CVgYeJwxBxEDbO74cGy/XyqHhDtfk1vDa4StMw9joKN0z9B+1MlAZ59jj2A/xywIr48UQ1rfbDb8vOEgW8DMQBRbpN94ZJ6O4E+b3KS/xHjT+FL/RBi/QwB366sW2ytIQGC6+ueoR5jHm3gLhIyXL2MPxOS5UsCIo9FBCJhbT2c/9yf4ey8bhHSza/zYyJxcy+eUc2OX94izILxzQTMwU/MY3Eqgd/ige7SwP3wAWK9D278vXxvjiGRzmwyEgErraPtUL4BrN2RAo4D7Q6irP5RJSqxsf5yHQ6CQxvAoBQA8kAhASsCFD8grv4AQRysIuCxku",
+      "vectors": [
+        "S92xzUIBAA4+Cyb7KdHTHS/E2fQkGPtCVj/VJSDF3OgPyy8n49Esuu7+GlA0EtoP3vrHQusxUbXCtdsTK9obDzVYFCrf/78kE98JSx0EHODI2OUj7zcwyE/vJSbsyt3ewCcszEPeJ+3NFyvfS8jSGSYngebw3B8KQPK87+cdDzVn3wU2GxomQrwJ/+a/TwMUIgw/x0LhPbAXHDPPyZ7oCNrm5OXl3ixBxObpIuItBRe7L0ga8dvm3gfzxfsv5bkO1bTVArknPEoQ8DETCx3kONsaNqXHDOH3ITXxIzUEEsvT/C3RxyAD98KuwNMPJCDRs/IQ4i/s4PzpFiTd5c3qOylSsCsg9VtCHhnB3szy0vYWxcXeFybSAzEvIBc15O8XxOn76DDQKxzSSM8T+cUyD6AUByMs9y4K5f4gJtXy68nZwv3ZFSLexRwZF7vcQdYN3xLR1hIq20He7DHX5xJSsx0j7TDG2x8pswgONgok/RMPwhxF/ALv5AoMzMkxBwku",
+        "Jd7PrjwG/hBGCzMUINPFBCCs4P1BEuc+VU3dKSrX7uArtjk2x8Y0w+39L0MrDMMY6+y2N+JEYKezuNshO9QdBC5AHjDlENUjF+PzWjr5KvfIwOQb1iwwvz/ZLDXv2tvYvCo/vCLBF9nILTrTSMDhJyYIgeLjzjYCY++y/c8kDTFV6yQuEhUcS7sTAdTFXQooLAxEwD3VOMwiGyzgyqTYFtXix/vP5SpXwcnnL9g54ievNVkZ3Nbf0hfv0Qom4NER17rhGMU2NEYd8DYN/g/vN+EZF6GoGuv3MSryGTT4FrLOETHQuRrx3ci/1NARCz6qwOER6zTf2wnZMSa4y7n4NzRWsRgw9ERCLxPm1NMJwAYm0cbkJDHi/Dw1LRcvD9sg7eH/2yi/NB3OT8kU/8c8FrEm9C4P4SoW2AILMMr69M3UyvLqHBbuwCgnDrnZO9QI4iLI3A4l5jvB6CTG5BJTohoa4BHc9ik6xg3zShQkCQ0VnShA5xPv3P4WyLsrDyov"
       ]
     }
   ]
