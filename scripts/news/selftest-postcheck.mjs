@@ -6,7 +6,7 @@
  *
  *   node scripts/news/selftest-postcheck.mjs
  */
-import { postcheck, translationFidelity, metaCheck, numbersOf, metaOnlyBlockers, WORDS_MIN_SHORT_PRIMARY } from './postcheck.mjs';
+import { postcheck, translationFidelity, metaCheck, numbersOf, metaOnlyBlockers, WORDS_MIN_SHORT_PRIMARY, bodyOnlyBlockers } from './postcheck.mjs';
 
 let failed = 0;
 const ok = (cond, label, detail = '') => {
@@ -242,6 +242,16 @@ console.log('\nПланка объёма для короткого первои�
   const text = Array.from({ length: 20 }, (_, i) => `The regulator said measure number ${i} applies to licensees from next month onward.`).join(' ').split(' ').slice(0, 230).join(' ');
   ok(postcheck(text, 'en').issues.some((i) => i.kind === 'объём'), '230 слов при обычной планке — замечание');
   ok(!postcheck(text, 'en', { minWords: WORDS_MIN_SHORT_PRIMARY }).issues.some((i) => i.kind === 'объём'), '230 слов при планке короткого первоисточника — без замечания');
+}
+
+console.log('\nБлокеры второго прохода только в теле перевода (повторный перевод)');
+{
+  const es = 'Mazij fue director comercial de Shape Games, empresa que después vendió Kambi. La junta votó el 6 de noviembre.';
+  const v = (quote, extra = {}) => ({ ok: false, namesPrivateIndividuals: false, blockers: [{ kind: 'invented', quote, problem: 'x' }], ...extra });
+  ok(bodyOnlyBlockers(v('empresa que después vendió Kambi'), es), 'цитата из тела перевода — переводим заново');
+  ok(!bodyOnlyBlockers(v('Bragg nombra CEO interino'), es), 'цитаты нет в теле (это мета) — не наш случай');
+  ok(!bodyOnlyBlockers(v('empresa que después vendió Kambi', { namesPrivateIndividuals: true }), es), 'частные лица — решение человека');
+  ok(!bodyOnlyBlockers({ ok: true, blockers: [] }, es), 'вердикт чистый — нечего править');
 }
 
 console.log(failed ? `\nПРОВАЛЕНО: ${failed}\n` : '\nВсе проверки пройдены.\n');

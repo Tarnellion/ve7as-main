@@ -34,7 +34,7 @@ import { makeClient } from './client.mjs';
 import { intEnv, positiveEnv } from './env.mjs';
 import { dequantize, cosine } from './vec.mjs';
 import { SAME_EVENT } from './thresholds.mjs';
-import { postcheck, metaCheck, metaOnlyBlockers, issuesToPrompt, translationFidelity, WORDS_MIN, WORDS_MIN_SHORT_PRIMARY, SHORT_PRIMARY_CHARS } from './postcheck.mjs';
+import { postcheck, metaCheck, metaOnlyBlockers, bodyOnlyBlockers, issuesToPrompt, translationFidelity, WORDS_MIN, WORDS_MIN_SHORT_PRIMARY, SHORT_PRIMARY_CHARS } from './postcheck.mjs';
 import { holdTopics } from './policy.mjs';
 import { MAX_BODY, extractText } from './extract.mjs';
 
@@ -656,6 +656,42 @@ if (LIVE) {
   }
 }
 
+/**
+ * ПОВТОРНЫЙ ПЕРЕВОД ПО ВТОРОМУ ПРОХОДУ. Английский текст второй проход выпустил, а испанский нет, и каждый
+ * блокер цитирует само испанское тело: ошибся перевод (контрольный прогон 12.11.2026 — переводчик добавил
+ * факт, которого нет в источниках). Перевод делается заново с замечаниями и заново целиком проверяется;
+ * решение по новому вердикту, первый остаётся в newsReview. Один круг. Мету не трогаем: её проверяет тот же
+ * повторный проход.
+ */
+const translationRepaired = new Set();
+if (LIVE) {
+  const fix = [];
+  for (const e of living()) {
+    const en = verdicts.en.get(e.id);
+    const vEn = en && !en.truncated ? parseJson(en.text) : null;
+    const es = verdicts.es.get(e.id);
+    const vEs = es && !es.truncated ? parseJson(es.text) : null;
+    if (vEn?.ok && !vEn.namesPrivateIndividuals && bodyOnlyBlockers(vEs, sourceText(e, 'es'))) fix.push({ e, v: vEs });
+  }
+  if (fix.length) {
+    console.log(`\n  второй проход держит только испанский перевод у ${fix.length} — перевод заново и повторная проверка`);
+    const notes = (v) => v.blockers.map((b) => `— [${b.kind}] «${b.quote}»: ${b.problem}`).join('\n');
+    const again = await run(client, 'translate', fix.map(({ e, v }) => ({
+      custom_id: e.id, params: buildParams('translate', translatePrompt(revisions.get(e.id).text, notes(v))),
+    })));
+    const changed = fix.filter(({ e }) => { const r = again.get(e.id); return r?.text && !r.truncated; });
+    for (const { e } of changed) translations.set(e.id, again.get(e.id));
+    if (changed.length) {
+      const re = await run(client, 'verifyEs', changed.map(({ e }) => ({ custom_id: e.id, params: verifyParams(e, 'es') })));
+      for (const { e } of changed) {
+        if (!firstVerdicts.es.has(e.id)) firstVerdicts.es.set(e.id, verdicts.es.get(e.id));
+        verdicts.es.set(e.id, re.get(e.id) ?? { text: '', truncated: true });
+        translationRepaired.add(e.id);
+      }
+    }
+  }
+}
+
 mkdirSync(OUT, { recursive: true });
 const report = [];
 for (const e of living()) {
@@ -700,7 +736,7 @@ for (const e of living()) {
         ['verify', verdictsEn], ['verifyEs', verdictsEs], ['translate', translations]]
         .map(([k, m]) => [k, Boolean(m.get(e.id)?.truncated)])),
     en: { text: en, meta: parseJson(metas.get(`${e.id}:en`)?.text), check: checkEn, metaRetried: metaRetried.has(`${e.id}:en`), metaRepaired: metaRepaired.has(`${e.id}:en`) },
-    es: { text: es, meta: parseJson(metas.get(`${e.id}:es`)?.text), check: checkEs, metaRetried: metaRetried.has(`${e.id}:es`), metaRepaired: metaRepaired.has(`${e.id}:es`) },
+    es: { text: es, meta: parseJson(metas.get(`${e.id}:es`)?.text), check: checkEs, metaRetried: metaRetried.has(`${e.id}:es`), metaRepaired: metaRepaired.has(`${e.id}:es`), translationRepaired: translationRepaired.has(e.id) },
     // Вердикт до правки меты — для редактора: что второй проход не выпустил в первый раз.
     verifyBeforeMetaRepair: firstVerdicts.en.has(e.id) ? parseJson(firstVerdicts.en.get(e.id)?.text ?? '') : null,
     verifyEsBeforeMetaRepair: firstVerdicts.es.has(e.id) ? parseJson(firstVerdicts.es.get(e.id)?.text ?? '') : null,

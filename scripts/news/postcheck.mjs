@@ -375,3 +375,17 @@ export function metaOnlyBlockers(verdict, meta, text) {
     return q.length >= 8 && inMeta(q) && !body.includes(q);
   });
 }
+
+/**
+ * Все ли блокеры второго прохода цитируют сам текст (а не мету). Для испанской версии это значит, что
+ * ошибся перевод: английский оригинал второй проход выпустил, а испанский нет. Тогда перевод делается
+ * заново с названными замечаниями (generate.mjs). Частные лица — решение человека.
+ */
+export function bodyOnlyBlockers(verdict, text) {
+  if (!verdict || verdict.ok || verdict.namesPrivateIndividuals || !verdict.blockers?.length) return false;
+  const body = normQuote(text);
+  return verdict.blockers.every((b) => {
+    const q = normQuote(b.quote);
+    return q.length >= 8 && body.includes(q);
+  });
+}

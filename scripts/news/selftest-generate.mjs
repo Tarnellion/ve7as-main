@@ -71,9 +71,14 @@ function reply(params) {
     // metaBlock: второй проход держит заголовок, пока в нём «63 days»; bodyBlock — держит фразу из самого текста.
     if (mode.metaBlock && content.includes('ЗАГОЛОВОК: Strike ends after 63 days')) return block('Strike ends after 63 days');
     if (mode.bodyBlock) return block(content.split('ТЕКСТ:\n')[1].slice(0, 40));
+    if (content.includes('vendido después a Kambi')) return block('regulador, vendido después a Kambi,');
     return out(JSON.stringify({ ok: true, namesPrivateIndividuals: false, individuals: [], blockers: [], notes: 'ок' }));
   }
-  if (phase === 'translate') return out(ES);
+  if (phase === 'translate') {
+    // esBad: первый перевод добавляет факт, которого нет в оригинале; повтор с замечаниями — чистый.
+    const bad = mode.esBad && (mode.esBad === 'always' || !marked('Предыдущий перевод проверяющий не выпустил'));
+    return out(bad ? ES.replace('regulador', 'regulador, vendido después a Kambi,') : ES);
+  }
   if (phase === 'meta') {
     // metaNote: 'once' — служебная пометка в описании только в первой попытке, 'always' — в каждой.
     const retried = marked('Предыдущая попытка нарушила правила');
@@ -258,6 +263,23 @@ const mbb = await run([event('mb3', 'Event mb3')], {}, ['--limit=1']);
 mode = {};
 ok(seen.phases.filter((p) => p === 'meta').length === 2 && seen.phases.filter((p) => p === 'verify').length === 2, 'ни правки меты, ни повторной проверки');
 ok(rec(mbb.dir, 'mb3').en.metaRepaired === false, 'metaRepaired=false');
+
+console.log('\nВторой проход держит только испанский перевод: перевод заново и повторная проверка');
+seen.phases.length = 0;
+mode = { esBad: 'once' };
+const tb = await run([event('tr1', 'Event tr')], {}, ['--limit=1']);
+mode = {};
+const rtb = rec(tb.dir, 'tr1');
+ok(seen.phases.filter((p) => p === 'translate').length === 2 && seen.phases.filter((p) => p === 'verify').length === 3,
+  `перевод и проверка ES повторены по разу (translate ${seen.phases.filter((p) => p === 'translate').length}, verify ${seen.phases.filter((p) => p === 'verify').length})`);
+ok(!rtb.es.text.includes('Kambi') && rtb.verifyEs?.ok === true && rtb.es.translationRepaired === true, 'в записи — новый перевод, чистый вердикт и отметка о повторе');
+ok(rtb.verifyEsBeforeMetaRepair?.ok === false, 'первый вердикт ES сохранён для редактора');
+ok(!decide(rtb, 'auto').reasons.some((x) => x.code.startsWith('verify') || x.code.startsWith('blockers')), 'после повтора второй проход не держит публикацию');
+seen.phases.length = 0;
+mode = { esBad: 'always' };
+const tb2 = await run([event('tr2', 'Event tr2')], {}, ['--limit=1']);
+mode = {};
+ok(seen.phases.filter((p) => p === 'translate').length === 2 && !decide(rec(tb2.dir, 'tr2'), 'auto').publish, 'перевод плох и после повтора: один круг, публикация закрыта');
 
 console.log('\nЧистая мета: повтора нет, лишних запросов нет');
 seen.phases.length = 0;

@@ -100,7 +100,8 @@ function reviewNotes(record, decision, mode, now) {
   // Мета пересобиралась по замечаниям второго прохода: редактор видит, что именно тот не выпустил в первый раз.
   for (const [lang, first] of [['EN', record.verifyBeforeMetaRepair], ['ES', record.verifyEsBeforeMetaRepair]]) {
     if (!first) continue;
-    lines.push(`  мета ${lang} исправлена по второму проходу; в первый раз он не выпустил: ` +
+    const what = lang === 'ES' && record.es?.translationRepaired ? 'испанский перевод сделан заново' : `мета ${lang} исправлена`;
+    lines.push(`  ${what} по второму проходу; в первый раз он не выпустил: ` +
       (first.blockers ?? []).map((b) => `[${b.kind}] «${clip(b.quote ?? '', 120)}»`).join('; '));
   }
 

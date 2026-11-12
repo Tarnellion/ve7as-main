@@ -260,7 +260,7 @@ export const ES_STYLE =
   '«M$» и «M€» не использовать, в заголовке при нехватке места — «215 millones».';
 
 /** Шаг 5 — перевод EN → ES. Не подстрочник: ES индексируется наравне с EN. */
-export function translatePrompt(text) {
+export function translatePrompt(text, problems = '') {
   return [
     {
       role: 'user',
@@ -270,6 +270,10 @@ export function translatePrompt(text) {
         `Сохрани ритм абзацев, числа и атрибуцию. Атрибуцию переводи как есть («según Casino.org»), не добавляй «solo», ` +
         `«únicamente», «ningún otro medio». Испанские штампы из гайда запрещены так же, как английские.\n` +
         `${ES_STYLE}\n\n` +
+        (problems
+          ? `Предыдущий перевод проверяющий не выпустил. Переведи заново ЦЕЛИКОМ, строго по оригиналу: ничего не ` +
+            `добавляй, не усиливай и не опускай. Его замечания:\n${problems}\n\n`
+          : '') +
         text,
     },
   ];
