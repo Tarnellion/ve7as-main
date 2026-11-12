@@ -108,7 +108,9 @@ export const HOLD_PATTERNS = [
   // «defendant» стоял в «гражданском иске», а «acusad*» в «обвинениях», и редактору называли не ту причину.
   [words(['defendant*', 'acusad*']), 'судебное разбирательство'],
   [words(['lawsuit*', 'sues', 'sued', 'suing', 'litigation', 'plaintiff*', 'class action',
-    'rechtszaak', 'demanda*', 'klage*', 'plainte*']), 'гражданский иск'],
+    // «demanda*» без контекста ловило «las demandas» профсоюза о зарплате (забастовка Encore, 06.11): только судебные формы.
+    'rechtszaak', 'demanda judicial', 'demandas judiciales', 'demanda colectiva', 'presentó una demanda', 'presentaron una demanda',
+    'interpuso una demanda', 'demandó', 'demandaron', 'klage*', 'plainte*']), 'гражданский иск'],
   ...GUARDED.sue.map((re) => [re, 'гражданский иск']),
   // 'mort*' ловило mortgage, mortality и brick-and-mortar; оставлены формы со смыслом «смерть» (в том числе
   // mortal/mortos/mortels, которые ревью нашло потерянными при первой замене) и частые обороты без слова «смерть».

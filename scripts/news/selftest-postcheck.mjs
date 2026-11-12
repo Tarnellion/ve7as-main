@@ -6,7 +6,7 @@
  *
  *   node scripts/news/selftest-postcheck.mjs
  */
-import { postcheck, translationFidelity, metaCheck, numbersOf } from './postcheck.mjs';
+import { postcheck, translationFidelity, metaCheck, numbersOf, metaOnlyBlockers, WORDS_MIN_SHORT_PRIMARY } from './postcheck.mjs';
 
 let failed = 0;
 const ok = (cond, label, detail = '') => {
@@ -221,6 +221,28 @@ ok(numbersOf('1.2 billion').has('1200000000') && numbersOf('1,2 mil millones').h
   'три записи одной суммы дают одно и то же значение');
 ok(numbersOf('5 months and 3 meters').size === 0 && numbersOf('MP 1,394 and 51.79%').size === 3,
   'числа без масштаба не изменились: «5 months» не принят за масштаб, «1,394» и «51.79» разобраны как раньше');
+
+console.log('\nБлокеры второго прохода только в мете (правка меты в generate.mjs)');
+{
+  const body = 'Wynn said the strike ended on 5 November. According to Casino.org, the strike lasted 63 days.';
+  const meta = { title: 'Encore Boston Harbor Strike Ends After 63 Days', description: 'Workers ratified a new contract on 5 November.' };
+  const v = (quote, extra = {}) => ({ ok: false, namesPrivateIndividuals: false, blockers: [{ kind: 'unattributed', quote, problem: 'x' }], ...extra });
+  ok(metaOnlyBlockers(v('Encore Boston Harbor Strike Ends After 63 Days'), meta, body), 'цитата из заголовка — правим мету');
+  ok(metaOnlyBlockers(v('«Workers ratified a new contract»'), meta, body), 'часть описания, кавычки и регистр не мешают');
+  ok(!metaOnlyBlockers(v('the strike lasted 63 days'), meta, body), 'цитата из текста — мету не правим');
+  ok(!metaOnlyBlockers({ ...v('Encore Boston Harbor Strike Ends After 63 Days'), blockers: [{ kind: 'x', quote: 'Encore Boston Harbor Strike Ends After 63 Days', problem: '' }, { kind: 'x', quote: 'the strike lasted 63 days', problem: '' }] }, meta, body),
+    'хотя бы один блокер в тексте — мету не правим');
+  ok(!metaOnlyBlockers(v('Encore Boston Harbor Strike Ends After 63 Days', { namesPrivateIndividuals: true }), meta, body), 'названы частные лица — решение человека');
+  ok(!metaOnlyBlockers(v('63 days'), meta, body), 'слишком короткая цитата не опознаётся');
+  ok(!metaOnlyBlockers({ ok: true, blockers: [] }, meta, body) && !metaOnlyBlockers(null, meta, body), 'нет блокеров или вердикта — нечего править');
+}
+
+console.log('\nПланка объёма для короткого первоисточника');
+{
+  const text = Array.from({ length: 20 }, (_, i) => `The regulator said measure number ${i} applies to licensees from next month onward.`).join(' ').split(' ').slice(0, 230).join(' ');
+  ok(postcheck(text, 'en').issues.some((i) => i.kind === 'объём'), '230 слов при обычной планке — замечание');
+  ok(!postcheck(text, 'en', { minWords: WORDS_MIN_SHORT_PRIMARY }).issues.some((i) => i.kind === 'объём'), '230 слов при планке короткого первоисточника — без замечания');
+}
 
 console.log(failed ? `\nПРОВАЛЕНО: ${failed}\n` : '\nВсе проверки пройдены.\n');
 process.exit(failed ? 1 : 0);

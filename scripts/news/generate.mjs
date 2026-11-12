@@ -34,7 +34,7 @@ import { makeClient } from './client.mjs';
 import { intEnv, positiveEnv } from './env.mjs';
 import { dequantize, cosine } from './vec.mjs';
 import { SAME_EVENT } from './thresholds.mjs';
-import { postcheck, metaCheck, issuesToPrompt, translationFidelity } from './postcheck.mjs';
+import { postcheck, metaCheck, metaOnlyBlockers, issuesToPrompt, translationFidelity, WORDS_MIN, WORDS_MIN_SHORT_PRIMARY, SHORT_PRIMARY_CHARS } from './postcheck.mjs';
 import { holdTopics } from './policy.mjs';
 import { MAX_BODY, extractText } from './extract.mjs';
 
@@ -460,6 +460,14 @@ if (!queue.length) {
   console.log('отсекает около 85 % потока, а журнал — то, о чём уже писали.\n');
   process.exit(0);
 }
+// Короткий первоисточник: сообщение регулятора короче SHORT_PRIMARY_CHARS. Для него нижняя планка объёма 200
+// слов, а не 250 (см. postcheck.mjs): честный пересказ релиза KSA на 1000 символов выходит в 240 слов.
+for (const e of queue) {
+  const chars = (docs.get(e.id) ?? []).reduce((n, d) => n + d.text.length, 0);
+  e.shortPrimary = e.verdict === 'regulator-primary' && chars > 0 && chars < SHORT_PRIMARY_CHARS;
+}
+const lengthOpts = (e) => ({ minWords: e.shortPrimary ? WORDS_MIN_SHORT_PRIMARY : WORDS_MIN });
+
 console.log(`\nВ работе: ${queue.length} из ${LIMIT} слотов${unreadDropped.size ? `, не читаются и пропущены: ${unreadDropped.size}` : ''}\n`);
 
 if (!LIVE) {
@@ -513,7 +521,7 @@ const critiques = settle('critique', await run(client, 'critique', living().map(
 /** Замечания кода добавляются к замечаниям критика: правка идёт одним проходом. */
 const revisions = settle('revise', await run(client, 'revise', living().map((e) => {
   const draft = drafts.get(e.id).text;
-  const check = postcheck(draft, 'en');
+  const check = postcheck(draft, 'en', lengthOpts(e));
   const notes = [critiques.get(e.id).text, check.ok ? '' : issuesToPrompt(check.issues)]
     .filter(Boolean).join('\n');
   return { custom_id: e.id, params: buildParams('revise', revisePrompt(draft, notes, check.hint)) };
@@ -524,9 +532,18 @@ const translations = settle('translate', await run(client, 'translate', living()
   params: buildParams('translate', translatePrompt(revisions.get(e.id).text)),
 }))));
 
+// Мета знает, какие утверждения сообщает одно издание: иначе она выносит их в заголовок как факт.
+const unconfirmedOf = (e) => {
+  const u = parseJson(facts.get(e.id)?.text ?? '')?.unconfirmed;
+  return Array.isArray(u) ? u.filter((x) => typeof x === 'string') : [];
+};
+const sourceText = (e, lang) => (lang === 'en' ? revisions : translations).get(e.id).text;
+const metaParams = (e, lang, problems = '') =>
+  buildParams('meta', metaPrompt(sourceText(e, lang), lang, problems, { unconfirmed: unconfirmedOf(e) }), META_SCHEMA);
+
 const metas = await run(client, 'meta', living().flatMap((e) => [
-  { custom_id: `${e.id}:en`, params: buildParams('meta', metaPrompt(revisions.get(e.id).text, 'en'), META_SCHEMA) },
-  { custom_id: `${e.id}:es`, params: buildParams('meta', metaPrompt(translations.get(e.id).text, 'es'), META_SCHEMA) },
+  { custom_id: `${e.id}:en`, params: metaParams(e, 'en') },
+  { custom_id: `${e.id}:es`, params: metaParams(e, 'es') },
 ]));
 
 // Мета без разбираемого JSON — материалу не из чего собрать заголовок и слаг.
@@ -561,8 +578,7 @@ if (LIVE) {
     console.log(`\n  мета нарушает правила у ${bad.length} из ${living().length * 2} — один повтор с замечаниями`);
     const again = await run(client, 'meta', bad.map(({ e, lang, id, issues }) => ({
       custom_id: id,
-      params: buildParams('meta',
-        metaPrompt((lang === 'en' ? revisions : translations).get(e.id).text, lang, issuesToPrompt(issues)), META_SCHEMA),
+      params: metaParams(e, lang, issuesToPrompt(issues)),
     })));
     for (const { id } of bad) {
       metaRetried.add(id);
@@ -582,24 +598,71 @@ if (LIVE) {
  * черновиком, но автопубликация для него закрыта (policy.mjs).
  */
 const metaOf = (e, lang) => (LIVE ? parseJson(metas.get(`${e.id}:${lang}`)?.text) : null) ?? {};
-const verdictsEn = await run(client, 'verify', living().map((e) => ({
-  custom_id: e.id,
-  params: buildParams('verify', verifyPrompt(revisions.get(e.id).text, facts.get(e.id).text, e,
-    { lang: 'en', title: metaOf(e, 'en').title, description: metaOf(e, 'en').description }), VERIFY_SCHEMA),
-})));
-const verdictsEs = await run(client, 'verifyEs', living().map((e) => ({
-  custom_id: e.id,
-  params: buildParams('verifyEs', verifyPrompt(translations.get(e.id).text, facts.get(e.id).text, e,
-    { lang: 'es', title: metaOf(e, 'es').title, description: metaOf(e, 'es').description }), VERIFY_SCHEMA),
-})));
+const VERIFY_STEP = { en: 'verify', es: 'verifyEs' };
+const verifyParams = (e, lang) => buildParams(VERIFY_STEP[lang], verifyPrompt(sourceText(e, lang), facts.get(e.id).text, e,
+  { lang, title: metaOf(e, lang).title, description: metaOf(e, lang).description }), VERIFY_SCHEMA);
+const verdictsEn = await run(client, 'verify', living().map((e) => ({ custom_id: e.id, params: verifyParams(e, 'en') })));
+const verdictsEs = await run(client, 'verifyEs', living().map((e) => ({ custom_id: e.id, params: verifyParams(e, 'es') })));
+const verdicts = { en: verdictsEn, es: verdictsEs };
+
+/**
+ * ПРАВКА МЕТЫ ПО ВТОРОМУ ПРОХОДУ. С 02 по 12.11.2026 второй проход в 7 случаях из 9 пропускал тело текста и
+ * блокировал только заголовок или описание — и сам предлагал исправленную формулировку. Мета — самый дешёвый
+ * шаг (Haiku), а тело при этом не трогается, поэтому один круг правки окупается: мета пересобирается с
+ * замечаниями, проходит metaCheck и ЗАНОВО целиком проверяется вторым проходом. Решение по-прежнему за новым
+ * вердиктом; первый вердикт остаётся в записи для редактора.
+ *
+ * Правим, только если КАЖДЫЙ блокер цитирует заголовок или описание и ни один не цитирует текст, а частных лиц
+ * нет: проблема в теле мета-правкой не лечится, а имена — решение человека.
+ */
+const firstVerdicts = { en: new Map(), es: new Map() };
+const metaRepaired = new Set();
+if (LIVE) {
+  const fix = [];
+  for (const e of living()) {
+    for (const lang of ['en', 'es']) {
+      const r = verdicts[lang].get(e.id);
+      const v = r && !r.truncated ? parseJson(r.text) : null;
+      if (metaOnlyBlockers(v, metaOf(e, lang), sourceText(e, lang))) fix.push({ e, lang, v });
+    }
+  }
+  if (fix.length) {
+    console.log(`\n  второй проход держит только мету у ${fix.length} — правка меты и повторная проверка`);
+    const notes = ({ v }) => 'Второй проход не выпустил заголовок или описание. Исправь ровно это, остальное оставь:\n' +
+      v.blockers.map((b) => `— [${b.kind}] «${b.quote}»: ${b.problem}`).join('\n') + (v.notes ? `\nЗаметка проверяющего: ${v.notes}` : '');
+    const again = await run(client, 'meta', fix.map((f) => ({ custom_id: `${f.e.id}:${f.lang}`, params: metaParams(f.e, f.lang, notes(f)) })));
+    const changed = [];
+    for (const f of fix) {
+      const id = `${f.e.id}:${f.lang}`;
+      const r = again.get(id);
+      const m = r?.text && !r.truncated ? parseJson(r.text) : null;
+      // Новая мета должна быть целой и чистой по коду; иначе оставляем прежнюю, и решение остаётся за первым вердиктом.
+      if (!m || !metaCheck(m, f.lang).ok) continue;
+      metas.set(id, r);
+      changed.push(f);
+    }
+    for (const lang of ['en', 'es']) {
+      const mine = changed.filter((f) => f.lang === lang);
+      if (!mine.length) continue;
+      const re = await run(client, VERIFY_STEP[lang], mine.map((f) => ({ custom_id: f.e.id, params: verifyParams(f.e, lang) })));
+      for (const f of mine) {
+        firstVerdicts[lang].set(f.e.id, verdicts[lang].get(f.e.id));
+        const r = re.get(f.e.id);
+        // Нет нового вердикта — не оставляем старый к новой мете: вердикт пропадает, политика закроет автопубликацию.
+        verdicts[lang].set(f.e.id, r ?? { text: '', truncated: true });
+        metaRepaired.add(`${f.e.id}:${lang}`);
+      }
+    }
+  }
+}
 
 mkdirSync(OUT, { recursive: true });
 const report = [];
 for (const e of living()) {
   const en = revisions.get(e.id).text;
   const es = translations.get(e.id).text;
-  const checkEn = LIVE ? postcheck(en, 'en') : null;
-  let checkEs = LIVE ? postcheck(es, 'es') : null;
+  const checkEn = LIVE ? postcheck(en, 'en', lengthOpts(e)) : null;
+  let checkEs = LIVE ? postcheck(es, 'es', lengthOpts(e)) : null;
   if (checkEs) {
     // Ритм у перевода не меряем (см. postcheck.mjs), вместо него — сохранность структуры оригинала.
     const fidelity = translationFidelity(en, es);
@@ -636,8 +699,11 @@ for (const e of living()) {
       [['facts', facts], ['draft', drafts], ['critique', critiques], ['revise', revisions],
         ['verify', verdictsEn], ['verifyEs', verdictsEs], ['translate', translations]]
         .map(([k, m]) => [k, Boolean(m.get(e.id)?.truncated)])),
-    en: { text: en, meta: parseJson(metas.get(`${e.id}:en`)?.text), check: checkEn, metaRetried: metaRetried.has(`${e.id}:en`) },
-    es: { text: es, meta: parseJson(metas.get(`${e.id}:es`)?.text), check: checkEs, metaRetried: metaRetried.has(`${e.id}:es`) },
+    en: { text: en, meta: parseJson(metas.get(`${e.id}:en`)?.text), check: checkEn, metaRetried: metaRetried.has(`${e.id}:en`), metaRepaired: metaRepaired.has(`${e.id}:en`) },
+    es: { text: es, meta: parseJson(metas.get(`${e.id}:es`)?.text), check: checkEs, metaRetried: metaRetried.has(`${e.id}:es`), metaRepaired: metaRepaired.has(`${e.id}:es`) },
+    // Вердикт до правки меты — для редактора: что второй проход не выпустил в первый раз.
+    verifyBeforeMetaRepair: firstVerdicts.en.has(e.id) ? parseJson(firstVerdicts.en.get(e.id)?.text ?? '') : null,
+    verifyEsBeforeMetaRepair: firstVerdicts.es.has(e.id) ? parseJson(firstVerdicts.es.get(e.id)?.text ?? '') : null,
     generatedAt: new Date().toISOString(),
     live: LIVE,
   };

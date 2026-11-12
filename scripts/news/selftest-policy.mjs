@@ -158,6 +158,9 @@ ok(!hold('The mortgage lender, mortality tables and a brick-and-mortar shop'), '
 ok(hold('El empresario acudió a su juicio ayer') && hold('El caso irá a juicio oral'), '«acudió a su juicio» и «irá a juicio» — суд, держит');
 ok(!hold('El regulador dijo que sí. A su juicio, la medida es proporcionada.') && !hold('La medida, a juicio de la DGOJ, es proporcionada.'), 'вводные «A su juicio,» / «, a juicio de» — мнение, не суд');
 
+ok(!hold('Los trabajadores mantienen sus demandas salariales') && !hold('La empresa aceptó las demandas del sindicato'), '«demandas» профсоюза — не иск');
+ok(hold('El operador presentó una demanda contra el regulador') && hold('Kalshi demandó a Luisiana') && hold('Una demanda colectiva contra la empresa'), 'судебные формы «demanda» держат');
+
 console.log('\nДата события не позже первого упоминания');
 const dated = (eventSentence, firstSeen = '2026-10-23T12:28:00Z') => {
   const r = clone(good());

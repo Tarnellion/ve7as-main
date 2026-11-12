@@ -97,6 +97,12 @@ function reviewNotes(record, decision, mode, now) {
     for (const b of v.blockers ?? []) lines.push(`  блокер [${b.kind}] «${clip(b.quote, 160)}» — ${b.problem}`);
     if (v.notes) lines.push(`  заметка: ${v.notes}`);
   }
+  // Мета пересобиралась по замечаниям второго прохода: редактор видит, что именно тот не выпустил в первый раз.
+  for (const [lang, first] of [['EN', record.verifyBeforeMetaRepair], ['ES', record.verifyEsBeforeMetaRepair]]) {
+    if (!first) continue;
+    lines.push(`  мета ${lang} исправлена по второму проходу; в первый раз он не выпустил: ` +
+      (first.blockers ?? []).map((b) => `[${b.kind}] «${clip(b.quote ?? '', 120)}»`).join('; '));
+  }
 
   const c = record.en.check;
   if (c) lines.push('', `Постпроверка EN: ${c.words} слов, CV ритма ${c.rhythm?.cv}, однопредложенных ${Math.round((c.rhythm?.singleShare ?? 0) * 100)} %`);

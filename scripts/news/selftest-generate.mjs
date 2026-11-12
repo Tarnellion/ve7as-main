@@ -58,20 +58,29 @@ function reply(params) {
   const out = (text, stop = 'end_turn') => ({ text, stop });
   if (phase === 'facts') {
     const tag = marked('FAIL-DRAFT') ? ' FAIL-DRAFT' : marked('FAIL-ALL') ? ' FAIL-ALL' : '';
-    return out(JSON.stringify({ event: `A regulator fined an operator${tag}`, facts: [{ statement: 'Fine of EUR 5 million on 20 October 2026', attribution: 'regulator', sourceGroups: ['a', 'b', 'c'] }], unconfirmed: [] }));
+    return out(JSON.stringify({ event: `A regulator fined an operator${tag}`, facts: [{ statement: 'Fine of EUR 5 million on 20 October 2026', attribution: 'regulator', sourceGroups: ['a', 'b', 'c'] }],
+      unconfirmed: mode.unconfirmed ? ['Only one outlet says the strike lasted 63 days'] : [] }));
   }
   if (phase === 'draft') return marked('FAIL-DRAFT') ? out('cut off mid', 'max_tokens') : out(EN);
   if (phase === 'critique') return out('Замечаний нет.');
   if (phase === 'revise') return out(EN);
   if (phase === 'verify') {
-    return mode.badVerify ? out('это не JSON') : out(JSON.stringify({ ok: true, namesPrivateIndividuals: false, individuals: [], blockers: [], notes: 'ок' }));
+    if (mode.badVerify) return out('это не JSON');
+    const content = params.messages?.[0]?.content ?? '';
+    const block = (quote) => out(JSON.stringify({ ok: false, namesPrivateIndividuals: false, individuals: [], blockers: [{ kind: 'unattributed', quote, problem: 'single source' }], notes: 'fix the headline' }));
+    // metaBlock: второй проход держит заголовок, пока в нём «63 days»; bodyBlock — держит фразу из самого текста.
+    if (mode.metaBlock && content.includes('ЗАГОЛОВОК: Strike ends after 63 days')) return block('Strike ends after 63 days');
+    if (mode.bodyBlock) return block(content.split('ТЕКСТ:\n')[1].slice(0, 40));
+    return out(JSON.stringify({ ok: true, namesPrivateIndividuals: false, individuals: [], blockers: [], notes: 'ок' }));
   }
   if (phase === 'translate') return out(ES);
   if (phase === 'meta') {
     // metaNote: 'once' — служебная пометка в описании только в первой попытке, 'always' — в каждой.
     const retried = marked('Предыдущая попытка нарушила правила');
     const dirty = mode.metaNote === 'always' || (mode.metaNote === 'once' && !retried);
-    return out(JSON.stringify({ title: 'Mock title', description: 'D'.repeat(120) + (dirty ? ' Not verified.' : ''), slug: 'mock-event', section: 'casino-slots' }));
+    const repairing = marked('Второй проход не выпустил');
+    const title = mode.metaBlock && (mode.metaBlock === 'always' || !repairing) ? 'Strike ends after 63 days' : 'Mock title';
+    return out(JSON.stringify({ title, description: 'D'.repeat(120) + (dirty ? ' Not verified.' : ''), slug: 'mock-event', section: 'casino-slots' }));
   }
   return out('?');
 }
@@ -217,6 +226,38 @@ ok(seen.phases.filter((p) => p === 'meta').length === 4, 'повтор один,
 const dec = decide(rma, 'auto');
 ok(!dec.publish && dec.reasons.some((x) => x.code === 'meta-check-en') && dec.reasons.some((x) => x.code === 'meta-check-es'),
   'политика закрывает публикацию кодами meta-check-en и meta-check-es', JSON.stringify(dec.reasons.map((x) => x.code)));
+
+console.log('\nВторой проход держит только заголовок: мета пересобирается и проверяется заново');
+seen.phases.length = 0; seen.prompts = {};
+mode = { metaBlock: 'once', unconfirmed: true };
+const mb = await run([event('mb1', 'Event mb')], {}, ['--limit=1']);
+mode = {};
+const rmb = rec(mb.dir, 'mb1');
+ok(mb.code === 0, 'прогон завершился штатно', mb.out.slice(-300));
+ok(seen.prompts.meta.slice(0, 2).every((p) => p.includes('Only one outlet says the strike lasted 63 days')), 'мета видит одноисточниковые утверждения');
+ok(seen.phases.filter((p) => p === 'meta').length === 4 && seen.phases.filter((p) => p === 'verify').length === 4,
+  `мета и второй проход повторены по разу на каждый язык (meta ${seen.phases.filter((p) => p === 'meta').length}, verify ${seen.phases.filter((p) => p === 'verify').length})`);
+ok(seen.prompts.meta.slice(2).every((p) => p.includes('Strike ends after 63 days') && p.includes('single source')), 'в повторе меты названы цитата и замечание второго прохода');
+ok(rmb.en.meta.title === 'Mock title' && rmb.verify?.ok === true && rmb.verifyEs?.ok === true, 'в записи — новая мета и новый (чистый) вердикт');
+ok(rmb.en.metaRepaired === true && rmb.verifyBeforeMetaRepair?.ok === false, 'отмечено, что мету правили, и сохранён первый вердикт для редактора');
+ok(!decide(rmb, 'auto').reasons.some((x) => x.code.startsWith('verify') || x.code.startsWith('blockers')), 'после правки второй проход не держит публикацию');
+
+console.log('\nЗаголовок остаётся плохим и после правки: один круг, публикация закрыта');
+seen.phases.length = 0;
+mode = { metaBlock: 'always' };
+const ma2 = await run([event('mb2', 'Event mb2')], {}, ['--limit=1']);
+mode = {};
+const rma2 = rec(ma2.dir, 'mb2');
+ok(seen.phases.filter((p) => p === 'verify').length === 4, 'повтор один, не цикл до победы');
+ok(!decide(rma2, 'auto').publish && decide(rma2, 'auto').reasons.some((x) => x.code === 'blockers'), 'публикация закрыта блокером второго прохода');
+
+console.log('\nБлокер в самом тексте: мету не трогаем');
+seen.phases.length = 0;
+mode = { bodyBlock: true };
+const mbb = await run([event('mb3', 'Event mb3')], {}, ['--limit=1']);
+mode = {};
+ok(seen.phases.filter((p) => p === 'meta').length === 2 && seen.phases.filter((p) => p === 'verify').length === 2, 'ни правки меты, ни повторной проверки');
+ok(rec(mbb.dir, 'mb3').en.metaRepaired === false, 'metaRepaired=false');
 
 console.log('\nЧистая мета: повтора нет, лишних запросов нет');
 seen.phases.length = 0;

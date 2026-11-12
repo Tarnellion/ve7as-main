@@ -28,6 +28,15 @@ const BANNED = JSON.parse(readFileSync(join(HERE, 'style', 'banned.json'), 'utf8
  */
 export const WORDS_MIN = 250;
 /**
+ * Планка для короткого первоисточника: собственное сообщение регулятора короче 2000 символов. KSA публикует
+ * решения на 950–1100 символов, и честный пересказ выходил в 240 слов — дважды (медиа-гайд 27.10,
+ * Endorphina 02.11) единственным замечанием был объём. Растягивать текст до 250 значит дописывать то, чего
+ * в источнике нет, — ровно то, от чего планку уже опускали с 380. Для событий из нескольких изданий не
+ * снижаем: там короткий текст значит потерю фактов.
+ */
+export const WORDS_MIN_SHORT_PRIMARY = 200;
+export const SHORT_PRIMARY_CHARS = 2000;
+/**
  * Предел объёма зависит от языка. Испанский текст систематически длиннее
  * английского примерно на пятую часть при том же содержании — измерено на
  * первом боевом прогоне: 697 слов EN против 811 ES, и перевод свалился
@@ -202,7 +211,7 @@ export function metaCheck(meta, lang = 'en') {
   return { ok: issues.length === 0, issues };
 }
 
-export function postcheck(text, lang = 'en') {
+export function postcheck(text, lang = 'en', { minWords = WORDS_MIN } = {}) {
   const issues = serviceIssues(text, lang, 'текст');
 
   const lists = BANNED[lang] ?? BANNED.en;
@@ -215,7 +224,7 @@ export function postcheck(text, lang = 'en') {
 
   const words = text.replace(/[#>*_`|-]/g, ' ').split(/\s+/).filter(Boolean).length;
   const maxWords = WORDS_MAX[lang] ?? WORDS_MAX.en;
-  if (words < WORDS_MIN) issues.push({ kind: 'объём', detail: `${words} слов, нужно от ${WORDS_MIN}` });
+  if (words < minWords) issues.push({ kind: 'объём', detail: `${words} слов, нужно от ${minWords}` });
   if (words > maxWords) issues.push({ kind: 'объём', detail: `${words} слов, предел ${maxWords}` });
 
   if (/^#\s/m.test(text)) issues.push({ kind: 'структура', detail: 'H1 внутри текста: заголовок задаётся отдельным полем' });
@@ -346,4 +355,23 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (res.ok) console.log('  замечаний нет');
   else console.log(issuesToPrompt(res.issues).split('\n').map((l) => '  ' + l).join('\n'));
   process.exit(res.ok ? 0 : 1);
+}
+
+/**
+ * Все ли блокеры второго прохода относятся к заголовку или описанию, а не к тексту. Тогда материал можно
+ * спасти пересборкой меты (generate.mjs): тело не трогается, а новую мету второй проход проверяет заново.
+ * Цитата сравнивается без кавычек, регистра и лишних пробелов; цитата короче 8 символов не считается
+ * опознанной. Частные лица — всегда решение человека.
+ */
+const normQuote = (x) => String(x ?? '').toLowerCase().replace(/[«»"“”'’`*_]/g, '').replace(/\s+/g, ' ').trim();
+export function metaOnlyBlockers(verdict, meta, text) {
+  if (!verdict || verdict.ok || verdict.namesPrivateIndividuals || !verdict.blockers?.length) return false;
+  const inMeta = (q) => [meta?.title, meta?.description].some((m) => {
+    const a = normQuote(m); return a && q && (a.includes(q) || (q.length >= 12 && q.includes(a)));
+  });
+  const body = normQuote(text);
+  return verdict.blockers.every((b) => {
+    const q = normQuote(b.quote);
+    return q.length >= 8 && inMeta(q) && !body.includes(q);
+  });
 }
