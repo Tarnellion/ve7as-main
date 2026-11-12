@@ -1,0 +1,157 @@
+list,keyword,avg_monthly_searches,low,high,page
+en,35x wagering,10-100,10,100,articles/wagering-explained
+en,6 5 vs 3 2 blackjack,100-1K,100,1000,tools/blackjack-house-edge
+en,6 to 5 blackjack,1K-10K,1000,10000,tools/blackjack-house-edge
+en,6 to 5 blackjack payout,10-100,10,100,tools/blackjack-house-edge
+en,american odds to decimal,1K-10K,1000,10000,tools/odds-converter
+en,bankroll management,1K-10K,1000,10000,articles/bankroll-management
+en,bankroll management betting,1K-10K,1000,10000,articles/bankroll-management
+en,bankroll management calculator,10-100,10,100,articles/bankroll-management
+en,blackjack basic strategy,10K-100K,10000,100000,articles/blackjack-basic-strategy
+en,blackjack basic strategy chart,10K-100K,10000,100000,articles/blackjack-basic-strategy
+en,blackjack basic strategy trainer,1K-10K,1000,10000,articles/blackjack-basic-strategy
+en,blackjack house edge,1K-10K,1000,10000,tools/blackjack-house-edge
+en,blackjack house edge calculator,100-1K,100,1000,tools/blackjack-house-edge
+en,blackjack odds calculator,100-1K,100,1000,tools/odds-converter
+en,bonus wagering calculator,10-100,10,100,tools/wagering-calculator
+en,bookmaker limited my account,нет данных,0,0,нет страницы: лимиты счёта
+en,bookmaker margin calculator,10-100,10,100,tools/margin-calculator
+en,can casinos change rtp,нет данных,0,0,план: slot-math / can-casinos-change-rtp
+en,can casinos change rtp on slots,10-100,10,100,план: slot-math / can-casinos-change-rtp
+en,casino bonus calculator,10-100,10,100,tools/wagering-calculator
+en,casino bonus playthrough calculator,нет данных,0,0,tools/wagering-calculator
+en,casino kyc,10-100,10,100,план: kyc-from-inside
+en,closing line value,100-1K,100,1000,нет страницы: EV / CLV
+en,closing line value calculator,10-100,10,100,нет страницы: EV / CLV
+en,dealer hits soft 17,100-1K,100,1000,tools/blackjack-house-edge
+en,decimal to american odds,1K-10K,1000,10000,tools/odds-converter
+en,devig calculator,100-1K,100,1000,tools/margin-calculator
+en,esports betting,10K-100K,10000,100000,articles/esports-betting-basics
+en,euromillions odds,1K-10K,1000,10000,tools/lottery-expected-value
+en,expected value betting,100-1K,100,1000,нет страницы: EV / CLV
+en,fair odds calculator,100-1K,100,1000,tools/margin-calculator
+en,fractional odds to decimal,100-1K,100,1000,tools/odds-converter
+en,hit frequency slots,10-100,10,100,план: slot-math / can-casinos-change-rtp
+en,house edge,1K-10K,1000,10000,tools/blackjack-house-edge
+en,how are slot machines programmed,100-1K,100,1000,план: slot-math / can-casinos-change-rtp
+en,how do bookmakers set odds,100-1K,100,1000,план: how-bookmakers-set-odds
+en,implied probability calculator,1K-10K,1000,10000,tools/odds-converter
+en,kelly criterion,10K-100K,10000,100000,нет страницы: критерий Келли
+en,kelly criterion calculator,1K-10K,1000,10000,нет страницы: критерий Келли
+en,lottery expected value,100-1K,100,1000,tools/lottery-expected-value
+en,lottery expected value calculator,10-100,10,100,tools/lottery-expected-value
+en,lottery odds calculator,1K-10K,1000,10000,tools/odds-converter
+en,lottery roll down,100-1K,100,1000,tools/lottery-expected-value
+en,lump sum vs annuity,1K-10K,1000,10000,tools/lottery-expected-value
+en,mega millions expected value,10-100,10,100,tools/lottery-expected-value
+en,moneyline converter,100-1K,100,1000,tools/odds-converter
+en,no vig calculator,1K-10K,1000,10000,tools/margin-calculator
+en,non sticky bonus,1K-10K,1000,10000,план: bonus-engine-explained
+en,odds calculator,100K-1M,100000,1000000,tools/odds-converter
+en,odds converter,10K-100K,10000,100000,tools/odds-converter
+en,odds converter to percentage,100-1K,100,1000,tools/odds-converter
+en,odds to probability,1K-10K,1000,10000,tools/odds-converter
+en,omaha vs holdem,100-1K,100,1000,articles/poker-formats-guide
+en,overround calculator,100-1K,100,1000,tools/margin-calculator
+en,par sheet,100-1K,100,1000,план: slot-math / can-casinos-change-rtp
+en,playthrough calculator,10-100,10,100,tools/wagering-calculator
+en,poker variants,1K-10K,1000,10000,articles/poker-formats-guide
+en,positive ev betting,100-1K,100,1000,нет страницы: EV / CLV
+en,pot odds,1K-10K,1000,10000,нет страницы: pot odds
+en,pot odds calculator,1K-10K,1000,10000,tools/odds-converter
+en,powerball expected value,100-1K,100,1000,tools/lottery-expected-value
+en,powerball expected value calculator,10-100,10,100,tools/lottery-expected-value
+en,provably fair,1K-10K,1000,10000,план: rng / provably-fair
+en,rng certification,100-1K,100,1000,план: rng / provably-fair
+en,rollover calculator,10-100,10,100,tools/wagering-calculator
+en,rtp meaning,1K-10K,1000,10000,план: slot-math / can-casinos-change-rtp
+en,slot rtp,10K-100K,10000,100000,план: slot-math / can-casinos-change-rtp
+en,slot volatility,100-1K,100,1000,план: slot-math / can-casinos-change-rtp
+en,sticky bonus,100-1K,100,1000,план: bonus-engine-explained
+en,vig calculator,1K-10K,1000,10000,tools/margin-calculator
+en,wagering calculator,1K-10K,1000,10000,tools/wagering-calculator
+en,wagering requirement calculator,100-1K,100,1000,tools/wagering-calculator
+en,wagering requirements,1K-10K,1000,10000,articles/wagering-explained
+en,wagering requirements explained,10-100,10,100,articles/wagering-explained
+en,what is overround,10-100,10,100,tools/margin-calculator
+en,what is rtp in slots,100-1K,100,1000,план: slot-math / can-casinos-change-rtp
+en,what is vig,1K-10K,1000,10000,tools/margin-calculator
+en,what is wagering requirement,100-1K,100,1000,articles/wagering-explained
+en,why do casinos ask for id,нет данных,0,0,план: kyc-from-inside
+en,why do odds change,10-100,10,100,план: how-bookmakers-set-odds
+en,why does the house always win,100-1K,100,1000,tools/blackjack-house-edge
+es,apuestas de valor,10-100,10,100,нет страницы: EV / CLV
+es,blackjack 3 a 2,нет данных,0,0,tools/blackjack-house-edge
+es,blackjack 6 a 5,нет данных,0,0,tools/blackjack-house-edge
+es,bono sticky,нет данных,0,0,план: bonus-engine-explained
+es,calculadora blackjack,100-1K,100,1000,tools/blackjack-house-edge
+es,calculadora criterio de kelly,10-100,10,100,нет страницы: критерий Келли
+es,calculadora de apuestas,100-1K,100,1000,нет страницы: калькулятор экспрессов и ставок
+es,calculadora de apuestas combinadas,10-100,10,100,нет страницы: калькулятор экспрессов и ставок
+es,calculadora de apuestas deportivas,100-1K,100,1000,нет страницы: калькулятор экспрессов и ставок
+es,calculadora de bonos,100-1K,100,1000,tools/wagering-calculator
+es,calculadora de cuotas,1K-10K,1000,10000,tools/odds-converter
+es,calculadora de lotería,100-1K,100,1000,tools/lottery-expected-value
+es,calculadora de margen,100-1K,100,1000,tools/margin-calculator
+es,calculadora de momios,1K-10K,1000,10000,tools/odds-converter
+es,calculadora de probabilidad implícita,нет данных,0,0,tools/odds-converter
+es,calculadora de probabilidades lotería,10-100,10,100,tools/lottery-expected-value
+es,calculadora de rollover,нет данных,0,0,tools/wagering-calculator
+es,calculadora kelly,10-100,10,100,нет страницы: критерий Келли
+es,calculadora momios americanos,10-100,10,100,tools/odds-converter
+es,calculadora overround,нет данных,0,0,tools/margin-calculator
+es,calculadora parley,10K-100K,10000,100000,нет страницы: калькулятор экспрессов и ставок
+es,calculadora rollover,нет данных,0,0,tools/wagering-calculator
+es,closing line value,100-1K,100,1000,нет страницы: EV / CLV
+es,conversor de cuotas,100-1K,100,1000,tools/odds-converter
+es,conversor de cuotas decimales a americanas,нет данных,0,0,tools/odds-converter
+es,convertidor de cuotas,100-1K,100,1000,tools/odds-converter
+es,convertidor de momios,100-1K,100,1000,tools/odds-converter
+es,criterio de kelly,100-1K,100,1000,нет страницы: критерий Келли
+es,cuotas americanas a decimales,10-100,10,100,tools/odds-converter
+es,cuotas decimales,нет данных,0,0,tools/odds-converter
+es,cuotas fraccionarias,нет данных,0,0,tools/odds-converter
+es,cuotas sin margen,нет данных,0,0,tools/margin-calculator
+es,cómo calculan las cuotas las casas de apuestas,нет данных,0,0,план: how-bookmakers-set-odds
+es,esperanza matemática lotería,нет данных,0,0,tools/lottery-expected-value
+es,estrategia basica blackjack tabla,10-100,10,100,articles/blackjack-basic-strategy
+es,estrategia básica blackjack,1K-10K,1000,10000,articles/blackjack-basic-strategy
+es,gestión de banca apuestas,нет данных,0,0,articles/bankroll-management
+es,gestión de bankroll,нет данных,0,0,articles/bankroll-management
+es,margen casas de apuestas,нет данных,0,0,tools/margin-calculator
+es,momios a decimal,10-100,10,100,tools/odds-converter
+es,momios americanos,10-100,10,100,tools/odds-converter
+es,overround,100-1K,100,1000,tools/margin-calculator
+es,pot odds,1K-10K,1000,10000,нет страницы: pot odds
+es,probabilidad de ganar euromillones,100-1K,100,1000,tools/lottery-expected-value
+es,probabilidad de ganar la primitiva,100-1K,100,1000,tools/lottery-expected-value
+es,probabilidad euromillones,100-1K,100,1000,tools/lottery-expected-value
+es,probabilidad implícita,нет данных,0,0,tools/odds-converter
+es,probabilidad powerball,10-100,10,100,tools/lottery-expected-value
+es,probabilidades lotería,100-1K,100,1000,tools/lottery-expected-value
+es,provably fair,1K-10K,1000,10000,план: rng / provably-fair
+es,que es rtp en casino,100-1K,100,1000,план: slot-math / can-casinos-change-rtp
+es,qué es el rollover,1K-10K,1000,10000,articles/wagering-explained
+es,qué es el rollover en las apuestas,нет данных,0,0,articles/wagering-explained
+es,qué es el rtp,10-100,10,100,план: slot-math / can-casinos-change-rtp
+es,qué es el vig,нет данных,0,0,tools/margin-calculator
+es,requisito de apuesta,нет данных,0,0,articles/wagering-explained
+es,requisito de apuesta x30,10-100,10,100,articles/wagering-explained
+es,requisitos de apuesta,10-100,10,100,articles/wagering-explained
+es,rollover apuestas,10-100,10,100,articles/wagering-explained
+es,rollover casino,100-1K,100,1000,articles/wagering-explained
+es,rollover x35,10-100,10,100,articles/wagering-explained
+es,rtp casino,1K-10K,1000,10000,план: slot-math / can-casinos-change-rtp
+es,rtp slots,10K-100K,10000,100000,план: slot-math / can-casinos-change-rtp
+es,rtp tragaperras,10-100,10,100,план: slot-math / can-casinos-change-rtp
+es,sin rollover,100-1K,100,1000,articles/wagering-explained
+es,tabla estrategia básica blackjack,нет данных,0,0,articles/blackjack-basic-strategy
+es,tipos de póker,1K-10K,1000,10000,articles/poker-formats-guide
+es,tragamonedas rtp,нет данных,0,0,план: slot-math / can-casinos-change-rtp
+es,valor esperado apuestas,нет данных,0,0,нет страницы: EV / CLV
+es,valor esperado lotería,нет данных,0,0,tools/lottery-expected-value
+es,ventaja de la casa,нет данных,0,0,tools/blackjack-house-edge
+es,ventaja de la casa blackjack,нет данных,0,0,tools/blackjack-house-edge
+es,ventaja de la casa en blackjack,нет данных,0,0,tools/blackjack-house-edge
+es,volatilidad slots,10-100,10,100,план: slot-math / can-casinos-change-rtp
+es,volatilidad tragaperras,нет данных,0,0,план: slot-math / can-casinos-change-rtp
