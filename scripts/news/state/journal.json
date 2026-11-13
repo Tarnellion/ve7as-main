@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-12T17:28:45.773Z",
+  "updatedAt": "2026-11-13T13:13:44.217Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1531,6 +1531,43 @@
       "vectors": [
         "S92xzUIBAA4+Cyb7KdHTHS/E2fQkGPtCVj/VJSDF3OgPyy8n49Esuu7+GlA0EtoP3vrHQusxUbXCtdsTK9obDzVYFCrf/78kE98JSx0EHODI2OUj7zcwyE/vJSbsyt3ewCcszEPeJ+3NFyvfS8jSGSYngebw3B8KQPK87+cdDzVn3wU2GxomQrwJ/+a/TwMUIgw/x0LhPbAXHDPPyZ7oCNrm5OXl3ixBxObpIuItBRe7L0ga8dvm3gfzxfsv5bkO1bTVArknPEoQ8DETCx3kONsaNqXHDOH3ITXxIzUEEsvT/C3RxyAD98KuwNMPJCDRs/IQ4i/s4PzpFiTd5c3qOylSsCsg9VtCHhnB3szy0vYWxcXeFybSAzEvIBc15O8XxOn76DDQKxzSSM8T+cUyD6AUByMs9y4K5f4gJtXy68nZwv3ZFSLexRwZF7vcQdYN3xLR1hIq20He7DHX5xJSsx0j7TDG2x8pswgONgok/RMPwhxF/ALv5AoMzMkxBwku",
         "Jd7PrjwG/hBGCzMUINPFBCCs4P1BEuc+VU3dKSrX7uArtjk2x8Y0w+39L0MrDMMY6+y2N+JEYKezuNshO9QdBC5AHjDlENUjF+PzWjr5KvfIwOQb1iwwvz/ZLDXv2tvYvCo/vCLBF9nILTrTSMDhJyYIgeLjzjYCY++y/c8kDTFV6yQuEhUcS7sTAdTFXQooLAxEwD3VOMwiGyzgyqTYFtXix/vP5SpXwcnnL9g54ievNVkZ3Nbf0hfv0Qom4NER17rhGMU2NEYd8DYN/g/vN+EZF6GoGuv3MSryGTT4FrLOETHQuRrx3ci/1NARCz6qwOER6zTf2wnZMSa4y7n4NzRWsRgw9ERCLxPm1NMJwAYm0cbkJDHi/Dw1LRcvD9sg7eH/2yi/NB3OT8kU/8c8FrEm9C4P4SoW2AILMMr69M3UyvLqHBbuwCgnDrnZO9QI4iLI3A4l5jvB6CTG5BJTohoa4BHc9ik6xg3zShQkCQ0VnShA5xPv3P4WyLsrDyov"
+      ]
+    },
+    {
+      "id": "1795e2d9d7bc",
+      "publishedAt": "2026-11-13T13:13:44.216Z",
+      "title": "Aristocrat names ex-Entain COO Dafne Guisard as CEO as Interactive profit falls 6.2%",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "sbc",
+        "igamingbusiness",
+        "gruporandom"
+      ],
+      "sources": [
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/11/12/aristocrat-names-ex-entain-coo-dafne-guisard-as-ceo-as-interactive-profit-falls-6-2"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/technology/2026/11/12/aristocrat-leisure-ceo"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/people/aristocrat-ceo-transition-croker"
+        },
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/dafne-guisard-sucedera-a-trevor-croker-al-frente-de-aristocrat-en-abril-de-2027"
+        }
+      ],
+      "centroid": "QjvR+SDIBA8PGxfrSOjdP0T8xMstFb8rNEjQ7hqy1+INtgstng0r6s0EFC5RJNo0zMLQJPRAMdGr1u0bPdoUHkMa/ize0uQ4KtwRQS/0CvHPzdINzWsv6F/2JVbavsfPxUgqzT3NP83vG+nxQ9LDLB4WxN4DsCTdQ/LnxePsExMp4hQ3UjgwPNgF9NbzHtsdHyFK6jrVKNIyDzTUsNsHIsHBy+3R9jZAuOHBK9w77ie6ExQvzO++96nuwfof3SYN18vRP+4wOgob2BkfNhHsS+AlAsDBLNrvIEnKB0T2JdnkCSnuxzLS5LW04djhFzq2wd0t2kvS8hLTJyC+ysbjKy03zgEw4TMWPBTk1cjdzyks67j+CVbV2j0VNkpQ1dVJ49HlwD/jMB7tGqwNAvw0HL4RL00bDkYk4fA3Q/om9dnayubdGCjp0iAiGrXJNMXd+i7d2gco+CD58i6/zA4ugQkn7Qm7z0ERrfYvECwv3SEauR492wX50OcY+8AcOy0h",
+      "vectors": [
+        "PlDL6SLf4g8NHRPnZADaUDznucc1DM00PlLF5xSV4OIDthU6kPoz3ckEFjBMMeAzy8PAM/RYPM+Sw+oTOtEqFVQqEDPb0ttPLNMTRTH+/+O5xckVz3ky32PxQW7em7DLu0pBz0TMV8HtH+rTT72sOSMludvspCLERd/mw8H+Fhc41BZIZEk/S+IE9dTyLeApMSxQ5TfSRcQsDz++m9gCIrS/xvvK9zJJsdO1NuxG7zfGEBY5tAbD/a33vQsn6SQX27rGNN4/Ow0a1iYWTCDdT+JMDbC9LbbwL1PK/Uj9IsHg9jzysjrI1LCKxs/pLCC0w8lBvVLN+w/gPDHF1LvpJDxFygcp1jAURxjis7LTwiFG2psLClvL6EgPNE1m1stR3c3RujjEWA/rKaAWHu9WLbD5Ql8jBlgt3fM4X+4lAtjkuODQ/UHaxxcqJrG2Kb/pAk3VxAkw8BLt2DWwzgovgfpG/RScsU4fiPgiMSpM1C8RoDVL3wLyyOYh/LAUTCgn",
+        "NybU+EHSDwwmFBDZRdXoPFb+ydgbHbghLCzC6R2t0OkIshFAmgg75cIGNDFKLuQxy6e2IAJDMuee3OAoQc8JGVEyCRrr6fJOJNIGTD3sDPW318/2yG016VLtL1/ku8jCt0MvtC7SRMPrD+XhRs7BJhz+r8fysyzlLenzzPHYABU63S81YjwwMMsGBczvKMg0KTZh2z3aPPAkDkDwodv5KKyqxu7N/VA6tdzAI9BE9DOrDBZGwQGz/JTVvugKyCgZ07zNU/EyNw8QxxJFHQbwWNAdEL/ILd/qIEau+E3hHObeGU3YzUDe3cW56NfpDD26xtId5EnM+RPPKCPE1cv0PD5KzwQn7VklPhjo0srl3CUX968DBmLD0lQINUZg1tpXz8vSz07fDynsGrAJ7O1FGsYXTGcZH0Qn2Pw/RP4g9tv+3te8FRwBxSYVHKy7Qs7e+CXX0P8z+RT08C/IxgI1gRIm4Qyu0T8gsvotEz8x1RElxhoy1QPzr+0J+bYhSCEL",
+        "L07aExTVAhMUHhjuLubhOkL6z8I3E9AqNkvS8xC51fEMuP4dqxEi69MPByxKEM4nzNLVJeo3MtK20fETPtwXJS0WAjbZy9spMeAMTCn9BPDi0ssZvWUk6WTxED/Yz8Xd1D4ezkbHKtj/GfcENObKJhoW1OL7siDzS/zcye37EwQg4g0uOBszMtUA7Nr6HuYYHhA8ATbaE8ktCDLJ0tcOGdzM0+7W+C8+vOzNJdc06w++GBgZzN3O+Lj2sPQx4isO1tnZLwItNgkj4hEOMhTuPe4n/Me4KefgHE7jFUj0F9rjDx360Sbb4LDL8NzYEUO5zO0s5D/c7gvdIRPGxtPdISMw1v876RgXMxDd28rZxyYn47f5+1Dg4xoeMEBG1NE768/7wyzzORvlH7gO+fcwGbobJzsa9DUS6eQySPcf+d3hz/XuFRrn3x8sFcHkMMriASTa5gIh7Sn0/izNyhI8gQod5gPJ0EP+tfMuAyI34yMYwBZD6hH85OYa/NEeNy0j",
+        "YynH6Q2gFw/3Hh76UOfRODwPvMssFagsMlbi8yjH2s0atwoknxwf+dX3AytlJttFzcrxHPIzJb6/5fgdO+cJIUL+4irbxOoiJekeKSbrGPrixuQP4WMy7mMGHFTPytzPyVQf4T3OPdXhI9sCRdDQLR8gz/EttCPRTv/ovebeIx0Y8AA1UEQeRt8L7dzwB9wGCBY/4j3MEstKGSHXq+QOJsHLyuDW7ClCvubBL98w7Si3Fwsr7N+x66r22QQX3x/619nUR+UlQgYe3x8VPgvyTOAK8cbKLeUDF0DIDDUFP+LvAgTwyC3E+q674d3eGUWwsegs4FTQ5xvCGiCqvrzXLBwixvwy1jAKORHo79Xh1jcw99jzGkviy0UeP1Y51t1G897vtErvIiP3CacLCBkOFMkVDTgXIUwt5O0zJgQ15taowefxNS/h2CQbErLJM7zL7Sbv6BMgCC4L/Cuy0hcWgQ4Y8wPR5jYLvfQ8ACcL5CMavBY2zPsC3+Ia+cMbJT0v"
       ]
     }
   ]
