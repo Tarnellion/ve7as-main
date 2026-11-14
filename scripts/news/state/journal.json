@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-13T13:13:44.217Z",
+  "updatedAt": "2026-11-14T12:17:38.717Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1568,6 +1568,38 @@
         "NybU+EHSDwwmFBDZRdXoPFb+ydgbHbghLCzC6R2t0OkIshFAmgg75cIGNDFKLuQxy6e2IAJDMuee3OAoQc8JGVEyCRrr6fJOJNIGTD3sDPW318/2yG016VLtL1/ku8jCt0MvtC7SRMPrD+XhRs7BJhz+r8fysyzlLenzzPHYABU63S81YjwwMMsGBczvKMg0KTZh2z3aPPAkDkDwodv5KKyqxu7N/VA6tdzAI9BE9DOrDBZGwQGz/JTVvugKyCgZ07zNU/EyNw8QxxJFHQbwWNAdEL/ILd/qIEau+E3hHObeGU3YzUDe3cW56NfpDD26xtId5EnM+RPPKCPE1cv0PD5KzwQn7VklPhjo0srl3CUX968DBmLD0lQINUZg1tpXz8vSz07fDynsGrAJ7O1FGsYXTGcZH0Qn2Pw/RP4g9tv+3te8FRwBxSYVHKy7Qs7e+CXX0P8z+RT08C/IxgI1gRIm4Qyu0T8gsvotEz8x1RElxhoy1QPzr+0J+bYhSCEL",
         "L07aExTVAhMUHhjuLubhOkL6z8I3E9AqNkvS8xC51fEMuP4dqxEi69MPByxKEM4nzNLVJeo3MtK20fETPtwXJS0WAjbZy9spMeAMTCn9BPDi0ssZvWUk6WTxED/Yz8Xd1D4ezkbHKtj/GfcENObKJhoW1OL7siDzS/zcye37EwQg4g0uOBszMtUA7Nr6HuYYHhA8ATbaE8ktCDLJ0tcOGdzM0+7W+C8+vOzNJdc06w++GBgZzN3O+Lj2sPQx4isO1tnZLwItNgkj4hEOMhTuPe4n/Me4KefgHE7jFUj0F9rjDx360Sbb4LDL8NzYEUO5zO0s5D/c7gvdIRPGxtPdISMw1v876RgXMxDd28rZxyYn47f5+1Dg4xoeMEBG1NE768/7wyzzORvlH7gO+fcwGbobJzsa9DUS6eQySPcf+d3hz/XuFRrn3x8sFcHkMMriASTa5gIh7Sn0/izNyhI8gQod5gPJ0EP+tfMuAyI34yMYwBZD6hH85OYa/NEeNy0j",
         "YynH6Q2gFw/3Hh76UOfRODwPvMssFagsMlbi8yjH2s0atwoknxwf+dX3AytlJttFzcrxHPIzJb6/5fgdO+cJIUL+4irbxOoiJekeKSbrGPrixuQP4WMy7mMGHFTPytzPyVQf4T3OPdXhI9sCRdDQLR8gz/EttCPRTv/ovebeIx0Y8AA1UEQeRt8L7dzwB9wGCBY/4j3MEstKGSHXq+QOJsHLyuDW7ClCvubBL98w7Si3Fwsr7N+x66r22QQX3x/619nUR+UlQgYe3x8VPgvyTOAK8cbKLeUDF0DIDDUFP+LvAgTwyC3E+q674d3eGUWwsegs4FTQ5xvCGiCqvrzXLBwixvwy1jAKORHo79Xh1jcw99jzGkviy0UeP1Y51t1G897vtErvIiP3CacLCBkOFMkVDTgXIUwt5O0zJgQ15taowefxNS/h2CQbErLJM7zL7Sbv6BMgCC4L/Cuy0hcWgQ4Y8wPR5jYLvfQ8ACcL5CMavBY2zPsC3+Ia+cMbJT0v"
+      ]
+    },
+    {
+      "id": "12ffe1f78caa",
+      "publishedAt": "2026-11-14T12:17:38.717Z",
+      "title": "Massachusetts Regulator Reports Dozens Of Prediction Market Inquiries From Consumers",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "gamblinginsider",
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/203614/massachusetts-regulator-prediction-markets-inquiries-cftc"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/massachusetts-regulator-swamped-with-prediction-market-complaints-it-cant-resolve"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/massachusetts-raises-fresh-concerns-over-prediction-markets"
+        }
+      ],
+      "centroid": "GPbewD3YGyoxD1QRYq3uHEe0yt0I1/1vSG3f/gWax+1Xyh4zwcc68b0qDH9aJrQ6oO3KPgQVOL7GvrgrRhkI7DU0HCi65b0n+NwhQB7iFeflxO5B2yhI1UnVMj/4tsfEvDM3207aMrHXJQfONMTbCk4ZmL/p1UMPJ/TF0swWGC8/+jkcKRolb9rv0+TLKesLWCNlBVDxL/UJBWTrsdQtRMHhstbZ/SJbvd/jAeA26ziwHGEOztzVrea90QQV8swXtaXITOAiJTk6tSz0AQ3FL7wvJMfRQg3xEDXQ70r/KLTjP0vlzyrj+bqpw7csGRLHmuYK4D71zBz9QB263929N0NHmQ4d5VABKAbo27vxthcq6tDq9FaiyVj6ES0m8fQk0djJqO+/V0XmSeMBF9AnLq8+OUMUISAowvsfYfkk18DNuum/JSLn1ycHGN69Lp7gCx7axBAMyEDy7Qm3uTVZj/4q6gXI7zlFt+4TUxlP1CseuDEg4xkR79MR3NY4NDst",
+      "vectors": [
+        "F+fWtDHdFzIvDTQjX7rrJ0Sgyu4B5/VlOHDQCROTveZk1B81288868Q4F3tPLLFEi9bSSAQOPszbsr0kSRnm9DgmMxTK2skp8+AwKyPcE/ThveFV2TJH1z3bLDzuwMXVxig/2z7KHZfZIwrNO8bcAVATmNLwz0sDNQLK08cgBjQ79zwkPRAWa9n60czMIu8GZz5RETfmM/0F7mHys80PSMbgvNnXECVkxtYC8/Qx5jygIHEMwubUodC+ywMm69kZqJbOPuMiLzY7sy/0AQbKH78xLcXYQRzxClLb5DoMLr/dQELK0CLl/bmpvMAnHwm8jeQXzTjn0RUGPgWp3ezLNzpFoBon1mEHKSDV5LfluP4418vp91Sq2WTy/kIq6QEl3d/LqvbZWTXXW+vwAtsnLJE1R0YUISs9swYbXPgdz7vZv/jcJCnh4SIQDrbEKaf5ASXawAsO0ED45QWktjRUgQU06hjN9DRLruUaTzlGzxUstk4r6BIO6NYf2t0zO1Un",
+        "Egfl0zvcExorEE4IWrbwIEjEzt0K3P5nTl3q/ASdz/o9zhUqssw07LsnEX9VIrEywOzYOwIfNr612K41Nh4I5Sg7DCy79MUp+M8NPxjrC+rl0+kx5yNU4krNJkMCwsvOwzIh0VrbOMTRDgTYJM/iDD4hnMDa5z8YF/HBxNEiFBdAASYVGhUgbOLx2fzXLd8JSSFmBUz1Hu0JFmLwvd8xN8nct9PV8htRueTVC9Up9C28FFYN1uHZuvbF2P4P/NoUvqzKTPoVHiwxvDDxDgvMLs0mI8PDPAT2DSTX+UD4JLXiNlj1zSbs+r6107kkFRvFouv57DsBzB7/SCHG39bAOkNHnAkN6jj0Gwf608AC0iQr9NPi4lqXxlEJGh0n9Ocm0tzLqvS8UUTqQegHIdQsMMI4PTkhGiASz/UTWQMh4s7eueS6HCXw2CL+GOnHParcFSDXzggOzUHw6QXFyCRPoPsg9APL4DY6vfgDQAhG2jAUwRQU4CUN+MkY29QuMSsh",
+        "IPPeuUvPJzU5EXwIa5jvC0a5yMsNwgN/UHri9PejzeVmvCc6uro8/rse+X5oJMA3kwezNgYQMbDFrsIjUxEs7j86Fjir4Koi/+cpVyDdI9fqvgQ+0iI5x1HbRT34nsaprD1G6E3sQbreQgbHPbnUEVsUl632yDsQKOjF4838LkRB9UgcIyk6cdPg0eO+LPURWAd29mv6PfcOCWjeos9HTLXqo9fg9idbuuPTBNlK5z23IFgT1c3Trey10QwI768XvK7AV8AwI0k/siH58ha7QKc2Gs/bSAbrGim98WP6JqnsRkLw0TfY9Lqgua03FxDWpOQP6Ub5yiLxODDA49atMklIkgYk7lcLNero3L3qlCEX9NT2B1GrvVDyGSgd9/YfxM7HqOOpV1byPtUMIcIeLLxMJEoFJhMqxfgxbews1retud+qLxTkyzIJIPysIIrKChPfwB0Guz3v+hO/rEhojfgp3/DA+kBIvuwfaQlh0zsasTIh4RAY79/54NNILjA/"
       ]
     }
   ]
