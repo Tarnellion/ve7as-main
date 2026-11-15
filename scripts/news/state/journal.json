@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-14T12:17:38.717Z",
+  "updatedAt": "2026-11-15T12:50:06.911Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1600,6 +1600,38 @@
         "F+fWtDHdFzIvDTQjX7rrJ0Sgyu4B5/VlOHDQCROTveZk1B81288868Q4F3tPLLFEi9bSSAQOPszbsr0kSRnm9DgmMxTK2skp8+AwKyPcE/ThveFV2TJH1z3bLDzuwMXVxig/2z7KHZfZIwrNO8bcAVATmNLwz0sDNQLK08cgBjQ79zwkPRAWa9n60czMIu8GZz5RETfmM/0F7mHys80PSMbgvNnXECVkxtYC8/Qx5jygIHEMwubUodC+ywMm69kZqJbOPuMiLzY7sy/0AQbKH78xLcXYQRzxClLb5DoMLr/dQELK0CLl/bmpvMAnHwm8jeQXzTjn0RUGPgWp3ezLNzpFoBon1mEHKSDV5LfluP4418vp91Sq2WTy/kIq6QEl3d/LqvbZWTXXW+vwAtsnLJE1R0YUISs9swYbXPgdz7vZv/jcJCnh4SIQDrbEKaf5ASXawAsO0ED45QWktjRUgQU06hjN9DRLruUaTzlGzxUstk4r6BIO6NYf2t0zO1Un",
         "Egfl0zvcExorEE4IWrbwIEjEzt0K3P5nTl3q/ASdz/o9zhUqssw07LsnEX9VIrEywOzYOwIfNr612K41Nh4I5Sg7DCy79MUp+M8NPxjrC+rl0+kx5yNU4krNJkMCwsvOwzIh0VrbOMTRDgTYJM/iDD4hnMDa5z8YF/HBxNEiFBdAASYVGhUgbOLx2fzXLd8JSSFmBUz1Hu0JFmLwvd8xN8nct9PV8htRueTVC9Up9C28FFYN1uHZuvbF2P4P/NoUvqzKTPoVHiwxvDDxDgvMLs0mI8PDPAT2DSTX+UD4JLXiNlj1zSbs+r6107kkFRvFouv57DsBzB7/SCHG39bAOkNHnAkN6jj0Gwf608AC0iQr9NPi4lqXxlEJGh0n9Ocm0tzLqvS8UUTqQegHIdQsMMI4PTkhGiASz/UTWQMh4s7eueS6HCXw2CL+GOnHParcFSDXzggOzUHw6QXFyCRPoPsg9APL4DY6vfgDQAhG2jAUwRQU4CUN+MkY29QuMSsh",
         "IPPeuUvPJzU5EXwIa5jvC0a5yMsNwgN/UHri9PejzeVmvCc6uro8/rse+X5oJMA3kwezNgYQMbDFrsIjUxEs7j86Fjir4Koi/+cpVyDdI9fqvgQ+0iI5x1HbRT34nsaprD1G6E3sQbreQgbHPbnUEVsUl632yDsQKOjF4838LkRB9UgcIyk6cdPg0eO+LPURWAd29mv6PfcOCWjeos9HTLXqo9fg9idbuuPTBNlK5z23IFgT1c3Trey10QwI768XvK7AV8AwI0k/siH58ha7QKc2Gs/bSAbrGim98WP6JqnsRkLw0TfY9Lqgua03FxDWpOQP6Ub5yiLxODDA49atMklIkgYk7lcLNero3L3qlCEX9NT2B1GrvVDyGSgd9/YfxM7HqOOpV1byPtUMIcIeLLxMJEoFJhMqxfgxbews1retud+qLxTkyzIJIPysIIrKChPfwB0Guz3v+hO/rEhojfgp3/DA+kBIvuwfaQlh0zsasTIh4RAY79/54NNILjA/"
+      ]
+    },
+    {
+      "id": "e7a58e4a6a35",
+      "publishedAt": "2026-11-15T12:50:06.911Z",
+      "title": "Digital Card Rips Are a $2 Billion Business, and Gambling Companies Want In",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "gamblinginsider",
+        "casinoorg",
+        "igamingbusiness"
+      ],
+      "sources": [
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/203838/digital-card-rips-are-a-2-billion-business-and-gambling-companies-want-in"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/digital-pack-rips-a-2b-industry-with-opportunity-for-sportsbooks"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/gaming/ripping-yarns-why-sportsbooks-are-chasing-digital-trading-card-rips"
+        }
+      ],
+      "centroid": "F/XDu1LYLzU8FBP6Q8X8ED7aycD+APAZSGPo/SvJ3OcmimMcoc1L4bQML1lMOOQ11+jgRPlGPcmdv6YeU+QXG0o9JDuP+u4/AMoaQCv0HOG7z8JetiYpykfPPzzc2a2z0Rwu0krDMbz5GD7SWOzXJEgWsMv2pCfxSgS1y74DFzA46gU/Pjk9S+X/vtTYRewSRyRF90j3M+UYLXG2y+5FLp/onfnJ+i1T6suiDAAT4DbKPkgu5d+5zsDimhQF2foZttPDLeIjICUV1SQrNebFf+U4JKPFEP/XBR7qAkvwFbDlMzussx7x8JfDtq4QMxzZvfAb2CvowAndHSrOwrTcKREwxx1H3CYdPQgCw9bKtB4r7NrYAiut8EAXFCJZ7etC3sPD0innNynpVs36GOIkOsISHUwMBEdNuc8XRPMsxrnWxQjfLCnn6zMKBqPPHcHxKg64vAsW6ELh6x/ozCREhiwRzjrJ80EZzPQzSRlg1BtHsjMk1yQHtdoVzeMcJjo3",
+      "vectors": [
+        "EwPDy1TFJUJT6iP0Tr0FFUTdz8H5AO0aW0fh/gfD2t8ygWsSitIz0a8RPGFTMussz/DwQgpkYNeXvZcWYNoQHEA9MFiY6uEu8rI3PBrqF9uryL9PuR4oykvRRjTi07ii3SVCwULNOrz6GTzXaO7JJTwrvO/0rgz/Vv2swL0NGCs36hs9UF5WXN70ptjkQP4dXSBR/TztM8wdLWGd0/IzFZ7arAK77SpM4sCOIRwb1UDaQVEt3d3a6sjRmTIP0+r7tdy8F8McLDEd6C8oOci0fu5GIpifBBLDBA31DUXvGJj8QDmrpB3c5JTEqbQQQSzXvfQe1C36q/fmJSLNx6bAJBVDtg5M0D0MNvr0vOO5rQ0r3cbXAyuY8lIaFh5G6e1B37DV3yHoQCnoXsfmGP0iL9MhHkX/AlBYwbYWQPMfxLTizw7kKCPk6iUED6vSKL32QQ7AxRsp6T/w+j/lsxw7hykTxTbe/UgxyOk3TSxs5RI1ryw71ycPtdUs2O0RFkwr",
+        "BOHgw1LpNEIgIxD+MdL4Cj/PvsYMA+sEQWHY9DbF4vMillsssdJD4MIHKjdQMuov6wTXQu05MM+iv6EYQ+EeE2wlKxmSIvBCA8r8Miv3EOrOv717ticixUvkUTDSyqG90x0v21TQC8D+BFTbUevOHkgdrLf7sC3pNger478GD0E07/czSys0Q/YP0s7kQ+sRQi5B6kXzQgAZIXzRwuBSOqD0mQnE7ylA3NW77vIT8Cm8Qz434eGkxrPtoxH84wkaztKqH/klDRsPxDhALQivf+c4HqndEPvbFjvZ8U0HEK3HKj6VtSPy95+/vp0YIRbX2eAUwizbxRDeFSzM0q3uJxUSvxpD8xscPBwO08rHyhIy9PXSFyvD8icXJzpk5O9I3syyujPTNSv5QM/3HcUjQ7YPJ08P+zY+vtkORvo218jSwgbwMSfn9UcLCKXNHtPgGgDUog8Q+Enk8x303SBTmCggxxvJ0y0DyAEtRA9SuSNIwjUhyyMHsN4I0dstKTwf",
+        "KvyurEncLxc7KAT8Q8b4DzPl1b/1/fgpNnX/BD3X2+UbkVsUsMhg87IMJGk6Pdo9zcncP/YxJL6ox8IpUPQTICpQED2O4flFCuUbTDf7KOK96c9Huiou1Dm9Ikfk8LbAyREX3EG0SMD0KSTKR+7wJkz7scL1mDbuTAXPwsX3GyA35v9FGiAqPN36yNzHQ90GMRk2/04EHuQPNGi50/lCNqjqnOPgDy9j/9ClF/UL3jXPMkMj8uO2w8vpnPoE2fsvp9DnSusjIx8R2AQUNOLxc9wlJ7DVG/Lo9g/yCEbeFtDwKzTNxxgE95zMwcIHMQ/fqf0d9STm1RPXHCrXs87oKwg34yo/1BcrPgEDwNngrDYf9Nbi6yi07UEU/QpY++c24NHK4SP7LCTbXNYPEeokNcQGD0gVDklJtOAdQO0qvLTTxQPNJivt4yYN/aXTDrj+IRid0vYJ2jjU2QDi2Cs4gS7/41a9CUYY2PIvQg9a4xlOrTIP5x/+wt0LxeQTLSRS"
       ]
     }
   ]
