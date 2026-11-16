@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-15T12:50:06.911Z",
+  "updatedAt": "2026-11-16T13:45:50.218Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1632,6 +1632,32 @@
         "EwPDy1TFJUJT6iP0Tr0FFUTdz8H5AO0aW0fh/gfD2t8ygWsSitIz0a8RPGFTMussz/DwQgpkYNeXvZcWYNoQHEA9MFiY6uEu8rI3PBrqF9uryL9PuR4oykvRRjTi07ii3SVCwULNOrz6GTzXaO7JJTwrvO/0rgz/Vv2swL0NGCs36hs9UF5WXN70ptjkQP4dXSBR/TztM8wdLWGd0/IzFZ7arAK77SpM4sCOIRwb1UDaQVEt3d3a6sjRmTIP0+r7tdy8F8McLDEd6C8oOci0fu5GIpifBBLDBA31DUXvGJj8QDmrpB3c5JTEqbQQQSzXvfQe1C36q/fmJSLNx6bAJBVDtg5M0D0MNvr0vOO5rQ0r3cbXAyuY8lIaFh5G6e1B37DV3yHoQCnoXsfmGP0iL9MhHkX/AlBYwbYWQPMfxLTizw7kKCPk6iUED6vSKL32QQ7AxRsp6T/w+j/lsxw7hykTxTbe/UgxyOk3TSxs5RI1ryw71ycPtdUs2O0RFkwr",
         "BOHgw1LpNEIgIxD+MdL4Cj/PvsYMA+sEQWHY9DbF4vMillsssdJD4MIHKjdQMuov6wTXQu05MM+iv6EYQ+EeE2wlKxmSIvBCA8r8Miv3EOrOv717ticixUvkUTDSyqG90x0v21TQC8D+BFTbUevOHkgdrLf7sC3pNger478GD0E07/czSys0Q/YP0s7kQ+sRQi5B6kXzQgAZIXzRwuBSOqD0mQnE7ylA3NW77vIT8Cm8Qz434eGkxrPtoxH84wkaztKqH/klDRsPxDhALQivf+c4HqndEPvbFjvZ8U0HEK3HKj6VtSPy95+/vp0YIRbX2eAUwizbxRDeFSzM0q3uJxUSvxpD8xscPBwO08rHyhIy9PXSFyvD8icXJzpk5O9I3syyujPTNSv5QM/3HcUjQ7YPJ08P+zY+vtkORvo218jSwgbwMSfn9UcLCKXNHtPgGgDUog8Q+Enk8x303SBTmCggxxvJ0y0DyAEtRA9SuSNIwjUhyyMHsN4I0dstKTwf",
         "KvyurEncLxc7KAT8Q8b4DzPl1b/1/fgpNnX/BD3X2+UbkVsUsMhg87IMJGk6Pdo9zcncP/YxJL6ox8IpUPQTICpQED2O4flFCuUbTDf7KOK96c9Huiou1Dm9Ikfk8LbAyREX3EG0SMD0KSTKR+7wJkz7scL1mDbuTAXPwsX3GyA35v9FGiAqPN36yNzHQ90GMRk2/04EHuQPNGi50/lCNqjqnOPgDy9j/9ClF/UL3jXPMkMj8uO2w8vpnPoE2fsvp9DnSusjIx8R2AQUNOLxc9wlJ7DVG/Lo9g/yCEbeFtDwKzTNxxgE95zMwcIHMQ/fqf0d9STm1RPXHCrXs87oKwg34yo/1BcrPgEDwNngrDYf9Nbi6yi07UEU/QpY++c24NHK4SP7LCTbXNYPEeokNcQGD0gVDklJtOAdQO0qvLTTxQPNJivt4yYN/aXTDrj+IRid0vYJ2jjU2QDi2Cs4gS7/41a9CUYY2PIvQg9a4xlOrTIP5x/+wt0LxeQTLSRS"
+      ]
+    },
+    {
+      "id": "86e1200a55a9",
+      "publishedAt": "2026-11-16T13:45:50.217Z",
+      "title": "Flutter Execs: FanDuel Predicts Making Strides, Users Look a Lot Like Sportsbook Customers",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/flutter-execs-fanduel-predicts-making-strides-customers-look-a-lot-like-our-sportsbook-customers"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/fanduel-predicts-gains-momentum-as-flutter-considers-further-investment"
+        }
+      ],
+      "centroid": "EADb4kvoclg3HyMdfMfNPjysyLsWAtc+UVin6zPN3wMawg4mk89L5+UwCFJQQfQwvsvpR/A5O9/VncMpX+TkIVxG8Q/A19Ys/eMlRTz9F9m5v+w68jkh227RHVnTp6TD1UEw7lvNObPyCyDKYazfKEohgsLfuTYkUOW/qubfAysZAyE0TRxIV+jt08+wVwA9My1dzDHuZNQvC2C1xtgvNoPjxSy43EBCruWQG7wv+UG2L0o4zdewxMLpyu4j4RIGwLSzK+0iVxghvUDjKwbEYdYaCJKnDOjj5T37AzXmC5nYP0TB3y/Wz6/Uvs7kFlLc2rY1uDXV9g3sLh600cnVJRxPugBD1j0eTB7r36fYxio5CtP9/k+kzmnrGFMmAPA0vMOyzTvlWTXtI88gJOQfKJgZG00oFTA/sv44DeIi8tnRrODYKyvKFDv5J6nhIqnZBjfXqhwoyUIH9R26rD1XgQkw9BOtw0Elru81PxhWtTcqoFAx3ToByO8V2MQZSjwR",
+      "vectors": [
+        "Jf669FPvWks3FRMKdcnfMja3zr0ICtM9WmWo9TTd3/oJsf8Zj9ZI+dpABEpESAAnpdXxMv8mNeTZosUaasXeGVM+/RG17tM+AuMtOzgEFN/Cz/ND7CwX2njVIFnosqDM3jMe71jLL8PxAR7IWbHjM0YwgdDbq0EsVParsu7Z+EQP8jIvUidNXvbs1dCqXgc6MjZhvTD+Y8csEluvu+EkM5Lk2D2r5zo3wt6OI7UxBDTDIUg1wueg0b/o1+gy2yP/vLrBJPsJURYbu0LaOgPJZ+IV/IuoB/Dh4TH6Dy74CovMQ0HN4x/hu6Phy9/hI0LZ0cYzxT7W9BDjGSynztTKMxJSzuk/3DAlUyry1LvmxzAg+sP/7Fu9zlv7Dz0mFOk8tbq9ukLiWyYCGOETH/IcIKAdJUYzDC9KoP8nDdsT6OvbsNX3JSvJBSv6H7blNab3AjrcuAoKvkIE8B/HsUNMhxAp6Se/yEkWquFBSxlQtS8bnEsz1Ef+u/4G4McxPiwY",
+        "+wIA1DvkflsyJS8sdsvCQzyqyMEh+t84QEOx5CvD4gwp2Bsuos5F2fIcDFJTNOk13MfjU+NFO93WpMgzSQXsJVxG6AvTxN4V+OYaSDn3F9e4tugr+kAo31jSGFDDprLB0Uc88FTVPavzFB7SX7DeGUYPkbzmziUZRdfZquLpDA4hFA4zQA08R9zx1tO+R/o6Lh9Q4C3hWuQtA1vE1tM1NIHluRjM1D9Fo/CeEcsp70iyOEQ23c3Ivsztw/YQ6gANy7atLOA3VRckxjfuGQjEUdAcE6SwD+Pn7EL89jfXCrHoM0C83zrP6MPMucPqB1ri568ztCfZ+Qj3Pw3I2sPkEyJDrhY/1EMVPg/m7Z3QyyBKGOj8EDuV02zdHWAi7PgmytKv5S7rTj7ZKcIqJdofLZsSDksZHSsuzP1CDO0t/svNsu69LSbRH0T5K6XgC7W/CS7XpSlB2TsJ+hi2sDJaiQAyAP6lxDIvuv8kLRRSvDo0r00q6igF2uIh08f/TkYI"
       ]
     }
   ]
