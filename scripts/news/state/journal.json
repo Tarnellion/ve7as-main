@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-16T13:45:50.218Z",
+  "updatedAt": "2026-11-17T14:32:01.390Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1658,6 +1658,44 @@
       "vectors": [
         "Jf669FPvWks3FRMKdcnfMja3zr0ICtM9WmWo9TTd3/oJsf8Zj9ZI+dpABEpESAAnpdXxMv8mNeTZosUaasXeGVM+/RG17tM+AuMtOzgEFN/Cz/ND7CwX2njVIFnosqDM3jMe71jLL8PxAR7IWbHjM0YwgdDbq0EsVParsu7Z+EQP8jIvUidNXvbs1dCqXgc6MjZhvTD+Y8csEluvu+EkM5Lk2D2r5zo3wt6OI7UxBDTDIUg1wueg0b/o1+gy2yP/vLrBJPsJURYbu0LaOgPJZ+IV/IuoB/Dh4TH6Dy74CovMQ0HN4x/hu6Phy9/hI0LZ0cYzxT7W9BDjGSynztTKMxJSzuk/3DAlUyry1LvmxzAg+sP/7Fu9zlv7Dz0mFOk8tbq9ukLiWyYCGOETH/IcIKAdJUYzDC9KoP8nDdsT6OvbsNX3JSvJBSv6H7blNab3AjrcuAoKvkIE8B/HsUNMhxAp6Se/yEkWquFBSxlQtS8bnEsz1Ef+u/4G4McxPiwY",
         "+wIA1DvkflsyJS8sdsvCQzyqyMEh+t84QEOx5CvD4gwp2Bsuos5F2fIcDFJTNOk13MfjU+NFO93WpMgzSQXsJVxG6AvTxN4V+OYaSDn3F9e4tugr+kAo31jSGFDDprLB0Uc88FTVPavzFB7SX7DeGUYPkbzmziUZRdfZquLpDA4hFA4zQA08R9zx1tO+R/o6Lh9Q4C3hWuQtA1vE1tM1NIHluRjM1D9Fo/CeEcsp70iyOEQ23c3Ivsztw/YQ6gANy7atLOA3VRckxjfuGQjEUdAcE6SwD+Pn7EL89jfXCrHoM0C83zrP6MPMucPqB1ri568ztCfZ+Qj3Pw3I2sPkEyJDrhY/1EMVPg/m7Z3QyyBKGOj8EDuV02zdHWAi7PgmytKv5S7rTj7ZKcIqJdofLZsSDksZHSsuzP1CDO0t/svNsu69LSbRH0T5K6XgC7W/CS7XpSlB2TsJ+hi2sDJaiQAyAP6lxDIvuv8kLRRSvDo0r00q6igF2uIh08f/TkYI"
+      ]
+    },
+    {
+      "id": "091a26fa15e3",
+      "publishedAt": "2026-11-17T14:32:01.389Z",
+      "title": "EGBA cuts 2024 harm-funding figure to €64.8m from €148.9m in new sustainability report",
+      "lang": "en",
+      "voices": 4,
+      "groups": [
+        "sbc",
+        "igamingbusiness",
+        "focusgn",
+        "yogonet"
+      ],
+      "sources": [
+        {
+          "source": "casinobeats",
+          "url": "https://casinobeats.com/2026/11/16/egba-cuts-2024-harm-funding-figure-to-e64-8m-from-e148-9m-in-new-sustainability-report"
+        },
+        {
+          "source": "igamingbusiness",
+          "url": "https://igamingbusiness.com/sustainable-gambling/egba-members-societal-contributions-surpass-5-5-billion-2025"
+        },
+        {
+          "source": "focusgn",
+          "url": "https://focusgn.com/egba-societal-contribution-sustainability-report"
+        },
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/16/127318-egba-members-contribute-55b-to-european-society-in-2025"
+        }
+      ],
+      "centroid": "JxThvDHLVlxHBET0Rcr7GEXN0NkTCNxRSDG00Sqoz78mkUcgjwJbxMYbIUg4J9VO07rvYANLRZi3s7YVdg0JJEg+HkrT7c8aBuMPZUrmJcCkr70n1zIPnGEAMjPC3au1+zBZ5EObLbmwKAWWYbLKL0T0rsveyS/QegXHudoTDDhT5Q8nRjlaY9AWDNbQUuMkXkBu/UjfLusHG3Sz2cQ9Q7/Wn+GryiJMvfChI+VD8znEN2Yx49y2y9uijQIcy/4GpqrCT7kuPRkhzxlCG/ricMc3JIamDQrS+EjyClH0McIWHDnN2zLL2s/XrMrNEizeyckd7yvR3hf7RC/Jw7Hb/zJeu0BH2j1LNBrfzq/ToQ1j0eryyDW310f3Lx1lAN1G1cLP1jXlI0bvVqvv6esmItArMxIM/TIOyeY7SgYgw9jDue/yKTYH0xblEoGvQMv4FQeDyxcpwDv4zRO65B1WmzQO20Cuz0Qk3PkKK0dh2+Qlyywi2BLI4+1V1t0VPS84",
+      "vectors": [
+        "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"
       ]
     }
   ]
