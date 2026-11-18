@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-17T14:32:01.390Z",
+  "updatedAt": "2026-11-18T14:07:56.260Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1696,6 +1696,38 @@
         "IhPh1BjLS1dF/TfpK8cBIjjJ5dcVB9pXPjS+1Caz0q8flkgRgRFIw8s4IUkyPvE72rsOVP1CTKK9wroRc/QIJzotKVHa7ssKBPEHY03gIre0qLwT1BgDoVn7My3H5bbEAzNX8kOaLdCvHQ6aZLXBNlEFw9bTzCvAdBm8t+UK+ydK9RYbQDhiVcUPDerOXe0lVzpr8jv4LOXvJWq368I7Pc/tr+Wi2h1EyfGaH+E48CrKLFgt2dOlyuComhQY4QQHra3ITs8UPRgM0iJGJ/Pmeb8wI4inABHG8TH1GkoCK84ZJDPd3CjAy9jIxtDOCzTc4Msd8SrR9A/7NSXJ0brc8iNUx0pL2EBWKg7vzLnasQVZ0uX/sCm+4Tz/JRxYE+1I18zY3C7dEjUGYrra5vIZIfEsJAEFAC4Mw+xINhIasufCt+v8KiwR0xrbBIW3T9L5GAyOzCkutUHwziO94hdTsTsD3D202T0RAPQJFzlZ2ugV2h4p2Rq45/E/zekZNSAz",
         "EArdvSK+SFVTHDnsSNHyG0vRw94hA/NQTUjR4zu63tkSjE8dmPdfzuT4JTErEdQ50bjnSflBMrK6vsMDbxYFGkc6I0XMDd4eCtsAWTzaJsWyxs487igrl0D4MDO96LWr7xxK5E6cGM+6JAuwW8LLIEb5o7Tm0ynTYwzawtX/7jQ21AEzPS9OV90sB9LFWvMTXkllAEnlLvTrD23Bxc5HNsPWiuK7vSg/ye20H+dG7zHUKlwg8eiz1M+rieYaywoFsJjJTKgrORMcuhM5FP/add05Koe5EQzcDUgBC0P3JdwJHzPf2Tbc48fqm8nNIRzqvtsV5TPc7QwHRi7Yxr7r9zw3uUA+5zBDKQfh0rrmvRJK3+n60SS62kv7GyRHBeQ2w7jQ2CDdLUv+T6fv8vskGsgiJCAEAiQJ2vFARBUqwOHTvOb7KSgZ0xLrHJXAMtP9AfqB2wws1Cn+5Qi98xBSuTcZ5jOyxDcr5/0SLytX1+sx0CIaxv3K6e9P6eAIPzEj",
         "FRvs0SnMWVopATb1P84VEUTd49gQGdc7QCmvwhi3zcYmj00doxNkusItGj43MeU+3br4VQ1BN6DLvcMZZBkDIjo2D0Hc3tAFBegJUkL1FMujsroRxSgFrlABOybM4a3OCTtb7DSuGrG7IQOcV7rRITD7t9r4yiLhcfHN1OEYJitL4gwaNS1VW8gSD9fFRsYqWytY/0XwIvUHDn+14McjRc3kteGp1yU7vOmWLOw5/DDCR1sw4ee+yNakpwAJxfwMsLzFR8QZOB4a1A1MD/j0W8QvIo2yDA7I+UjpAlz5OtUgETXG6CfU39rixODECDXp1NEtCh3P3RfqRhjLz7fk/BZWxDdJ3Ec9Jg/h27fVmxBfyO3o2zvB2VLpKRNc7uFG39TM4ELpDz3wTan64vwtJeExJAkJCBYWyedKQwcbw+S+uvjkODMN4hbr+omqOdX8Af6f1x0kwS/i0Am/3SBGojwN6kew2l4a2vYFEExZ4+Mkzica4BzM2/hC7uUqMTUz"
+      ]
+    },
+    {
+      "id": "42bb545f8958",
+      "publishedAt": "2026-11-18T14:07:56.260Z",
+      "title": "Bally’s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments",
+      "lang": "en",
+      "voices": 3,
+      "groups": [
+        "gamblinginsider",
+        "casinoorg",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/204079/ballys-q3-2026-results-missed-liquidity-requirement"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/ballys-lands-560m-in-new-financing-for-chicago-casino"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/ballys-lands-560m-to-advance-chicago-casino-plan"
+        }
+      ],
+      "centroid": "EgzrpjPvRSpIAjwEN866TUPOwbEX7PxEPkja5TGE1vMbkkQio8IjxdXxHWJRG/grx9HeY/gvTdSrqN4RTfj0KDt/LjC549JRBNcmFvvOIuWBwNU7r1dB0kbyTinDxdLDwTdHujzARaHTGhvQWbbMIkkFmaEC1jHuWtOsusz0BQwj6h4XHxZAZcz5//XxNOsqFShN2EzGL+AZHlqdubUYO674z+yx1FRgtM/NDMgswz7MIGEh5N/Vyuvln+UB2tYOubrPLeEWRjMi1lkbHgu6cus7DqXIDt72HyvwE1PlF8nZIkLF4xjqv6vBysD9DFffs8Qr2DbVxw3dRzXKraHUME445wpC1B9CHgbq6LQFtSJArq7yCWLJ/EcMU11DAu1D0LW+2RjgWyjGJ8cbE+cURNPx6CT9OkEa5dwTIRs33dzup+vRMiMP3lMyIOu/P+oRGzLNv/FU8yPg+BPnzDhphRdR5zOktD1Ox90XRTZT4Cg80RtO3gT61gE1xsooIfoV",
+      "vectors": [
+        "FQPWuSz0OTFLAkD4P8jBVizSx7oRAQBLRFrh/iOE1/Qeky4lo9si0df3H25PKQAg197gUOcuOti9tdcOU/H1Ni1/C0a26t1Z//MjJgTYH+2m0tEmwGAuyTzjIinczd28xkE5wD/BNbLQAAvOUMu7IkDrt7EG3zTDRsu/r9UDAx4R7S8XACQ0btb+9O7MMfsFGiJf6ka2LN1EGlObs7kPJrQEzt+q0T1kq/jSD8sh8jvKB20f3eTmy/jVsv8r3NMYxdasHuQwQSMs7CsSJwDBX+szDa7LDMztHhb5DjzjBsztCUrJ2yrRwMbHxbMMGlHbsMol4Tjf4QHKJhfEoKHaTS893SIn7zA1IBHv6rQVxyxDtqj76lu390IATT41B/RKysfR3xDQTCTLKdYLJPwbRNHC9yAKH0Yk8tgZGhgrA8zho963KDL50UAtJO21MtcYIjbX4Pc33yC8+BHr0DlpmyNS2UaqsTxJvO0qSzJn0SI3zwdFy/bs7Ps62dYwGgUQ",
+        "EgX+qSH3Qxw0CCgJLNS2UDzRy7wU7/IzOj/n3y2X3vAVny4YorIm1eL0F01HDAEszNHkXPQyUNmttegUSAfjEkBkOBXH5ddF+8ccAvy+EN6BqO9DrE0rx00FWh26vNjBxDc31UKxTa3eGxfVUqTMIlgglZn90SIQV+iuzsfnEvsd7w8aJxQ5X9PzBvsILPdJFyM4yEzTL94IFEyXvsIUOLHv2/et0lZbya7P/NAhwULIJFYu5ezDyu77md7w2+D8vbnhMN0VQ0AhyWEdIAC/bNZAE6nYCOj7ISX5FU/tIMvQNDOz5wn2zrTE08f7GE3jp8cs0DLPyRzcTkbErqPYI0c0+PNJ3BBMJv7n68QKtSc2r7X8GlPVBjkVPm5PB+1D2bPB3Sj0VS/KJc8XDOMBO9sJ3h4CP0Ma6NIFGhMyzez8s/DgMhkJ5FMsFOTESfsPHizMx+ZV9hsB/w32zkZfiRJS+Bq0vkFPx9chNSxP6ic400FN4gUQ3Pg1w8IfG/sI",
+        "CxnzqjznQCVF/ToKKtvLLE3Uw7MZ2gI7LC3S2zWT2fcXpFofvsoXutTvGk5HFOopwdHfYA8gR9evqOUNN/MGJDR1OSfC4c8/D9YnFfThLuqB1s04t0FU8TXxVirE1s/byx5QriPfO6DZKifaUMbrGDADm7IB3S77VtKuxdf1+Qcw6RQOKwZAR8r7AvkCL9ckCCc84T7aJ+z6JFXBz7keQrz30vPQ5FBIvdbVFs02qyvgK0YN8dji2ODnrNvn4NsSvLLrLer5OygS2mUbCx7BaQMtB7LGEu/7FjnlEVbnGNPaHzbi8A/8wqDJ1Nfx70/p1soj4SvfvQb5TTTk0LjWE10n6AZCvhMzDALv6Lrvtws1u8PmE1vf90UMV1Iz9+sr2bq82AvnVxnMHMAoBd4ZOdkL6CPtQSkJ3PMWJR430ubzuPjpLRMm7k8uHfTVMfIHCyfRq/lYBSPt9BTb1RpXjgk56iqowik+4t32PDYt7iU13gJC9RD0yA8ixtceJfAg"
       ]
     }
   ]
