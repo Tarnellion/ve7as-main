@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-18T14:07:56.260Z",
+  "updatedAt": "2026-11-19T14:31:26.546Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1728,6 +1728,26 @@
         "FQPWuSz0OTFLAkD4P8jBVizSx7oRAQBLRFrh/iOE1/Qeky4lo9si0df3H25PKQAg197gUOcuOti9tdcOU/H1Ni1/C0a26t1Z//MjJgTYH+2m0tEmwGAuyTzjIinczd28xkE5wD/BNbLQAAvOUMu7IkDrt7EG3zTDRsu/r9UDAx4R7S8XACQ0btb+9O7MMfsFGiJf6ka2LN1EGlObs7kPJrQEzt+q0T1kq/jSD8sh8jvKB20f3eTmy/jVsv8r3NMYxdasHuQwQSMs7CsSJwDBX+szDa7LDMztHhb5DjzjBsztCUrJ2yrRwMbHxbMMGlHbsMol4Tjf4QHKJhfEoKHaTS893SIn7zA1IBHv6rQVxyxDtqj76lu390IATT41B/RKysfR3xDQTCTLKdYLJPwbRNHC9yAKH0Yk8tgZGhgrA8zho963KDL50UAtJO21MtcYIjbX4Pc33yC8+BHr0DlpmyNS2UaqsTxJvO0qSzJn0SI3zwdFy/bs7Ps62dYwGgUQ",
         "EgX+qSH3Qxw0CCgJLNS2UDzRy7wU7/IzOj/n3y2X3vAVny4YorIm1eL0F01HDAEszNHkXPQyUNmttegUSAfjEkBkOBXH5ddF+8ccAvy+EN6BqO9DrE0rx00FWh26vNjBxDc31UKxTa3eGxfVUqTMIlgglZn90SIQV+iuzsfnEvsd7w8aJxQ5X9PzBvsILPdJFyM4yEzTL94IFEyXvsIUOLHv2/et0lZbya7P/NAhwULIJFYu5ezDyu77md7w2+D8vbnhMN0VQ0AhyWEdIAC/bNZAE6nYCOj7ISX5FU/tIMvQNDOz5wn2zrTE08f7GE3jp8cs0DLPyRzcTkbErqPYI0c0+PNJ3BBMJv7n68QKtSc2r7X8GlPVBjkVPm5PB+1D2bPB3Sj0VS/KJc8XDOMBO9sJ3h4CP0Ma6NIFGhMyzez8s/DgMhkJ5FMsFOTESfsPHizMx+ZV9hsB/w32zkZfiRJS+Bq0vkFPx9chNSxP6ic400FN4gUQ3Pg1w8IfG/sI",
         "CxnzqjznQCVF/ToKKtvLLE3Uw7MZ2gI7LC3S2zWT2fcXpFofvsoXutTvGk5HFOopwdHfYA8gR9evqOUNN/MGJDR1OSfC4c8/D9YnFfThLuqB1s04t0FU8TXxVirE1s/byx5QriPfO6DZKifaUMbrGDADm7IB3S77VtKuxdf1+Qcw6RQOKwZAR8r7AvkCL9ckCCc84T7aJ+z6JFXBz7keQrz30vPQ5FBIvdbVFs02qyvgK0YN8dji2ODnrNvn4NsSvLLrLer5OygS2mUbCx7BaQMtB7LGEu/7FjnlEVbnGNPaHzbi8A/8wqDJ1Nfx70/p1soj4SvfvQb5TTTk0LjWE10n6AZCvhMzDALv6Lrvtws1u8PmE1vf90UMV1Iz9+sr2bq82AvnVxnMHMAoBd4ZOdkL6CPtQSkJ3PMWJR430ubzuPjpLRMm7k8uHfTVMfIHCyfRq/lYBSPt9BTb1RpXjgk56iqowik+4t32PDYt7iU13gJC9RD0yA8ixtceJfAg"
+      ]
+    },
+    {
+      "id": "2ff396237085",
+      "publishedAt": "2026-11-19T14:31:26.546Z",
+      "title": "GGL untersagt bekanntem Streamer Werbung für unerlaubte Glücksspiele",
+      "lang": "de",
+      "voices": 1,
+      "groups": [
+        "ggl"
+      ],
+      "sources": [
+        {
+          "source": "ggl",
+          "url": "https://www.gluecksspiel-behoerde.de/de/news/ggl-untersagt-bekanntem-streamer-werbung-fuer-unerlaubte-gluecksspiele"
+        }
+      ],
+      "centroid": "RB+xzET6JD/t/lrxVtXBGCLT3P8SD9kdVyHYFQikvvA3tjAkyQIv69cwGkdXFgMsxfP+JOQe+7D30NkFKQsWFA9CEC22581QC8gTPATXDtm06L9W0TBH41jzKlDe3Z/Syx427FC++8bqNBe+JtDpDA4Ygcbd7h3FRsHErKAjGhsd+iYZ9UBIN7zd4OjjC/8zGC5v0zzmL75CMEXREdUXIMTOlN/+7zkw3OUAIecl9EG1D0s42MaetvT82goZwM4VwrfpNtEmFjAj0DEVQAfKN+ELBcG0Rs0fDjfPISLbRrQODUT0zRzU9rm7zKMxBBXxydAqx03KsTfVOzeW87fbVzJRswAd00cqRRjq9+n2vhZo6BziBCzX104UNBBa2uBEqN7N0wqrGRrYTMnoLcQ7BNEVIRwwJzkj6NMaQ/UZzcrgyOTNGC/g8if0HO3/dbT34iah4joqsjb7zg7XxRo8nDwZ6Tqr2DU8vQa/NUwP+RA5wyJFuQsV9Mkn9sU6UiIn",
+      "vectors": [
+        "RB+xzET6JD/t/lrxVtXBGCLT3P8SD9kdVyHYFQikvvA3tjAkyQIv69cwGkdXFgMsxfP+JOQe+7D30NkFKQsWFA9CEC22581QC8gTPATXDtm06L9W0TBH41jzKlDe3Z/Syx427FC++8bqNBe+JtDpDA4Ygcbd7h3FRsHErKAjGhsd+iYZ9UBIN7zd4OjjC/8zGC5v0zzmL75CMEXREdUXIMTOlN/+7zkw3OUAIecl9EG1D0s42MaetvT82goZwM4VwrfpNtEmFjAj0DEVQAfKN+ELBcG0Rs0fDjfPISLbRrQODUT0zRzU9rm7zKMxBBXxydAqx03KsTfVOzeW87fbVzJRswAd00cqRRjq9+n2vhZo6BziBCzX104UNBBa2uBEqN7N0wqrGRrYTMnoLcQ7BNEVIRwwJzkj6NMaQ/UZzcrgyOTNGC/g8if0HO3/dbT34iah4joqsjb7zg7XxRo8nDwZ6Tqr2DU8vQa/NUwP+RA5wyJFuQsV9Mkn9sU6UiIn"
       ]
     }
   ]
