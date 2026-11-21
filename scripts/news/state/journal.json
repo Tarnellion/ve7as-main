@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-20T14:06:36.332Z",
+  "updatedAt": "2026-11-21T13:33:08.293Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1768,6 +1768,26 @@
       "centroid": "UvjC3xfMISoaDkf7U6rQCz/u19Ad480cYSqOCyfL9v4W0002rAQlCs0nCjA1S81Kr/n+IA0z+MLVzLYvR+nsNSNEAx274eFJD+EWTDrdHg2lsM8+9SAs6i/qTjXe572y8RQ/6xbOGZbvKgbJNuC5DDwTgdD01F7CWNjSxc/TGzJI+BsNHxc+OLAW5+zaFM33ARg57SPdFAwqJF/pEvY/HMmumtr14mRC0uvpHwYk+iGyBFM73PGez+HQmwEVldw8wsXsUqgAJCwA4eoULfbt/PYKE7jTSRreBxu5IBTyPb3+MCwQ7iPSAd/Q08n+APL3u8Um6EPY3gXeOA3OubX3NR5K2A4a40o6DRjW8NQUyvpM6uzPCzPO8kwQOw9M2tIl49Lc9QztGBrfMMYI3tQTJdslBRUvQihI6PYrVvoqx/LU5eiuLjrl0zYDJdDmTKXy2CCp5CJMyDMS8Ry10CkNsD8h8iit2E0UyD7aKkYg9t4WvQ9A1g4H2tX/BN83JiQu",
       "vectors": [
         "UvjC3xfMISoaDkf7U6rQCz/u19Ad480cYSqOCyfL9v4W0002rAQlCs0nCjA1S81Kr/n+IA0z+MLVzLYvR+nsNSNEAx274eFJD+EWTDrdHg2lsM8+9SAs6i/qTjXe572y8RQ/6xbOGZbvKgbJNuC5DDwTgdD01F7CWNjSxc/TGzJI+BsNHxc+OLAW5+zaFM33ARg57SPdFAwqJF/pEvY/HMmumtr14mRC0uvpHwYk+iGyBFM73PGez+HQmwEVldw8wsXsUqgAJCwA4eoULfbt/PYKE7jTSRreBxu5IBTyPb3+MCwQ7iPSAd/Q08n+APL3u8Um6EPY3gXeOA3OubX3NR5K2A4a40o6DRjW8NQUyvpM6uzPCzPO8kwQOw9M2tIl49Lc9QztGBrfMMYI3tQTJdslBRUvQihI6PYrVvoqx/LU5eiuLjrl0zYDJdDmTKXy2CCp5CJMyDMS8Ry10CkNsD8h8iit2E0UyD7aKkYg9t4WvQ9A1g4H2tX/BN83JiQu"
+      ]
+    },
+    {
+      "id": "bcc95fd8c8a2",
+      "publishedAt": "2026-11-21T13:33:08.293Z",
+      "title": "Ksa spreekt Circus en ZEbet aan op verboden wedaanbod",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/ksa-spreekt-circus-en-zebet-aan-op-verboden-wedaanbod"
+        }
+      ],
+      "centroid": "X/nVwRn0JkHUIk4QUdL7IVfC890Q/7k/TyjQ/R7U58pOwzcSjNk8/948H3FgP99Dy+70RwsLPKDG1804aRElCi4l+AKY+801ANL7ThnhEuXG4KQyxgwLyEDbPEi60cXH1SQT7znoOuHNPQrnKc29CE8bkr7VrRvzXhLOtNzNCCJP9DQTGi8hdMf08u+6/ucY+TpR6hzoPtomNzHd1tknSrXZ19Lw7DAQrBq3KNEw+2ezDxsSxtLB0eLvwuf6x+pH8pD7PNcpDxD00EkWMArCOcg1F9O6FvfDLAvEM1P3LJ3uERrW9Rb639O75bbzMvLboPAayFrI1C3XO0SW353kHzc8yxc881UQLzf728cM3yIuuvLxEj264RQINxQ348p/+AWk1izBShP7NPYcG9cFFr4Y5Dr4O1Is0tYkWxYP2d7NwCfyDAIJ5UPuMLe2TrPSzCrHt/0UtDEn5BnP0jpdkhMDvRiq51Aa7/oeQDFI8vgg20468QoE+8/73MdTIhA5",
+      "vectors": [
+        "X/nVwRn0JkHUIk4QUdL7IVfC890Q/7k/TyjQ/R7U58pOwzcSjNk8/948H3FgP99Dy+70RwsLPKDG1804aRElCi4l+AKY+801ANL7ThnhEuXG4KQyxgwLyEDbPEi60cXH1SQT7znoOuHNPQrnKc29CE8bkr7VrRvzXhLOtNzNCCJP9DQTGi8hdMf08u+6/ucY+TpR6hzoPtomNzHd1tknSrXZ19Lw7DAQrBq3KNEw+2ezDxsSxtLB0eLvwuf6x+pH8pD7PNcpDxD00EkWMArCOcg1F9O6FvfDLAvEM1P3LJ3uERrW9Rb639O75bbzMvLboPAayFrI1C3XO0SW353kHzc8yxc881UQLzf728cM3yIuuvLxEj264RQINxQ348p/+AWk1izBShP7NPYcG9cFFr4Y5Dr4O1Is0tYkWxYP2d7NwCfyDAIJ5UPuMLe2TrPSzCrHt/0UtDEn5BnP0jpdkhMDvRiq51Aa7/oeQDFI8vgg20468QoE+8/73MdTIhA5"
       ]
     }
   ]
