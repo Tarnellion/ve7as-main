@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-21T13:33:08.293Z",
+  "updatedAt": "2026-11-22T13:26:46.368Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1788,6 +1788,26 @@
       "centroid": "X/nVwRn0JkHUIk4QUdL7IVfC890Q/7k/TyjQ/R7U58pOwzcSjNk8/948H3FgP99Dy+70RwsLPKDG1804aRElCi4l+AKY+801ANL7ThnhEuXG4KQyxgwLyEDbPEi60cXH1SQT7znoOuHNPQrnKc29CE8bkr7VrRvzXhLOtNzNCCJP9DQTGi8hdMf08u+6/ucY+TpR6hzoPtomNzHd1tknSrXZ19Lw7DAQrBq3KNEw+2ezDxsSxtLB0eLvwuf6x+pH8pD7PNcpDxD00EkWMArCOcg1F9O6FvfDLAvEM1P3LJ3uERrW9Rb639O75bbzMvLboPAayFrI1C3XO0SW353kHzc8yxc881UQLzf728cM3yIuuvLxEj264RQINxQ348p/+AWk1izBShP7NPYcG9cFFr4Y5Dr4O1Is0tYkWxYP2d7NwCfyDAIJ5UPuMLe2TrPSzCrHt/0UtDEn5BnP0jpdkhMDvRiq51Aa7/oeQDFI8vgg20468QoE+8/73MdTIhA5",
       "vectors": [
         "X/nVwRn0JkHUIk4QUdL7IVfC890Q/7k/TyjQ/R7U58pOwzcSjNk8/948H3FgP99Dy+70RwsLPKDG1804aRElCi4l+AKY+801ANL7ThnhEuXG4KQyxgwLyEDbPEi60cXH1SQT7znoOuHNPQrnKc29CE8bkr7VrRvzXhLOtNzNCCJP9DQTGi8hdMf08u+6/ucY+TpR6hzoPtomNzHd1tknSrXZ19Lw7DAQrBq3KNEw+2ezDxsSxtLB0eLvwuf6x+pH8pD7PNcpDxD00EkWMArCOcg1F9O6FvfDLAvEM1P3LJ3uERrW9Rb639O75bbzMvLboPAayFrI1C3XO0SW353kHzc8yxc881UQLzf728cM3yIuuvLxEj264RQINxQ348p/+AWk1izBShP7NPYcG9cFFr4Y5Dr4O1Is0tYkWxYP2d7NwCfyDAIJ5UPuMLe2TrPSzCrHt/0UtDEn5BnP0jpdkhMDvRiq51Aa7/oeQDFI8vgg20468QoE+8/73MdTIhA5"
+      ]
+    },
+    {
+      "id": "3be7b084c902",
+      "publishedAt": "2026-11-22T13:26:46.368Z",
+      "title": "Cancellation of Authorisation for Vittoriosa Consultancy Limited (C 73106)",
+      "lang": "en",
+      "voices": 1,
+      "groups": [
+        "mga"
+      ],
+      "sources": [
+        {
+          "source": "mga",
+          "url": "https://www.mga.org.mt/cancellation-of-authorisation-for-vittoriosa-consultancy-limited-c-73106"
+        }
+      ],
+      "centroid": "NCW0xTMELls27TjSSqAGIDj1z78p7NYjUD/E+i6m399Xmhsv1LE3zK0o/lVXHLtR2PTaSR0qDZrb0OEmc+b9LkwoJy+t76pDBbQeNy30GdPRqMoSsVJQzTkDJUXSxtOn3yda0kqcMYb1JdmxHdT8FScTtOjZyh3TbOvYta8BBDNO9BAjHlFJP6vx1OLLJvsfOSZ64Fv6RMs4FXTLz94rN7/RkcrvCUBDnvnaNNVc8CGwLEAt2wm5ybu7oRkBwvk+1MH5Wc46GT0Y9jIeIS7gLe0UCd+oUvXbKiv3EFD1JLX5BSa38BDf1+bJ07btJlLEgewE71Thxhn4CSW87OrQLjoMuS42/VcSVfXe4eLljio87NoK6jms5SUFOydR/OJC58i82ATpLSrnIJz348YZM8bkGCIlGS8q9CNFV+Y76cm01MrYOlLj4BL7IMG7H8L0+BDKzhglxkzsAEvXzClEjCBGxCSc1TwnteoBPSNXDeAnsQlM3frp0cQW3OUlTgj+",
+      "vectors": [
+        "NCW0xTMELls27TjSSqAGIDj1z78p7NYjUD/E+i6m399Xmhsv1LE3zK0o/lVXHLtR2PTaSR0qDZrb0OEmc+b9LkwoJy+t76pDBbQeNy30GdPRqMoSsVJQzTkDJUXSxtOn3yda0kqcMYb1JdmxHdT8FScTtOjZyh3TbOvYta8BBDNO9BAjHlFJP6vx1OLLJvsfOSZ64Fv6RMs4FXTLz94rN7/RkcrvCUBDnvnaNNVc8CGwLEAt2wm5ybu7oRkBwvk+1MH5Wc46GT0Y9jIeIS7gLe0UCd+oUvXbKiv3EFD1JLX5BSa38BDf1+bJ07btJlLEgewE71Thxhn4CSW87OrQLjoMuS42/VcSVfXe4eLljio87NoK6jms5SUFOydR/OJC58i82ATpLSrnIJz348YZM8bkGCIlGS8q9CNFV+Y76cm01MrYOlLj4BL7IMG7H8L0+BDKzhglxkzsAEvXzClEjCBGxCSc1TwnteoBPSNXDeAnsQlM3frp0cQW3OUlTgj+"
       ]
     }
   ]
