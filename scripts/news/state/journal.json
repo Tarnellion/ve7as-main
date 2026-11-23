@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-22T13:26:46.368Z",
+  "updatedAt": "2026-11-23T16:04:43.950Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1808,6 +1808,26 @@
       "centroid": "NCW0xTMELls27TjSSqAGIDj1z78p7NYjUD/E+i6m399Xmhsv1LE3zK0o/lVXHLtR2PTaSR0qDZrb0OEmc+b9LkwoJy+t76pDBbQeNy30GdPRqMoSsVJQzTkDJUXSxtOn3yda0kqcMYb1JdmxHdT8FScTtOjZyh3TbOvYta8BBDNO9BAjHlFJP6vx1OLLJvsfOSZ64Fv6RMs4FXTLz94rN7/RkcrvCUBDnvnaNNVc8CGwLEAt2wm5ybu7oRkBwvk+1MH5Wc46GT0Y9jIeIS7gLe0UCd+oUvXbKiv3EFD1JLX5BSa38BDf1+bJ07btJlLEgewE71Thxhn4CSW87OrQLjoMuS42/VcSVfXe4eLljio87NoK6jms5SUFOydR/OJC58i82ATpLSrnIJz348YZM8bkGCIlGS8q9CNFV+Y76cm01MrYOlLj4BL7IMG7H8L0+BDKzhglxkzsAEvXzClEjCBGxCSc1TwnteoBPSNXDeAnsQlM3frp0cQW3OUlTgj+",
       "vectors": [
         "NCW0xTMELls27TjSSqAGIDj1z78p7NYjUD/E+i6m399Xmhsv1LE3zK0o/lVXHLtR2PTaSR0qDZrb0OEmc+b9LkwoJy+t76pDBbQeNy30GdPRqMoSsVJQzTkDJUXSxtOn3yda0kqcMYb1JdmxHdT8FScTtOjZyh3TbOvYta8BBDNO9BAjHlFJP6vx1OLLJvsfOSZ64Fv6RMs4FXTLz94rN7/RkcrvCUBDnvnaNNVc8CGwLEAt2wm5ybu7oRkBwvk+1MH5Wc46GT0Y9jIeIS7gLe0UCd+oUvXbKiv3EFD1JLX5BSa38BDf1+bJ07btJlLEgewE71Thxhn4CSW87OrQLjoMuS42/VcSVfXe4eLljio87NoK6jms5SUFOydR/OJC58i82ATpLSrnIJz348YZM8bkGCIlGS8q9CNFV+Y76cm01MrYOlLj4BL7IMG7H8L0+BDKzhglxkzsAEvXzClEjCBGxCSc1TwnteoBPSNXDeAnsQlM3frp0cQW3OUlTgj+"
+      ]
+    },
+    {
+      "id": "b7e185568163",
+      "publishedAt": "2026-11-23T16:04:43.949Z",
+      "title": "Ksa voorkomt gokreclame op wedstrijdshirts van Inter Milaan en Club Brugge",
+      "lang": "nl",
+      "voices": 1,
+      "groups": [
+        "ksa"
+      ],
+      "sources": [
+        {
+          "source": "ksa",
+          "url": "https://kansspelautoriteit.nl/ksa-voorkomt-gokreclame-op-wedstrijdshirts-van-inter-milaan-en-club-brugge"
+        }
+      ],
+      "centroid": "U+OcwFgQODAOOk74Ox24LDGy5uMP4dRGG0jKLBei4d5VpkEfgdFJ7OgfBmBoJvg19/3vWR40KsjXt/goX/wH/lIpGUOU28pYA8AJLQLlJN60y4wn1y03n0vlIk70mr+s5DUm02XXFsy9GRnNJsa/GUYblcAE4B7XWe+/x+nyNldl+govHU1DR73+1tjND9gNGSkq2RsDWrosOU/m8ucbMrDLwRMF31X4rg3aJutBw2nnGzoW3e64stbKoutEubQnuZzlXaImUBwyqj1CVQ/JJ7g/PuSncuDQMQPAMCCvS4MVAxbY2hTc2czczKoBCSTt1df2qDvJmCADSye806i6BxE2piROFWX9Pj3q/t72vUw8yCjr5RnOxf9LMklU75Z78t3G2UDBPzj3TOUCEd8WUMMRCBz+RVUJwd4SMyQMwMe4kOrlNhkc5UX3MLCyHq7W0zHaxhIRxy4C5RjcxD4PlTUr4xKX4mEo0d3iR1Ji39/vyTRF0B4WIqkeBbE7JDo2",
+      "vectors": [
+        "U+OcwFgQODAOOk74Ox24LDGy5uMP4dRGG0jKLBei4d5VpkEfgdFJ7OgfBmBoJvg19/3vWR40KsjXt/goX/wH/lIpGUOU28pYA8AJLQLlJN60y4wn1y03n0vlIk70mr+s5DUm02XXFsy9GRnNJsa/GUYblcAE4B7XWe+/x+nyNldl+govHU1DR73+1tjND9gNGSkq2RsDWrosOU/m8ucbMrDLwRMF31X4rg3aJutBw2nnGzoW3e64stbKoutEubQnuZzlXaImUBwyqj1CVQ/JJ7g/PuSncuDQMQPAMCCvS4MVAxbY2hTc2czczKoBCSTt1df2qDvJmCADSye806i6BxE2piROFWX9Pj3q/t72vUw8yCjr5RnOxf9LMklU75Z78t3G2UDBPzj3TOUCEd8WUMMRCBz+RVUJwd4SMyQMwMe4kOrlNhkc5UX3MLCyHq7W0zHaxhIRxy4C5RjcxD4PlTUr4xKX4mEo0d3iR1Ji39/vyTRF0B4WIqkeBbE7JDo2"
       ]
     }
   ]
