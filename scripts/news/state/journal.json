@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-23T16:04:43.950Z",
+  "updatedAt": "2026-11-24T16:00:33.518Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1828,6 +1828,44 @@
       "centroid": "U+OcwFgQODAOOk74Ox24LDGy5uMP4dRGG0jKLBei4d5VpkEfgdFJ7OgfBmBoJvg19/3vWR40KsjXt/goX/wH/lIpGUOU28pYA8AJLQLlJN60y4wn1y03n0vlIk70mr+s5DUm02XXFsy9GRnNJsa/GUYblcAE4B7XWe+/x+nyNldl+govHU1DR73+1tjND9gNGSkq2RsDWrosOU/m8ucbMrDLwRMF31X4rg3aJutBw2nnGzoW3e64stbKoutEubQnuZzlXaImUBwyqj1CVQ/JJ7g/PuSncuDQMQPAMCCvS4MVAxbY2hTc2czczKoBCSTt1df2qDvJmCADSye806i6BxE2piROFWX9Pj3q/t72vUw8yCjr5RnOxf9LMklU75Z78t3G2UDBPzj3TOUCEd8WUMMRCBz+RVUJwd4SMyQMwMe4kOrlNhkc5UX3MLCyHq7W0zHaxhIRxy4C5RjcxD4PlTUr4xKX4mEo0d3iR1Ji39/vyTRF0B4WIqkeBbE7JDo2",
       "vectors": [
         "U+OcwFgQODAOOk74Ox24LDGy5uMP4dRGG0jKLBei4d5VpkEfgdFJ7OgfBmBoJvg19/3vWR40KsjXt/goX/wH/lIpGUOU28pYA8AJLQLlJN60y4wn1y03n0vlIk70mr+s5DUm02XXFsy9GRnNJsa/GUYblcAE4B7XWe+/x+nyNldl+govHU1DR73+1tjND9gNGSkq2RsDWrosOU/m8ucbMrDLwRMF31X4rg3aJutBw2nnGzoW3e64stbKoutEubQnuZzlXaImUBwyqj1CVQ/JJ7g/PuSncuDQMQPAMCCvS4MVAxbY2hTc2czczKoBCSTt1df2qDvJmCADSye806i6BxE2piROFWX9Pj3q/t72vUw8yCjr5RnOxf9LMklU75Z78t3G2UDBPzj3TOUCEd8WUMMRCBz+RVUJwd4SMyQMwMe4kOrlNhkc5UX3MLCyHq7W0zHaxhIRxy4C5RjcxD4PlTUr4xKX4mEo0d3iR1Ji39/vyTRF0B4WIqkeBbE7JDo2"
+      ]
+    },
+    {
+      "id": "356372b31ad4",
+      "publishedAt": "2026-11-24T16:00:33.517Z",
+      "title": "Entain in advanced talks to sell Eastern European stake to CVC for up to $2.29bn",
+      "lang": "en",
+      "voices": 4,
+      "groups": [
+        "yogonet",
+        "casinoorg",
+        "gruporandom",
+        "gamblingnews"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/23/127415-entain-in-advanced-talks-to-sell-eastern-european-stake-to-cvc-for-up-to-229bn"
+        },
+        {
+          "source": "casinoorg",
+          "url": "https://www.casino.org/news/entain-mulling-sale-of-remaining-stake-in-eastern-europe-biz-to-cvc-for-up-to-2-29b"
+        },
+        {
+          "source": "azarplus",
+          "url": "https://www.azarplus.com/entain-negocia-con-cvc-la-venta-de-su-participacion-restante-en-europa-del-este"
+        },
+        {
+          "source": "gamblingnews",
+          "url": "https://www.gamblingnews.com/news/entain-shares-rise-as-cvc-eyes-2-29b-deal-for-european-business"
+        }
+      ],
+      "centroid": "L/TEwCDZKC1DAQP7T8jiFz32yMIY9uw+VmPCAzCo3tYTjD8/pt9gw9caKmNHNQxC5+PKIxlJPtyXuNIRPwQGMVpYFBnHE9E9FOdGPyvw6+Wg+cUz3GUZnzb0PG+1xt2e4DcZz1PBJMoGGwDWYa7TJiL7oOP+o0TUOurfv9rQ5Bw/6xYhJUFZVNoDzMnzGPE3TztM3Tn3aPUIJkDep9L7RrvCtvq4ylUOuv2rQ9Az0D/HFjVGuAfC6dXAoxAu2QoyvoeyPfI4ICASrD8eHhvicuQ8EMHEHbHl8z/zAUX1PcT6FmnSxzXY3bqg28Xe+kiqwa0PvzW37fbWVf3azLYIMCFHtgMc02sgXSrcw7nfrBA9CtUQ8EnHqXsNR1dICsUu18SjqUywFjUXP9gMBdlHEecNIjkDPTsUtfEoJzE+4cPT2NmnIinwujP/G6+VEt0EEEmwnCQb4CL/6CjX5EBMgSQv5UDMtlEovdsQRF4zCOErtFIu8SDQneAj3akWOggt",
+      "vectors": [
+        "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"
       ]
     }
   ]
