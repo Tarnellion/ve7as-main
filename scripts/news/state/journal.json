@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-24T16:00:33.518Z",
+  "updatedAt": "2026-11-25T15:43:29.820Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1866,6 +1866,37 @@
         "M+nEsxz4IypQ/QH6RsjrDkAQ1LoZ/v8nVG25Bym+3dETgTk5s9ddxtQkJ15KNxcz8cqzEhZAM/Seu9IQMv0DIV5bDgu7HN1LCOFYOynx1OSy98Q+zHgMoCngN3C0y/GX4ikiy1O2FcD8IfvHWKXKLhv/u+byoTfVLOnkydDO4w1I7x0TDS5ZTOf/1cEAEfZAVjNe2kL8egkRHjnfrsr6WK+/vP2/x0r9s++iPsAtwTzWFDFivRC/3+LSox414horuoW2MfcxHSUUtzcOKx7nafhCAsvNDr3lD08B+jPvN8b7HGvTzUTX1sCt18Ti/FO6wLMSsRyp7P7fXfTZ2sUPJSVJqwkY7G0vYSrWu6/QrgY1CtYa60zLq3L+RlRECMc08bujqkiwISz9QdcHBddIFtIoKUEIRDESuPMjLSkt7b7c4dCeGyfWyS38BL2YEuMHH0OnoSga9Sj5/DPm6kpVgics3zzYrkgexOIVT2Q4AOckv0Is7xzRpNUk1bgXIgQ/",
         "MP/X4yDHLg0kEwsQRNnjEy/r0M0c5NRJSkfCCTCh5OAVrT4rp/Zi0eUPI2VAKww58eTyNClBK7mz1N8vJigTOEE2ASLW+tMpGAAwTjHuC9ia+9Mm61AerDEKKV7AxeOt6jwW0FHSKNAKIf/dSsvVEhnvlukjrU3aRPzqte7D8yIs+BowJkhFYM8B2dPo/eoiIi0Z3R/8VecEKz7suPr4Nsraw/PH2EgQ1QPHG88/5zPBEDQm1P/j5MnCrwohwQkqxJrOTe0wDgoQtT0SEyDfXdgtGLzVGcDu6yfnHTz4SOj9DUzdux/l67+d5djfBEKg074R1DnJ4f3AMfrgwqz6Mw4vwAsrwnEMUxvsx8rxtCBBAu8D+SvlrnQIOFU4+Ms12Nezpkm49CYkMuQBDtkoB+8IEh35QToeo+4fGEdU2NbA0s2/OiAFyj35JcS6A9kA+kTFoTIfziQWzh7V0DwzgSQq/S3QyEUVu8gONlobDdQpyFYr8CvUqugZ7scYPw4f",
         "JfPFtC7dHT1J/QPzV87hIC/4vsoCBu00amTM9i245OASjjRCrMpQs9YeLmJAOQk+6e3CIBNPS/SgosH8ROf6Jl1bGxDXKuA6EeFBJCH44uys69E04lobkjT1PmG2xNWr4y8c1VnFIMQMBgfXZaTbMRoIs9zrpDbVM9jR0NLm5SI51g0cJjthSuQMy9ToHQQ9ZDpR5EfsZ+0DIT7RmrIGOrfKswmpw1MGtgubYdwn0kjSEjNXqgm68NC9rgw98wsuvI6fKftCNyUNrjUrGxjna+9DDMjFI7Tm6UYE6kv+NbX1C2TLxTXY2LWqzsPo9E2lu64LrT+06vTrZPzS1K4LKTBMuvgJ3F8vUjfGxa/Ypg89/74P/064p2gSVFVIG9Ik1rWkq020IS8lN8oZ+uJPGukHIj4UKj0MvvYrGiQt6Mvb3uGsFjn0sDAPIaeBGO0NFUHAsRYe4R/q6ifT7z5SmxFC1krHrk0sze4WTmE7BvQwtFMt9x/TktYp26wWNAcm"
+      ]
+    },
+    {
+      "id": "cdd51bb40abc",
+      "publishedAt": "2026-11-25T15:43:29.820Z",
+      "title": "BETBY adds eMMA: Stone Faces and eRugby'94 games to proprietary esports portfolio",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "yogonet",
+        "sbc"
+      ],
+      "sources": [
+        {
+          "source": "yogonet_intl",
+          "url": "https://www.yogonet.com/international/news/2026/11/24/127444-betby-adds-emma-stone-faces-and-erugby-3994-games-to-proprietary-esports-portfolio"
+        },
+        {
+          "source": "sbcnews",
+          "url": "https://sbcnews.co.uk/esports-fantasy/2026/11/24/betby-esports-portfolio"
+        },
+        {
+          "source": "yogonet_latam",
+          "url": "https://www.yogonet.com/latinoamerica/noticias/2026/11/25/111630-betby-incorpora-los-juegos-emma-stone-faces-y-erugby-3994-a-su-portafolio-propio-de-esports"
+        }
+      ],
+      "centroid": "FgnWrkC8JhsQDzzmRtDsJEbBvMgf9fgJVEHg3ybB5O8vpxwqxMlGzcEbHjU8FQFDxfPtVA8pOrfOxbMrO/ALIz0UNzDH8eQ9DQ/3YEreMuS39+Mz4TAowFbzPju+0YG0+kkqzC3wP77nFvfSZdbwEBsemd4AqhzZOAa9stjz/SEtBCMtKy1GRNcR9tn3OckoNhNc2EL/E/sGHka9zfEZRdDerP2f1h85pu6rEddL4T61L0Qc5iC007PywR7/z9gpxMD2K+YrJx3auSMAEwi8XsX7ILfD79n2GxPxCToBMqXxNUjA9SXi6tvOvOXS7Dv40tY24lLvzg8aKfWxm6/cISocqAM/4j4ZOR337M7q4R02/vrsKUvCx0gJVRpA7ORH6d7OuSruKCISTssJ+Nsy9toZSCsWFiz+pOEcQiQYxu/u3PwEHDjd2yr2KKrOGrv19v68uhke2kPn0Q3d6yQ4pC8H1gjBvC4mzN4fLEAf+vo6sCsp1TXn0vAxxOk2Shwx",
+      "vectors": [
+        "DxjPplHJKCkPFD3dONHnMECyyLsc+vQJWzzS1Cax4PMhqg4wvslI1LMjFzUzEQRIwe3cUw4kPsHErKgXQN8bJ1skSjO9+uQ9GRb4YUDpK9yf9ucp1jQmwGH3ODbA0oGx+koowTTmQbLyG/HNcdHkFRkboNHqqhjcMvuvrdv1Ay8i+CUjMTVGQ8/+9t/zQN00QRtp007/HvoGF0qnzeQRP9TYqgKJ0hsppPWpBs5N6FKrLEwt4huu0Lr0wzEO39go0sHnK+guLCvXtSv9DwCtVND+Jbu+3eP4GxjzB0MAMpnmNFi2Airo5tPRqvDO7Ur20d8721jpzgYeL+67nqHbLygulws/6D4gPioA783Z4Bkv/e3zKFi4wEsRZiJD7elL4tTDrj/kOxwcVsn29tM6A9EXVD8mCy/wo+4oRSATzOj52fcHHDza1x7vNKPXIbb++/+4tR0V103eyw7c7R47qTUQ3xG7tTgbwOMdKkEz9QoysDIm0jrZyuc20Og9Tx4y",
+        "FgTVsTfGJgoRCTbwT8v8IFjbvsgl7AgCUkPq4iLb5e8zqSMnzcxD09AZGSY3GPdD0vHwVRkzM73VzKohOvYDHS8FLjfi5uIyDfr7YkHXLeHMANo14SYnrlfnLkHAyoG/+j4v3CD+RMDdFPveTuX5Dh0pkeP9vQfvNxjAut739xw6DSIvHBNDP9gP+tr3PbQsOAJP4TkDFgb7HUzL3vocStHdtACo2ClEqe2lDulE6Sy8MDwL5Cq02a7vwQ/syuIstLn7IfMuJgzbvwsFDAjBVcL+G6/JBtj+GRD5Aj/7Nq/sMEnG7yHa2+zXw+3Y9Sr/3Ns94Tz5zxgdGenDnr7cFjMTyf424DspMA3x6cHr6CIs9e7dIUDMyzgIQf9M8uo/6ObYuRX7IC4IOsIe9ctA8OIWLyMGESECrNsIPhIT1uf45QQAGC3T4B4EHbDVGMfw+Pu6uf4j2DDs1hPk7htCqy8G3vi1thoz398aLSgv9vpGuSEq5TH3zwI/xf1FTCIm",
+        "HAHctDmkIx8REkPjSdXfHjaxrtYa+ukQT0Ti5iy15+w5oSQnv8dHv70ULEZKFgs+uvr6VAYkPaTO18lLN/oDJS8ULyez9OdIASDyXF/aP++47+g67DYt1Er9VTq72IGq+1UmxDfqOMfpE/rJcszyDxkTnOUYlTa9P/7Irs7s/hkqBSI1NUNLSt0m89D8LcwZKR5d1ED8Bu8TJTvDu/UdRcnjpfer2hY8o+ezIMxR0T65MUQd6xq6z7Pxvh0GxswnyMj/NdUlIiLbtTf+IA/Fc8D0IbzB6NHsHRHkEyoILqYDOzjC8CPk/8/CxtLN4T/zyMcr6GbpywwSMwmTlKvcHyMUlQJK30MBQCP07t/62xlHCRT3NEnByVgBWzAv49hL8uDNwi7oHRoSW9cE/PYb8dgdWCAXJjQHmtsnRTwjr//Z0/gGHz/t2kLtKKm/E7Px7wLBwTQh3k/pzwXW5jUqmCkBxRLWyTokwdclK1j4A+o1pi8rxzXi3+Mct9UdRBQ8"
       ]
     }
   ]
