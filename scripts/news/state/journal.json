@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-27T15:13:01.685Z",
+  "updatedAt": "2026-11-28T14:19:10.352Z",
   "dedupWindowDays": 120,
   "entries": [
     {
@@ -1949,6 +1949,37 @@
       "vectors": [
         "JuTc1jTrOg47Bif/X8vwMVQCttUn7/oULAnAEjSm7PYKvyU93sowye33Ricj/NcZv9vAM+w3NczLz7BlLenGDDFmMEC6+6/y3/8MFijFMrawt9Na1U31uWcNTzzaw5y3zB5O5FXUJ74DKGjIN8PYIRxAsPoJ+C3aTvS7x8PYFz4MHRw6JPIkSugH1brXOg8hNv9K0CfsLu0tKkq3y8gmKLu8r+Gp20I/udzMLgtWzEe1PTP89Pus093onQ7vseJOx5ezIvICLy3sxiLzQvzhZPs+K6uX6a4QOlLgSjjeGdDzNlnM2Qrn7Ja77OgUDfPf4MYx3jbLw/QFOQO/xqzXER4OrDsJ+j8uLCDl+6Pf1yUs6tvdE0DJ0CwIRitD8ed/5d3iug4DOhPhQtpg/b1VLuQh9jsJIDAyz9c2O+763PXC4BDEAiPQ4TdEJLW+LKT4HEENxvUR1kTowDT9yQYwhhgk0Cyun0BB3e0lHCw++fVHrk0l3xL0rg05ydldLUs0",
         "Fu3T00H9MCtCByQFTLvrN0D3quYi+vQXNiTCGVG72vUPjDcszOM0v9wRPCQ8CucS1wTDOQpEGbi41ss5IdjeIDlWMzup7L0K5gsLDzXMLrKiudxa2C4EuVjuUznayIGo3SA+zTO+Ia75EVO9I9LlHyAoyOzw4SvTQOu20t/lGyYUCRY2CCU2PNsM6tLwVP0cShlJzD/3KdRFKzC73uAGJs/LuvLNy0xDu+DDMvRC5T3aJDIP6emg8s3SuPjjwNQ5uMPXEfw6LDX4wCUNTQrBYQBGR7eg9O0lH0QGX0rdHtTmPEuu8B3I04yz4OMMEfvez+0/AjjnzgYNPfnNzqjiAgQKrTYGuSQqIgTV6rrny0832djd7jDE4CbzSjY97+ty+87nxvYSVAjlPs8zJuAkJdoMFC7/CzMu5dEnTe0K6AHO2unSHgzg3E4yKajbH8ruChvwzvAY4RPu4CLxw+1QhycNvjGkqkA25tpAQz0t7gk7xEEcyxDxuARDyscwJilB"
+      ]
+    },
+    {
+      "id": "d9f6db71964c",
+      "publishedAt": "2026-11-28T14:19:10.352Z",
+      "title": "Kalshi users under 21 run up outsized losses, NYC Council finds",
+      "lang": "en",
+      "voices": 2,
+      "groups": [
+        "sbc",
+        "gamblinginsider"
+      ],
+      "sources": [
+        {
+          "source": "sbcamericas",
+          "url": "https://sbcamericas.com/2026/11/24/nyc-council-kalshi-underage-marketing"
+        },
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/207240/nyc-council-kalshi-under-21-trading-losses"
+        },
+        {
+          "source": "gamblinginsider",
+          "url": "https://www.gamblinginsider.com/news/207431/kalshi-retail-losses-new-york-city"
+        }
+      ],
+      "centroid": "NPTy12QNIDJR6HoBQ8nVGSmwo8we9gBxVlnT6TKhvcdRqh05wthDy6AJEDRBOeQx5w3HO+hMSbrUn7McSu0LFEA9GyKY/6tK8QhEMDTKAs3to9hTvyU2n0HzSB7RnbSltSlU1WPYTLDkYi6yf7W7LjMTtOXwnkfeSMyf0sYKI0kc5VQvQVBcaq8M967lW/EeNz824WC9Zr4IFkCTneFAVavovfS90i9qzeW7Et9L9j/OJWFAxQLDwte7pSEy49Ykopn1F91CRx00vTojHPmrSOI7HqnLL/jX20T3C1/0P7rZIDfc1C/nw7LTqq30ATPLm9cY6xW81ATQQzKxuabJCzlrtQAj7kwxOQ691b3aliIj19znGHeo2hj+DTM6AOdL493TpBDAUSnZSN7zGtAuMa0yH0sUHVNMxO0iX9YP2cytuPvb+SD+7yYCRdu7J6r92yutoi08qiDm8iXeo0hUhUFTyyK8609GtOIQUxBy/go7qyg7uAfutdQ03OciQkA5",
+      "vectors": [
+        "Owr7uHoMHBMw5WQYUMLEDiq+vs0W/QxeSTrK3DKnxMpHvBw6x+Az3aj8+kYcL9MV5xPXMuE/S7zjsrIGR+4KEixDKTWDA6Zc+xIqNyboB94AutlOwC0vqTIIPgfIrLS6xDJh3kvqKrf0aUjAYsq5LS0OwvjdqjHgT9K20uIMFj8V70gpNUtRS6r738DtRv8nNSU34Ey6YLUAKTelqPApUabrxffV0zFb1Ou6+vFCCjLlJlFM4ArA1Ny9oBQ01/UwtaH6GvJNPAwnwDstD/uvNuU3IbrKLvfq1CsHBUXuM8nKITXX1Rjvu73dvafr/z3YwdoD1gq9xBDXNhm7yKPiES1hxQkM/E4iLRTW3tS2rRoi1unnEl7I5/sUEC0r//RR3+XhsRTOOTXdOurtLso4Jr4yHEL+FFI4zuQ5SOIR1dGe0u/e9wwD3iIIRM3PG7b9zS7LozE5qCT69i/xp1VGgUhNyBHG5D9Gv9kRPwls/AUWpDoqv/nwrtge5QAYNCAs",
+        "L+vc/D4jLkVY+W31KNjdJyGsq+Qi6AZ1V1vS7S2ov8pPmxc50NU/t6cAKSRDMPEz6Qa3MeBeTLm6rcMiTfkDEzE8GBar+Lco7P47QjfR78vapc9YuxwqrEDkTh3npcWqrjE9zmK7Sr/ZSSm2f7THKicAt+PxqFbfP9iw2LIMLTgi3UEwQURfYcAXAJv0a90XJy0n3V3HXtEZATqYoupHPbPmtAe+1iBc497PGus/9C/JJ2Yjx/TKstTBrhok69ATn6kAHtg3UCQ3wh0VKv+2V+svFrTJMAfa5kUAFVjtKc3pKTHlzi3kw8TMssDy8CbTldgZAB7E4QDWQS+9wKnI9TBhwg823zRGPfnN1Kj2lhoq6ub6Emuw1hvsExo1DeZC597StQXHVBq/UuH3G84hNsU5HksaIUVRyvX+Wewa3tupvgnR+x8N9hz0L9KtH70G+R2juS47qwvY+SLPoUZNkEZL1hrA92Ivus0LUBRp9gFEtiZPxQHjvdsf6PEtSGM2",
+        "JOgE3Ff1DzNY4Xz1P8/rDyS7mMEZAOxjTWHq+Smsxs9Juxwpv91G2aofCiJXP+8+6wzVP/4zL8zslLkmN+QRElUpCBG2ArpF7wRXCDOyEMryous+1Rs8oUHxOi/QnrWgvwxI32XuXa/nWgy1fLTEJTgmuNkGojzlN8iQ2coDHlAX6V4pPUxNd7sQCMLUSfsUO1s17l7HWcb9Ez+Zps9AW7/s0OK12S5rvu68H8hO5kzHGVNBtAbR0ODFuC4v7sYfqZrnB9YwOCEwx0gdFfO0Od09GaLcJOzL4EvfBmkEUKrjDi/g5D3p3anco7UDFSjDk90n8hLF4/vPQEOvtr+9GEFkrOce804gMhuk18zumSkTz87aHX+U2S/6AEU/8+I77N3RnhK6UyD5OtX3/OQkKZkeGj8hG0tKxPUjZb/94cTWqPvr/DDr/isISv7FMaDz1Squoxwvwifm6hThuipSniNMzzW/7DhKtggPVQ5jCRVKvAwnthn8x9RT0ckZOi47"
       ]
     }
   ]
